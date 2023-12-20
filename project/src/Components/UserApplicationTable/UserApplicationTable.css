@@ -3,120 +3,12 @@ body {
   width: 100vw;
   overflow-x: hidden;
 }
-
-.ant-layout-sider-children {
-  background-color: #022c3b;
-}
-
-.welcome {
-  color: #e0f7ff;
-  font-size: 18px;
-  text-align: center;
-  height: 51px;
-  background-color: #022c3b;
-  border-bottom: 1px solid #e0f7ff;
-  margin-bottom: 15px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-// menu text
-.ant-menu-title-content {
-}
-
-.ant-layout-header {
-  padding: 0;
-  background-color: #022c3b;
-}
-
-.ant-menu-item {
-  color: #e0f7ff;
-  background-color: #022c3b;
-}
-
-.trigger-button {
-  border-radius: 0px;
-  color: #022c3b;
-  background-color: #e0f7ff;
-}
-
-.trigger-button:hover {
-  border-radius: 0px;
-  color: #022c3b;
-  background-color: #e0f7ff;
-}
-
-.title {
-  position: relative;
-  color: #e0f7ff;
-  font-size: 18px;
-  font-weight: 500;
-  margin-left: 20px;
-}
-
-.trigger-button:hover {
-  background-color: red;
-}
-
-// dashboard icon
-
-
-.ant-menu {
-  background-color: #022c3b;
-}
-
-
-.title_bar {
-  color: #e0f7ff;
-  font-size: 16px;
-  font-weight: 500;
-  background-color: #1e5c72;
-  width: 100%;
-  height: 50px;
-  padding-left: 25px;
-}
-
-.menuTitle {
-  width: auto;
-  margin-left: 50px;
-}
-
-.ant-layout-content {
-  background-color: red;
-}
-
-.profile {
-  display: flex;
-  flex-direction: row;
-  gap: 15px;
-  align-items: center;
-  height:64px;
-  font-size: 16px;
-  color: #e0f7ff;
-  margin-right: 30px;
-  background-color: #1e5c72;
-  width: 100%;
-  padding-left: 25px;
-  cursor: pointer;
-}
-
-.notificaiton {
-position: Absolute;
-right: 30px; 
-}
-.emailCommunication {
-  position: Absolute;
-  right: 80px;
-  font-size: 22px;
-  color: #e0f7ff;
-  cursor: pointer;
-}
-
 /*User Application*/
 
 .UserApplicationForm {
   max-width: 800px;
+  margin-top: auto;
+  margin-bottom: auto;
   margin-left: auto;
   margin-right: auto;
 }

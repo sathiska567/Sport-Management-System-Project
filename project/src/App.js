@@ -1,14 +1,14 @@
-import './App.css';
-import {BrowserRouter,Routes,Route,} from "react-router-dom";
-import Navbar from "./Components/Navigation/Navbar.jsx";
+import "./App.css";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import UserApplication from "./Components/UserApplication/UserApplication.jsx";
 import UserApplicationTable from "./Components/UserApplicationTable/UserApplicationTable.jsx";
+import StatCards from "./Components/StatCard/StatCards.jsx";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/AdminDashboard" element={<Navbar />} />
+        <Route path="/AdminDashboard" element={<StatCards />} />
         <Route
           path="/AdminDashboard/UserValidation"
           element={<UserApplicationTable />}

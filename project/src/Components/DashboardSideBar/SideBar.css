@@ -1,7 +1,7 @@
 body {
   height: 100vh;
   width: 100vw;
-  overflow-x: hidden;
+  overflow-y: hidden;
 }
 
 .ant-layout-sider-children {
@@ -60,12 +60,27 @@ body {
 }
 
 // dashboard icon
+.dashboard-icon {
+}
 
+.ant-menu-item-active {
+}
+
+.ant-menu-item:hover {
+}
+
+.ant-menu-item-selected {
+}
 
 .ant-menu {
   background-color: #022c3b;
 }
-
+.ant-menu-root {
+}
+.ant-menu-inline {
+}
+.ant-menu-light {
+}
 
 .title_bar {
   color: #e0f7ff;
@@ -102,92 +117,13 @@ body {
 }
 
 .notificaiton {
-position: Absolute;
+position: fixed;
 right: 30px; 
 }
 .emailCommunication {
-  position: Absolute;
+  position: fixed;
   right: 80px;
   font-size: 22px;
   color: #e0f7ff;
   cursor: pointer;
-}
-
-/*User Application*/
-
-.UserApplicationForm {
-  max-width: 800px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.ant-form-item-control {
-    width: calc(100% - 120px); /* Adjust the width as needed */
-}
-
-.ant-form-item-label {
-    width: 120px; /* Adjust the width as needed */
-    margin-left: 100px;
-}
-
-
-.UserApplicationFormHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #022C3B;
-  margin: 0;
-  padding: 10px;
-}
-
-.UserApplicationFormHeader h3 {
-  color: #e0f7ff;
-  margin: 0;
-  flex: 1; /* Take up remaining space, centering the h3 */
-  text-align: center;
-}
-
-.UserApplicationFormApplication {
-  max-height: 500px; 
-  overflow-y: auto; 
-  border: 1px solid #e0f7ff;
-  border-radius: 4px;
-  background-color: #D6F5FF;
-  color: #022C3B;
-  font-weight: 500;
-}
-
-/* Style for Submit button */
-
-.UserApplicationCloseBtn {
-position : relative;
-  font-size: 22px;
-  color: #e0f7ff;
-  cursor: pointer;
-}
-
-
-/* Style for the table */
-
-.search {
-    display: flex;
-    flex-direction: row;
-    gap: 15px;
-    width: 100%;
-}
-
-.tableContainer {
-    width: 100%;
-    margin-top: 30px;
-    max-height: 480px; /* Set the maximum height as per your requirement */
-    overflow-y: auto; /* Add a vertical scroll bar if the content overflows */
-}
-.table {
-    margin-top: 20px;
-    margin-bottom: 20px;
-    width: 100%;
-    justify-content: center;
-}
-.custom-table .ant-table-thead > tr > th {
-  height: 20px; /* Adjust the height as needed */
 }

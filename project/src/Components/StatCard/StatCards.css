@@ -1,0 +1,48 @@
+body {
+  height: 100vh;
+  width: 100vw;
+}
+
+.stats {
+display: flex;
+flex-direction: column;
+gap: 20px;
+width: 100%;
+display: flex;
+}
+
+.sRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 30px;
+  width: 100%;
+}
+
+.sItem {
+  width : 350px;
+  height: 170px;
+  background-color: #1e5c72;
+  border-radius: 40px;
+  background-color: #D6F5FF;
+  box-shadow: 0 2px 2px #1e5c72;
+}
+
+.ant-col  {
+  text-align: center;
+  margin-left: 25%;
+  margin-top: 8%;
+}
+
+.stats .ant-statistic-title {
+  font-size: 22px;
+  color: #022C3B;
+  margin-bottom: 0px;
+}
+
+.stats .ant-statistic-content-value {
+  font-size: 48px;
+  color: #17404F;
+  font-weight: 500;
+
+}
