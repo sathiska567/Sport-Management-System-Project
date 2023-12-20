@@ -210,8 +210,10 @@ const SideBar = ({ children }) => {
         <div className="title_bar">
           <Text className="menuTitle" selectedMenuItem={selectedMenuItem} />
         </div>
+
         {/* Main content */}
         {children}
+        
       </Layout>
     </Layout>
   );
