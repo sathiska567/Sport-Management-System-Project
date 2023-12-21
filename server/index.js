@@ -1,17 +1,46 @@
-require("dotenv").config(); // Load environment variables
+// index.js
 
-const express = require("express");
-const cors = require("cors");
+const express = require('express');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const initDatabase = require('./db/db');
+const adminRoutes = require('./routes/adminRoutes');
+const cookieParser = require('cookie-parser');
 
-require("./db/mongoDb"); 
+
 
 const app = express();
 
-app.use(express.json()); // middlewares
-app.use(cors());
+app.use(bodyParser.json());
 
-const PORT = process.env.PORT || 3000; // Define a default port if PORT is not set in .env
+app.use(cors({
+  origin: ["http://localhost:3000"],
+  credentials: true,
+  methods: ["GET", "POST"]
+}));
 
+app.use(cookieParser())
+
+
+// Initialize the database connection
+initDatabase();
+
+
+// Use the admin routes
+app.use('/admin', adminRoutes);
+
+
+
+
+
+
+
+
+
+
+
+
+const PORT = process.env.PORT || 5050;
 app.listen(PORT, () => {
-    console.log("Server is running on port " + PORT);
+  console.log(`Server is running on port ${PORT}`);
 });
