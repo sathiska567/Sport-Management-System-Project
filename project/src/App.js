@@ -3,14 +3,45 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import UserApplication from "./Components/UserApplication/UserApplication.jsx";
 import UserApplicationTable from "./Components/UserApplicationTable/UserApplicationTable.jsx";
 import StatCards from "./Components/StatCard/StatCards.jsx";
+import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute.js";
+import PublicRoute from "./Components/PublicRoute/PublicRoute.js";
+import Login from "./Pages/LoginPage.jsx";
+import Register from "./Pages/RegisterPage.jsx";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/AdminDashboard" element={<StatCards />} />
+        <Route path="/" element={
+          <ProtectedRoute>
+                <StatCards />
+          </ProtectedRoute>
+            
+        
+        } />
+
+       {/* All user Login */}
+       <Route path="/login" element={
+              <PublicRoute>
+                    <Login />
+              </PublicRoute>
+               
+             
+          } />
+          
+          {/* All user registration */}
+          <Route path="/register" element={
+             
+               <PublicRoute>
+                 <Register />
+               </PublicRoute>
+            
+          } /> 
+
+
+
         <Route
-          path="/AdminDashboard/UserValidation"
+          path="/UserValidation"
           element={<UserApplicationTable />}
         />
         <Route
@@ -18,6 +49,15 @@ function App() {
           path="/AdminDashboard/UserValidation/view"
           element={<UserApplication />}
         />
+
+
+
+
+
+
+
+
+
       </Routes>
     </BrowserRouter>
 
