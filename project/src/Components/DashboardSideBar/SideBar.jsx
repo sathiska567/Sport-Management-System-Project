@@ -140,10 +140,10 @@ const SideBar = ({ children }) => {
           }}
         >
           <Menu.Item key="1" icon={<DashboardOutlined />}>
-            <Link to="/AdminDashboard">Dashboard</Link>
+            <Link to="/">Dashboard</Link>
           </Menu.Item>
           <Menu.Item key="2" icon={<PendingActions />}>
-            <Link to="/AdminDashboard/UserValidation">User Validation</Link>
+            <Link to="/UserValidation">User Validation</Link>
           </Menu.Item>
           <Menu.Item key="3" icon={<ManageUser />}>
             <Link to="/Manage">Manage</Link>
@@ -210,10 +210,8 @@ const SideBar = ({ children }) => {
         <div className="title_bar">
           <Text className="menuTitle" selectedMenuItem={selectedMenuItem} />
         </div>
-
         {/* Main content */}
         {children}
-        
       </Layout>
     </Layout>
   );
