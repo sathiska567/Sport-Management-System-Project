@@ -134,4 +134,35 @@ const loginController = async (req, res) => {
 
 };
 
-module.exports = { registerController, loginController };
+
+// get current user details
+const getCurrentUserController = async(req,res)=>{
+   try {
+
+        const user = await User.findOne({_id : req.body.id})
+        console.log(user);
+
+        if(!user){
+                res.status(404).send({
+                message : "User Cannot find !!",
+                success : false                
+                })
+        }
+
+        res.status(200).send({
+                message : "Details found",
+                success : true,
+                user
+        })
+        
+   } catch (error) {
+
+        res.status(400).send({
+                message : "Error while occure executing getCurrentUserController ",
+                success : false
+        })
+        
+   }
+}
+
+module.exports = { registerController, loginController,getCurrentUserController };
