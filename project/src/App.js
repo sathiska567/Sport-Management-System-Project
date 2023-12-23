@@ -8,6 +8,7 @@ import Login from "./Pages/user/Login.jsx";
 import ForgotPassword from "./Pages/user/ForgotPass.jsx";
 import OTPPage from "./Pages/user/Otp.jsx"
 import ResetPassword from "./Pages/user/ResetPass.jsx"
+import ApplyPosition from "./Components/ApplyPosition/ApplyPosition.jsx";
 
 
 
@@ -46,6 +47,14 @@ function App() {
       path='/reset-pass' 
       element={<ResetPassword />} 
       />
+
+
+
+    {/* Apply position routes */}
+    <Route 
+     path="/apply-position"
+     element={<ApplyPosition/>} 
+     />
 
 
     {/* after login routes */}

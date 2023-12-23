@@ -81,32 +81,32 @@ const UserApplicationTable = () => {
                   key: "UID",
                 },
                 {
-                  title: "Name",
-                  dataIndex: "Name",
-                  key: "Name",
+                  title: "User Name",
+                  dataIndex: "User Name",
+                  key: "User Name",
                 },
-                {
-                  title: "Location",
-                  dataIndex: "Location",
-                  key: "Location",
-                  filteredValue: [location],
-                  onFilter: (value, record) => {
-                    return String(record.Location)
-                      .toLowerCase()
-                      .includes(value.toLocaleLowerCase());
-                  },
-                },
-                {
-                  title: "User Role",
-                  dataIndex: "UserRole",
-                  key: "UserRole",
-                  filteredValue: [userRole],
-                  onFilter: (value, record) => {
-                    return String(record.UserRole)
-                      .toLowerCase()
-                      .includes(value.toLocaleLowerCase());
-                  },
-                },
+                // {
+                //   title: "Location",
+                //   dataIndex: "Location",
+                //   key: "Location",
+                //   filteredValue: [location],
+                //   onFilter: (value, record) => {
+                //     return String(record.Location)
+                //       .toLowerCase()
+                //       .includes(value.toLocaleLowerCase());
+                //   },
+                // },
+                // {
+                //   title: "User Role",
+                //   dataIndex: "UserRole",
+                //   key: "UserRole",
+                //   filteredValue: [userRole],
+                //   onFilter: (value, record) => {
+                //     return String(record.UserRole)
+                //       .toLowerCase()
+                //       .includes(value.toLocaleLowerCase());
+                //   },
+                // },
                 {
                   title: "Actions",
                   dataIndex: "Actions",
@@ -150,6 +150,7 @@ const UserApplicationTable = () => {
                 },
                 pageSize: 5,
               }}
+              
               // Displaying data from the backend
               dataSource={userApplicationData.map((user) => ({
                 UID: user.uid,

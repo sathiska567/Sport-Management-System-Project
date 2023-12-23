@@ -2,7 +2,7 @@
 
 const express = require('express');
 const router = express.Router();
-const {loginController, registerController,getCurrentUserController } = require('../controllers/userController');
+const {loginController, registerController,getCurrentUserController,applyPositionController } = require('../controllers/userController');
 const authMiddleware = require('../middleware/authMiddleware');
 
 
@@ -16,8 +16,8 @@ router.post('/register', registerController);
 // GET CURRENT USER DETAILS
 router.get('/getCurrentUser',authMiddleware,getCurrentUserController)
 
-
-//router.post('/login', login);
+// APPLY POSITION || POST
+router.post('/apply-position',applyPositionController)
 
 
 
