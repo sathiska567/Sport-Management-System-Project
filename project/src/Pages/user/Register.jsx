@@ -59,7 +59,7 @@ function Register() {
         console.log('Admin registered successfully!');
 
         // Redirect to the login page after successful registration
-        navigate('/login');
+        navigate('/');
 
       } else {
         setError(response.data.message);
@@ -157,7 +157,7 @@ function Register() {
           {error && <div className="alert alert-danger mt-2">{error}</div>}
           <p>You agree to our terms and conditions</p>
           <Form.Item {...tailLayout}>
-            <Link to="/user/login" className="btn btn-primary btn-default border text-decoration-none w-100">
+            <Link to="/" className="btn btn-primary btn-default border text-decoration-none w-100">
               Log In
             </Link>
           </Form.Item>
