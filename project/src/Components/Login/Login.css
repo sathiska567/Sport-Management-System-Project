@@ -1,0 +1,75 @@
+body {
+    width: 100%;
+    height: 100%;
+}
+.LoginPage {
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    display: grid;
+    grid-template-columns: 25% 75%;
+
+}
+
+.LoginDetails {
+    margin-left:auto;
+    margin-right:auto;
+    width: 80%;
+}
+
+.ant-row {
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.LoginHeading {
+    margin-bottom: 40%;
+    margin-top: 20%;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    font-family: 'Roboto', sans-serif;
+    font-size: 36px;
+}
+
+.LoginInput {
+    border:none;
+    border-radius: 0;
+    border-bottom: 1px solid #d9d9d9;
+    background-color: white;
+    
+}
+
+.LoginLabel {
+    margin-bottom: -10px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 24px;
+    color: #666666;
+}
+
+
+.ant-btn  {
+    margin-top: 5%;
+    border-radius: 0;
+    font-family: Roboto, sans-serif;
+    font-size: 16px;
+    color: white;
+    font-weight: semi-bold;
+    
+}
+
+.LoginLink {
+    margin-top: -5px;
+    font-family: 'Roboto ', sans-serif;
+    font-size: 14px;
+    color: #0075E1;
+    font-weight: semi-bold;
+}
+
+.copyright {
+    position: absolute;
+    bottom: 0;
+    font-size: 13px;
+}
