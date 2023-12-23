@@ -3,19 +3,13 @@ import "./SideBar.css";
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-import {
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
-  DashboardOutlined,
-  PoweroffOutlined,
-  UserOutlined,
-  MailOutlined,
-} from "@ant-design/icons";
+import {MenuFoldOutlined,MenuUnfoldOutlined,DashboardOutlined,PoweroffOutlined,UserOutlined,MailOutlined,} from "@ant-design/icons";
 
-import { Layout, Menu, Button, Avatar, Space, Badge } from "antd";
+import { Layout, Menu, Button, Avatar, Space, Badge, message } from "antd";
 import ManageUser from "../icons/ManageUser.jsx";
 import PendingActions from "../icons/PendingActions.jsx";
 import axios from "axios";
+import { adminMenu, userMenu } from "../../Data/Data.js";
 
 // Destructuring components from Ant Design's Layout
 const { Header, Sider } = Layout;
@@ -27,6 +21,10 @@ const SideBar = ({ children }) => {
   const [isHoveredButton1, setIsHoveredButton1] = useState(false);
   const [isHoveredButton2, setIsHoveredButton2] = useState(false);
   const [selectedMenuItem, setSelectedMenuItem] = useState("1");
+
+  // set name
+  const [currentUserName , setCurrentUsername] = useState()
+  const [isAdmin,setIsAdmin] = useState(false)
 
   // Event handlers for mouse hover events
   const handleHoverButton1 = () => {
@@ -62,6 +60,32 @@ const SideBar = ({ children }) => {
     return <p>{text[selectedMenuItem]}</p>;
   };
 
+
+
+//   // GET CURRENT USER DATA
+ const currentUserData = async()=>{
+     try {
+
+      const res = await axios.get("http://localhost:8080/api/v1/user/getCurrentUser",     
+     {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+     }
+       )
+
+     console.log(res.data.user.isAdmin);
+     setCurrentUsername(res.data.user.username);
+     setIsAdmin(res.data.user.isAdmin)
+      
+     } catch (error) {
+
+      message.error("Error have inside the Get currentUserData function")
+      
+     }
+   
+ }
+
   // URL for the profile avatar
   const url =
     "https://static.vecteezy.com/system/resources/previews/009/383/461/non_2x/man-face-clipart-design-illustration-free-png.png";
@@ -79,7 +103,11 @@ const SideBar = ({ children }) => {
   });
 
   useEffect(() => {
-    // Replace 'your_backend_api/user_data' with your actual API endpoint for fetching user data
+
+  //  call getCurrentUser function
+  currentUserData();
+
+  // Replace 'your_backend_api/user_data' with your actual API endpoint for fetching user data
     axios
       .get("http://localhost:8080/demo")
       .then((response) => {
@@ -94,6 +122,10 @@ const SideBar = ({ children }) => {
         console.error("Error fetching user data:", error);
       });
   }, []);
+
+
+  // get admin or not status
+  const sideBarMenu = isAdmin ? adminMenu : userMenu
 
   // JSX structure for the Navbar component
   return (
@@ -118,7 +150,9 @@ const SideBar = ({ children }) => {
                 className="profileAvatar"
                 src={<img src={url} alt="avatar" />}
               />
-              <div className="Username">{userData.username}</div>
+              <div className="Username">{currentUserName}
+               
+              </div>
             </>
           )}
         </div>
@@ -139,6 +173,11 @@ const SideBar = ({ children }) => {
             fontSize: "16px",
           }}
         >
+
+
+         {isAdmin ? 
+         
+         <div>
           <Menu.Item key="1" icon={<DashboardOutlined />}>
             <Link to="/">Dashboard</Link>
           </Menu.Item>
@@ -146,7 +185,7 @@ const SideBar = ({ children }) => {
             <Link to="/UserValidation">User Validation</Link>
           </Menu.Item>
           <Menu.Item key="3" icon={<ManageUser />}>
-            <Link to="/Manage">Manage</Link>
+            <Link to="/Manage">Notification</Link>
           </Menu.Item>
           <Menu.Item
             key="4"
@@ -163,6 +202,40 @@ const SideBar = ({ children }) => {
           >
             <Link to="/LogOff">Log Off</Link>
           </Menu.Item>
+         </div>
+         
+         : 
+         
+         <div>
+          <Menu.Item key="1" icon={<DashboardOutlined />}>
+            <Link to="/">Dashboard</Link>
+          </Menu.Item>
+          <Menu.Item key="2" icon={<PendingActions />}>
+            <Link to="/apply-position">Apply Position</Link>
+          </Menu.Item>
+          <Menu.Item key="3" icon={<ManageUser />}>
+            <Link to="/search">Search</Link>
+          </Menu.Item>
+          <Menu.Item
+            key="4"
+            icon={<PoweroffOutlined />}
+            style={{
+              position: "absolute",
+              bottom: 0,
+              backgroundColor: isHoveredButton1 ? "#D94D34" : "#022C3B",
+              color: isHoveredButton1 ? "#E0F7FF" : "#E0F7FF",
+              fontSize: "16px",
+            }}
+            onMouseEnter={handleHoverButton1}
+            onMouseLeave={handleMouseLeaveButton1}
+          >
+            <Link to="/LogOff">Log Off</Link>
+          </Menu.Item>
+         </div>
+         
+         
+         }
+          
         </Menu>
       </Sider>
 
@@ -192,7 +265,7 @@ const SideBar = ({ children }) => {
             <a href="www">
               <Space size={24}>
                 {/* Notification badge */}
-                <Badge count={1}>
+                <Badge count={5}>
                   <Avatar shape="square" icon={<UserOutlined />} />
                 </Badge>
               </Space>
