@@ -3,11 +3,12 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import UserApplication from "./Components/UserApplication/UserApplication.jsx";
 import UserApplicationTable from "./Components/UserApplicationTable/UserApplicationTable.jsx";
 import StatCards from "./Components/StatCard/StatCards.jsx";
-import Register from "./Pages/user/Register.jsx";
-import Login from "./Pages/user/Login.jsx";
-import ForgotPassword from "./Pages/user/ForgotPass.jsx";
-import OTPPage from "./Pages/user/Otp.jsx"
-import ResetPassword from "./Pages/user/ResetPass.jsx"
+import Register from "./Pages/Aatheek/user/Register.jsx";
+import Login from "./Pages/Aatheek/user/Login.jsx";
+import ForgotPassword from "./Pages/Aatheek/user/ForgotPass.jsx";
+import OTPPage from "./Pages/Aatheek/user/Otp.jsx";
+import ResetPassword from "./Pages/Aatheek/user/ResetPass.jsx";
+import Dashboard from "./Pages/Aatheek/user/userDashboard.jsx";
 
 
 
@@ -24,7 +25,7 @@ function App() {
       {/* user login and registration */}
       <Route 
       path="/register" 
-      element={<Register />} 
+      element={<Register/>} 
       />
 
       <Route 
@@ -50,8 +51,8 @@ function App() {
 
     {/* after login routes */}
         <Route
-          path="/dashboad"
-          element={<StatCards />}
+          path="/dashboard"
+          element={<Dashboard/>}
         />
 
         <Route
