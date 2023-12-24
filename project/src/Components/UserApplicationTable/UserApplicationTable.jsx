@@ -100,28 +100,43 @@ const UserApplicationTable = () => {
           {/* Table section */}
           <div className="tableContainer">
           <Table
+
   columns={[
     {
       title: "User Id",
       dataIndex: "uid",
       render: (text, record) => (
         <span>
-          {console.log(record._id)}
-          {record._id}
+          {console.log(record.UserRole)}
+          {record.UserRole}
         </span>
       ),
     },
+
     {
-      title: "User Name",
+      title: "User Full Name",
       dataIndex: "userName",
       key: "userName",
       render: (text, record) => (
         <span>
-          {console.log(record.userName)}
-          {record.userName}
+          {console.log(record.FirstName + " " + record.LastName)}
+          {record.FirstName + " " + record.LastName}
         </span>
       ),
     },
+
+    {
+      title: "Experience",
+      dataIndex: "Experience",
+      key: "Experience",
+      render: (text, record) => (
+        <span>
+          {console.log(record.Experience)}
+          {record.Experience}
+        </span>
+      ),
+    },
+
     {
       title: "Actions",
       dataIndex: "Actions",

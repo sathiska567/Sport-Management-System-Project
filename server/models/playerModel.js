@@ -2,19 +2,36 @@ const mongoose = require("mongoose")
 
 const palyerSchema = new mongoose.Schema({
 
-  userId : {
+FirstName : {
      type : String,
+     require : [true,"First name is required"]
 
   },
 
-  userName:{
-        type :String,
-        required : true
+LastName : {
+     type : String,
+     require : [true,"Last name is required"]
+
   },
 
-  experienced:{
+  Email:{
         type :String,
-        required : true
+        require : [true,"Email is required"]
+  },
+
+  Age:{
+        type :Number,
+        require : [true,"Age is required"]
+  },
+
+  Experience:{
+        type :String,
+        require : [true,"Experience is required"]
+  },
+
+  UserRole:{
+        type :String,
+        require : [true,"UserRole is required"]
   },
 
   status : {

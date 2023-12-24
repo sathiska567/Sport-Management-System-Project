@@ -11,7 +11,7 @@ import {
 } from "@ant-design/icons";
 
 import axios from "axios";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 
 // Navbar component
@@ -32,10 +32,15 @@ const UserApplication = () => {
   const location = useLocation();
   console.log(location);
 
-const handleApprove = async()=>{
+  const navigate = useNavigate();
 
-}
+  const handleStatus = async(id,status)=>{
 
+      console.log(id,status);
+      // const res = await axios.post("http://localhost:8080/api/v1/admin/handle-status")
+      // navigate("/dashboad")
+      
+  }
 
   // End
 
@@ -52,11 +57,11 @@ const handleApprove = async()=>{
     <div className="UserApplicationForm">
       <div className="UserApplicationFormHeader">
         <h3>Application</h3>
-        <a href="http://localhost:3000/AdminDashboard/UserValidation">
+        {/* <a href="http://localhost:3000/AdminDashboard/UserValidation">
           <span className="UserApplicationCloseBtn">
             <CloseSquareOutlined />
           </span>
-        </a>
+        </a> */}
       </div>
       <div className="UserApplicationFormApplication">
         <form>
@@ -65,7 +70,7 @@ const handleApprove = async()=>{
             type="text"
             id="firstName"
             name="firstName"
-            value={location.state.record.userName}
+            value={location.state?.record?.FirstName}
             readOnly={true}
           />
           <label htmlFor="">Last Name:</label>
@@ -73,6 +78,7 @@ const handleApprove = async()=>{
             type="text"
             id="lastName"
             name="lastName"
+            value={location.state?.record?.LastName}
             readOnly={true}
           />
           <label htmlFor="">Email:</label>
@@ -81,6 +87,7 @@ const handleApprove = async()=>{
             id="email"
             name="email"
             readOnly={true}
+            value={location.state?.record?.Email}
           />
           <label htmlFor="">Age:</label>
           <input
@@ -88,13 +95,7 @@ const handleApprove = async()=>{
             id="age"
             name="age"
             readOnly={true}
-          />
-          <label htmlFor="dob">Date of Birth:</label>
-          <input
-            type="date"
-            id="dob"
-            name="dob"
-            readOnly={true}
+            value={location.state?.record?.Age}
           />
 
           <label htmlFor="">Experience:</label>
@@ -103,30 +104,33 @@ const handleApprove = async()=>{
             name="experience"
             rows="10"
             readOnly={true}
+            value={location.state?.record?.Experience}
+
           ></textarea>
-          <label htmlFor="">Winning History:</label>
+          {/* <label htmlFor="">Winning History:</label>
           <textarea
             id="winningHistory"
             name="winningHistory"
             rows="10"
             readOnly={true}
-          ></textarea>
-          <label htmlFor="">UserLocation:</label>
+          ></textarea> */}
+          {/* <label htmlFor="">UserLocation:</label>
           <input
             type="UserLocation"
             id="UserLocation"
             name="UserLocation"
             readOnly={true}
-          />
+          /> */}
           <label htmlFor="">User Role:</label>
           <input
             type="UserRole"
             id="UserRole"
             name="UserRole"
             readOnly={true}
+            value={location.state?.record?.UserRole}            
           />
           <div class="buttonSet">
-            <button class="approve userAppBTn">
+            <button class="approve userAppBTn" onClick={()=>handleStatus(location.state?.record?._id,"Approve")}>
               <UserAddOutlined className="UserApplicationIcon" />
               Accept
             </button>
