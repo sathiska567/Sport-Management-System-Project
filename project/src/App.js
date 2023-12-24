@@ -39,12 +39,12 @@ function App() {
       />
 
       <Route 
-      path='/otp-reset-pass' 
+      path='/otp-reset-pass/:email' 
       element={<OTPPage />} 
       />
 
       <Route 
-      path='/reset-pass' 
+      path='/reset-pass/:email' 
       element={<ResetPassword />} 
       />
 

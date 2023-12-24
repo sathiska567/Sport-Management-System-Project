@@ -1,13 +1,82 @@
 // ResetPassword.js
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Form, Input, Button, Typography } from 'antd';
+import axios from 'axios';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const { Title } = Typography;
 
 const ResetPassword = () => {
-  const onFinish = (values) => {
-    console.log('Received values:', values);
-    // Implement logic to reset password
+
+  const {email} = useParams();
+  const navigate = useNavigate();
+  
+  const [token, setToken] = useState(localStorage.getItem('rePassToken'));
+
+  useEffect(() => {
+    if (!token) {
+      navigate('/forgot-password');
+    }
+
+    // Clear the token after 2 minutes
+    const tokenClearTimer = setTimeout(() => {
+      localStorage.removeItem('rePassToken');
+      setToken(null);
+      navigate('/forgot-password');
+    }, 2 * 60 * 1000);
+
+    return () => clearTimeout(tokenClearTimer);
+  }, [token, navigate]);
+
+
+  useEffect(() => {
+    // Define your function here
+    const myFunction = () => {
+      console.log('Running myFunction');
+      // Add your logic here
+      if(!localStorage.getItem('rePassToken')){
+        window.location.reload();
+      }
+
+    };
+
+    // Set up an interval to run the function every 1000 milliseconds (1 second)
+    const intervalId = setInterval(myFunction, 1000);
+
+    // Clean up the interval when the component is unmounted
+    return () => clearInterval(intervalId);
+  }, []); // Empty dependency array ensures that the effect runs only once on mount
+
+
+  
+  const onFinish = async (values) => {
+    try {
+      // Send a POST request to the backend with the new password
+      const response = await axios.post('http://localhost:5050/user/reset-password', {
+        email,
+        newPassword: values.newPassword,
+        token
+      });
+
+      // Handle the response from the backend
+      if (response.data.message) {
+        console.log('Password was reset successfully');
+
+        // Clear the token immediately after changing the password
+        localStorage.removeItem('rePassToken');
+        setToken(null);
+        navigate('/');
+
+
+      } else {
+        console.log('Failed to reset password');
+        // Handle other responses or errors from the backend
+      }
+    } catch (error) {
+      // Handle network or other errors
+      console.error('Error:', error.message);
+    }
+
   };
 
   return (
