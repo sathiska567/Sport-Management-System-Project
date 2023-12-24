@@ -69,7 +69,7 @@ function App() {
         />
         <Route
           // Need to change after add table of application
-          path="/AdminDashboard/UserValidation/view"
+          path="/Applying-Details"
           element={<UserApplication />}
         />
 

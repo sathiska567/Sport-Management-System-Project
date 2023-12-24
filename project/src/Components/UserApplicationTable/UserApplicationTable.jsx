@@ -7,8 +7,9 @@ import {
   DeleteOutlined,
 } from "@ant-design/icons";
 
-import { Layout, Button, Input, Table } from "antd";
+import { Layout, Button, Input, Table, message } from "antd";
 import axios from "axios";
+import { useLocation, useNavigate } from "react-router-dom";
 
 // Destructuring components from Ant Design's Layout
 const { Content } = Layout;
@@ -18,19 +19,44 @@ const UserApplicationTable = () => {
   // Get data from back end
   // Start
   const [userRole, setUserRole] = useState([]);
-  const [location, setLocation] = useState([]);
+  const [Userlocation, setUserLocation] = useState([]);
   const [userApplicationData, setUserApplicationData] = useState([]);
+  const navigate = useNavigate();
+  const location = useLocation()
+
+ const ApplyingUser = async()=>{
+     
+        try {
+
+        const res = await axios.get("http://localhost:8080/api/v1/admin/get-all-details")
+        console.log(res.data.allApplyingDetails);
+        setUserApplicationData(res.data.allApplyingDetails)
+          
+        if(res.data.success){
+          setUserApplicationData(res.data.allApplyingDetails)
+        }
+
+        else{
+          message("Error found in applying details section")
+        }
+
+          
+        } catch (error) {
+
+          message.error("Error while fetching data")
+          
+        }
+        
+ }
+
+
+ const NavigateDetailsPage = async(record)=>{
+      navigate("/Applying-Details",{state:{record : record}})
+ }
+
 
   useEffect(() => {
-    axios
-      .get("http://localhost:5000/getUserApplicationTableData")
-      .then((result) => {
-        const userApplicationData = result.data; // Assuming result.data contains the user data
-        setUserApplicationData(userApplicationData);
-      })
-      .catch((err) => {
-        console.error("Axios Error:", err);
-      });
+    ApplyingUser();
   }, []);
 
   // End
@@ -67,98 +93,82 @@ const UserApplicationTable = () => {
               styles={{
                 marginBottom: "8",
               }}
-              onSearch={(value) => setLocation(value)}
-              onChange={(e) => setLocation(e.target.value)}
+              onSearch={(value) => setUserLocation(value)}
+              onChange={(e) => setUserLocation(e.target.value)}
             />
           </div>
           {/* Table section */}
           <div className="tableContainer">
-            <Table
-              columns={[
-                {
-                  title: "UID",
-                  dataIndex: "UID",
-                  key: "UID",
-                },
-                {
-                  title: "User Name",
-                  dataIndex: "User Name",
-                  key: "User Name",
-                },
-                // {
-                //   title: "Location",
-                //   dataIndex: "Location",
-                //   key: "Location",
-                //   filteredValue: [location],
-                //   onFilter: (value, record) => {
-                //     return String(record.Location)
-                //       .toLowerCase()
-                //       .includes(value.toLocaleLowerCase());
-                //   },
-                // },
-                // {
-                //   title: "User Role",
-                //   dataIndex: "UserRole",
-                //   key: "UserRole",
-                //   filteredValue: [userRole],
-                //   onFilter: (value, record) => {
-                //     return String(record.UserRole)
-                //       .toLowerCase()
-                //       .includes(value.toLocaleLowerCase());
-                //   },
-                // },
-                {
-                  title: "Actions",
-                  dataIndex: "Actions",
-                  key: "Actions",
-                  render: (text, record) => (
-                    <span>
-                      <a href="/AdminDashboard/UserValidation/view">
-                        <Button
-                          type="primary"
-                          style={{
-                            backgroundColor: "#05AD1B",
-                            color: "#fff",
-                            fontSize: "16px",
-                            marginRight: "10px",
-                          }}
-                        >
-                          <UserOutlined />
-                          View
-                        </Button>
-                      </a>
-                      <a href="/AdminDashboard/UserValidation/view">
-                        <Button
-                          type="primary"
-                          style={{
-                            backgroundColor: "#D94D34",
-                            color: "#fff",
-                            fontSize: "16px",
-                          }}
-                        >
-                          <DeleteOutlined />
-                          Delete
-                        </Button>
-                      </a>
-                    </span>
-                  ),
-                },
-              ]}
-              pagination={{
-                style: {
-                  marginTop: "50px",
-                },
-                pageSize: 5,
+          <Table
+  columns={[
+    {
+      title: "User Id",
+      dataIndex: "uid",
+      render: (text, record) => (
+        <span>
+          {console.log(record._id)}
+          {record._id}
+        </span>
+      ),
+    },
+    {
+      title: "User Name",
+      dataIndex: "userName",
+      key: "userName",
+      render: (text, record) => (
+        <span>
+          {console.log(record.userName)}
+          {record.userName}
+        </span>
+      ),
+    },
+    {
+      title: "Actions",
+      dataIndex: "Actions",
+      key: "Actions",
+      render: (text, record) => (
+        <span>
+            <Button
+              type="primary"
+              style={{
+                backgroundColor: "#05AD1B",
+                color: "#fff",
+                fontSize: "16px",
+                marginRight: "10px",
               }}
-              
-              // Displaying data from the backend
-              dataSource={userApplicationData.map((user) => ({
-                UID: user.uid,
-                Name: `${user.fname} ${user.lname}`,
-                Location: user.location,
-                UserRole: user.userRole,
-              }))}
-            ></Table>
+
+              onClick={() => NavigateDetailsPage(record)}
+            >
+              <UserOutlined />
+              View
+            </Button>
+          
+          <Button
+            type="primary"
+            style={{
+              backgroundColor: "#D94D34",
+              color: "#fff",
+              fontSize: "16px",
+            }}
+          >
+            <DeleteOutlined />
+            Delete
+          </Button>
+        </span>
+      ),
+    },
+  ]}
+  pagination={{
+    style: {
+      marginTop: "50px",
+    },
+    pageSize: 5,
+  }}
+  // Displaying data from the backend
+  dataSource={userApplicationData}
+></Table>
+
+            
           </div>
         </Content>
       </Layout>

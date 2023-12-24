@@ -11,6 +11,7 @@ import {
 } from "@ant-design/icons";
 
 import axios from "axios";
+import { useLocation } from "react-router-dom";
 
 
 // Navbar component
@@ -24,54 +25,24 @@ const UserApplication = () => {
   const [dob, setDob] = useState();
   const [experience, setExperience] = useState();
   const [winningHistory, setWinningHistory] = useState();
-  const [location, setLocation] = useState();
+  const [UserLocation, setUserLocation] = useState();
   const [userRole, setUserRole] = useState();
   const [userApplicationData, setUserApplicationData] = useState([]);
-  const Submit = (e) => {
-    e.preventDefault();
-    axios
-      .post("http://localhost:5000/addUserApplicationData", {
-        fname,
-        lname,
-        email,
-        age,
-        dob,
-        experience,
-        winningHistory,
-        location,
-        userRole,
-      })
-      .then((result) => {
-        console.log(result);
-        alert("Data successfully inserted into the database!");
-      })
-      .catch((err) => console.error("Axios Error:", err));
-  };
+
+  const location = useLocation();
+  console.log(location);
+
+const handleApprove = async()=>{
+
+}
+
+
   // End
 
   // Get the data from the backend
   // Start
   useEffect(() => {
-    axios
-      .get("http://localhost:5000/getUserApplicationData")
-      .then((result) => {
-        const userApplicationData = result.data; // Assuming result.data contains the user data
-
-        // Update state variables with data from the backend
-        setUserApplicationData(userApplicationData);
-        setFname(userApplicationData.firstName);
-        setLname(userApplicationData.lastName);
-        setEmail(userApplicationData.email);
-        setAge(userApplicationData.age);
-        setDob(userApplicationData.dob);
-        setExperience(userApplicationData.experience);
-        setWinningHistory(userApplicationData.winningHistory);
-        setLocation(userApplicationData.location);
-        setUserRole(userApplicationData.userRole);
-      })
-      .catch((err) => {
-        console.error("Axios Error:", err);
-      });
+    
   }, []);
   // End
 
@@ -88,41 +59,42 @@ const UserApplication = () => {
         </a>
       </div>
       <div className="UserApplicationFormApplication">
-        <form onSubmit={Submit}>
+        <form>
           <label htmlFor="">First Name:</label>
           <input
             type="text"
             id="firstName"
             name="firstName"
-            onChange={(e) => setFname(e.target.value)}
+            value={location.state.record.userName}
+            readOnly={true}
           />
           <label htmlFor="">Last Name:</label>
           <input
             type="text"
             id="lastName"
             name="lastName"
-            onChange={(e) => setLname(e.target.value)}
+            readOnly={true}
           />
           <label htmlFor="">Email:</label>
           <input
             type="email"
             id="email"
             name="email"
-            onChange={(e) => setEmail(e.target.value)}
+            readOnly={true}
           />
           <label htmlFor="">Age:</label>
           <input
             type="number"
             id="age"
             name="age"
-            onChange={(e) => setAge(e.target.value)}
+            readOnly={true}
           />
           <label htmlFor="dob">Date of Birth:</label>
           <input
             type="date"
             id="dob"
             name="dob"
-            onChange={(e) => setDob(e.target.value)}
+            readOnly={true}
           />
 
           <label htmlFor="">Experience:</label>
@@ -130,34 +102,30 @@ const UserApplication = () => {
             id="experience"
             name="experience"
             rows="10"
-            onChange={(e) => setExperience(e.target.value)}
+            readOnly={true}
           ></textarea>
           <label htmlFor="">Winning History:</label>
           <textarea
             id="winningHistory"
             name="winningHistory"
             rows="10"
-            onChange={(e) => setWinningHistory(e.target.value)}
+            readOnly={true}
           ></textarea>
-          <label htmlFor="">Location:</label>
+          <label htmlFor="">UserLocation:</label>
           <input
-            type="Location"
-            id="Location"
-            name="Location"
-            onChange={(e) => setLocation(e.target.value)}
+            type="UserLocation"
+            id="UserLocation"
+            name="UserLocation"
+            readOnly={true}
           />
           <label htmlFor="">User Role:</label>
           <input
             type="UserRole"
             id="UserRole"
             name="UserRole"
-            onChange={(e) => setUserRole(e.target.value)}
+            readOnly={true}
           />
           <div class="buttonSet">
-            <button class="submit userAppBTn">
-              <CheckCircleOutlined className="UserApplicationIcon" />
-              Submit
-            </button>
             <button class="approve userAppBTn">
               <UserAddOutlined className="UserApplicationIcon" />
               Accept
