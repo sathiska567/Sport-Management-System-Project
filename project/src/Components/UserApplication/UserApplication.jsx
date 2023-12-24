@@ -12,6 +12,7 @@ import {
 
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
+import { message } from "antd";
 
 
 // Navbar component
@@ -33,13 +34,29 @@ const UserApplication = () => {
   console.log(location);
 
   const navigate = useNavigate();
+  const [getApproval , setGetApproval] = useState();
 
   const handleStatus = async(id,status)=>{
 
-      console.log(id,status);
-      // const res = await axios.post("http://localhost:8080/api/v1/admin/handle-status")
-      // navigate("/dashboad")
+      try {
+
+        // console.log(id,status);
+      const res = await axios.post("http://localhost:8080/api/v1/admin/handle-status" , {id: id , status : status})
       
+      message.success("Your Approval is Successfull")
+      navigate("/UserValidation",{state:{status : status}})
+  
+      setGetApproval(res.data.UpdatedUser.status)
+        
+      } catch (error) {
+         message.error("Error while occure the Handle status function");
+      }
+      
+  }
+
+
+  const handleDissable = async()=>{
+     
   }
 
   // End
@@ -64,7 +81,7 @@ const UserApplication = () => {
         </a> */}
       </div>
       <div className="UserApplicationFormApplication">
-        <form>
+        
           <label htmlFor="">First Name:</label>
           <input
             type="text"
@@ -130,10 +147,22 @@ const UserApplication = () => {
             value={location.state?.record?.UserRole}            
           />
           <div class="buttonSet">
+            {
+             location.state.record.status == "pending" ? 
+              
             <button class="approve userAppBTn" onClick={()=>handleStatus(location.state?.record?._id,"Approve")}>
               <UserAddOutlined className="UserApplicationIcon" />
               Accept
             </button>
+
+              :
+              
+              <button class="approve userAppBTn" disabled={true} onClick={()=>handleDissable()}>
+              <UserAddOutlined className="UserApplicationIcon" />
+              Accepted
+            </button>
+            }
+            
             <button class="pending userAppBTn">
               <ClockCircleOutlined className="UserApplicationIcon" />
               Pending
@@ -143,7 +172,7 @@ const UserApplication = () => {
               Reject
             </button>
           </div>
-        </form>
+       
       </div>
     </div>
     </SideBar>

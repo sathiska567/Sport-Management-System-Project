@@ -36,6 +36,7 @@ const handleStatusController = async(req,res)=>{
          res.status(200).send({
               message:"Status Update Successfull",
               success:true,
+              UpdatedUser
          })
                 
         } catch (error) {

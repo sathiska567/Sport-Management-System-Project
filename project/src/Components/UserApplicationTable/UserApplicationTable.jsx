@@ -24,6 +24,9 @@ const UserApplicationTable = () => {
   const navigate = useNavigate();
   const location = useLocation()
 
+
+  console.log(location);
+
  const ApplyingUser = async()=>{
      
         try {
