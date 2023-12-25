@@ -11,6 +11,8 @@ import {
 } from "@ant-design/icons";
 
 import axios from "axios";
+import { useLocation, useNavigate } from "react-router-dom";
+import { message } from "antd";
 
 
 // Navbar component
@@ -24,144 +26,231 @@ const UserApplication = () => {
   const [dob, setDob] = useState();
   const [experience, setExperience] = useState();
   const [winningHistory, setWinningHistory] = useState();
-  const [location, setLocation] = useState();
+  const [UserLocation, setUserLocation] = useState();
   const [userRole, setUserRole] = useState();
   const [userApplicationData, setUserApplicationData] = useState([]);
-  const Submit = (e) => {
-    e.preventDefault();
-    axios
-      .post("http://localhost:5000/addUserApplicationData", {
-        fname,
-        lname,
-        email,
-        age,
-        dob,
-        experience,
-        winningHistory,
-        location,
-        userRole,
-      })
-      .then((result) => {
-        console.log(result);
-        alert("Data successfully inserted into the database!");
-      })
-      .catch((err) => console.error("Axios Error:", err));
-  };
+
+  const location = useLocation();
+  console.log(location);
+
+  const navigate = useNavigate();
+  const [getApproval , setGetApproval] = useState();
+
+  const handleStatus = async(id,status)=>{
+
+      try {
+
+        // console.log(id,status);
+      const res = await axios.post("http://localhost:8080/api/v1/admin/handle-status" , {id: id , status : status})
+      
+      message.success("Your Approval is Successfull")
+      navigate("/UserValidation",{state:{status : status}})
+  
+      setGetApproval(res.data.UpdatedUser.status)
+        
+      } catch (error) {
+         message.error("Error while occure the Handle status function");
+      }
+      
+  }
+
+
+  const handleUpdatedDetails = async(updatedId)=>{
+       console.log(updatedId);
+  }
+
+
+
   // End
 
   // Get the data from the backend
   // Start
   useEffect(() => {
-    axios
-      .get("http://localhost:5000/getUserApplicationData")
-      .then((result) => {
-        const userApplicationData = result.data; // Assuming result.data contains the user data
-
-        // Update state variables with data from the backend
-        setUserApplicationData(userApplicationData);
-        setFname(userApplicationData.firstName);
-        setLname(userApplicationData.lastName);
-        setEmail(userApplicationData.email);
-        setAge(userApplicationData.age);
-        setDob(userApplicationData.dob);
-        setExperience(userApplicationData.experience);
-        setWinningHistory(userApplicationData.winningHistory);
-        setLocation(userApplicationData.location);
-        setUserRole(userApplicationData.userRole);
-      })
-      .catch((err) => {
-        console.error("Axios Error:", err);
-      });
+    
   }, []);
   // End
 
   // JSX structure for the Navbar component
   return (
     <SideBar>
-    <div className="UserApplicationForm">
+       {
+        location.state.record.status === "pending" ?
+
+        <div className="UserApplicationForm">
+        <div className="UserApplicationFormHeader">
+          <h3>Application</h3>
+          {/* <a href="http://localhost:3000/AdminDashboard/UserValidation">
+            <span className="UserApplicationCloseBtn">
+              <CloseSquareOutlined />
+            </span>
+          </a> */}
+        </div>
+        <div className="UserApplicationFormApplication">
+          <div>
+            <label htmlFor="">First Name:</label>
+  
+            <input
+              type="text"
+              id="firstName"
+              name="firstName"
+              value={location.state?.record?.FirstName}
+              readOnly={true}
+            />
+           
+            <label htmlFor="">Last Name:</label>
+           
+              <input
+              type="text"
+              id="lastName"
+              name="lastName"
+              value={location.state?.record?.LastName}
+              readOnly={true}
+            />
+           
+            <label htmlFor="">Email:</label>
+            
+              <input
+              type="email"
+              id="email"
+              name="email"
+              value={location.state?.record?.Email}
+              readOnly={true}
+            />
+        
+            <label htmlFor="">Age:</label>
+              <input
+              type="number"
+              id="Age"
+              name="Age"
+              value={location.state?.record?.Age}
+              readOnly={true}
+            />
+            
+          
+            <label htmlFor="">Experience:</label>
+            <textarea
+              id="experience"
+              name="experience"
+              rows="10"
+              readOnly={true}
+              value={location.state?.record?.Experience}
+  
+            ></textarea>
+  
+            <label htmlFor="">User Role:</label>
+            <input
+              type="UserRole"
+              id="UserRole"
+              name="UserRole"
+              readOnly={true}
+              value={location.state?.record?.UserRole}            
+            />
+  
+            <div class="buttonSet">
+               <div> 
+              <button class="approve userAppBTn" onClick={()=>handleStatus(location.state?.record?._id,"Approve")}>
+                <UserAddOutlined className="UserApplicationIcon" />
+                Accept
+              </button>
+  
+              <button class="pending userAppBTn">
+                <ClockCircleOutlined className="UserApplicationIcon" />
+                Pending
+              </button>
+              <button class="reject userAppBTn">
+                <CloseCircleOutlined className="UserApplicationIcon" />
+                Reject
+              </button>
+  
+              </div>
+           </div>
+                
+              
+          </div>
+         
+        </div>
+      </div>
+
+      :
+
+
+      <div className="UserApplicationForm">
       <div className="UserApplicationFormHeader">
-        <h3>Application</h3>
-        <a href="http://localhost:3000/AdminDashboard/UserValidation">
+        <h3>Editable Application</h3>
+        {/* <a href="http://localhost:3000/AdminDashboard/UserValidation">
           <span className="UserApplicationCloseBtn">
             <CloseSquareOutlined />
           </span>
-        </a>
+        </a> */}
       </div>
       <div className="UserApplicationFormApplication">
-        <form onSubmit={Submit}>
+        <div>
           <label htmlFor="">First Name:</label>
+
           <input
             type="text"
             id="firstName"
             name="firstName"
-            onChange={(e) => setFname(e.target.value)}
+            value={location.state?.record?.FirstName}
+            readOnly={true}
           />
+         
           <label htmlFor="">Last Name:</label>
-          <input
+         
+            <input
             type="text"
             id="lastName"
             name="lastName"
-            onChange={(e) => setLname(e.target.value)}
+            value={location.state?.record?.LastName}
+            readOnly={true}
           />
+         
           <label htmlFor="">Email:</label>
-          <input
+          
+            <input
             type="email"
             id="email"
             name="email"
-            onChange={(e) => setEmail(e.target.value)}
+            value={location.state?.record?.Email}
+            readOnly={true}
           />
+      
           <label htmlFor="">Age:</label>
-          <input
+            <input
             type="number"
-            id="age"
-            name="age"
-            onChange={(e) => setAge(e.target.value)}
+            id="Age"
+            name="Age"
+            value={location.state?.record?.Age}
+            readOnly={true}
           />
-          <label htmlFor="dob">Date of Birth:</label>
-          <input
-            type="date"
-            id="dob"
-            name="dob"
-            onChange={(e) => setDob(e.target.value)}
-          />
-
+          
+        
           <label htmlFor="">Experience:</label>
           <textarea
             id="experience"
             name="experience"
             rows="10"
-            onChange={(e) => setExperience(e.target.value)}
+            readOnly={true}
+            value={location.state?.record?.Experience}
+
           ></textarea>
-          <label htmlFor="">Winning History:</label>
-          <textarea
-            id="winningHistory"
-            name="winningHistory"
-            rows="10"
-            onChange={(e) => setWinningHistory(e.target.value)}
-          ></textarea>
-          <label htmlFor="">Location:</label>
-          <input
-            type="Location"
-            id="Location"
-            name="Location"
-            onChange={(e) => setLocation(e.target.value)}
-          />
+
           <label htmlFor="">User Role:</label>
           <input
             type="UserRole"
             id="UserRole"
             name="UserRole"
-            onChange={(e) => setUserRole(e.target.value)}
+            readOnly={true}
+            value={location.state?.record?.UserRole}            
           />
+
           <div class="buttonSet">
-            <button class="submit userAppBTn">
-              <CheckCircleOutlined className="UserApplicationIcon" />
-              Submit
-            </button>
-            <button class="approve userAppBTn">
+             <div> 
+            <button class="approve userAppBTn" onClick={()=>handleStatus(location.state?.record?._id,"Approve")}>
               <UserAddOutlined className="UserApplicationIcon" />
               Accept
             </button>
+
             <button class="pending userAppBTn">
               <ClockCircleOutlined className="UserApplicationIcon" />
               Pending
@@ -170,10 +259,18 @@ const UserApplication = () => {
               <CloseCircleOutlined className="UserApplicationIcon" />
               Reject
             </button>
-          </div>
-        </form>
+
+            </div>
+         </div>
+              
+            
+        </div>
+       
       </div>
     </div>
+
+
+       }
     </SideBar>
   );
 };

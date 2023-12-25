@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt');
 // const { registerUser } = require('../services/userService');
 const User = require('../models/userModel');
 const jwt = require("jsonwebtoken");
+const PlayerModel = require('../models/playerModel');
 
 
 // Handle the user Registration
@@ -165,4 +166,29 @@ const getCurrentUserController = async(req,res)=>{
    }
 }
 
-module.exports = { registerController, loginController,getCurrentUserController };
+
+// Apply position controller
+const applyPositionController = async(req,res)=>{
+
+   try {
+      console.log(req.body);
+      const player = await PlayerModel(req.body)
+      await player.save();
+
+      res.status(200).send({
+        message:"Player position apply successfull",
+        success:true,
+        player
+      })
+        
+   } catch (error) {
+        res.status(400).send({
+                message : "Applying position have some error",
+                success : false,
+                error
+        })
+   }
+
+}
+
+module.exports = { registerController, loginController,getCurrentUserController,applyPositionController };

@@ -4,6 +4,7 @@ const express = require("express");
 const cors = require("cors");
 
 const userRoutes = require("./routes/userRoutes");
+const adminRoutes = require("./routes/adminRoutes");
 
 require("./db/mongoDb"); 
 
@@ -13,6 +14,7 @@ app.use(express.json()); // middlewares
 app.use(cors());
 
 app.use("/api/v1/user", userRoutes);
+app.use("/api/v1/admin", adminRoutes);
 
 
 
