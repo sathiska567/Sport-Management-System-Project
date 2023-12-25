@@ -54,4 +54,17 @@ const handleStatusController = async(req,res)=>{
 
 }
 
-module.exports = {getAllDetailsController,handleStatusController}
+
+const updateDetailsController = async(req,res)=>{
+
+        const {updatedId} = req.body
+
+        const positionApplyUserDataUpdated = await PlayerModel.findByIdAndUpdate(updatedId,req.body,{new:true})
+
+         res.status(200).send({
+                message:"Updated is successfull",
+         })
+
+}
+
+module.exports = {getAllDetailsController,handleStatusController,updateDetailsController}

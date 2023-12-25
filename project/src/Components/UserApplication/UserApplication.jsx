@@ -55,9 +55,11 @@ const UserApplication = () => {
   }
 
 
-  const handleDissable = async()=>{
-     
+  const handleUpdatedDetails = async(updatedId)=>{
+       console.log(updatedId);
   }
+
+
 
   // End
 
@@ -71,9 +73,110 @@ const UserApplication = () => {
   // JSX structure for the Navbar component
   return (
     <SideBar>
-    <div className="UserApplicationForm">
+       {
+        location.state.record.status === "pending" ?
+
+        <div className="UserApplicationForm">
+        <div className="UserApplicationFormHeader">
+          <h3>Application</h3>
+          {/* <a href="http://localhost:3000/AdminDashboard/UserValidation">
+            <span className="UserApplicationCloseBtn">
+              <CloseSquareOutlined />
+            </span>
+          </a> */}
+        </div>
+        <div className="UserApplicationFormApplication">
+          <div>
+            <label htmlFor="">First Name:</label>
+  
+            <input
+              type="text"
+              id="firstName"
+              name="firstName"
+              value={location.state?.record?.FirstName}
+              readOnly={true}
+            />
+           
+            <label htmlFor="">Last Name:</label>
+           
+              <input
+              type="text"
+              id="lastName"
+              name="lastName"
+              value={location.state?.record?.LastName}
+              readOnly={true}
+            />
+           
+            <label htmlFor="">Email:</label>
+            
+              <input
+              type="email"
+              id="email"
+              name="email"
+              value={location.state?.record?.Email}
+              readOnly={true}
+            />
+        
+            <label htmlFor="">Age:</label>
+              <input
+              type="number"
+              id="Age"
+              name="Age"
+              value={location.state?.record?.Age}
+              readOnly={true}
+            />
+            
+          
+            <label htmlFor="">Experience:</label>
+            <textarea
+              id="experience"
+              name="experience"
+              rows="10"
+              readOnly={true}
+              value={location.state?.record?.Experience}
+  
+            ></textarea>
+  
+            <label htmlFor="">User Role:</label>
+            <input
+              type="UserRole"
+              id="UserRole"
+              name="UserRole"
+              readOnly={true}
+              value={location.state?.record?.UserRole}            
+            />
+  
+            <div class="buttonSet">
+               <div> 
+              <button class="approve userAppBTn" onClick={()=>handleStatus(location.state?.record?._id,"Approve")}>
+                <UserAddOutlined className="UserApplicationIcon" />
+                Accept
+              </button>
+  
+              <button class="pending userAppBTn">
+                <ClockCircleOutlined className="UserApplicationIcon" />
+                Pending
+              </button>
+              <button class="reject userAppBTn">
+                <CloseCircleOutlined className="UserApplicationIcon" />
+                Reject
+              </button>
+  
+              </div>
+           </div>
+                
+              
+          </div>
+         
+        </div>
+      </div>
+
+      :
+
+
+      <div className="UserApplicationForm">
       <div className="UserApplicationFormHeader">
-        <h3>Application</h3>
+        <h3>Editable Application</h3>
         {/* <a href="http://localhost:3000/AdminDashboard/UserValidation">
           <span className="UserApplicationCloseBtn">
             <CloseSquareOutlined />
@@ -81,8 +184,9 @@ const UserApplication = () => {
         </a> */}
       </div>
       <div className="UserApplicationFormApplication">
-        
+        <div>
           <label htmlFor="">First Name:</label>
+
           <input
             type="text"
             id="firstName"
@@ -90,31 +194,37 @@ const UserApplication = () => {
             value={location.state?.record?.FirstName}
             readOnly={true}
           />
+         
           <label htmlFor="">Last Name:</label>
-          <input
+         
+            <input
             type="text"
             id="lastName"
             name="lastName"
             value={location.state?.record?.LastName}
             readOnly={true}
           />
+         
           <label htmlFor="">Email:</label>
-          <input
+          
+            <input
             type="email"
             id="email"
             name="email"
-            readOnly={true}
             value={location.state?.record?.Email}
-          />
-          <label htmlFor="">Age:</label>
-          <input
-            type="number"
-            id="age"
-            name="age"
             readOnly={true}
-            value={location.state?.record?.Age}
           />
-
+      
+          <label htmlFor="">Age:</label>
+            <input
+            type="number"
+            id="Age"
+            name="Age"
+            value={location.state?.record?.Age}
+            readOnly={true}
+          />
+          
+        
           <label htmlFor="">Experience:</label>
           <textarea
             id="experience"
@@ -124,20 +234,7 @@ const UserApplication = () => {
             value={location.state?.record?.Experience}
 
           ></textarea>
-          {/* <label htmlFor="">Winning History:</label>
-          <textarea
-            id="winningHistory"
-            name="winningHistory"
-            rows="10"
-            readOnly={true}
-          ></textarea> */}
-          {/* <label htmlFor="">UserLocation:</label>
-          <input
-            type="UserLocation"
-            id="UserLocation"
-            name="UserLocation"
-            readOnly={true}
-          /> */}
+
           <label htmlFor="">User Role:</label>
           <input
             type="UserRole"
@@ -146,23 +243,14 @@ const UserApplication = () => {
             readOnly={true}
             value={location.state?.record?.UserRole}            
           />
+
           <div class="buttonSet">
-            {
-             location.state.record.status == "pending" ? 
-              
+             <div> 
             <button class="approve userAppBTn" onClick={()=>handleStatus(location.state?.record?._id,"Approve")}>
               <UserAddOutlined className="UserApplicationIcon" />
               Accept
             </button>
 
-              :
-              
-              <button class="approve userAppBTn" disabled={true} onClick={()=>handleDissable()}>
-              <UserAddOutlined className="UserApplicationIcon" />
-              Accepted
-            </button>
-            }
-            
             <button class="pending userAppBTn">
               <ClockCircleOutlined className="UserApplicationIcon" />
               Pending
@@ -171,10 +259,18 @@ const UserApplication = () => {
               <CloseCircleOutlined className="UserApplicationIcon" />
               Reject
             </button>
-          </div>
+
+            </div>
+         </div>
+              
+            
+        </div>
        
       </div>
     </div>
+
+
+       }
     </SideBar>
   );
 };

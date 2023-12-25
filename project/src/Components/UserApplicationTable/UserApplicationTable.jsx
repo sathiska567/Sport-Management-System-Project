@@ -22,21 +22,18 @@ const UserApplicationTable = () => {
   const [Userlocation, setUserLocation] = useState([]);
   const [userApplicationData, setUserApplicationData] = useState([]);
   const navigate = useNavigate();
-  const location = useLocation()
+  const location = useLocation([])
 
-
-  console.log(location);
 
  const ApplyingUser = async()=>{
      
         try {
 
         const res = await axios.get("http://localhost:8080/api/v1/admin/get-all-details")
-        console.log(res.data.allApplyingDetails);
-        setUserApplicationData(res.data.allApplyingDetails)
+        // console.log(res.data.allApplyingDetails.status);
           
         if(res.data.success){
-          setUserApplicationData(res.data.allApplyingDetails)
+          setUserApplicationData(res.data.allApplyingDetails);
         }
 
         else{
@@ -110,7 +107,6 @@ const UserApplicationTable = () => {
       dataIndex: "uid",
       render: (text, record) => (
         <span>
-          {console.log(record.UserRole)}
           {record.UserRole}
         </span>
       ),
@@ -122,7 +118,6 @@ const UserApplicationTable = () => {
       key: "userName",
       render: (text, record) => (
         <span>
-          {console.log(record.FirstName + " " + record.LastName)}
           {record.FirstName + " " + record.LastName}
         </span>
       ),
@@ -134,7 +129,6 @@ const UserApplicationTable = () => {
       key: "Experience",
       render: (text, record) => (
         <span>
-          {console.log(record.Experience)}
           {record.Experience}
         </span>
       ),
@@ -145,8 +139,10 @@ const UserApplicationTable = () => {
       dataIndex: "Actions",
       key: "Actions",
       render: (text, record) => (
-        <span>
-            <Button
+        <span>   
+              {
+                record.status == "pending" ?
+                <Button
               type="primary"
               style={{
                 backgroundColor: "#05AD1B",
@@ -157,9 +153,29 @@ const UserApplicationTable = () => {
 
               onClick={() => NavigateDetailsPage(record)}
             >
+
+             
               <UserOutlined />
-              View
+              View             
             </Button>
+                :
+                <Button
+              type="primary"
+              style={{
+                backgroundColor: "#05AD1B",
+                color: "#fff",
+                fontSize: "16px",
+                marginRight: "10px",
+              }}
+
+              onClick={() => NavigateDetailsPage(record)}
+            >
+
+             
+              <UserOutlined />
+              Update             
+            </Button>
+              }
           
           <Button
             type="primary"
