@@ -177,3 +177,15 @@ textarea:focus {
   background-color: rgba(217, 77, 52, 0.6); /* Red */
 }
 /* Add more styling as needed */
+
+/* style antd Form */
+.Form_Item{
+  background-color: red;
+  margin: 0;
+  padding: 0;
+  
+}
+
+.Form_Item Input{
+  padding-right: 0px;
+}

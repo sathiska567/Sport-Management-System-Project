@@ -63,6 +63,7 @@ const updateDetailsController = async(req,res)=>{
 
          res.status(200).send({
                 message:"Updated is successfull",
+                success:true
          })
 
 }
