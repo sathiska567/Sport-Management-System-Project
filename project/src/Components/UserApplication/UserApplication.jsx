@@ -246,18 +246,18 @@ const UserApplication = () => {
 
           <div class="buttonSet">
              <div> 
-            <button class="approve userAppBTn" onClick={()=>handleStatus(location.state?.record?._id,"Approve")}>
+            <button class="approve userAppBTn" onClick={()=>handleUpdatedDetails(location.state?.record?._id)}>
               <UserAddOutlined className="UserApplicationIcon" />
-              Accept
+              Update
             </button>
 
-            <button class="pending userAppBTn">
+            <button class="pending userAppBTn" disabled>
               <ClockCircleOutlined className="UserApplicationIcon" />
-              Pending
+              Button is dissable
             </button>
-            <button class="reject userAppBTn">
+            <button class="reject userAppBTn" disabled>
               <CloseCircleOutlined className="UserApplicationIcon" />
-              Reject
+              Button is dissable
             </button>
 
             </div>
