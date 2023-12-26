@@ -101,7 +101,7 @@ const UserApplicationTable = () => {
             padding: 24,
             minHeight: 280,
             height: "100%",
-            background: "#E9F9FF",
+            background: "whitesmoke",
           }}
         >
           {/* Search section */}
