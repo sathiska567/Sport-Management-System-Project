@@ -4,11 +4,11 @@ import UserApplication from "./Components/UserApplication/UserApplication.jsx";
 import UserApplicationTable from "./Components/UserApplicationTable/UserApplicationTable.jsx";
 import StatCards from "./Components/StatCard/StatCards.jsx";
 import Register from "./Pages/user/Register.jsx";
-import Login from "./Pages/user/Login.jsx";
 import ForgotPassword from "./Pages/user/ForgotPass.jsx";
 import OTPPage from "./Pages/user/Otp.jsx"
 import ResetPassword from "./Pages/user/ResetPass.jsx"
 import ApplyPosition from "./Components/ApplyPosition/ApplyPosition.jsx";
+import NewLogin from "./Components/Login/Login.jsx"
 
 
 
@@ -16,8 +16,6 @@ function App() {
 
   const isLoggedIn = window.localStorage.getItem('isLoggedIn');
   console.log(isLoggedIn, 'login');
-
-
 
   return (
     <BrowserRouter>
@@ -28,10 +26,17 @@ function App() {
       element={<Register />} 
       />
 
-      <Route 
+      {/* <Route 
       path="/" 
       element={<Login />} 
+      /> */}
+
+      <Route 
+      path="/" 
+      element={<NewLogin />} 
       />
+
+      
 
       <Route 
       path='/forgot-password' 
