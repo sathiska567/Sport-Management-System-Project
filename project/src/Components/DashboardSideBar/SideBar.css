@@ -5,16 +5,16 @@ body {
 }
 
 .ant-layout-sider-children {
-  background-color: #022c3b;
+  background-color: #15295E;
 }
 
 .welcome {
-  color: #e0f7ff;
+  color: white;
   font-size: 18px;
   text-align: center;
   height: 51px;
-  background-color: #022c3b;
-  border-bottom: 1px solid #e0f7ff;
+  background-color: #15295E;
+  border-bottom: 1px solid white;
   margin-bottom: 15px;
   display: flex;
   justify-content: center;
@@ -27,29 +27,29 @@ body {
 
 .ant-layout-header {
   padding: 0;
-  background-color: #022c3b;
+  background-color: #15295E;
 }
 
 .ant-menu-item {
-  color: #e0f7ff;
-  background-color: #022c3b;
+  color: white;
+  background-color: #15295E;
 }
 
 .trigger-button {
   border-radius: 0px;
-  color: #022c3b;
-  background-color: #e0f7ff;
+  color: #15295E;
+  background-color: white;
 }
 
 .trigger-button:hover {
   border-radius: 0px;
-  color: #022c3b;
-  background-color: #e0f7ff;
+  color: #15295E;
+  background-color: white;
 }
 
 .title {
   position: relative;
-  color: #e0f7ff;
+  color: white;
   font-size: 18px;
   font-weight: 500;
   margin-left: 20px;
@@ -73,7 +73,7 @@ body {
 }
 
 .ant-menu {
-  background-color: #022c3b;
+  background-color: #15295E;
 }
 .ant-menu-root {
 }
@@ -83,7 +83,7 @@ body {
 }
 
 .title_bar {
-  color: #e0f7ff;
+  color: white;
   font-size: 16px;
   font-weight: 500;
   background-color: #1e5c72;
@@ -108,7 +108,7 @@ body {
   align-items: center;
   height:64px;
   font-size: 16px;
-  color: #e0f7ff;
+  color: white;
   margin-right: 30px;
   background-color: #1e5c72;
   width: 100%;
@@ -124,6 +124,6 @@ right: 30px;
   position: fixed;
   right: 80px;
   font-size: 22px;
-  color: #e0f7ff;
+  color: white;
   cursor: pointer;
 }
