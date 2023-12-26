@@ -12,7 +12,7 @@ import {
 
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
-import { message } from "antd";
+import { message,Form } from "antd";
 
 
 // Navbar component
@@ -35,6 +35,10 @@ const UserApplication = () => {
 
   const navigate = useNavigate();
   const [getApproval , setGetApproval] = useState();
+  const [FirstName,setFirstName] = useState();
+  const [LastName,setLastName] = useState();
+  const [newEmail,setNewEmail] = useState();
+  const [newAge,setNewAge] = useState();
 
   const handleStatus = async(id,status)=>{
 
@@ -56,8 +60,64 @@ const UserApplication = () => {
 
 
   const handleUpdatedDetails = async(updatedId)=>{
-       console.log(updatedId);
+
+
+       try {
+
+      const UpdatedUser = await axios.patch("http://localhost:8080/api/v1/admin/update-details",{updatedId:updatedId ,FirstName : FirstName , LastName : LastName, Email:newEmail , Age:newAge})
+      console.log(UpdatedUser.data.success);
+      if(UpdatedUser.data.success){
+
+        message.success("Successfull Updated")
+        navigate("/UserValidation")
+
+      }
+        
+       } catch (error) {
+
+        message.error("Error while occuring updated section")
+        
+       }
+
+
   }
+
+  const handlePending = async()=>{
+     try {
+      message.success("Pending added successfull")
+      navigate("/UserValidation")
+      
+     } catch (error) {
+       message.error(error)
+     }
+  }
+
+
+const handleReject = async (deletedUserId) => {
+  try {
+    console.log(deletedUserId);
+
+    const deletedUserResponse = await axios.delete("http://localhost:8080/api/v1/admin/delete-details", {
+      data: { deletedUserId: deletedUserId },
+    });
+
+    console.log(deletedUserResponse);
+
+    if (deletedUserResponse.data.success) {
+      message.success(deletedUserResponse.data.message);
+      navigate("/UserValidation")
+    }
+   
+    else{
+      message.error(deletedUserResponse.data.message);
+    }
+
+
+  } catch (error) {
+    // Handle error
+    console.error(error);
+  }
+};
 
 
 
@@ -153,11 +213,11 @@ const UserApplication = () => {
                 Accept
               </button>
   
-              <button class="pending userAppBTn">
+              <button class="pending userAppBTn" onClick={()=>handlePending()}>
                 <ClockCircleOutlined className="UserApplicationIcon" />
                 Pending
               </button>
-              <button class="reject userAppBTn">
+              <button class="reject userAppBTn" onClick={()=>handleReject(location.state?.record?._id)}>
                 <CloseCircleOutlined className="UserApplicationIcon" />
                 Reject
               </button>
@@ -169,11 +229,11 @@ const UserApplication = () => {
           </div>
          
         </div>
-      </div>
+        </div>
 
       :
 
-
+    <Form layout='verticle' onFinish={(values) => handleUpdatedDetails(location.state?.record?._id, values)}>
       <div className="UserApplicationForm">
       <div className="UserApplicationFormHeader">
         <h3>Editable Application</h3>
@@ -183,17 +243,19 @@ const UserApplication = () => {
           </span>
         </a> */}
       </div>
+
       <div className="UserApplicationFormApplication">
         <div>
           <label htmlFor="">First Name:</label>
 
           <input
-            type="text"
-            id="firstName"
-            name="firstName"
-            value={location.state?.record?.FirstName}
-            readOnly={true}
-          />
+             type="text"
+             id="firstName"
+             name="firstName"
+            //  value={firstName} // Assuming firstName is the state variable
+             onChange={(e) => setFirstName(e.target.value)}
+           />
+
          
           <label htmlFor="">Last Name:</label>
          
@@ -201,8 +263,8 @@ const UserApplication = () => {
             type="text"
             id="lastName"
             name="lastName"
-            value={location.state?.record?.LastName}
-            readOnly={true}
+            onChange={(e) => setLastName(e.target.value)}
+            
           />
          
           <label htmlFor="">Email:</label>
@@ -211,8 +273,7 @@ const UserApplication = () => {
             type="email"
             id="email"
             name="email"
-            value={location.state?.record?.Email}
-            readOnly={true}
+            onChange={(e) => setNewEmail(e.target.value)}
           />
       
           <label htmlFor="">Age:</label>
@@ -220,8 +281,7 @@ const UserApplication = () => {
             type="number"
             id="Age"
             name="Age"
-            value={location.state?.record?.Age}
-            readOnly={true}
+            onChange={(e) => setNewAge(e.target.value)}
           />
           
         
@@ -262,12 +322,16 @@ const UserApplication = () => {
 
             </div>
          </div>
-              
             
         </div>
+
+      
        
       </div>
     </div>
+
+    </Form>
+
 
 
        }

@@ -9,18 +9,22 @@ const App = () => {
         const [componentSize, setComponentSize] = useState('default');
         const navigate = useNavigate();
 
-        const onFormLayoutChange = ({ size }) => {
+const onFormLayoutChange = ({ size }) => {
                 setComponentSize(size);
         };
 
 
-        // handle position registration
-        const handleSubmit = async (values) => {
-                console.log(values);
+// handle position registration
+const handleSubmit = async (values) => {
+                try {
 
-                const res = await axios.post("http://localhost:8080/api/v1/user/apply-position", values)
-                console.log(res);
+               const res = await axios.post("http://localhost:8080/api/v1/user/apply-position", values)
+               message.success("Position Applying successfull")
                 navigate("/dashboad")
+                  
+                } catch (error) {
+                  message.error(error);
+                }
 
         }
 

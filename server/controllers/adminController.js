@@ -63,8 +63,35 @@ const updateDetailsController = async(req,res)=>{
 
          res.status(200).send({
                 message:"Updated is successfull",
+                success:true
          })
 
 }
 
-module.exports = {getAllDetailsController,handleStatusController,updateDetailsController}
+
+const deleteDetailsController = async(req,res)=>{
+
+        try {
+
+         const {deletedUserId} = req.body;
+         console.log(deletedUserId);
+         const deletedUser = await PlayerModel.findByIdAndDelete(deletedUserId)
+
+         res.status(200).send({
+                message:"Deleted successfull",
+                success : true
+         })
+                
+        } catch (error) {
+
+        res.status(200).send({
+                message:"Deleted Controller have error",
+                success : flase
+          })
+                
+        }
+
+
+}
+
+module.exports = {getAllDetailsController,handleStatusController,updateDetailsController,deleteDetailsController}
