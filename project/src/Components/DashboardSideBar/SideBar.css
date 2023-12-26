@@ -36,7 +36,8 @@ body {
 }
 
 .trigger-button {
-  border-radius: 0px;
+position: fixed;
+top: -76px;
   color: #15295E;
   background-color: white;
 }
