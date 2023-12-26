@@ -1,4 +1,5 @@
 const PlayerModel = require("../models/playerModel")
+const User = require("../models/userModel")
 
 
 const getAllDetailsController = async(req,res)=>{
@@ -72,11 +73,23 @@ const updateDetailsController = async(req,res)=>{
 const deleteDetailsController = async(req,res)=>{
 
         try {
+        
+        //  handle delete notification
+        const deletedNotification = await User.findOne({ isAdmin: true });
+
+    if (deletedNotification) {
+        const notification = deletedNotification.notification;
+        // Assuming notification is a number, decrement it
+
+        notification.pop();
+
+       await deletedNotification.save();
+ 
+    }
 
          const {deletedUserId} = req.body;
          console.log(deletedUserId);
          const deletedUser = await PlayerModel.findByIdAndDelete(deletedUserId)
-
          res.status(200).send({
                 message:"Deleted successfull",
                 success : true
@@ -86,7 +99,7 @@ const deleteDetailsController = async(req,res)=>{
 
         res.status(200).send({
                 message:"Deleted Controller have error",
-                success : flase
+                success : false
           })
                 
         }
