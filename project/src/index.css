@@ -1,3 +1,8 @@
+body {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
 .dash{
   background-color: #041f38;
 }
