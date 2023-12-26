@@ -26,9 +26,11 @@ const StatCards = () => {
         console.error("Error fetching user data:", error);
       });
   }, []);
-
+  
   // JSX structure for the Navbar component
   return (
+
+    
     <SideBar>
       <Layout className="ant-layout-sider-children">
         {/* Main content layout */}
@@ -41,7 +43,7 @@ const StatCards = () => {
               padding: 24,
               minHeight: 280,
               height: "100%",
-              background: "#E9F9FF",
+              background: "white",
             }}
           >
             {/* Stats section */}
@@ -51,6 +53,7 @@ const StatCards = () => {
                 <div className="sItem">
                   <Col span={12}>
                     <Statistic
+                      className="statistic"
                       title="Finished Events"
                       value={456}
                       formatter={formatter}

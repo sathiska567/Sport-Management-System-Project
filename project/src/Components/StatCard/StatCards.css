@@ -22,10 +22,8 @@ display: flex;
 .sItem {
   width : 350px;
   height: 170px;
-  background-color: #1e5c72;
-  border-radius: 40px;
-  background-color: #D6F5FF;
-  box-shadow: 0 2px 2px #1e5c72;
+  background-color: white;
+  box-shadow: 1.5px 2px 2px 1.5px rgba(0, 0, 0, 0.17);
 }
 
 .ant-col  {
@@ -36,7 +34,7 @@ display: flex;
 
 .stats .ant-statistic-title {
   font-size: 22px;
-  color: #022C3B;
+  color: #6C6C6C;
   margin-bottom: 0px;
 }
 
@@ -46,3 +44,5 @@ display: flex;
   font-weight: 500;
 
 }
+
+
