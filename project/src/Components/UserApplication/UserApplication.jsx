@@ -185,6 +185,15 @@ const handleReject = async (deletedUserId) => {
               value={location.state?.record?.Age}
               readOnly={true}
             />
+
+            <label htmlFor="">Distric:</label>
+              <input
+              type="text"
+              id="distric"
+              name="distric"
+              value={location.state?.record?.Distric}
+              readOnly={true}
+            />
             
           
             <label htmlFor="">Experience:</label>
@@ -281,6 +290,14 @@ const handleReject = async (deletedUserId) => {
             type="number"
             id="Age"
             name="Age"
+            onChange={(e) => setNewAge(e.target.value)}
+          />
+
+          <label htmlFor="">Distric:</label>
+            <input
+            type="text"
+            id="distric"
+            name="Distric"
             onChange={(e) => setNewAge(e.target.value)}
           />
           

@@ -9,17 +9,6 @@ const PlayerModel = require('../models/playerModel');
 
 // Handle the user Registration
 const registerController = async (req, res) => {
-  // try {
-  //   const { username, email, password } = req.body;
-
-  //   // Register the user (including checking for existence and password hashing)
-  //   await registerUser({ username, email, password });
-
-  //   res.status(201).json({ message: 'User registered successfully' });
-  // } catch (error) {
-  //   console.error('Registration error:', error.message);
-  //   res.status(400).json({ message: error.message });
-  // }
 
   try {
     const exisitingUser = await User.findOne({ email: req.body.email });
@@ -43,7 +32,7 @@ const registerController = async (req, res) => {
     await newUser.save();
 
     // handle successfull message
-    res.status(201).send({
+     res.status(201).send({
             message: "Register Sucessfully",
             success: true,
 
@@ -174,6 +163,21 @@ const applyPositionController = async(req,res)=>{
       console.log(req.body);
       const player = await PlayerModel(req.body)
       await player.save();
+
+     // handle notification
+      const adminUser = await User.findOne({isAdmin:true})
+      const notification = adminUser.notification;
+      
+      notification.push({
+        type: "apply-position-request",
+        message: "Notification section updated",
+        data: {
+         RequestedId: player._id,
+         name: player.FirstName + " " + player.LastName
+        //  onClickPath: "/admin/docotrs",
+      },
+      })
+      adminUser.save()
 
       res.status(200).send({
         message:"Player position apply successfull",

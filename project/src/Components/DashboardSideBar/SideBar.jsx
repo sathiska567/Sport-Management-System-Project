@@ -25,6 +25,7 @@ const SideBar = ({ children }) => {
   // set name
   const [currentUserName , setCurrentUsername] = useState()
   const [isAdmin,setIsAdmin] = useState(false)
+  const [notificationCount , setNotificationCount] = useState(0)
 
   // Event handlers for mouse hover events
   const handleHoverButton1 = () => {
@@ -62,7 +63,7 @@ const SideBar = ({ children }) => {
 
 
 
-//   // GET CURRENT USER DATA
+//    GET CURRENT USER DATA
  const currentUserData = async()=>{
      try {
 
@@ -74,9 +75,10 @@ const SideBar = ({ children }) => {
      }
        )
 
-     console.log(res.data.user.isAdmin);
+     console.log(res.data.user.notification);
      setCurrentUsername(res.data.user.username);
      setIsAdmin(res.data.user.isAdmin)
+     setNotificationCount(res.data.user.notification.length)
       
      } catch (error) {
 
@@ -86,8 +88,9 @@ const SideBar = ({ children }) => {
    
  }
 
-  // URL for the profile avatar
-  const url =
+
+// URL for the profile avatar
+const url =
     "https://static.vecteezy.com/system/resources/previews/009/383/461/non_2x/man-face-clipart-design-illustration-free-png.png";
 
   // Event handler for trigger button click
@@ -129,11 +132,13 @@ const SideBar = ({ children }) => {
 
   // JSX structure for the Navbar component
   return (
+    
     <>
-
       {
         isAdmin ?
-        <Layout className="ant-layout-sider-children">
+
+      <Layout className="ant-layout-sider-children">
+        
         {/* Sidebar component */}
         <Sider
           trigger={null}
@@ -231,7 +236,7 @@ const SideBar = ({ children }) => {
               <a href="www">
                 <Space size={24}>
                   {/* Notification badge */}
-                  <Badge count={5}>
+                  <Badge count={notificationCount}>
                     <Avatar shape="square" icon={<UserOutlined />} />
                   </Badge>
                 </Space>
@@ -256,7 +261,7 @@ const SideBar = ({ children }) => {
 
         :
 
-    <Layout className="ant-layout-sider-children">
+      <Layout className="ant-layout-sider-children">
       {/* Sidebar component */}
       <Sider
         trigger={null}
@@ -375,7 +380,7 @@ const SideBar = ({ children }) => {
         {/* Main content */}
         {children}
       </Layout>
-    </Layout>
+      </Layout>
 
     
       }

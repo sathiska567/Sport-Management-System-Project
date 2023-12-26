@@ -161,6 +161,17 @@ const UserApplicationTable = () => {
     },
 
     {
+      title: "Distric",
+      dataIndex: "Distric",
+      key: "Distric",
+      render: (text, record) => (
+        <span>
+          {record.Distric}
+        </span>
+      ),
+    },
+
+    {
       title: "Actions",
       dataIndex: "Actions",
       key: "Actions",

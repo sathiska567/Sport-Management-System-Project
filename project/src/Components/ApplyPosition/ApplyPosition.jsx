@@ -75,6 +75,11 @@ return (
                      <Input type='text' placeholder='Enter your Experience' />
                   </Form.Item>
                </Col>
+               <Col xs={24} md={24} lg={8}>
+                  <Form.Item label='Distric' name='Distric' required rules={[{ required: true }]}>
+                     <Input type='text' placeholder='Enter your Dictric' />
+                  </Form.Item>
+               </Col>
 
                <Col xs={24} md={24} lg={8}>
                   <button className="btn btn-primary form-btn" type='submit'>

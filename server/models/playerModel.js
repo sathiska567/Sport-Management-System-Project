@@ -29,6 +29,11 @@ LastName : {
         require : [true,"Experience is required"]
   },
 
+  Distric:{
+        type :String,
+        require : [true,"Distric is required"]
+  },
+
   UserRole:{
         type :String,
         require : [true,"UserRole is required"]
