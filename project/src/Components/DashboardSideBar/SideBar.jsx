@@ -32,7 +32,7 @@ const SideBar = ({ children }) => {
   // set name
   const [currentUserName, setCurrentUsername] = useState();
   const [isAdmin, setIsAdmin] = useState(false);
-  const [positionNotification,setPositionNotification] = useState(0)
+  const [positionNotification,setPositionNotification] = useState()
 
   // Event handlers for mouse hover events
   const handleHoverButton1 = () => {
@@ -80,10 +80,12 @@ const SideBar = ({ children }) => {
         }
       );
 
-      console.log(res.data.user.isAdmin);
+      console.log(res.data.user.notification[0]);
+
+        setPositionNotification(res.data.user.notification.length)
+
       setCurrentUsername(res.data.user.username);
       setIsAdmin(res.data.user.isAdmin);
-      setPositionNotification(res.data.user.notification.length)
 
     } catch (error) {
       message.error("Error have inside the Get currentUserData function");
@@ -236,7 +238,7 @@ const SideBar = ({ children }) => {
                 Sports Management System
               </span>
               <span style={{ color: "white" }} className="notificaiton">
-                <a href="www">
+                <a href="/UserValidation">
                   <Space size={24}>
                     {/* Notification badge */}
                     <Badge count={positionNotification}>

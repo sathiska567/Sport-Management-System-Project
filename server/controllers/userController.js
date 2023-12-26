@@ -9,17 +9,6 @@ const PlayerModel = require('../models/playerModel');
 
 // Handle the user Registration
 const registerController = async (req, res) => {
-  // try {
-  //   const { username, email, password } = req.body;
-
-  //   // Register the user (including checking for existence and password hashing)
-  //   await registerUser({ username, email, password });
-
-  //   res.status(201).json({ message: 'User registered successfully' });
-  // } catch (error) {
-  //   console.error('Registration error:', error.message);
-  //   res.status(400).json({ message: error.message });
-  // }
 
   try {
     const exisitingUser = await User.findOne({ email: req.body.email });
