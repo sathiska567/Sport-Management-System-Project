@@ -88,9 +88,37 @@ const UserApplication = () => {
       navigate("/UserValidation")
       
      } catch (error) {
-      
+       message.error(error)
      }
   }
+
+
+const handleReject = async (deletedUserId) => {
+  try {
+    console.log(deletedUserId);
+
+    const deletedUserResponse = await axios.delete("http://localhost:8080/api/v1/admin/delete-details", {
+      data: { deletedUserId: deletedUserId },
+    });
+
+    console.log(deletedUserResponse);
+
+    if (deletedUserResponse.data.success) {
+      message.success(deletedUserResponse.data.message);
+      navigate("/UserValidation")
+    }
+   
+    else{
+      message.error(deletedUserResponse.data.message);
+    }
+
+
+  } catch (error) {
+    // Handle error
+    console.error(error);
+  }
+};
+
 
 
   // End
@@ -189,7 +217,7 @@ const UserApplication = () => {
                 <ClockCircleOutlined className="UserApplicationIcon" />
                 Pending
               </button>
-              <button class="reject userAppBTn">
+              <button class="reject userAppBTn" onClick={()=>handleReject(location.state?.record?._id)}>
                 <CloseCircleOutlined className="UserApplicationIcon" />
                 Reject
               </button>

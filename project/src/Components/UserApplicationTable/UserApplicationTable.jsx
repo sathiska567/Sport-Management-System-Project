@@ -55,6 +55,32 @@ const UserApplicationTable = () => {
  }
 
 
+ const handleDelete = async(record)=>{
+     console.log(record._id);
+
+     try {
+
+      const deletedUser = await axios.delete("http://localhost:8080/api/v1/admin/delete-details",{
+       data : {deletedUserId :record._id}
+     })
+
+     if(deletedUser.data.success){
+        message.success(deletedUser.data.message)
+        window.location.reload();
+        navigate("/UserValidation")
+     }
+      
+     } catch (error) {
+
+        message.error("Error while occuring handle delete section")
+      
+     }
+ }
+
+
+ 
+
+
   useEffect(() => {
     ApplyingUser();
   }, []);
@@ -184,6 +210,7 @@ const UserApplicationTable = () => {
               color: "#fff",
               fontSize: "16px",
             }}
+            onClick={() => handleDelete(record)}
           >
             <DeleteOutlined />
             Delete

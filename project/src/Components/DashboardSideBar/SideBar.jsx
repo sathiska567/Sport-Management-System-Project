@@ -129,6 +129,133 @@ const SideBar = ({ children }) => {
 
   // JSX structure for the Navbar component
   return (
+    <>
+
+      {
+        isAdmin ?
+        <Layout className="ant-layout-sider-children">
+        {/* Sidebar component */}
+        <Sider
+          trigger={null}
+          collapsible
+          collapsed={collapsed}
+          collapsedWidth={100} // Adjusted collapsed width
+        >
+          {/* Profile section */}
+          <div className="profile">
+            {collapsed ? (
+              <Avatar
+                className="profileAvatar"
+                src={<img src={userData.avatarUrl} alt="avatar" />}
+              />
+            ) : (
+              <>
+                <Avatar
+                  className="profileAvatar"
+                  src={<img src={url} alt="avatar" />}
+                />
+                <div className="Username">{currentUserName}
+                 
+                </div>
+              </>
+            )}
+          </div>
+  
+          {/* Other sections of the sidebar, such as menu items */}
+          <div className="welcome">Welcome</div>
+          <div className="demo-logo-vertical" />
+          <Menu
+            onSelect={handleMenuItemClick}
+            selectedKeys={[selectedMenuItem]}
+            theme="dark"
+            mode="inline"
+            defaultSelectedKeys={["1"]}
+            style={{
+              backgroundColor: "#022C3B",
+              width: "100%",
+              height: "82.5vh",
+              fontSize: "16px",
+            }}
+          >
+            <Menu.Item key="1" icon={<DashboardOutlined />}>
+              <Link to="/dashboad">Dashboard</Link>
+            </Menu.Item>
+            <Menu.Item key="2" icon={<PendingActions />}>
+              <Link to="/UserValidation">User Validation</Link>
+            </Menu.Item>
+            <Menu.Item key="3" icon={<ManageUser />}>
+              <Link to="/Manage">Notification</Link>
+            </Menu.Item>
+            <Menu.Item
+              key="4"
+              icon={<PoweroffOutlined />}
+              style={{
+                position: "absolute",
+                bottom: 0,
+                backgroundColor: isHoveredButton1 ? "#D94D34" : "#022C3B",
+                color: isHoveredButton1 ? "#E0F7FF" : "#E0F7FF",
+                fontSize: "16px",
+              }}
+              onMouseEnter={handleHoverButton1}
+              onMouseLeave={handleMouseLeaveButton1}
+            >
+              <Link to="/LogOff">Log Off</Link>
+            </Menu.Item>
+                     
+          </Menu>
+        </Sider>
+  
+        {/* Main content layout */}
+        <Layout>
+          {/* Header component */}
+          <Header className="ant-layout-header">
+            {/* Trigger button */}
+            <Button
+              className="trigger-button ant-btn"
+              type="text"
+              icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+              onClick={handleTriggerButtonClick}
+              style={{
+                fontSize: "16px",
+                width: 64,
+                height: 64,
+                backgroundColor: isHoveredButton2 ? "#022C3B" : "#E0F7FF",
+                color: isHoveredButton2 ? "#E0F7FF" : "#022C3B",
+              }}
+              onMouseEnter={handleHoverButton2}
+              onMouseLeave={handleMouseLeaveButton2}
+            />
+            {/* Title and notification sections */}
+            <span className="title">Sports Management System</span>
+            <span className="notificaiton">
+              <a href="www">
+                <Space size={24}>
+                  {/* Notification badge */}
+                  <Badge count={5}>
+                    <Avatar shape="square" icon={<UserOutlined />} />
+                  </Badge>
+                </Space>
+              </a>
+            </span>
+            {/* Email communication section */}
+            <a href="www">
+              <span className="emailCommunication">
+                <MailOutlined />
+              </span>
+            </a>
+          </Header>
+  
+          {/* Title bar displaying the selected menu item */}
+          <div className="title_bar">
+            <Text className="menuTitle" selectedMenuItem={selectedMenuItem} />
+          </div>
+          {/* Main content */}
+          {children}
+        </Layout>
+      </Layout>
+
+        :
+
     <Layout className="ant-layout-sider-children">
       {/* Sidebar component */}
       <Sider
@@ -173,42 +300,8 @@ const SideBar = ({ children }) => {
             fontSize: "16px",
           }}
         >
-
-
-         {isAdmin ? 
-         
-         <div>
           <Menu.Item key="1" icon={<DashboardOutlined />}>
-            <Link to="/">Dashboard</Link>
-          </Menu.Item>
-          <Menu.Item key="2" icon={<PendingActions />}>
-            <Link to="/UserValidation">User Validation</Link>
-          </Menu.Item>
-          <Menu.Item key="3" icon={<ManageUser />}>
-            <Link to="/Manage">Notification</Link>
-          </Menu.Item>
-          <Menu.Item
-            key="4"
-            icon={<PoweroffOutlined />}
-            style={{
-              position: "absolute",
-              bottom: 0,
-              backgroundColor: isHoveredButton1 ? "#D94D34" : "#022C3B",
-              color: isHoveredButton1 ? "#E0F7FF" : "#E0F7FF",
-              fontSize: "16px",
-            }}
-            onMouseEnter={handleHoverButton1}
-            onMouseLeave={handleMouseLeaveButton1}
-          >
-            <Link to="/LogOff">Log Off</Link>
-          </Menu.Item>
-         </div>
-         
-         : 
-         
-         <div>
-          <Menu.Item key="1" icon={<DashboardOutlined />}>
-            <Link to="/">Dashboard</Link>
+            <Link to="/dashboad">Dashboard</Link>
           </Menu.Item>
           <Menu.Item key="2" icon={<PendingActions />}>
             <Link to="/apply-position">Apply Position</Link>
@@ -231,11 +324,7 @@ const SideBar = ({ children }) => {
           >
             <Link to="/LogOff">Log Off</Link>
           </Menu.Item>
-         </div>
-         
-         
-         }
-          
+                   
         </Menu>
       </Sider>
 
@@ -265,9 +354,9 @@ const SideBar = ({ children }) => {
             <a href="www">
               <Space size={24}>
                 {/* Notification badge */}
-                <Badge count={5}>
+                {/* <Badge count={5}>
                   <Avatar shape="square" icon={<UserOutlined />} />
-                </Badge>
+                </Badge> */}
               </Space>
             </a>
           </span>
@@ -287,6 +376,13 @@ const SideBar = ({ children }) => {
         {children}
       </Layout>
     </Layout>
+
+    
+      }
+    
+    
+    
+    </>
   );
 };
 
