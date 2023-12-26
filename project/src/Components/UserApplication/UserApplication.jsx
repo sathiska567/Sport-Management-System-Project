@@ -283,6 +283,14 @@ const handleReject = async (deletedUserId) => {
             name="Age"
             onChange={(e) => setNewAge(e.target.value)}
           />
+
+          <label htmlFor="">Distric:</label>
+            <input
+            type="Distric"
+            id="Distric"
+            name="Distric"
+            onChange={(e) => setNewAge(e.target.value)}
+          />
           
         
           <label htmlFor="">Experience:</label>
