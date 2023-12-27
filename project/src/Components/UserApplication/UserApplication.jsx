@@ -39,6 +39,7 @@ const UserApplication = () => {
   const [LastName,setLastName] = useState();
   const [newEmail,setNewEmail] = useState();
   const [newAge,setNewAge] = useState();
+  const [distric,setNewDistric] = useState();
 
   const handleStatus = async(id,status)=>{
 
@@ -64,7 +65,7 @@ const UserApplication = () => {
 
        try {
 
-      const UpdatedUser = await axios.patch("http://localhost:8080/api/v1/admin/update-details",{updatedId:updatedId ,FirstName : FirstName , LastName : LastName, Email:newEmail , Age:newAge})
+      const UpdatedUser = await axios.patch("http://localhost:8080/api/v1/admin/update-details",{updatedId:updatedId ,FirstName : FirstName , LastName : LastName, Email:newEmail , Age:newAge,Distric:distric})
       console.log(UpdatedUser.data.success);
       if(UpdatedUser.data.success){
 
@@ -185,6 +186,15 @@ const handleReject = async (deletedUserId) => {
               value={location.state?.record?.Age}
               readOnly={true}
             />
+
+            <label htmlFor="">Distric:</label>
+              <input
+              type="text"
+              id="Distric"
+              name="Distric"
+              value={location.state?.record?.Distric}
+              readOnly={true}
+            />
             
           
             <label htmlFor="">Experience:</label>
@@ -289,7 +299,7 @@ const handleReject = async (deletedUserId) => {
             type="Distric"
             id="Distric"
             name="Distric"
-            onChange={(e) => setNewAge(e.target.value)}
+            onChange={(e) => setNewDistric(e.target.value)}
           />
           
         
