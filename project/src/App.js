@@ -8,7 +8,10 @@ import ForgotPassword from "./Pages/user/ForgotPass.jsx";
 import OTPPage from "./Pages/user/Otp.jsx"
 import ResetPassword from "./Pages/user/ResetPass.jsx"
 import ApplyPosition from "./Components/ApplyPosition/ApplyPosition.jsx";
-import NewLogin from "./Components/Login/Login.jsx"
+import NewLogin from "./Components/Login/Login.jsx";
+import PlayerProfile from "./Components/PlayerComponents/PlayerProfile.jsx";
+
+
 
 
 
@@ -19,73 +22,35 @@ function App() {
 
   return (
     <BrowserRouter>
-  <Routes>
-      {/* user login and registration */}
-      <Route 
-      path="/register" 
-      element={<Register />} 
-      />
+      <Routes>
+        {/* user login and registration */}
+        <Route path="/register" element={<Register />} />
 
-      {/* <Route 
+        {/* <Route 
       path="/" 
       element={<Login />} 
       /> */}
 
-      <Route 
-      path="/" 
-      element={<NewLogin />} 
-      />
+        <Route path="/" element={<NewLogin />} />
 
-      
+        <Route path="/forgot-password" element={<ForgotPassword />} />
 
-      <Route 
-      path='/forgot-password' 
-      element={<ForgotPassword />} 
-      />
+        <Route path="/otp-reset-pass" element={<OTPPage />} />
 
-      <Route 
-      path='/otp-reset-pass' 
-      element={<OTPPage />} 
-      />
+        <Route path="/reset-pass" element={<ResetPassword />} />
 
-      <Route 
-      path='/reset-pass' 
-      element={<ResetPassword />} 
-      />
+        {/* Apply position routes */}
+        <Route path="/apply-position" element={<ApplyPosition />} />
 
+        {/* after login routes */}
+        <Route path="/dashboad" element={<StatCards />} />
 
-
-    {/* Apply position routes */}
-    <Route 
-     path="/apply-position"
-     element={<ApplyPosition/>} 
-     />
-
-
-    {/* after login routes */}
-        <Route
-          path="/dashboad"
-          element={<StatCards />}
-        />
-
-        <Route
-          path="/UserValidation"
-          element={<UserApplicationTable />}
-        />
+        <Route path="/UserValidation" element={<UserApplicationTable />} />
         <Route
           // Need to change after add table of application
           path="/Applying-Details"
           element={<UserApplication />}
         />
-
-
-
-
-
-
-
-
-
       </Routes>
     </BrowserRouter>
 

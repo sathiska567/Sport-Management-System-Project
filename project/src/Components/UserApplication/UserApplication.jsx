@@ -12,8 +12,7 @@ import {
 
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
-import { message,Form } from "antd";
-
+import { message, Form } from "antd";
 
 // Navbar component
 const UserApplication = () => {
@@ -34,325 +33,314 @@ const UserApplication = () => {
   console.log(location);
 
   const navigate = useNavigate();
-  const [getApproval , setGetApproval] = useState();
-  const [FirstName,setFirstName] = useState();
-  const [LastName,setLastName] = useState();
-  const [newEmail,setNewEmail] = useState();
-  const [newAge,setNewAge] = useState();
-  const [distric,setNewDistric] = useState();
+  const [getApproval, setGetApproval] = useState();
+  const [FirstName, setFirstName] = useState();
+  const [LastName, setLastName] = useState();
+  const [newEmail, setNewEmail] = useState();
+  const [newAge, setNewAge] = useState();
+  const [distric, setNewDistric] = useState();
 
-  const handleStatus = async(id,status)=>{
+  const handleStatus = async (id, status) => {
+    try {
+      // console.log(id,status);
+      const res = await axios.post(
+        "http://localhost:8080/api/v1/admin/handle-status",
+        { id: id, status: status }
+      );
 
-      try {
+      message.success("Your Approval is Successfull");
+      navigate("/UserValidation", { state: { status: status } });
 
-        // console.log(id,status);
-      const res = await axios.post("http://localhost:8080/api/v1/admin/handle-status" , {id: id , status : status})
-      
-      message.success("Your Approval is Successfull")
-      navigate("/UserValidation",{state:{status : status}})
-  
-      setGetApproval(res.data.UpdatedUser.status)
-        
-      } catch (error) {
-         message.error("Error while occure the Handle status function");
-      }
-      
-  }
+      setGetApproval(res.data.UpdatedUser.status);
+    } catch (error) {
+      message.error("Error while occure the Handle status function");
+    }
+  };
 
-
-  const handleUpdatedDetails = async(updatedId)=>{
-
-
-       try {
-
-      const UpdatedUser = await axios.patch("http://localhost:8080/api/v1/admin/update-details",{updatedId:updatedId ,FirstName : FirstName , LastName : LastName, Email:newEmail , Age:newAge,Distric:distric})
+  const handleUpdatedDetails = async (updatedId) => {
+    try {
+      const UpdatedUser = await axios.patch(
+        "http://localhost:8080/api/v1/admin/update-details",
+        {
+          updatedId: updatedId,
+          FirstName: FirstName,
+          LastName: LastName,
+          Email: newEmail,
+          Age: newAge,
+          Distric: distric,
+        }
+      );
       console.log(UpdatedUser.data.success);
-      if(UpdatedUser.data.success){
-
-        message.success("Successfull Updated")
-        navigate("/UserValidation")
-
+      if (UpdatedUser.data.success) {
+        message.success("Successfull Updated");
+        navigate("/UserValidation");
       }
-        
-       } catch (error) {
-
-        message.error("Error while occuring updated section")
-        
-       }
-
-
-  }
-
-  const handlePending = async()=>{
-     try {
-      message.success("Pending added successfull")
-      navigate("/UserValidation")
-      
-     } catch (error) {
-       message.error(error)
-     }
-  }
-
-
-const handleReject = async (deletedUserId) => {
-  try {
-    console.log(deletedUserId);
-
-    const deletedUserResponse = await axios.delete("http://localhost:8080/api/v1/admin/delete-details", {
-      data: { deletedUserId: deletedUserId },
-    });
-
-    console.log(deletedUserResponse);
-
-    if (deletedUserResponse.data.success) {
-      message.success(deletedUserResponse.data.message);
-      navigate("/UserValidation")
+    } catch (error) {
+      message.error("Error while occuring updated section");
     }
-   
-    else{
-      message.error(deletedUserResponse.data.message);
+  };
+
+  const handlePending = async () => {
+    try {
+      message.success("Pending added successfull");
+      navigate("/UserValidation");
+    } catch (error) {
+      message.error(error);
     }
+  };
 
+  const handleReject = async (deletedUserId) => {
+    try {
+      console.log(deletedUserId);
 
-  } catch (error) {
-    // Handle error
-    console.error(error);
-  }
-};
+      const deletedUserResponse = await axios.delete(
+        "http://localhost:8080/api/v1/admin/delete-details",
+        {
+          data: { deletedUserId: deletedUserId },
+        }
+      );
 
+      console.log(deletedUserResponse);
 
+      if (deletedUserResponse.data.success) {
+        message.success(deletedUserResponse.data.message);
+        navigate("/UserValidation");
+      } else {
+        message.error(deletedUserResponse.data.message);
+      }
+    } catch (error) {
+      // Handle error
+      console.error(error);
+    }
+  };
 
   // End
 
   // Get the data from the backend
   // Start
-  useEffect(() => {
-    
-  }, []);
+  useEffect(() => {}, []);
   // End
 
   // JSX structure for the Navbar component
   return (
     <SideBar>
-       {
-        location.state.record.status === "pending" ?
-
+      {location.state.record.status === "pending" ? (
         <div className="UserApplicationForm">
-        <div className="UserApplicationFormHeader">
-          <h3>Application</h3>
-          {/* <a href="http://localhost:3000/AdminDashboard/UserValidation">
+          <div className="UserApplicationFormHeader">
+            <h3>Application</h3>
+            {/* <a href="http://localhost:3000/AdminDashboard/UserValidation">
             <span className="UserApplicationCloseBtn">
               <CloseSquareOutlined />
             </span>
           </a> */}
-        </div>
-        <div className="UserApplicationFormApplication">
-          <div>
-            <label htmlFor="">First Name:</label>
-  
-            <input
-              type="text"
-              id="firstName"
-              name="firstName"
-              value={location.state?.record?.FirstName}
-              readOnly={true}
-            />
-           
-            <label htmlFor="">Last Name:</label>
-           
-              <input
-              type="text"
-              id="lastName"
-              name="lastName"
-              value={location.state?.record?.LastName}
-              readOnly={true}
-            />
-           
-            <label htmlFor="">Email:</label>
-            
-              <input
-              type="email"
-              id="email"
-              name="email"
-              value={location.state?.record?.Email}
-              readOnly={true}
-            />
-        
-            <label htmlFor="">Age:</label>
-              <input
-              type="number"
-              id="Age"
-              name="Age"
-              value={location.state?.record?.Age}
-              readOnly={true}
-            />
-
-            <label htmlFor="">Distric:</label>
-              <input
-              type="text"
-              id="Distric"
-              name="Distric"
-              value={location.state?.record?.Distric}
-              readOnly={true}
-            />
-            
-          
-            <label htmlFor="">Experience:</label>
-            <textarea
-              id="experience"
-              name="experience"
-              rows="10"
-              readOnly={true}
-              value={location.state?.record?.Experience}
-  
-            ></textarea>
-  
-            <label htmlFor="">User Role:</label>
-            <input
-              type="UserRole"
-              id="UserRole"
-              name="UserRole"
-              readOnly={true}
-              value={location.state?.record?.UserRole}            
-            />
-  
-            <div class="buttonSet">
-               <div> 
-              <button class="approve userAppBTn" onClick={()=>handleStatus(location.state?.record?._id,"Approve")}>
-                <UserAddOutlined className="UserApplicationIcon" />
-                Accept
-              </button>
-  
-              <button class="pending userAppBTn" onClick={()=>handlePending()}>
-                <ClockCircleOutlined className="UserApplicationIcon" />
-                Pending
-              </button>
-              <button class="reject userAppBTn" onClick={()=>handleReject(location.state?.record?._id)}>
-                <CloseCircleOutlined className="UserApplicationIcon" />
-                Reject
-              </button>
-  
-              </div>
-           </div>
-                
-              
           </div>
-         
-        </div>
-        </div>
+          <div className="UserApplicationFormApplication">
+            <div>
+              <label htmlFor="">First Name:</label>
 
-      :
+              <input
+                type="text"
+                id="firstName"
+                name="firstName"
+                value={location.state?.record?.FirstName}
+                readOnly={true}
+              />
 
-    <Form layout='verticle' onFinish={(values) => handleUpdatedDetails(location.state?.record?._id, values)}>
-      <div className="UserApplicationForm">
-      <div className="UserApplicationFormHeader">
-        <h3>Editable Application</h3>
-        {/* <a href="http://localhost:3000/AdminDashboard/UserValidation">
+              <label htmlFor="">Last Name:</label>
+
+              <input
+                type="text"
+                id="lastName"
+                name="lastName"
+                value={location.state?.record?.LastName}
+                readOnly={true}
+              />
+
+              <label htmlFor="">Email:</label>
+
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value={location.state?.record?.Email}
+                readOnly={true}
+              />
+
+              <label htmlFor="">Age:</label>
+              <input
+                type="number"
+                id="Age"
+                name="Age"
+                value={location.state?.record?.Age}
+                readOnly={true}
+              />
+
+              <label htmlFor="">Distric:</label>
+              <input
+                type="text"
+                id="Distric"
+                name="Distric"
+                value={location.state?.record?.Distric}
+                readOnly={true}
+              />
+
+              <label htmlFor="">Experience:</label>
+              <textarea
+                id="experience"
+                name="experience"
+                rows="10"
+                readOnly={true}
+                value={location.state?.record?.Experience}
+              ></textarea>
+
+              <label htmlFor="">User Role:</label>
+              <input
+                type="UserRole"
+                id="UserRole"
+                name="UserRole"
+                readOnly={true}
+                value={location.state?.record?.UserRole}
+              />
+
+              <div class="buttonSet">
+                <div>
+                  <button
+                    class="approve userAppBTn"
+                    onClick={() =>
+                      handleStatus(location.state?.record?._id, "Approve")
+                    }
+                  >
+                    <UserAddOutlined className="UserApplicationIcon" />
+                    Accept
+                  </button>
+
+                  <button
+                    class="pending userAppBTn"
+                    onClick={() => handlePending()}
+                  >
+                    <ClockCircleOutlined className="UserApplicationIcon" />
+                    Pending
+                  </button>
+                  <button
+                    class="reject userAppBTn"
+                    onClick={() => handleReject(location.state?.record?._id)}
+                  >
+                    <CloseCircleOutlined className="UserApplicationIcon" />
+                    Reject
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      ) : (
+        <Form
+          layout="verticle"
+          onFinish={(values) =>
+            handleUpdatedDetails(location.state?.record?._id, values)
+          }
+        >
+          <div className="UserApplicationForm">
+            <div className="UserApplicationFormHeader">
+              <h3>Editable Application</h3>
+              {/* <a href="http://localhost:3000/AdminDashboard/UserValidation">
           <span className="UserApplicationCloseBtn">
             <CloseSquareOutlined />
           </span>
         </a> */}
-      </div>
-
-      <div className="UserApplicationFormApplication">
-        <div>
-          <label htmlFor="">First Name:</label>
-
-          <input
-             type="text"
-             id="firstName"
-             name="firstName"
-            //  value={firstName} // Assuming firstName is the state variable
-             onChange={(e) => setFirstName(e.target.value)}
-           />
-
-         
-          <label htmlFor="">Last Name:</label>
-         
-            <input
-            type="text"
-            id="lastName"
-            name="lastName"
-            onChange={(e) => setLastName(e.target.value)}
-            
-          />
-         
-          <label htmlFor="">Email:</label>
-          
-            <input
-            type="email"
-            id="email"
-            name="email"
-            onChange={(e) => setNewEmail(e.target.value)}
-          />
-      
-          <label htmlFor="">Age:</label>
-            <input
-            type="number"
-            id="Age"
-            name="Age"
-            onChange={(e) => setNewAge(e.target.value)}
-          />
-
-          <label htmlFor="">Distric:</label>
-            <input
-            type="Distric"
-            id="Distric"
-            name="Distric"
-            onChange={(e) => setNewDistric(e.target.value)}
-          />
-          
-        
-          <label htmlFor="">Experience:</label>
-          <textarea
-            id="experience"
-            name="experience"
-            rows="10"
-            readOnly={true}
-            value={location.state?.record?.Experience}
-
-          ></textarea>
-
-          <label htmlFor="">User Role:</label>
-          <input
-            type="UserRole"
-            id="UserRole"
-            name="UserRole"
-            readOnly={true}
-            value={location.state?.record?.UserRole}            
-          />
-
-          <div class="buttonSet">
-             <div> 
-            <button class="approve userAppBTn" onClick={()=>handleUpdatedDetails(location.state?.record?._id)}>
-              <UserAddOutlined className="UserApplicationIcon" />
-              Update
-            </button>
-
-            <button class="pending userAppBTn" disabled>
-              <ClockCircleOutlined className="UserApplicationIcon" />
-              Button is dissable
-            </button>
-            <button class="reject userAppBTn" disabled>
-              <CloseCircleOutlined className="UserApplicationIcon" />
-              Button is dissable
-            </button>
-
             </div>
-         </div>
-            
-        </div>
 
-      
-       
-      </div>
-    </div>
+            <div className="UserApplicationFormApplication">
+              <div>
+                <label htmlFor="">First Name:</label>
 
-    </Form>
+                <input
+                  type="text"
+                  id="firstName"
+                  name="firstName"
+                  //  value={firstName} // Assuming firstName is the state variable
+                  onChange={(e) => setFirstName(e.target.value)}
+                />
 
+                <label htmlFor="">Last Name:</label>
 
+                <input
+                  type="text"
+                  id="lastName"
+                  name="lastName"
+                  onChange={(e) => setLastName(e.target.value)}
+                />
 
-       }
+                <label htmlFor="">Email:</label>
+
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  onChange={(e) => setNewEmail(e.target.value)}
+                />
+
+                <label htmlFor="">Age:</label>
+                <input
+                  type="number"
+                  id="Age"
+                  name="Age"
+                  onChange={(e) => setNewAge(e.target.value)}
+                />
+
+                <label htmlFor="">Distric:</label>
+                <input
+                  type="Distric"
+                  id="Distric"
+                  name="Distric"
+                  onChange={(e) => setNewDistric(e.target.value)}
+                />
+
+                <label htmlFor="">Experience:</label>
+                <textarea
+                  id="experience"
+                  name="experience"
+                  rows="10"
+                  readOnly={true}
+                  value={location.state?.record?.Experience}
+                ></textarea>
+
+                <label htmlFor="">User Role:</label>
+                <input
+                  type="UserRole"
+                  id="UserRole"
+                  name="UserRole"
+                  readOnly={true}
+                  value={location.state?.record?.UserRole}
+                />
+
+                <div class="buttonSet">
+                  <div>
+                    <button
+                      class="approve userAppBTn"
+                      onClick={() =>
+                        handleUpdatedDetails(location.state?.record?._id)
+                      }
+                    >
+                      <UserAddOutlined className="UserApplicationIcon" />
+                      Update
+                    </button>
+
+                    <button class="pending userAppBTn" disabled>
+                      <ClockCircleOutlined className="UserApplicationIcon" />
+                      Button is dissable
+                    </button>
+                    <button class="reject userAppBTn" disabled>
+                      <CloseCircleOutlined className="UserApplicationIcon" />
+                      Button is dissable
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Form>
+      )}
     </SideBar>
   );
 };
