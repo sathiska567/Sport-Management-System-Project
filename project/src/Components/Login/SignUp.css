@@ -2,8 +2,7 @@ body {
     width: 100%;
     height: 100%;
 }
-
-.OTPPage {
+.SignUpPage {
     width: 100%;
     height: 100%;
     background-color: white;
@@ -12,35 +11,23 @@ body {
 
 }
 
-.OTPDetails {
+.SignUpDetails {
     margin-left:auto;
     margin-right:auto;
     width: 80%;
 }
 
-.otpResendLink {
-    text-decoration: none;
-    font-family: 'Roboto', sans-serif;
-    font-size: 14px;
-    color: #0075E1;
-    margin-bottom:0;
-    font-weight: 400;
-}
-
-.otpResendLink:hover {
-    color: rgba(0,117,225,0.7);
-}
-
-
 .ant-row {
     height: 20px;
     display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.OTPHeading {
+.SignUpHeading {
     color: #666666;
+    margin-bottom: 40%;
     margin-top: 20%;
-    margin-bottom:10%;
     text-align: center;
     margin-left: auto;
     margin-right: auto;
@@ -48,7 +35,7 @@ body {
     font-size: 36px;
 }
 
-.OTPInput {
+.SignUpInput {
     border:none;
     border-radius: 0;
     border-bottom: 1px solid #d9d9d9;
@@ -56,7 +43,7 @@ body {
     
 }
 
-.LoginLabel {
+.SignUpLabel {
     margin-bottom: -10px;
     font-family: 'Roboto', sans-serif;
     font-size: 24px;
@@ -66,40 +53,24 @@ body {
 
 .ant-btn  {
     margin-top: 5%;
-    margin-bottom: 5%;
     border-radius: 0;
     font-family: Roboto, sans-serif;
-    font-size: 14px;
+    font-size: 16px;
     color: white;
     font-weight: semi-bold;
+    
 }
 
+.SignUpLink {
+    margin-top: -5px;
+    font-family: 'Roboto ', sans-serif;
+    font-size: 14px;
+    color: #0075E1;
+    font-weight: semi-bold;
+}
 
 .copyright {
     position: absolute;
     bottom: 0;
     font-size: 13px;
-}
-
-.ForgetPasswordSubTitle {
-    margin-top: 5%;
-    margin-bottom: 7%;
-    font-family: 'Roboto', sans-serif;
-    font-size: 18px;
-    color: #5A5A5A;
-    text-align: center;
-    font-weight: 100;
-}
-
-.OTPText {
-    margin-top: 5%;
-    margin-bottom: 25%;
-    font-family: 'Roboto', sans-serif;
-    font-size: 16px;
-    color: #666666;
-    text-align: center;
-    font-weight: 100;
-}
-.emailIcon {
-   
 }

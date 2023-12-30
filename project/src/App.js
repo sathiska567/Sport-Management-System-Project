@@ -12,7 +12,7 @@ import NewLogin from "./Components/Login/Login.jsx";
 import PlayerProfile from "./Components/PlayerComponents/PlayerProfile.jsx";
 import PublicRoute from "./Components/PublicRoute/PublicRoute.js";
 import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute.js";
-
+import SignUp from "./Components/Login/SignUp.jsx";
 
 
 function App() {
