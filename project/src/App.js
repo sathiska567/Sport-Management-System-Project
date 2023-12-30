@@ -9,7 +9,9 @@ import OTPPage from "./Components/Login/OTPPage.jsx"
 import ResetPassword from "./Pages/user/ResetPass.jsx"
 import ApplyPosition from "./Components/ApplyPosition/ApplyPosition.jsx";
 import NewLogin from "./Components/Login/Login.jsx";
-// import PlayerProfile from "./Components/PlayerComponents/PlayerProfile.jsx";
+import PlayerProfile from "./Components/PlayerComponents/PlayerProfile.jsx";
+import PublicRoute from "./Components/PublicRoute/PublicRoute.js";
+import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute.js";
 
 
 
@@ -22,34 +24,93 @@ function App() {
     <BrowserRouter>
       <Routes>
         {/* user login and registration */}
-        <Route path="/register" element={<Register />} />
+        <Route path="/register" element={
+          <PublicRoute>
+            <Register />
+          </PublicRoute>
+        } />
 
         {/* <Route 
       path="/" 
       element={<Login />} 
       /> */}
 
-        <Route path="/" element={<NewLogin />} />
+        <Route
 
-        <Route path="/forgot-password" element={<ForgotPassword />} />
+          path="/" element={
+            <PublicRoute>
+              <NewLogin />
+            </PublicRoute>
 
-        <Route path="/otp-reset-pass" element={<OTPPage />} />
+          }
 
-        <Route path="/reset-pass" element={<ResetPassword />} />
+        />
+
+        <Route path="/forgot-password" element={
+          <PublicRoute>
+            <ForgotPassword />
+          </PublicRoute>
+
+        } />
+
+        <Route path="/otp-reset-pass" element={
+        
+        <PublicRoute>
+          <OTPPage />
+        </PublicRoute>
+        
+        } />
+
+        <Route path="/reset-pass" element={
+          <PublicRoute>
+            <ResetPassword />
+          </PublicRoute>
+
+        } />
 
         {/* Apply position routes */}
-        <Route path="/apply-position" element={<ApplyPosition />} />
+        <Route path="/apply-position" element={
+          <ProtectedRoute>
+            <ApplyPosition />
+          </ProtectedRoute>
+        } />
 
         {/* after login routes */}
-        <Route path="/dashboad" element={<StatCards />} />
+        <Route path="/dashboad" element={
+          <ProtectedRoute>
+            <StatCards />
+          </ProtectedRoute>
+        } />
 
-        <Route path="/UserValidation" element={<UserApplicationTable />} />
+        <Route path="/UserValidation" element={
+          <ProtectedRoute>
+            <UserApplicationTable />
+          </ProtectedRoute>
+        } />
         <Route
           // Need to change after add table of application
           path="/Applying-Details"
-          element={<UserApplication />}
+          element={
+            <ProtectedRoute>
+              <UserApplication />
+            </ProtectedRoute>
+          }
         />
+
+        <Route
+          path="/player-profile"
+          element={
+            <ProtectedRoute>
+              <PlayerProfile />
+            </ProtectedRoute>
+          }
+
+        />
+
+
       </Routes>
+
+
     </BrowserRouter>
 
     // <div className="App">

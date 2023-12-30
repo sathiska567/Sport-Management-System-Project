@@ -53,7 +53,7 @@ const ApplyPosition = () => {
 
                <div className="UserApplicationFormApplication">
 
-                  <Form layout='verticle' onFinish={handleSubmit} className='m-3'>
+                  <Form layout='verticle' onFinish={handleSubmit} className='m-3' style={{padding:"20px"}}>
                      <h3 className='text-light' style={{ textAlign: "center" }}>Personal Details : </h3>
 
                      <label htmlFor="">First Name:</label>
