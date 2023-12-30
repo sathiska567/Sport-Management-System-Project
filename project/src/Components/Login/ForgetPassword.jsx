@@ -1,9 +1,15 @@
+import { useNavigate } from "react-router-dom";
 import "./ForgetPassword.css";
 import { Button, Form, Input } from "antd";
 
 
 const ForgetPassword = () => {
   // State to manage password visibility
+  const navigate = useNavigate();
+
+  const handleNavigate = async()=>{
+      navigate("/otp-reset-pass")
+  }
 
   return (
     <div className="ForgetPasswordPage">
@@ -29,7 +35,7 @@ const ForgetPassword = () => {
                 },
               ]}
             />
-            <Button type="primary" className="ResetButton" htmlType="submit">
+            <Button type="primary" className="ResetButton" htmlType="submit" onClick={handleNavigate}>
               RESET PASSWORD
             </Button>
           </Form>

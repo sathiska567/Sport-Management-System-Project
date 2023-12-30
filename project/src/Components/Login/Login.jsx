@@ -91,7 +91,7 @@ const Login = () => {
               onClick={togglePasswordVisibility}
               onChange={(e)=>setPassword(e.target.value)}
             />
-            <a href="/" className="LoginLink">
+            <a href="/forgot-password" className="LoginLink">
               Forgot Password?
             </a>
             <Button type="primary" className="LoginButton" htmlType="submit">
