@@ -4,14 +4,12 @@ import UserApplication from "./Components/UserApplication/UserApplication.jsx";
 import UserApplicationTable from "./Components/UserApplicationTable/UserApplicationTable.jsx";
 import StatCards from "./Components/StatCard/StatCards.jsx";
 import Register from "./Pages/user/Register.jsx";
-import ForgotPassword from "./Pages/user/ForgotPass.jsx";
-import OTPPage from "./Pages/user/Otp.jsx"
+import ForgotPassword from "./Components/Login/ForgetPassword.jsx";
+import OTPPage from "./Components/Login/OTPPage.jsx"
 import ResetPassword from "./Pages/user/ResetPass.jsx"
 import ApplyPosition from "./Components/ApplyPosition/ApplyPosition.jsx";
 import NewLogin from "./Components/Login/Login.jsx";
-import PlayerProfile from "./Components/PlayerComponents/PlayerProfile.jsx";
-
-
+// import PlayerProfile from "./Components/PlayerComponents/PlayerProfile.jsx";
 
 
 
