@@ -15,8 +15,8 @@ const { Content } = Layout;
 const UserApplicationTable = () => {
   // Get data from back end
   // Start
-  const [userRole, setUserRole] = useState([]);
-  const [Userlocation, setUserLocation] = useState([]);
+  const [userRole, setUserRole] = useState("");
+  const [Userlocation, setUserLocation] = useState("");
   const [userApplicationData, setUserApplicationData] = useState([]);
   const navigate = useNavigate();
   const location = useLocation([]);
@@ -66,6 +66,14 @@ const UserApplicationTable = () => {
   useEffect(() => {
     ApplyingUser();
   }, []);
+
+  // Filter userApplicationData based on userRole and Userlocation
+  const filteredData = userApplicationData.filter((data) => {
+    return (
+      data.UserRole.toLowerCase().includes(userRole.toLowerCase()) &&
+      data.Distric.toLowerCase().includes(Userlocation.toLowerCase())
+    );
+  });
 
   // End
 
@@ -206,7 +214,7 @@ const UserApplicationTable = () => {
                   pageSize: 5,
                 }}
                 // Displaying data from the backend
-                dataSource={userApplicationData}
+                dataSource={filteredData}
               ></Table>
             </div>
           </Content>
