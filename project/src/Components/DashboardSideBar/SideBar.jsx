@@ -238,7 +238,7 @@ const SideBar = ({ children }) => {
                   fontWeight: "regular",
                 }}
               >
-                Sports Management System
+                GameSync Pro
               </span>
               <span style={{ color: "white" }} className="notificaiton">
                 <a href="/UserValidation">
@@ -379,7 +379,7 @@ const SideBar = ({ children }) => {
                   fontWeight: "regular",
                 }}
               >
-                Sports Management System
+                GameSync Pro
               </span>
               <span style={{ color: "white" }} className="notificaiton">
                 <a href="www">

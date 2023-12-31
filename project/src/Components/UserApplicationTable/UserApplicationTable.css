@@ -83,3 +83,9 @@ position : relative;
 .custom-table .ant-table-thead > tr > th {
   height: 20px; /* Adjust the height as needed */
 }
+
+:where(.css-dev-only-do-not-override-qgg3xn).ant-table-wrapper .ant-table-thead >tr>th, :where(.css-dev-only-do-not-override-qgg3xn).ant-table-wrapper .ant-table-thead >tr>td {
+  background-color: #15295E;
+  color: #fff;
+  font-weight: 500;
+}
