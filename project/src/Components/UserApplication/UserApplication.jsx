@@ -242,7 +242,7 @@ const UserApplication = () => {
         >
           <div className="UserApplicationForm">
             <div className="UserApplicationFormHeader">
-              <h3>Editable Application</h3>
+
               {/* <a href="http://localhost:3000/AdminDashboard/UserValidation">
           <span className="UserApplicationCloseBtn">
             <CloseSquareOutlined />
@@ -253,7 +253,6 @@ const UserApplication = () => {
             <div className="UserApplicationFormApplication">
               <div>
                 <label htmlFor="">First Name:</label>
-
                 <input
                   type="text"
                   id="firstName"
@@ -261,9 +260,7 @@ const UserApplication = () => {
                   //  value={firstName} // Assuming firstName is the state variable
                   onChange={(e) => setFirstName(e.target.value)}
                 />
-
                 <label htmlFor="">Last Name:</label>
-
                 <input
                   type="text"
                   id="lastName"
@@ -328,11 +325,9 @@ const UserApplication = () => {
 
                     <button class="pending userAppBTn" disabled>
                       <ClockCircleOutlined className="UserApplicationIcon" />
-                      Button is dissable
                     </button>
                     <button class="reject userAppBTn" disabled>
                       <CloseCircleOutlined className="UserApplicationIcon" />
-                      Button is dissable
                     </button>
                   </div>
                 </div>
