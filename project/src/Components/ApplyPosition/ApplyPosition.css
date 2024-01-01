@@ -1,6 +1,8 @@
 .formInput{
-        width: 70%;
+        width:100%;
         margin: 0;
+        background-color: #fff;
+        border: 1px solid #ccc;
 }
 
 .FormColumn{

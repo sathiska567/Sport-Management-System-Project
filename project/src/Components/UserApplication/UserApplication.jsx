@@ -126,8 +126,29 @@ const UserApplication = () => {
     <SideBar>
       {location.state.record.status === "pending" ? (
         <div className="UserApplicationForm">
-          <div className="UserApplicationFormHeader">
-            <h3>Application</h3>
+          <div
+            style={{
+              backgroundColor: "#15295E",
+            }}
+            className="UserApplicationFormHeader"
+          >
+            <h3
+              style={{
+                color: "white",
+              }}
+            >
+              Application
+            </h3>
+            <a href="/UserValidation">
+              <  CloseSquareOutlined 
+                  style={{
+                    color: "white",
+                    fontSize: "20px",
+                    marginRight: "10%",
+                  }}
+              />
+            </a>
+
             {/* <a href="http://localhost:3000/AdminDashboard/UserValidation">
             <span className="UserApplicationCloseBtn">
               <CloseSquareOutlined />
@@ -136,100 +157,109 @@ const UserApplication = () => {
           </div>
           <div className="UserApplicationFormApplication">
             <div>
-              <label htmlFor="">First Name:</label>
+              <Form
+                layout="verticle"
+                className="m-3"
+                style={{
+                  padding: "50px",
+                  backgroundColor: "white",
+                }}
+              >
+                <label htmlFor="">First Name:</label>
 
-              <input
-                type="text"
-                id="firstName"
-                name="firstName"
-                value={location.state?.record?.FirstName}
-                readOnly={true}
-              />
+                <input
+                  type="text"
+                  id="firstName"
+                  name="firstName"
+                  value={location.state?.record?.FirstName}
+                  readOnly={true}
+                />
 
-              <label htmlFor="">Last Name:</label>
+                <label htmlFor="">Last Name:</label>
 
-              <input
-                type="text"
-                id="lastName"
-                name="lastName"
-                value={location.state?.record?.LastName}
-                readOnly={true}
-              />
+                <input
+                  type="text"
+                  id="lastName"
+                  name="lastName"
+                  value={location.state?.record?.LastName}
+                  readOnly={true}
+                />
 
-              <label htmlFor="">Email:</label>
+                <label htmlFor="">Email:</label>
 
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={location.state?.record?.Email}
-                readOnly={true}
-              />
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={location.state?.record?.Email}
+                  readOnly={true}
+                />
 
-              <label htmlFor="">Age:</label>
-              <input
-                type="number"
-                id="Age"
-                name="Age"
-                value={location.state?.record?.Age}
-                readOnly={true}
-              />
+                <label htmlFor="">Age:</label>
+                <input
+                  type="number"
+                  id="Age"
+                  name="Age"
+                  value={location.state?.record?.Age}
+                  readOnly={true}
+                />
 
-              <label htmlFor="">Distric:</label>
-              <input
-                type="text"
-                id="Distric"
-                name="Distric"
-                value={location.state?.record?.Distric}
-                readOnly={true}
-              />
+                <label htmlFor="">Distric:</label>
+                <input
+                  type="text"
+                  id="Distric"
+                  name="Distric"
+                  value={location.state?.record?.Distric}
+                  readOnly={true}
+                />
 
-              <label htmlFor="">Experience:</label>
-              <textarea
-                id="experience"
-                name="experience"
-                rows="10"
-                readOnly={true}
-                value={location.state?.record?.Experience}
-              ></textarea>
+                <label htmlFor="">Experience:</label>
+                <textarea
+                  id="experience"
+                  name="experience"
+                  rows="10"
+                  readOnly={true}
+                  value={location.state?.record?.Experience}
+                ></textarea>
 
-              <label htmlFor="">User Role:</label>
-              <input
-                type="UserRole"
-                id="UserRole"
-                name="UserRole"
-                readOnly={true}
-                value={location.state?.record?.UserRole}
-              />
+                <label htmlFor="">User Role:</label>
+                <input
+                  type="UserRole"
+                  id="UserRole"
+                  name="UserRole"
+                  readOnly={true}
+                  value={location.state?.record?.UserRole}
+                />
 
-              <div class="buttonSet">
-                <div>
-                  <button
-                    class="approve userAppBTn"
-                    onClick={() =>
-                      handleStatus(location.state?.record?._id, "Approve")
-                    }
-                  >
-                    <UserAddOutlined className="UserApplicationIcon" />
-                    Accept
-                  </button>
+                <div class="buttonSet">
+                  <div>
+                    <button
+                      class="approve userAppBTn"
+                      onClick={() =>
+                        handleStatus(location.state?.record?._id, "Approve")
+                      }
+                    >
+                      <UserAddOutlined className="UserApplicationIcon" />
+                      Accept
+                    </button>
 
-                  <button
-                    class="pending userAppBTn"
-                    onClick={() => handlePending()}
-                  >
-                    <ClockCircleOutlined className="UserApplicationIcon" />
-                    Pending
-                  </button>
-                  <button
-                    class="reject userAppBTn"
-                    onClick={() => handleReject(location.state?.record?._id)}
-                  >
-                    <CloseCircleOutlined className="UserApplicationIcon" />
-                    Reject
-                  </button>
+                    <button
+                      class="pending userAppBTn"
+                      onClick={() => handlePending()}
+                    >
+                      <ClockCircleOutlined className="UserApplicationIcon" />
+                      Pending
+                    </button>
+                    <button
+                      class="reject userAppBTn"
+                      onClick={() => handleReject(location.state?.record?._id)}
+                    >
+                      <CloseCircleOutlined className="UserApplicationIcon" />
+                      Reject
+                    </button>
+                  </div>
                 </div>
-              </div>
+              </Form>
             </div>
           </div>
         </div>
@@ -241,8 +271,12 @@ const UserApplication = () => {
           }
         >
           <div className="UserApplicationForm">
-            <div className="UserApplicationFormHeader">
-              <h3>Editable Application</h3>
+            <div
+              style={{
+                backgroundColor: "#15295E",
+              }}
+              className="UserApplicationFormHeader"
+            >
               {/* <a href="http://localhost:3000/AdminDashboard/UserValidation">
           <span className="UserApplicationCloseBtn">
             <CloseSquareOutlined />
@@ -253,7 +287,6 @@ const UserApplication = () => {
             <div className="UserApplicationFormApplication">
               <div>
                 <label htmlFor="">First Name:</label>
-
                 <input
                   type="text"
                   id="firstName"
@@ -261,9 +294,7 @@ const UserApplication = () => {
                   //  value={firstName} // Assuming firstName is the state variable
                   onChange={(e) => setFirstName(e.target.value)}
                 />
-
                 <label htmlFor="">Last Name:</label>
-
                 <input
                   type="text"
                   id="lastName"
@@ -328,11 +359,9 @@ const UserApplication = () => {
 
                     <button class="pending userAppBTn" disabled>
                       <ClockCircleOutlined className="UserApplicationIcon" />
-                      Button is dissable
                     </button>
                     <button class="reject userAppBTn" disabled>
                       <CloseCircleOutlined className="UserApplicationIcon" />
-                      Button is dissable
                     </button>
                   </div>
                 </div>
