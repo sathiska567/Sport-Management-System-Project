@@ -30,8 +30,13 @@ const handleStatusController = async(req,res)=>{
         
         try {
          const {id,status} = req.body;
-         console.log(id,status);
          const UpdatedUser = await PlayerModel.findByIdAndUpdate(id , {status})
+
+         const updatedUser = await User.findOne({isAdmin:true}) 
+         const notification = updatedUser.notification;
+        
+         notification.pop();
+         await updatedUser.save();
 
 
          res.status(200).send({
@@ -61,9 +66,6 @@ const updateDetailsController = async(req,res)=>{
         const {updatedId} = req.body
 
         const positionApplyUserDataUpdated = await PlayerModel.findByIdAndUpdate(updatedId,req.body,{new:true})
-
-        // const updatedUser = await User.findOne({isAdmin:true}) 
-        // console.log("Updated user details is "+ updatedUser );
 
          res.status(200).send({
                 message:"Updated is successfull",
