@@ -62,6 +62,9 @@ const updateDetailsController = async(req,res)=>{
 
         const positionApplyUserDataUpdated = await PlayerModel.findByIdAndUpdate(updatedId,req.body,{new:true})
 
+        // const updatedUser = await User.findOne({isAdmin:true}) 
+        // console.log("Updated user details is "+ updatedUser );
+
          res.status(200).send({
                 message:"Updated is successfull",
                 success:true
