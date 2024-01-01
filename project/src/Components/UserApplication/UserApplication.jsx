@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import SideBar from "../DashboardSideBar/SideBar";
 import {
   CloseSquareOutlined,
-  CheckCircleOutlined,
+  EditOutlined,
   ClockCircleOutlined,
   UserAddOutlined,
   CloseCircleOutlined,
@@ -140,12 +140,12 @@ const UserApplication = () => {
               Application
             </h3>
             <a href="/UserValidation">
-              <  CloseSquareOutlined 
-                  style={{
-                    color: "white",
-                    fontSize: "20px",
-                    marginRight: "10%",
-                  }}
+              <CloseSquareOutlined
+                style={{
+                  color: "white",
+                  fontSize: "20px",
+                  marginRight: "10%",
+                }}
               />
             </a>
 
@@ -264,19 +264,46 @@ const UserApplication = () => {
           </div>
         </div>
       ) : (
+        // Update form
         <Form
+          style={{
+            margin: "auto",
+            width: "75%",
+          }}
           layout="verticle"
           onFinish={(values) =>
             handleUpdatedDetails(location.state?.record?._id, values)
           }
         >
-          <div className="UserApplicationForm">
+          <div
+            style={{
+            }}
+            className="UserApplicationForm"
+          >
             <div
               style={{
                 backgroundColor: "#15295E",
               }}
               className="UserApplicationFormHeader"
             >
+              <h3
+                style={{
+                  color: "white",
+                  letterSpacing: "1px",
+                  fontWeight: "500",
+                }}
+              >
+                Application
+              </h3>
+              <a href="/UserValidation">
+                <CloseSquareOutlined
+                  style={{
+                    color: "white",
+                    fontSize: "20px",
+                    marginRight: "10%",
+                  }}
+                />
+              </a>
               {/* <a href="http://localhost:3000/AdminDashboard/UserValidation">
           <span className="UserApplicationCloseBtn">
             <CloseSquareOutlined />
@@ -284,7 +311,13 @@ const UserApplication = () => {
         </a> */}
             </div>
 
-            <div className="UserApplicationFormApplication">
+            <div
+              style={{
+                backgroundColor: "white",
+                padding: "50px",
+              }}
+              className="UserApplicationFormApplication"
+            >
               <div>
                 <label htmlFor="">First Name:</label>
                 <input
@@ -349,19 +382,30 @@ const UserApplication = () => {
                   <div>
                     <button
                       class="approve userAppBTn"
+                      style={{ backgroundColor: "#E4A11B", width: "115px" }}
                       onClick={() =>
                         handleUpdatedDetails(location.state?.record?._id)
                       }
                     >
-                      <UserAddOutlined className="UserApplicationIcon" />
+                      <EditOutlined className="UserApplicationIcon" />
                       Update
                     </button>
 
-                    <button class="pending userAppBTn" disabled>
+                    <button
+                      style={{ width: "115px" }}
+                      class="pending userAppBTn"
+                      disabled
+                    >
                       <ClockCircleOutlined className="UserApplicationIcon" />
+                      Pending
                     </button>
-                    <button class="reject userAppBTn" disabled>
+                    <button
+                      style={{ backgroundColor: "#DC4C64", width: "115px" }}
+                      class="reject userAppBTn"
+                      disabled
+                    >
                       <CloseCircleOutlined className="UserApplicationIcon" />
+                      Delete
                     </button>
                   </div>
                 </div>

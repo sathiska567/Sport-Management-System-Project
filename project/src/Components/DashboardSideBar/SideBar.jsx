@@ -8,7 +8,7 @@ import {
   MenuUnfoldOutlined,
   DashboardOutlined,
   PoweroffOutlined,
-  UserOutlined,
+  BellOutlined,
   MailOutlined,
 } from "@ant-design/icons";
 
@@ -245,7 +245,16 @@ const SideBar = ({ children }) => {
                   <Space size={24}>
                     {/* Notification badge */}
                     <Badge count={positionNotification}>
-                      <Avatar shape="square" icon={<UserOutlined />} />
+                      <Avatar
+                        shape="square"
+                        icon={
+                          <BellOutlined
+                            style={{
+                              fontSize: "22px",
+                            }}
+                          />
+                        }
+                      />
                     </Badge>
                   </Space>
                 </a>

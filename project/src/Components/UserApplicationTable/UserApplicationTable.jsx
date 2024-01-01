@@ -2,7 +2,7 @@
 import "./UserApplicationTable.css";
 import React, { useState, useEffect } from "react";
 import SideBar from "../DashboardSideBar/SideBar";
-import { UserOutlined, DeleteOutlined } from "@ant-design/icons";
+import { UserOutlined, DeleteOutlined, EditOutlined } from "@ant-design/icons";
 
 import { Layout, Button, Input, Table, message } from "antd";
 import axios from "axios";
@@ -152,12 +152,13 @@ const UserApplicationTable = () => {
                     dataIndex: "Actions",
                     key: "Actions",
                     render: (text, record) => (
-                      <span style={{
-                        display: "flex",
-                        flexDirection: "row",
-                        gap: "10px",
-
-                      }}>
+                      <span
+                        style={{
+                          display: "flex",
+                          flexDirection: "row",
+                          gap: "10px",
+                        }}
+                      >
                         {record.status == "pending" ? (
                           <Button
                             type="primary"
@@ -177,7 +178,7 @@ const UserApplicationTable = () => {
                           <Button
                             type="primary"
                             style={{
-                              backgroundColor: "#05AD1B",
+                              backgroundColor: "#E4A11B",
                               color: "#fff",
                               fontSize: "14px",
                               marginRight: "10px",
@@ -185,7 +186,7 @@ const UserApplicationTable = () => {
                             }}
                             onClick={() => NavigateDetailsPage(record)}
                           >
-                            <UserOutlined />
+                            <EditOutlined />
                             Update
                           </Button>
                         )}
