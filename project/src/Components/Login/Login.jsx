@@ -97,6 +97,14 @@ const Login = () => {
             <Button type="primary" className="LoginButton" htmlType="submit">
               SIGN IN
             </Button>
+
+            <p>Don't have an account ?  
+            <a href="/register" className="LoginLink">
+              create new account.
+            </a>
+
+            </p>
+            
           </Form>
           <p className="copyright">
             Copyright &copy;2024 Design by DevOps DreamViewers

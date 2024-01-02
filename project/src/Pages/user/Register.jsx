@@ -34,7 +34,7 @@ function Register() {
     setError('');
   };
 
-  const onFinish = async () => {
+const onFinish = async () => {
     // Clear the error message on form submission
     clearError();
 

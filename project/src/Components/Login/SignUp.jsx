@@ -1,26 +1,67 @@
 import React, { useState } from "react";
 import "./SignUp.css";
-import { Button, Form, Input } from "antd";
+import { Button, Form, Input, message } from "antd";
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 import {useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const SignUp = () => {
   // State to manage password visibility
   const [visible, setVisible] = useState(false);
   const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
   const [password, setPassword] = useState("");
-  const naviagte = useNavigate();
+  const navigate = useNavigate();
 
   // Function to toggle password visibility
   const togglePasswordVisibility = () => {
     setVisible(!visible);
   };
+
+
+  // handle registration
+const onFinish = async()=>{
+  console.log(name,email,password);
+  
+  try {
+
+    const response = await axios.post('http://localhost:8080/api/v1/user/register', {username:name,email:email,password:password}  );
+    console.log(response);
+
+    if(response.data.success){
+        message.success("Registration is successfull")
+        navigate("/")
+    }
+    
+  } catch (error) {
+    message.error(error)
+  }
+
+
+}
+
+
   return (
     <div className="SignUpPage">
       <div className="SignUpDetails">
         <h1 className="SignUpHeading">GameSync Pro</h1>
         <div>
-          <Form name="nest-messages">
+          <Form name="nest-messages" onFinish={onFinish} >
+            <label htmlFor="" className="SignUpLabel">
+              User Name:
+            </label>
+            <Input
+              type="text"
+              className="SignUpInput"
+              id="name"
+              name="name"
+              rules={[
+                {
+                  required: true,
+                },
+              ]}
+              onChange={(e) => setName(e.target.value)}
+            />
             <label htmlFor="" className="SignUpLabel">
               Email:
             </label>

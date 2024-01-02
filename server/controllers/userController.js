@@ -43,6 +43,7 @@ const registerController = async (req, res) => {
     res.status(500).send({
             success: false,
             message: `Register Controller ${error.message}`,
+
     });
 }
 

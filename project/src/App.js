@@ -26,7 +26,7 @@ function App() {
         {/* user login and registration */}
         <Route path="/register" element={
           <PublicRoute>
-            <Register />
+            <SignUp />
           </PublicRoute>
         } />
 
