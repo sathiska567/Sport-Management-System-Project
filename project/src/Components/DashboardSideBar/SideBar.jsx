@@ -336,9 +336,9 @@ const SideBar = ({ children }) => {
               <Menu.Item key="2" icon={<PendingActions />}>
                 <Link to="/apply-position">Apply Position</Link>
               </Menu.Item>
-              <Menu.Item key="3" icon={<ManageUser />}>
+              {/* <Menu.Item key="3" icon={<ManageUser />}>
                 <Link to="/player-profile">Profile</Link>
-              </Menu.Item>
+              </Menu.Item> */}
               <Menu.Item
                 key="4"
                 icon={<PoweroffOutlined />}
