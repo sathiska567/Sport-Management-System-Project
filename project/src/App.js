@@ -97,7 +97,7 @@ function App() {
           }
         />
 
-        <Route
+        {/* <Route
           path="/player-profile"
           element={
             <ProtectedRoute>
@@ -105,7 +105,7 @@ function App() {
             </ProtectedRoute>
           }
 
-        />
+        /> */}
 
 
       </Routes>
