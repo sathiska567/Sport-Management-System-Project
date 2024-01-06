@@ -125,6 +125,11 @@ const loginController = async (req, res) => {
 };
 
 
+// FORGOTTEN PASSWORD CONTROLLER
+ 
+
+
+
 // get current user details
 const getCurrentUserController = async(req,res)=>{
    try {
@@ -194,5 +199,9 @@ const applyPositionController = async(req,res)=>{
         }
      
      }
+
+
+
+
 
 module.exports = { registerController, loginController,getCurrentUserController,applyPositionController };
