@@ -1,7 +1,6 @@
 const User = require('../models/userModel');
-const jwt = require("jsonwebtoken");
-const PlayerModel = require('../models/playerModel');
 const {sendEmail} = require('../service/emailService');
+const bcrypt = require("bcryptjs")
 
 
 // Forgotten password controller
@@ -78,7 +77,7 @@ const VerifyOtpController = async (req, res) => {
             console.log('OTP verified');
 
             res.status(200).send({
-                succuss:true,
+                success:true,
                 message:"OTP Verify Successfully.",
                 user
             })
@@ -109,56 +108,42 @@ const VerifyOtpController = async (req, res) => {
 
 
 const ResetPasswordController = async (req, res) => {
-//   const {email, newPassword, token} = req.body;
-
-  try {
-    // Verify the token
-    // jwt.verify(token, 'your-secret-key', async (err, decoded) => {
-    //   if (err) {
-    //     return res.status(401).json({ error: 'Invalid token' });
-    //   }
-
-    //   const user = await User.findOne({ email });
-
-    //   if (user) {
-    //     // Hash the password before saving it to the database
-    //     const hashedPassword = await bcrypt.hash(newPassword, 10);
-    //     user.password = hashedPassword;
-    //     await user.save();
-    //     res.json({ message: 'Password changed successfully' });
-    //   } else {
-    //     res.status(404).json({ error: 'User not found' });
-    //   }
-    // });
-
-    const newPassword = req.body.password; 
-
-    // bcrypt the new password
-    const solt = await bcrypt.genSalt(10);
-
-    const hashedNewPassword = await bcrypt.hash(newPassword, solt);
-    req.body.password = hashedNewPassword;
-
-    const newUser = new User(req.body)
-
-    await newUser.save();
-
-    res.status(201).send({
-      message: "Password Change Sucessfully",
-      success: true,
-       newUser
-      });
-
-  } 
-  
-  catch(error){
-    res.status(400).send({
-        succuss:false,
-        message:"Error occure in Reset Password Controller",
-        error
-    })
-  }
-}
+        try {
+          const { email, password } = req.body;
+      
+          // Find the user by email
+          const user = await User.findOne({ email });
+      
+          if (user) {
+            // Hash the new password
+            const salt = await bcrypt.genSalt(10);
+            const hashedPassword = await bcrypt.hash(password, salt);
+      
+            // Update the user's password
+            user.password = hashedPassword;
+            await user.save();
+      
+            res.status(200).send({
+              success: true,
+              message: "Password changed successfully",
+              user: { email: user.email, username: user.username },
+            });
+          } else {
+            res.status(404).send({
+              success: false,
+              message: "User not found",
+            });
+          }
+        } catch (error) {
+          console.error("Error in ResetPasswordController:", error);
+          res.status(500).send({
+            success: false,
+            message: "An error occurred while resetting the password.",
+            error: error.message,
+          });
+        }
+      };
+      
 
       
 module.exports = {SendOtpController,VerifyOtpController,ResetPasswordController};

@@ -1,14 +1,35 @@
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import "./ForgetPassword.css";
-import { Button, Form, Input } from "antd";
+import { Button, Form, Input, message } from "antd";
+import { useState } from "react";
+import axios from "axios";
+// import SpinComponent from "../Spin/SpinComponent";
 
 
 const ForgetPassword = () => {
   // State to manage password visibility
   const navigate = useNavigate();
+  const [email,setEmail] = useState("");
+  const location = useLocation([]);
+
 
   const handleNavigate = async()=>{
-      navigate("/otp-reset-pass")
+    // <SpinComponent />
+
+    try {
+      // console.log(email);
+      const response = await axios.post("http://localhost:8080/api/v1/forgotten/forgot-password",{email:email})
+      // console.log(response.data.user.email);
+
+      const currentUserEmail = response.data.user.email;
+
+      message.success("OTP sent to your email")
+      navigate("/otp-reset-pass", { state: { email: currentUserEmail } })
+
+    } catch (error) {
+       message.error("Cannot sent OTP to Your give email")
+    }
+    
   }
 
   return (
@@ -29,6 +50,7 @@ const ForgetPassword = () => {
               className="ForgetPasswordInput"
               id="email"
               name="email"
+              onChange={(e)=>setEmail(e.target.value)}
               rules={[
                 {
                   required: true,

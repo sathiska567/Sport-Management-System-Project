@@ -1,12 +1,42 @@
 import "./OTPPage.css";
-import { Button, Form } from "antd";
+import { Button, Form, message } from "antd";
 import React, { useState } from "react";
 import Email from "../icons/Email.jsx"
+import axios from "axios";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const OTPPage = () => {
 
   // Restrict input only numbers
   const [otp, setOtp] = useState("");
+  const location = useLocation([]);
+  const navigate = useNavigate();
+  console.log(location);
+
+const submitOTP = async()=>{
+        try {
+          console.log(location.state.email);
+          const email = location.state.email;
+
+          const response = await axios.post("http://localhost:8080/api/v1/forgotten/verify-otp", {email:email , otp : otp });
+          console.log("OTP verifyied response is " , response.data);
+          console.log(response.data.success);
+
+          if(response.data.success){
+            message.success("OTP was mached")
+            navigate("/reset-pass",{state : {email :email}})
+          }
+
+          else{
+            message.error("Forgotten Password backend have an erro")
+          }
+
+          
+        } catch (error) {
+          //  message.error("OTP was not mached")
+        }
+  }
+
 
   const handleKeyPress = (event) => {
     const key = event.key;
@@ -39,7 +69,7 @@ const OTPPage = () => {
               onChange={(event) => setOtp(event.target.value)}
               onKeyPress={handleKeyPress}
             />
-            <Button type="primary" className="Next" htmlType="submit">
+            <Button type="primary" className="Next" htmlType="submit" onClick={submitOTP}>
               NEXT
             </Button>
           </Form>
