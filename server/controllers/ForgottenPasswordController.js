@@ -1,6 +1,7 @@
 const User = require('../models/userModel');
 const jwt = require("jsonwebtoken");
 const PlayerModel = require('../models/playerModel');
+const {sendEmail} = require('../service/emailService');
 
 
 // Forgotten password controller
@@ -45,7 +46,7 @@ const SendOtpController = async (req, res) => {
                     })
           }
         } catch (error) {
-                res.status(200).send({
+                res.status(400).send({
                         succuss : false,
                         message:"OTP Generate adn Send Have an error.",
                         error
@@ -112,23 +113,42 @@ const ResetPasswordController = async (req, res) => {
 
   try {
     // Verify the token
-    jwt.verify(token, 'your-secret-key', async (err, decoded) => {
-      if (err) {
-        return res.status(401).json({ error: 'Invalid token' });
-      }
+    // jwt.verify(token, 'your-secret-key', async (err, decoded) => {
+    //   if (err) {
+    //     return res.status(401).json({ error: 'Invalid token' });
+    //   }
 
-      const user = await User.findOne({ email });
+    //   const user = await User.findOne({ email });
 
-      if (user) {
-        // Hash the password before saving it to the database
-        const hashedPassword = await bcrypt.hash(newPassword, 10);
-        user.password = hashedPassword;
-        await user.save();
-        res.json({ message: 'Password changed successfully' });
-      } else {
-        res.status(404).json({ error: 'User not found' });
-      }
-    });
+    //   if (user) {
+    //     // Hash the password before saving it to the database
+    //     const hashedPassword = await bcrypt.hash(newPassword, 10);
+    //     user.password = hashedPassword;
+    //     await user.save();
+    //     res.json({ message: 'Password changed successfully' });
+    //   } else {
+    //     res.status(404).json({ error: 'User not found' });
+    //   }
+    // });
+
+    const newPassword = req.body.password; 
+
+    // bcrypt the new password
+    const solt = await bcrypt.genSalt(10);
+
+    const hashedNewPassword = await bcrypt.hash(newPassword, solt);
+    req.body.password = hashedNewPassword;
+
+    const newUser = new User(req.body)
+
+    await newUser.save();
+
+    res.status(201).send({
+      message: "Password Change Sucessfully",
+      success: true,
+       newUser
+      });
+
   } 
   
   catch(error){

@@ -4,7 +4,9 @@ require("dotenv").config(); // Load environment variables
 
 // Create a transporter using SMTP
 const transporter = nodemailer.createTransport({
-  service: 'gmail',
+  host: 'smtp.gmail.com',
+  port: 587,
+  secure: false,
   auth: {
     user: process.env.EMAIL_FROM, // Replace with your Gmail email
     pass: process.env.EMAIL_PASSWORD, // Replace with your Gmail email password
@@ -24,7 +26,9 @@ const sendEmail = async (email, resetCode) => {
   try {
     await transporter.sendMail(mailOptions);
     console.log('Email sent successfully');
-  } catch (error) {
+  } 
+
+  catch (error) {
     console.error('Error sending email:', error.message);
     throw new Error('Failed to send email');
   }
