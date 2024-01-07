@@ -27,7 +27,7 @@ const ForgetPassword = () => {
       navigate("/otp-reset-pass", { state: { email: currentUserEmail } })
 
     } catch (error) {
-       message.error("Cannot sent OTP to Your give email")
+       message.error("This email haven't any registered account.please register !")
     }
     
   }

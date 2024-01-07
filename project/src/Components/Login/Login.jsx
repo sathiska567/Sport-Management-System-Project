@@ -94,9 +94,6 @@ const Login = () => {
             <a href="/forgot-password" className="LoginLink">
               Forgot Password?
             </a>
-            <Button type="primary" className="LoginButton" htmlType="submit">
-              SIGN IN
-            </Button>
 
             <p>Don't have an account ?  
             <a href="/register" className="LoginLink">
@@ -104,6 +101,10 @@ const Login = () => {
             </a>
 
             </p>
+           
+            <Button type="primary" className="LoginButton" htmlType="submit">
+              SIGN IN
+            </Button>
             
           </Form>
           <p className="copyright">
