@@ -6,7 +6,7 @@ import StatCards from "./Components/StatCard/StatCards.jsx";
 import Register from "./Pages/user/Register.jsx";
 import ForgotPassword from "./Components/Login/ForgetPassword.jsx";
 import OTPPage from "./Components/Login/OTPPage.jsx"
-import ResetPassword from "./Pages/user/ResetPass.jsx"
+import ResetPassword from "./Components/Login/CreateNewPassword.jsx"
 import ApplyPosition from "./Components/ApplyPosition/ApplyPosition.jsx";
 import NewLogin from "./Components/Login/Login.jsx";
 import PlayerProfile from "./Components/PlayerComponents/PlayerProfile.jsx";
@@ -63,7 +63,7 @@ function App() {
 
         <Route path="/reset-pass" element={
           <PublicRoute>
-            <ResetPassword />
+            <ResetPassword/>
           </PublicRoute>
 
         } />
@@ -98,10 +98,10 @@ function App() {
         />
 
         {/* <Route
-          path="/player-profile"
+          path="/create-new-password"
           element={
             <ProtectedRoute>
-              <PlayerProfile />
+              
             </ProtectedRoute>
           }
 

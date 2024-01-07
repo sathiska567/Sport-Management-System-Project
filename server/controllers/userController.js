@@ -155,7 +155,6 @@ const getCurrentUserController = async(req,res)=>{
    }
 }
 
-
 // Apply position controller
 const applyPositionController = async(req,res)=>{
 
@@ -193,6 +192,6 @@ const applyPositionController = async(req,res)=>{
              })
         }
      
-     }
+}
 
 module.exports = { registerController, loginController,getCurrentUserController,applyPositionController };
