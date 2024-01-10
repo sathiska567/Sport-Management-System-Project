@@ -13,6 +13,8 @@ import PlayerProfile from "./Components/PlayerComponents/PlayerProfile.jsx";
 import PublicRoute from "./Components/PublicRoute/PublicRoute.js";
 import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute.js";
 import SignUp from "./Components/Login/SignUp.jsx";
+import Fixture from "./Components/Fixture/Fixture.jsx";
+import AddTeam from "./Components/Fixture/AddTeam.jsx"
 
 
 function App() {
@@ -93,6 +95,24 @@ function App() {
           element={
             <ProtectedRoute>
               <UserApplication />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          // Need to change after add table of application
+          path="/fixture"
+          element={
+            <ProtectedRoute>
+               <Fixture />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          // Need to change after add table of application
+          path="/addTeam"
+          element={
+            <ProtectedRoute>
+               <AddTeam />
             </ProtectedRoute>
           }
         />
