@@ -69,15 +69,57 @@ import axios from 'axios'
 export default function Fixture() {
 
  const [teamData , setTeamData] = useState([])
+         const shuffledArray = []
+        const usedIndexes = []
+        const [shuffledNewArray, setShuffledNewArray] = useState([]);
  
  const getTeamData = async()=>{
         const response = await axios.get("http://localhost:8080/api/v1/fixture/get-team")
-        console.log(response.data.data);
+        // console.log(response.data.data);
         setTeamData(response.data.data)
+        setShuffledNewArray(response.data.data)
  }
+
+
+ const ShuffleData = () => {
+            let i = 0;
+            console.log(teamData);
+                
+            while (i < teamData.length) {
+                
+            // const randomIndex = Math.floor(Math.random() * teamData.length);
+            const randomIndex = Math.floor(Math.random() * teamData.length)
+            // console.log(randomIndex);
+                
+             if(!usedIndexes.includes(randomIndex)){
+                 shuffledArray.push(teamData[randomIndex])
+                 usedIndexes.push(randomIndex)
+                 i++
+             }   
+
+            // console.log(shuffledArray);
+            // i++
+                        
+            }
+        setShuffledNewArray(shuffledArray)
+        console.log(shuffledArray);
+
+        }
+
+const shuffleDataStore = async()=>{
+     console.log("shuffled data : " ,shuffledNewArray);
+    //  for (let i = 0; i < shuffledNewArray.length; i++) {
+         const response = await axios.post("http://localhost:8080/api/v1/shuffle/newTeam",shuffledNewArray)
+        // console.log(shuffledNewArray[i]);
+      
+    //  }
+      }
+
+
 
  useEffect(()=>{
         getTeamData()
+        ShuffleData();
  },[])
 
 
@@ -85,8 +127,12 @@ export default function Fixture() {
     <>
      <SideBar>
          <div>
-             <h1>Fixture</h1>
+             {shuffledNewArray.map((data)=>(
+                <p>{data.TeamName}</p>
+             ))}
          </div>
+         <button onClick={ShuffleData}>Suffle</button><br />
+         <button onClick={shuffleDataStore}>Save</button>
      </SideBar>
     </>
   )

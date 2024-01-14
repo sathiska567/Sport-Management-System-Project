@@ -1,11 +1,13 @@
 const FixtureDataModel = require("../models/FixtureDataModel")
 
+
 const FixtureDataController = async(req,res)=>{
   
-    const {data} = req.body
+    const {teamName} = req.body
 
+    console.log(teamName);
     const user = new FixtureDataModel({
-        TeamName:data
+        TeamName:teamName
     })
 
     await user.save()

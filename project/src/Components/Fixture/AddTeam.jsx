@@ -14,7 +14,7 @@ const AddTeam = () => {
 const onFinish = async(values) => {
          console.log('Success:', values);
          const teamName = values.teamName;      
-
+         console.log(teamName);
          const respose = await axios.post("http://localhost:8080/api/v1/fixture/team",{teamName:teamName})
 
          console.log(respose);
