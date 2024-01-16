@@ -341,6 +341,10 @@ const SideBar = ({ children }) => {
                 <Link to="/fixture">Fixture Shuffle</Link>
               </Menu.Item>
 
+              {/* <Menu.Item key="4" icon={<PendingActions />}>
+                <Link to="/final-fixture">Fixture</Link>
+              </Menu.Item> */}
+
               <Menu.Item key="5" icon={<PendingActions />}>
                 <Link to="/update-fixture">Update Fixture</Link>
               </Menu.Item>

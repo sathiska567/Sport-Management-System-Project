@@ -4,6 +4,8 @@ import SideBar from '../DashboardSideBar/SideBar'
 import { useLocation } from 'react-router-dom'
 import { message } from 'antd';
 import axios from 'axios';
+import "./Fixture.css"
+
 
 export default function FinalizeFixture() {
   const location = useLocation([])
@@ -11,27 +13,28 @@ export default function FinalizeFixture() {
   const [selectionType, setSelectionType] = useState('checkbox');
 
 
+
+      // // rowSelection object indicates the need for row selection
+      // const rowSelection = {
+      //   onChange: (selectedRowKeys, selectedRows) => {
+      //     console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+      //   },
+      //   getCheckboxProps: (record) => ({
+      //     disabled: record.name === 'Disabled User',
+      //     // Column configuration not to be checked
+      //     name: record.name,
+      //   }),
+      // };
+
+
   console.log(location.state.shuffledDataId);
-
-
-    // rowSelection object indicates the need for row selection
-    const rowSelection = {
-      onChange: (selectedRowKeys, selectedRows) => {
-        console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-      },
-      getCheckboxProps: (record) => ({
-        disabled: record.name === 'Disabled User',
-        // Column configuration not to be checked
-        name: record.name,
-      }),
-    };
   
 
   const getFinalizeShuffle = async () => {
     try {
       const id = location.state.shuffledDataId
       const response = await axios.post("http://localhost:8080/api/v1/shuffle/newFixture", { id: id })
-      //  console.log(response.data.data.newTeam);
+       console.log(response.data.data);
       setFinalShuffle(response.data.data.newTeam);
 
 
@@ -45,52 +48,59 @@ export default function FinalizeFixture() {
     getFinalizeShuffle()
   }, [])
 
+  
+
   return (
     <>
       <SideBar>
 
-   <div>
+      <div className="fixtureContainer">
       <Radio.Group
         onChange={({ target: { value } }) => {
           setSelectionType(value);
         }}
         value={selectionType}
       >
-        <Radio value="checkbox">Checkbox</Radio>
-        <Radio value="radio">radio</Radio>
       </Radio.Group>
 
-      <Divider />
+              <Table
+                className="Table"
+                columns={[
+                  {
+                    title: "Teams Name",
+                    dataIndex: "teamName",
+                    render: (text, record) => <span>{record}</span>,
+                  },
 
-      <Table
-        rowSelection={{
-          type: selectionType,
-          ...rowSelection,
-        }}
-        columns={[
-          {
-            title: 'Name',
-            dataIndex: 'name',
-            // render: (text, record) => <a>{record.newTeam}</a>
-          },
+                  {
+                    title: "Event Time",
+                    dataIndex: "time",
+                    render: (text, record) => <span>8.30am</span>,
+                  },
 
-          {
-            title: 'Age',
-            dataIndex: 'age',
-          },
-          {
-            title: 'Address',
-            dataIndex: 'address',
-          },
-          
-        ]}
-        dataSource={finalShuffle}
-      />
-    </div>
+                  {
+                    title: "Location",
+                    dataIndex: "location",
+                    render: (text, record) => <span>Ground 01</span>,
+                  },
 
+                  {
+                    title: "Location",
+                    dataIndex: "location",
+                    
+                  },
 
-
-
+                ]}
+                pagination={{
+                  style: {
+                    marginTop: "50px",
+                  },
+                  pageSize: 5,
+                }}
+                // Displaying data from the backend
+                dataSource={finalShuffle}
+              ></Table>
+            </div>
 
       </SideBar>
     </>
