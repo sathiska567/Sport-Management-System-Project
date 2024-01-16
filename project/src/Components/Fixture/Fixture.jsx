@@ -65,13 +65,17 @@
 import React, { useEffect, useState } from 'react'
 import SideBar from '../DashboardSideBar/SideBar'
 import axios from 'axios'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { message } from 'antd'
 
 export default function Fixture() {
 
- const [teamData , setTeamData] = useState([])
-         const shuffledArray = []
+        const [teamData , setTeamData] = useState([])
+        const shuffledArray = []
         const usedIndexes = []
         const [shuffledNewArray, setShuffledNewArray] = useState([]);
+        const navigate = useNavigate()
+        const location = useLocation()
  
  const getTeamData = async()=>{
         const response = await axios.get("http://localhost:8080/api/v1/fixture/get-team")
@@ -107,12 +111,18 @@ export default function Fixture() {
         }
 
 const shuffleDataStore = async()=>{
-     console.log("shuffled data : " ,shuffledNewArray);
-    //  for (let i = 0; i < shuffledNewArray.length; i++) {
-         const response = await axios.post("http://localhost:8080/api/v1/shuffle/newTeam",shuffledNewArray)
-        // console.log(shuffledNewArray[i]);
-      
-    //  }
+        try {
+
+        console.log("shuffled data : " ,shuffledNewArray);
+        const response = await axios.post("http://localhost:8080/api/v1/shuffle/newTeam",shuffledNewArray)
+        // console.log(response.data.savedDocument._id);
+        const shuffledDataId = response.data.savedDocument._id
+        message.success(response.data.message)
+        navigate("/final-fixture",{state:{shuffledDataId:shuffledDataId}})
+
+        } catch (error) {
+          message.error("Shuffle fixture save have an error")
+        }      
       }
 
 

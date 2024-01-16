@@ -32,4 +32,29 @@ const shuffledNewTeamController = async (req, res) => {
   }
 };
 
-module.exports = { shuffledNewTeamController };
+
+// GET DATA || GET
+const getShuffledNewTeamController = async(req,res)=>{
+
+  try {
+    const {id} = req.body;
+    console.log("shuffle get id is " , id);
+    const data = await ShuffledNewTeamModel.findById(id);
+    console.log(data);
+    res.status(200).send({
+      success:true,
+      message:"Data Fetched Successfully",
+      data
+    })
+    
+  } catch (error) {
+    res.status(400).send({
+      success:false,
+      message:"Data Fetched Unsuccessfully",
+      error
+    })
+  }
+
+}
+
+module.exports = { shuffledNewTeamController,getShuffledNewTeamController };

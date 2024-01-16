@@ -15,6 +15,7 @@ import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute.js";
 import SignUp from "./Components/Login/SignUp.jsx";
 import Fixture from "./Components/Fixture/Fixture.jsx";
 import AddTeam from "./Components/Fixture/AddTeam.jsx"
+import FinalizeFixture from "./Components/Fixture/FinalizeFixture.jsx";
 
 
 function App() {
@@ -107,6 +108,17 @@ function App() {
             </ProtectedRoute>
           }
         />
+
+        <Route
+          // Need to change after add table of application
+          path="/final-fixture"
+          element={
+            <ProtectedRoute>
+              <FinalizeFixture/>
+            </ProtectedRoute>
+          }
+        />
+
         <Route
           // Need to change after add table of application
           path="/addTeam"
