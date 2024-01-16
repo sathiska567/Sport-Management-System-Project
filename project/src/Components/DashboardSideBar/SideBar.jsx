@@ -336,11 +336,17 @@ const SideBar = ({ children }) => {
               <Menu.Item key="2" icon={<PendingActions />}>
                 <Link to="/apply-position">Apply Position</Link>
               </Menu.Item>
-              {/* <Menu.Item key="3" icon={<ManageUser />}>
-                <Link to="/player-profile">Profile</Link>
-              </Menu.Item> */}
+
+              <Menu.Item key="3" icon={<PendingActions />}>
+                <Link to="/fixture">Fixture Shuffle</Link>
+              </Menu.Item>
+
+              <Menu.Item key="5" icon={<PendingActions />}>
+                <Link to="/update-fixture">Update Fixture</Link>
+              </Menu.Item>
+              
               <Menu.Item
-                key="4"
+                key="6"
                 icon={<PoweroffOutlined />}
                 style={{
                   position: "absolute",

@@ -21,9 +21,9 @@ body {
   align-items: center;
 }
 
-// menu text
+/* menu text
 .ant-menu-title-content {
-}
+} */
 
 .ant-layout-header {
   padding: 0;
@@ -60,7 +60,7 @@ top: -76px;
   background-color: red;
 }
 
-// dashboard icon
+/* // dashboard icon */
 .dashboard-icon {
 }
 
