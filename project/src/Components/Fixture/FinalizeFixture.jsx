@@ -58,9 +58,7 @@ export default function FinalizeFixture() {
 
      })
 
-  }
-
-  
+  }  
 
   return (
     <>
@@ -96,13 +94,6 @@ export default function FinalizeFixture() {
                     render: (text, record) => <span>Ground 01</span>,
                   },
 
-                  // {
-                  //   title: "Winning Status",
-                  //   dataIndex: "wid",
-                  //   render: (text, record) => <span><><CheckboxComponent/></></span>,
-                    
-                  // },
-
                 ]}
                 pagination={{
                   style: {
@@ -110,6 +101,7 @@ export default function FinalizeFixture() {
                   },
                   pageSize: 100,
                 }}
+
                 // Displaying data from the backend
                 dataSource={finalShuffle}
               >
@@ -117,7 +109,7 @@ export default function FinalizeFixture() {
               </Table>
             </div>
 
-            <div>
+      <div>
             <button onClick={handleDownload}>Download</button>
 
             </div>
