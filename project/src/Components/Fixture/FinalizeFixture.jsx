@@ -1,30 +1,19 @@
-import React, { useEffect, useState } from 'react'
-import { Divider, Radio, Table } from 'antd';
+import React, { useEffect, useRef, useState } from 'react'
+import { Checkbox, Divider, Radio, Table, Button } from 'antd';
 import SideBar from '../DashboardSideBar/SideBar'
 import { useLocation } from 'react-router-dom'
 import { message } from 'antd';
 import axios from 'axios';
 import "./Fixture.css"
+import html2canvas from 'html2canvas';
+import jspdf from "jspdf"
 
 
 export default function FinalizeFixture() {
   const location = useLocation([])
   const [finalShuffle, setFinalShuffle] = useState([])
   const [selectionType, setSelectionType] = useState('checkbox');
-
-
-
-      // // rowSelection object indicates the need for row selection
-      // const rowSelection = {
-      //   onChange: (selectedRowKeys, selectedRows) => {
-      //     console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-      //   },
-      //   getCheckboxProps: (record) => ({
-      //     disabled: record.name === 'Disabled User',
-      //     // Column configuration not to be checked
-      //     name: record.name,
-      //   }),
-      // };
+  const pdfRef = useRef();
 
 
   console.log(location.state.shuffledDataId);
@@ -48,13 +37,36 @@ export default function FinalizeFixture() {
     getFinalizeShuffle()
   }, [])
 
+
+  const handleDownload = async()=>{
+      
+     const input = pdfRef.current;
+
+     html2canvas(input).then((canvas)=>{
+        const imgData = canvas.toDataURL('image/png')   //convert data as images
+        const pdf = new jspdf('p', 'mm', 'a4' , true);    //use to generate pdf p - portrait mode(can use l - landscape mode) , mm - dimension(can pass difference dimension) , a4 - sheet formate(can pass a1,a2..) , true - optimization in pdf(reduce file size)
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = pdf.internal.pageSize.getHeight();
+        const imgWidth = canvas.width;
+        const imgHeight = canvas.height;
+        const ratio = Math.min(pdfWidth/imgWidth , pdfHeight/imgHeight)
+        const imgX = (pdfWidth - imgWidth*ratio)/2;
+        const imgY = 30;
+        pdf.addImage(imgData,"PNG",imgX,imgY,imgWidth*ratio , imgHeight*ratio)
+        pdf.save("Fixture.pdf")
+
+
+     })
+
+  }
+
   
 
   return (
     <>
       <SideBar>
 
-      <div className="fixtureContainer">
+      <div className="fixtureContainer" ref={pdfRef}>
       <Radio.Group
         onChange={({ target: { value } }) => {
           setSelectionType(value);
@@ -84,23 +96,32 @@ export default function FinalizeFixture() {
                     render: (text, record) => <span>Ground 01</span>,
                   },
 
-                  {
-                    title: "Location",
-                    dataIndex: "location",
+                  // {
+                  //   title: "Winning Status",
+                  //   dataIndex: "wid",
+                  //   render: (text, record) => <span><><CheckboxComponent/></></span>,
                     
-                  },
+                  // },
 
                 ]}
                 pagination={{
                   style: {
                     marginTop: "50px",
                   },
-                  pageSize: 5,
+                  pageSize: 100,
                 }}
                 // Displaying data from the backend
                 dataSource={finalShuffle}
-              ></Table>
+              >
+
+              </Table>
             </div>
+
+            <div>
+            <button onClick={handleDownload}>Download</button>
+
+            </div>
+
 
       </SideBar>
     </>
