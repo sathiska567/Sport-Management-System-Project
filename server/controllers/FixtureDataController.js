@@ -21,6 +21,7 @@ const FixtureDataController = async(req,res)=>{
 
 
 const GetFixtureDataController = async(req,res)=>{
+   try {
    const data = await FixtureDataModel.find({})
 
    res.status(200).send({
@@ -28,6 +29,13 @@ const GetFixtureDataController = async(req,res)=>{
         message:"Data get successfully",
         data
    })
+   } catch (error) {
+    res.status(400).send({
+        success:false,
+        message:"Data get Unsuccessfully",
+        error
+   })
+   }
 }
 
 module.exports = {FixtureDataController,GetFixtureDataController};

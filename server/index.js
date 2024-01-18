@@ -9,6 +9,8 @@ const forgottenPasswordRoute = require("./routes/ForgottenPasswordRoute");
 const FixtureRoute = require("./routes/FixtureRoute");
 const shuffledNewTeamRoute = require("./routes/shuffledNewTeamRoute")
 const UpdateFixtureRoute = require("./routes/UpdateFixtureRoute")
+const deleteRoute = require("./routes/deleteRoute")
+const StoreRoute = require("./routes/StoreRoute")
 
 require("./db/mongoDb"); 
 
@@ -23,6 +25,8 @@ app.use("/api/v1/forgotten", forgottenPasswordRoute);
 app.use("/api/v1/fixture", FixtureRoute);
 app.use("/api/v1/shuffle", shuffledNewTeamRoute);
 app.use("/api/v1/finalFixture",UpdateFixtureRoute );
+app.use("/api/v1/delete",deleteRoute );
+app.use("api/v1/store",StoreRoute)
 
 
 

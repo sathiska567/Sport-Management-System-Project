@@ -74,8 +74,10 @@ export default function Fixture() {
         const shuffledArray = []
         const usedIndexes = []
         const [shuffledNewArray, setShuffledNewArray] = useState([]);
+        const [newArray,setNewArray] = useState([])
         const navigate = useNavigate()
         const location = useLocation()
+        const matches = [];
  
  const getTeamData = async()=>{
         const response = await axios.get("http://localhost:8080/api/v1/fixture/get-team")
@@ -126,8 +128,45 @@ const shuffleDataStore = async()=>{
       }
 
 
+const singleEliminate = async()=>{
+    console.log(shuffledNewArray.length);
 
- useEffect(()=>{
+    for (let i = 0; i < shuffledNewArray.length; i += 2) {    
+      const matchNumber = `Match${(i / 2) + 1}`;
+      matches.push({
+        [matchNumber]: {
+
+          team1: shuffledNewArray[i],
+          team2: shuffledNewArray[i + 1],
+
+        }
+      });
+    }
+
+
+    setNewArray(matches)
+    console.log(newArray);
+
+
+
+    // try {
+
+    //   const response = await axios.post("http://localhost:8080/api/v1/store/store-data");
+    //   console.log(response);
+
+    // }
+    
+    // catch (error) {
+    //   console.error("Error making API request:", error);
+    // }
+    
+
+    // console.log(matches);
+    
+}
+
+
+useEffect(()=>{
         getTeamData()
         ShuffleData();
  },[])
@@ -141,8 +180,10 @@ const shuffleDataStore = async()=>{
                 <p>{data.TeamName}</p>
              ))}
          </div>
+         
          <button onClick={ShuffleData}>Suffle</button><br />
          <button onClick={shuffleDataStore}>Save</button>
+         <button onClick={singleEliminate}>Single Eliminate</button>
      </SideBar>
     </>
   )

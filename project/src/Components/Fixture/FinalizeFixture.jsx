@@ -12,8 +12,11 @@ import jspdf from "jspdf"
 export default function FinalizeFixture() {
   const location = useLocation([])
   const [finalShuffle, setFinalShuffle] = useState([])
+  const [length,setlength] = useState(0)
   const [selectionType, setSelectionType] = useState('checkbox');
   const pdfRef = useRef();
+  const i = 0;
+  const j = i+2;
 
 
   console.log(location.state.shuffledDataId);
@@ -23,8 +26,11 @@ export default function FinalizeFixture() {
     try {
       const id = location.state.shuffledDataId
       const response = await axios.post("http://localhost:8080/api/v1/shuffle/newFixture", { id: id })
-       console.log(response.data.data);
+      console.log(response.data.data.newTeam.length);
       setFinalShuffle(response.data.data.newTeam);
+
+      console.log(finalShuffle);
+
 
 
     } catch (error) {
@@ -64,14 +70,7 @@ export default function FinalizeFixture() {
     <>
       <SideBar>
 
-      <div className="fixtureContainer" ref={pdfRef}>
-      <Radio.Group
-        onChange={({ target: { value } }) => {
-          setSelectionType(value);
-        }}
-        value={selectionType}
-      >
-      </Radio.Group>
+      {/* <div className="fixtureContainer" ref={pdfRef}>
 
               <Table
                 className="Table"
@@ -79,7 +78,9 @@ export default function FinalizeFixture() {
                   {
                     title: "Teams Name",
                     dataIndex: "teamName",
-                    render: (text, record) => <span>{record}</span>,
+                    render: (text, record) =>(
+                      <span>{record}</span>
+                    )
                   },
 
                   {
@@ -107,7 +108,11 @@ export default function FinalizeFixture() {
               >
 
               </Table>
-            </div>
+      </div> */}
+
+      {finalShuffle.map((data)=>(
+          <p>{data}</p>
+      ))}
 
       <div>
             <button onClick={handleDownload}>Download</button>

@@ -25,6 +25,32 @@ const getAllCreatedFixtureController = async(req,res)=>{
 
 
 
+// GET CURRENT FIXTURE CONTROLLER
+const getCurrentCreatedFixtureController = async(req,res)=>{
+   try {
+      const {id}= req.body
+
+      const details = await suffledNewTeamModel.findById(id);
+      // console.log(details);
+
+      res.status(200).send({
+         success:true,
+         message:"Current fixture data fetched successfully",
+         details
+      })
+      
+   } catch (error) {
+      res.status(400).send({
+         success:true,
+         message:"Current fixture data fetched Unsuccessfully",
+      })
+   }
+    
+
+}
+
+
+
 // DELETE FIXTURE
 const deleteFixtureController = async(req,res)=>{
         try {
@@ -62,4 +88,4 @@ const fixtureUpdateController = async(req,res)=>{
 }
 
 
-module.exports = {getAllCreatedFixtureController,deleteFixtureController,fixtureUpdateController}
+module.exports = {getAllCreatedFixtureController,deleteFixtureController,fixtureUpdateController,getCurrentCreatedFixtureController}

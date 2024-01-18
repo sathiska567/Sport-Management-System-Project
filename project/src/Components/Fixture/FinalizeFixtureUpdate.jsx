@@ -28,7 +28,7 @@ const handleDelete = async (id) => {
     try {
       // const id = id;
       const response = await axios.post("http://localhost:8080/api/v1/finalFixture/delete", { id: id })
-      console.log(response);
+      // console.log(response);
       message.success("Data deleted successfully");
       window.location.reload();
 
@@ -42,7 +42,6 @@ const handleUpdate = async(id)=>{
     // console.log(id);
     // const response = await axios.post("http://localhost:8080/api/v1/finalFixture/update",{id})
     // console.log(response);
-
     navigate("/final-update-fixture",{state:{id:id}})
 
   }
