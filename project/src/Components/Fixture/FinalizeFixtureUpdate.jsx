@@ -2,10 +2,12 @@ import React, { useEffect, useState } from 'react'
 import SideBar from '../DashboardSideBar/SideBar'
 import axios from 'axios'
 import { Input, Table, message } from 'antd'
+import { useNavigate } from 'react-router-dom'
 
 export default function FinalizeFixtureUpdate() {
   const [newTeamdata, setnewTeamData] = useState([])
   const [fixtures, setFixture] = useState([])
+  const navigate = useNavigate();
 
 const getAllFixtures = async () => {
 
@@ -37,9 +39,12 @@ const handleDelete = async (id) => {
 
 
 const handleUpdate = async(id)=>{
-    console.log(id);
-    const response = await axios.post("http://localhost:8080/api/v1/finalFixture/update",{id})
-    console.log(response);
+    // console.log(id);
+    // const response = await axios.post("http://localhost:8080/api/v1/finalFixture/update",{id})
+    // console.log(response);
+
+    navigate("/final-update-fixture",{state:{id:id}})
+
   }
 
   useEffect(() => {
