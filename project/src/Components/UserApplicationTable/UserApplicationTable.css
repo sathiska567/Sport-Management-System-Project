@@ -3,61 +3,6 @@ body {
   width: 100vw;
   overflow-x: hidden;
 }
-/*User Application*/
-
-.UserApplicationForm {
-  max-width: 800px;
-  margin-top: auto;
-  margin-bottom: auto;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.ant-form-item-control {
-    width: calc(100% - 120px); /* Adjust the width as needed */
-}
-
-.ant-form-item-label {
-    width: 120px; /* Adjust the width as needed */
-    margin-left: 100px;
-}
-
-
-.UserApplicationFormHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #022C3B;
-  margin: 0;
-  padding: 10px;
-}
-
-.UserApplicationFormHeader h3 {
-  color: #e0f7ff;
-  margin: 0;
-  flex: 1; /* Take up remaining space, centering the h3 */
-  text-align: center;
-}
-
-.UserApplicationFormApplication {
-  max-height: 500px; 
-  overflow-y: auto; 
-  border: 1px solid #e0f7ff;
-  border-radius: 4px;
-  background-color: #D6F5FF;
-  color: #022C3B;
-  font-weight: 500;
-}
-
-/* Style for Submit button */
-
-.UserApplicationCloseBtn {
-position : relative;
-  font-size: 22px;
-  color: #e0f7ff;
-  cursor: pointer;
-}
-
 
 /* Style for the table */
 
@@ -70,18 +15,8 @@ position : relative;
 
 .tableContainer {
     width: 100%;
-    margin-top: 30px;
-    max-height: 480px; /* Set the maximum height as per your requirement */
-    overflow-y: auto; /* Add a vertical scroll bar if the content overflows */
-}
-.table {
-    margin-top: 20px;
-    margin-bottom: 20px;
-    width: 100%;
-    justify-content: center;
-}
-.custom-table .ant-table-thead > tr > th {
-  height: 20px; /* Adjust the height as needed */
+    margin-top: 0px;
+    /* Add a vertical scroll bar if the content overflows */
 }
 
 :where(.css-dev-only-do-not-override-qgg3xn).ant-table-wrapper .ant-table-thead >tr>th, :where(.css-dev-only-do-not-override-qgg3xn).ant-table-wrapper .ant-table-thead >tr>td {
@@ -89,3 +24,29 @@ position : relative;
   color: #fff;
   font-weight: 500;
 }
+
+.ant-table-row .ant-table-row-level-0 {
+  height: 10px !important ;/* Adjust the height as needed */
+}
+
+/* CSS */
+.tableContainer th {
+  position: sticky;
+  top: 0;
+  background: white;
+  z-index: 10;
+}
+
+.tableContainer tbody {
+  display: block;
+  height: 400px;
+  overflow: auto;
+}
+
+.tableContainer thead, .tableContainer tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+

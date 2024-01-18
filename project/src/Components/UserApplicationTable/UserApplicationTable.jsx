@@ -70,8 +70,10 @@ const UserApplicationTable = () => {
   // Filter userApplicationData based on userRole and Userlocation
   const filteredData = userApplicationData.filter((data) => {
     return (
-      data.UserRole.toLowerCase().includes(userRole.toLowerCase()) &&
-      data.Distric.toLowerCase().includes(Userlocation.toLowerCase())
+      data.UserRole &&
+      data.UserRole.toLowerCase().includes(userRole) &&
+      data.Distric &&
+      data.Distric.toLowerCase().includes(Userlocation)
     );
   });
 
@@ -89,7 +91,7 @@ const UserApplicationTable = () => {
             style={{
               margin: "16px",
               padding: 24,
-              minHeight: 280,
+              minHeight: 180,
               height: "100%",
               background: "whitesmoke",
             }}
@@ -168,6 +170,8 @@ const UserApplicationTable = () => {
                               fontSize: "14px",
                               marginRight: "10px",
                               borderRadius: "5px",
+                              marginTop: "auto",
+                              marginBottom: "auto",
                             }}
                             onClick={() => NavigateDetailsPage(record)}
                           >
@@ -183,6 +187,8 @@ const UserApplicationTable = () => {
                               fontSize: "14px",
                               marginRight: "10px",
                               borderRadius: "5px",
+                              marginTop: "auto",
+                              marginBottom: "auto",
                             }}
                             onClick={() => NavigateDetailsPage(record)}
                           >
@@ -198,6 +204,8 @@ const UserApplicationTable = () => {
                             color: "#fff",
                             fontSize: "14px",
                             borderRadius: "5px",
+                            marginTop: "auto",
+                            marginBottom: "auto",
                           }}
                           onClick={() => handleDelete(record)}
                         >
@@ -210,7 +218,7 @@ const UserApplicationTable = () => {
                 ]}
                 pagination={{
                   style: {
-                    marginTop: "50px",
+                    marginTop: "10px",
                   },
                   pageSize: 5,
                 }}
