@@ -127,42 +127,57 @@ const shuffleDataStore = async()=>{
       }
 
 
-const singleEliminate = async()=>{
-    console.log(shuffledNewArray.length);
+const singleEliminate = async () => {
+  const matches = [];
+ 
+  const shuffleArrayLength = shuffledNewArray.length;
+  console.log(shuffleArrayLength);
+    
+  if (shuffleArrayLength % 2 === 0) {
+    console.log("hello");
+  } else {
+    const newLength = shuffleArrayLength - 1;
+    const finalValueIndex = newLength + 1;
+    console.log(newLength);
+    console.log(finalValueIndex);
 
-    for (let i = 0; i < shuffledNewArray.length; i += 2) {    
-      const matchNumber = `Match${(i / 2) + 1}`;
+    for (let i = 0; i < newLength ; i ++ ) {  // 8
+      const matchNumber = `Match${i + 1}`;
       matches.push({
         [matchNumber]: {
-
           team1: shuffledNewArray[i],
           team2: shuffledNewArray[i + 1],
-
-        }
+        },
       });
     }
 
+    const j = 1;
+    matches.push({
+      [`Match${newLength-j}`]: {
+        team1: shuffledNewArray[newLength],
+        team2: "Match 01 Winning team",
+        
+      },
+      
+    });
+  }
 
-    setNewArray(matches)
-    console.log(newArray);
+
+  console.log(matches);
 
 
-
-    // try {
-
-    //   const response = await axios.post("http://localhost:8080/api/v1/store/store-data");
-    //   console.log(response);
-
-    // }
+        // for (let i = 0; i < shuffledNewArray.length; i += 2) {
+        //   const matchNumber = `Match${i / 2 + 1}`;
+        //   matches.push({
+        //     [matchNumber]: {
+        //       team1: shuffledNewArray[i],
+        //       team2: shuffledNewArray[i + 1],
+        //     },
+        //   });
+        // }
     
-    // catch (error) {
-    //   console.error("Error making API request:", error);
-    // }
-    
-
-    // console.log(matches);
-    
-}
+        
+      };
 
 
 useEffect(()=>{
@@ -181,7 +196,7 @@ useEffect(()=>{
          </div>
          
          <button onClick={ShuffleData}>Suffle</button><br />
-         <button onClick={shuffleDataStore}>Save</button>
+         <button onClick={shuffleDataStore}>Save</button><br />
          <button onClick={singleEliminate}>Single Eliminate</button>
      </SideBar>
     </>
