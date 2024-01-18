@@ -93,7 +93,6 @@ export default function Fixture() {
                 
             while (i < teamData.length) {
                 
-            // const randomIndex = Math.floor(Math.random() * teamData.length);
             const randomIndex = Math.floor(Math.random() * teamData.length)
             // console.log(randomIndex);
                 
