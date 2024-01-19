@@ -66,7 +66,7 @@ import React, { useEffect, useState } from 'react'
 import SideBar from '../DashboardSideBar/SideBar'
 import axios from 'axios'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { message } from 'antd'
+import { Table, message } from 'antd'
 
 export default function Fixture() {
 
@@ -74,16 +74,18 @@ export default function Fixture() {
         const shuffledArray = []
         const usedIndexes = []
         const [shuffledNewArray, setShuffledNewArray] = useState([]);
-        const [newArray,setNewArray] = useState([])
+        const [newArrayLength,setNewArrayLength] = useState([])
         const navigate = useNavigate()
         const location = useLocation()
         const matches = [];
  
  const getTeamData = async()=>{
         const response = await axios.get("http://localhost:8080/api/v1/fixture/get-team")
-        // console.log(response.data.data);
+        console.log(response.data.data);
         setTeamData(response.data.data)
         setShuffledNewArray(response.data.data)
+        setNewArrayLength(response.data.data)
+        console.log(newArrayLength.length);
  }
 
 
@@ -109,7 +111,8 @@ export default function Fixture() {
         setShuffledNewArray(shuffledArray)
         console.log(shuffledArray);
 
-        }
+      
+      }
 
 const shuffleDataStore = async()=>{
         try {
@@ -126,58 +129,21 @@ const shuffleDataStore = async()=>{
         }      
       }
 
+ const handleSingleEliminate = async()=>{
+  navigate("/test-fixture", { state: { teamsCount: newArrayLength.length } });
+ }
 
-const singleEliminate = async () => {
-  const matches = [];
- 
-  const shuffleArrayLength = shuffledNewArray.length;
-  console.log(shuffleArrayLength);
+const handleDelete = async(id)=>{
+   try {
+    const response = await axios.post("http://localhost:8080/api/v1/delete/delte-team",{id:id})
+    message.success(response.data.message)
+    window.location.reload()
     
-  if (shuffleArrayLength % 2 === 0) {
-    console.log("hello");
-  } else {
-    const newLength = shuffleArrayLength - 1;
-    const finalValueIndex = newLength + 1;
-    console.log(newLength);
-    console.log(finalValueIndex);
-
-    for (let i = 0; i < newLength ; i ++ ) {  // 8
-      const matchNumber = `Match${i + 1}`;
-      matches.push({
-        [matchNumber]: {
-          team1: shuffledNewArray[i],
-          team2: shuffledNewArray[i + 1],
-        },
-      });
-    }
-
-    const j = 1;
-    matches.push({
-      [`Match${newLength-j}`]: {
-        team1: shuffledNewArray[newLength],
-        team2: "Match 01 Winning team",
-        
-      },
-      
-    });
-  }
-
-
-  console.log(matches);
-
-
-        // for (let i = 0; i < shuffledNewArray.length; i += 2) {
-        //   const matchNumber = `Match${i / 2 + 1}`;
-        //   matches.push({
-        //     [matchNumber]: {
-        //       team1: shuffledNewArray[i],
-        //       team2: shuffledNewArray[i + 1],
-        //     },
-        //   });
-        // }
+   } catch (error) {
+    message.error("Delete have an error")
     
-        
-      };
+   }
+}
 
 
 useEffect(()=>{
@@ -189,15 +155,75 @@ useEffect(()=>{
   return (
     <>
      <SideBar>
-         <div>
+         {/* <div>
              {shuffledNewArray.map((data)=>(
                 <p>{data.TeamName}</p>
              ))}
-         </div>
-         
-         <button onClick={ShuffleData}>Suffle</button><br />
-         <button onClick={shuffleDataStore}>Save</button><br />
-         <button onClick={singleEliminate}>Single Eliminate</button>
+         </div> */}
+
+
+    <div className="fixtureContainer">
+
+              <Table
+                className="Table"
+                columns={[
+                  {
+                    title: "Team Number",
+                    width: "10%",
+                    dataIndex: "teamNumber",
+                    render: (text, record, index) => (
+                      <span key={index}>{index + 1}</span>
+                    )
+                  },                  
+                  {
+                    title: "Teams Name",
+                    dataIndex: "teamName",
+                    render: (text, record) =>(
+                      <span>{record.TeamName}</span>
+                    )
+                  },
+
+                  {
+                    title: "Event Time",
+                    dataIndex: "time",
+                    render: (text, record) => <span>8.30am</span>,
+                  },
+
+                  {
+                    title: "Location",
+                    dataIndex: "location",
+                    render: (text, record) => <span>Ground 01</span>,
+                  },
+
+                  {
+                    title: "Action",
+                    dataIndex: "action",
+                    render: (text, record) => (
+                      <span><button onClick={()=>handleDelete(record._id)}>delete</button></span>
+                    ),
+                  },
+
+                ]}
+                pagination={{
+                  style: {
+                    marginTop: "50px",
+                  },
+                  pageSize: 100,
+                }}
+
+                // Displaying data from the backend
+                dataSource={shuffledNewArray}
+              >
+
+              </Table>
+
+        <button onClick={ShuffleData}>Suffle</button>
+        <button onClick={shuffleDataStore}>Save Shuffle</button>
+        <button onClick={handleSingleEliminate}>Single Eliminate</button>
+
+
+      </div>
+
      </SideBar>
     </>
   )

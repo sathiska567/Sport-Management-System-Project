@@ -18,6 +18,7 @@ import AddTeam from "./Components/Fixture/AddTeam.jsx"
 import FinalizeFixture from "./Components/Fixture/FinalizeFixture.jsx";
 import FinalizeFixtureUpdate from "./Components/Fixture/FinalizeFixtureUpdate.jsx";
 import FinalUpdate from "./Components/Fixture/FinalUpdate.jsx";
+import SetFixtureRound from "./Components/Fixture/SetFixtureRound.jsx";
 
 
 function App() {
@@ -137,6 +138,16 @@ function App() {
           element={
             <ProtectedRoute>
                <FinalUpdate/>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          // Need to change after add table of application
+          path="/test-fixture"
+          element={
+            <ProtectedRoute>
+               <SetFixtureRound/>
             </ProtectedRoute>
           }
         />
