@@ -10,9 +10,10 @@ import { useLocation } from 'react-router-dom';
 export default function SetFixtureRound() {
   const [fixture, setFixture] = useState([]);
   const pdfRef = useRef();
-  const location = useLocation();
+  const location = useLocation([]);
   const players = location.state.teamsCount;
 
+  console.log(location);
 
   const singleEliminate = async () => {
     const elimBracket = SingleElimination(players, 1 , true);

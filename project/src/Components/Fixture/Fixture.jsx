@@ -74,7 +74,7 @@ export default function Fixture() {
         const shuffledArray = []
         const usedIndexes = []
         const [shuffledNewArray, setShuffledNewArray] = useState([]);
-        const [newArrayLength,setNewArrayLength] = useState([])
+        // const [newArrayLength,setNewArrayLength] = useState([])
         const navigate = useNavigate()
         const location = useLocation()
         const matches = [];
@@ -84,8 +84,8 @@ export default function Fixture() {
         console.log(response.data.data);
         setTeamData(response.data.data)
         setShuffledNewArray(response.data.data)
-        setNewArrayLength(response.data.data)
-        console.log(newArrayLength.length);
+        // setNewArrayLength(response.data.data)
+        // console.log(newArrayLength.length);
  }
 
 
@@ -129,9 +129,9 @@ const shuffleDataStore = async()=>{
         }      
       }
 
- const handleSingleEliminate = async()=>{
-  navigate("/test-fixture", { state: { teamsCount: newArrayLength.length } });
- }
+//  const handleSingleEliminate = async()=>{
+//   navigate("/test-fixture", { state: { teamsCount: newArrayLength.length } });
+//  }
 
 const handleDelete = async(id)=>{
    try {
@@ -219,7 +219,7 @@ useEffect(()=>{
 
         <button onClick={ShuffleData}>Suffle</button>
         <button onClick={shuffleDataStore}>Save Shuffle</button>
-        <button onClick={handleSingleEliminate}>Single Eliminate</button>
+        {/* <button onClick={handleSingleEliminate}>Single Eliminate</button> */}
 
 
       </div>

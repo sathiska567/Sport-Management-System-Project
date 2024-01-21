@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Checkbox, Divider, Radio, Table, Button } from 'antd';
 import SideBar from '../DashboardSideBar/SideBar'
-import { useLocation } from 'react-router-dom'
+import { Navigate, useLocation, useNavigate } from 'react-router-dom'
 import { message } from 'antd';
 import axios from 'axios';
 import "./Fixture.css"
@@ -17,21 +17,22 @@ export default function FinalizeFixture() {
   const pdfRef = useRef();
   const i = 0;
   const j = i+2;
+  const navigate = useNavigate()
+  const [newArrayLength,setNewArrayLength] = useState([])
 
 
   console.log(location.state.shuffledDataId);
   
 
-  const getFinalizeShuffle = async () => {
+const getFinalizeShuffle = async () => {
     try {
       const id = location.state.shuffledDataId
       const response = await axios.post("http://localhost:8080/api/v1/shuffle/newFixture", { id: id })
       console.log(response.data.data.newTeam.length);
+      // setShuffledNewArray(response.data.data)
+      setNewArrayLength(response.data.data.newTeam)
       setFinalShuffle(response.data.data.newTeam);
-
-      console.log(finalShuffle);
-
-
+      console.log(newArrayLength.length);
 
     } catch (error) {
       message.error("Error Occure in Finalize Fixture")
@@ -66,11 +67,17 @@ export default function FinalizeFixture() {
 
   }  
 
+  
+ const handleSingleEliminate = async()=>{
+  navigate("/test-fixture", { state: { teamsCount: newArrayLength.length } });
+ }
+
+
   return (
     <>
       <SideBar>
 
-      {/* <div className="fixtureContainer" ref={pdfRef}>
+      <div className="fixtureContainer" ref={pdfRef}>
 
               <Table
                 className="Table"
@@ -108,14 +115,16 @@ export default function FinalizeFixture() {
               >
 
               </Table>
-      </div> */}
+      </div>
 
-      {finalShuffle.map((data)=>(
+      {/* {finalShuffle.map((data)=>(
           <p>{data}</p>
-      ))}
+      ))} */}
 
       <div>
             <button onClick={handleDownload}>Download</button>
+            <button onClick={handleSingleEliminate}>Single Eliminate</button>
+
 
             </div>
 
