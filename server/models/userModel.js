@@ -21,7 +21,27 @@ const userSchema = new mongoose.Schema({
   isAdmin : {
     type : Boolean,
     default : false
- },  
+ }, 
+ 
+ isEventOrganizer:{
+  type:Boolean,
+  default:false
+},
+
+isCoach:{
+  type:Boolean,
+  default:false
+},
+
+isPlayer:{
+  type:Boolean,
+  default:false
+},
+
+isReferee:{
+  type:Boolean,
+  default:false
+},
  
 notification : {
   type : Array,

@@ -29,7 +29,9 @@ const getAllDetailsController = async(req,res)=>{
 const handleStatusController = async(req,res)=>{
         
         try {
-         const {id,status} = req.body;
+         const {id,status,userRole} = req.body;
+
+         console.log(userRole);
          const UpdatedUser = await PlayerModel.findByIdAndUpdate(id , {status})
 
          const updatedUser = await User.findOne({isAdmin:true}) 

@@ -40,12 +40,13 @@ const UserApplication = () => {
   const [newAge, setNewAge] = useState();
   const [distric, setNewDistric] = useState();
 
-  const handleStatus = async (id, status) => {
+  const handleStatus = async (id, status , userRole) => {
+    console.log(userRole);
     try {
       // console.log(id,status);
       const res = await axios.post(
         "http://localhost:8080/api/v1/admin/handle-status",
-        { id: id, status: status }
+        { id: id, status: status , userRole: userRole}
       );
 
       message.success("Your Approval is Successfull");
@@ -236,7 +237,7 @@ const UserApplication = () => {
                     <button
                       class="approve userAppBTn"
                       onClick={() =>
-                        handleStatus(location.state?.record?._id, "Approve")
+                        handleStatus(location.state?.record?._id, "Approve" , location.state?.record?.UserRole)
                       }
                     >
                       <UserAddOutlined className="UserApplicationIcon" />
