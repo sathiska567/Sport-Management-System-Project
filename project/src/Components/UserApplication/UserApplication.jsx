@@ -30,7 +30,7 @@ const UserApplication = () => {
   const [userApplicationData, setUserApplicationData] = useState([]);
 
   const location = useLocation([]);
-  console.log("dashboad : " , location);
+  // console.log("dashboad : " , location);
 
   const navigate = useNavigate();
   const [getApproval, setGetApproval] = useState();
@@ -39,10 +39,11 @@ const UserApplication = () => {
   const [newEmail, setNewEmail] = useState();
   const [newAge, setNewAge] = useState();
   const [distric, setNewDistric] = useState();
+  const [applyingUserEmail,setApplyingUserEmail] = useState("");
   // const location = useLocation();
 
-const handleStatus = async (id, status , userRole) => {
-    console.log(userRole);
+const handleStatus = async (id, status) => {
+
     try {
       // console.log(id,status);
       const res = await axios.post(
@@ -54,9 +55,25 @@ const handleStatus = async (id, status , userRole) => {
       navigate("/UserValidation", { state: { status: status } });
 
       setGetApproval(res.data.UpdatedUser.status);
+
     } catch (error) {
       message.error("Error while occure the Handle status function");
     }
+
+    //  ----------------------------------------------------------------------------------------------
+    try {
+
+     // console.log(location.state.record.Email);
+      const aproveResponse = await axios.post("http://localhost:8080/api/v1/aprove/aprove-user-model",{email:location.state.record.Email,userRole:location.state.record.UserRole})
+      console.log("approve response : " ,aproveResponse);
+
+    } catch (error) {
+      console.log("error found in gettign aproveResponse");
+      
+    }
+
+
+
   };
 
   const handleUpdatedDetails = async (updatedId) => {
@@ -116,28 +133,28 @@ const handleStatus = async (id, status , userRole) => {
     }
   };
 
-const getCurrentLoginUserDetails = async () => {
-    try {
-      const CurrentUserResponse = await axios.get("http://localhost:8080/api/v1/user/getCurrentUser",{
-         headers:{
-           Authorization:`Bearer ${localStorage.getItem("token")}`
-         }
-      })
-      // Handle the response or do something with the data
-      console.log(CurrentUserResponse);
+// const getCurrentLoginUserDetails = async () => {
+//     try {
+//       const CurrentUserResponse = await axios.get("http://localhost:8080/api/v1/user/getCurrentUser",{
+//          headers:{
+//            Authorization:`Bearer ${localStorage.getItem("token")}`
+//          }
+//       })
+//       // Handle the response or do something with the data
+//       console.log(CurrentUserResponse);
   
-    } catch (error) {
-      // Handle errors
-      console.error(error);
-    }
-  };
+//     } catch (error) {
+//       // Handle errors
+//       console.error(error);
+//     }
+//   };
 
   // End
 
   // Get the data from the backend
   // Start
   useEffect(() => {
-    getCurrentLoginUserDetails()
+    // getCurrentLoginUserDetails()
   }, []);
   // End
 

@@ -33,6 +33,10 @@ const SideBar = ({ children }) => {
   const [currentUserName, setCurrentUsername] = useState();
   const [isAdmin, setIsAdmin] = useState(false);
   const [positionNotification, setPositionNotification] = useState();
+  const [isCoach, setIsCoach] = useState("")
+  const [isEventOrganizer, setIsEventOrganizer] = useState("")
+  const [isPlayer, setIsPlayer] = useState("")
+  const [isReferee, setIsReferee] = useState("")
 
   // Event handlers for mouse hover events
   const handleHoverButton1 = () => {
@@ -80,14 +84,18 @@ const SideBar = ({ children }) => {
         }
       );
 
-      console.log(res.data.user.notification[0]);
+      console.log(res.data.user);
 
       setPositionNotification(res.data.user.notification.length);
 
       setCurrentUsername(res.data.user.username);
       setIsAdmin(res.data.user.isAdmin);
+      setIsCoach(res.data.user.isCoach)
+      setIsEventOrganizer(res.data.user.isEventOrganizer)
+      setIsPlayer(res.data.user.isPlayer)
+      setIsReferee(res.data.user.isReferee)
 
-      
+
     } catch (error) {
       message.error("Error have inside the Get currentUserData function");
     }
@@ -135,293 +143,326 @@ const SideBar = ({ children }) => {
   // JSX structure for the Navbar component
   return (
     <>
-      {isAdmin ? (
-        <Layout className="ant-layout-sider-children">
-          {/* Sidebar component */}
-          <Sider
-            trigger={null}
-            collapsible
-            collapsed={collapsed}
-            collapsedWidth={100} // Adjusted collapsed width
-          >
-            {/* Profile section */}
-            <div style={{ backgroundColor: "#15295E" }} className="profile">
-              {collapsed ? (
-                <Avatar
-                  className="profileAvatar"
-                  src={<img src={userData.avatarUrl} alt="avatar" />}
-                />
-              ) : (
-                <>
+      {isAdmin ?
+
+        (
+          <Layout className="ant-layout-sider-children">
+            {/* Sidebar component */}
+            <Sider
+              trigger={null}
+              collapsible
+              collapsed={collapsed}
+              collapsedWidth={100} // Adjusted collapsed width
+            >
+              {/* Profile section */}
+              <div style={{ backgroundColor: "#15295E" }} className="profile">
+                {collapsed ? (
                   <Avatar
                     className="profileAvatar"
-                    src={<img src={url} alt="avatar" />}
+                    src={<img src={userData.avatarUrl} alt="avatar" />}
                   />
-                  <div style={{ color: "white" }} className="Username">
-                    {currentUserName}
-                  </div>
-                </>
-              )}
-            </div>
+                ) : (
+                  <>
+                    <Avatar
+                      className="profileAvatar"
+                      src={<img src={url} alt="avatar" />}
+                    />
+                    <div style={{ color: "white" }} className="Username">
+                      {currentUserName}
+                    </div>
+                  </>
+                )}
+              </div>
 
-            {/* Other sections of the sidebar, such as menu items */}
-            <div style={{ color: "white" }} className="welcome">
-              Welcome
-            </div>
-            <div className="demo-logo-vertical" />
-            <Menu
-              onSelect={handleMenuItemClick}
-              selectedKeys={[selectedMenuItem]}
-              theme="dark"
-              mode="inline"
-              defaultSelectedKeys={["1"]}
-              style={{
-                backgroundColor: "#15295E",
-                width: "100%",
-                height: "82.5vh",
-                fontSize: "16px",
-              }}
-            >
-              <Menu.Item key="1" icon={<DashboardOutlined />}>
-                <Link to="/dashboad">Dashboard</Link>
-              </Menu.Item>
-              <Menu.Item key="2" icon={<PendingActions />}>
-                <Link to="/UserValidation">User Validation</Link>
-              </Menu.Item>
-              {/* <Menu.Item key="3" icon={<ManageUser />}>
+              {/* Other sections of the sidebar, such as menu items */}
+              <div style={{ color: "white" }} className="welcome">
+                Welcome
+              </div>
+              <div className="demo-logo-vertical" />
+              <Menu
+                onSelect={handleMenuItemClick}
+                selectedKeys={[selectedMenuItem]}
+                theme="dark"
+                mode="inline"
+                defaultSelectedKeys={["1"]}
+                style={{
+                  backgroundColor: "#15295E",
+                  width: "100%",
+                  height: "82.5vh",
+                  fontSize: "16px",
+                }}
+              >
+                <Menu.Item key="1" icon={<DashboardOutlined />}>
+                  <Link to="/dashboad">Dashboard</Link>
+                </Menu.Item>
+                <Menu.Item key="2" icon={<PendingActions />}>
+                  <Link to="/UserValidation">User Validation</Link>
+                </Menu.Item>
+                {/* <Menu.Item key="3" icon={<ManageUser />}>
                 <Link to="/Manage">Notification</Link>
               </Menu.Item> */}
-              <Menu.Item
-                key="4"
-                icon={<PoweroffOutlined />}
-                style={{
-                  position: "absolute",
-                  bottom: 0,
-                  backgroundColor: isHoveredButton1 ? "#D94D34" : "#15295E",
-                  color: isHoveredButton1 ? "white" : "white",
-                  fontSize: "16px",
-                }}
-                onMouseEnter={handleHoverButton1}
-                onMouseLeave={handleMouseLeaveButton1}
-              >
-                <Link to="/LogOff">Log Off</Link>
-              </Menu.Item>
-            </Menu>
-          </Sider>
+                <Menu.Item
+                  key="4"
+                  icon={<PoweroffOutlined />}
+                  style={{
+                    position: "absolute",
+                    bottom: 0,
+                    backgroundColor: isHoveredButton1 ? "#D94D34" : "#15295E",
+                    color: isHoveredButton1 ? "white" : "white",
+                    fontSize: "16px",
+                  }}
+                  onMouseEnter={handleHoverButton1}
+                  onMouseLeave={handleMouseLeaveButton1}
+                >
+                  <Link to="/LogOff">Log Off</Link>
+                </Menu.Item>
+              </Menu>
+            </Sider>
 
-          {/* Main content layout */}
-          <Layout>
-            {/* Header component */}
-            <Header className="ant-layout-header">
-              {/* Trigger button */}
-              <Button
-                className="trigger-button ant-btn"
-                type="text"
-                icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-                onClick={handleTriggerButtonClick}
-                style={{
-                  fontSize: "16px",
-                  width: 64,
-                  height: 64,
-                  backgroundColor: isHoveredButton2 ? "#526CAE" : "#15295E",
-                  color: isHoveredButton2 ? "white" : "white",
-                }}
-                onMouseEnter={handleHoverButton2}
-                onMouseLeave={handleMouseLeaveButton2}
-              />
-              {/* Title and notification sections */}
-              <span
-                className="title"
-                style={{
-                  color: "white",
-                  marginLeft: "75px",
-                  letterSpacing: "1px",
-                  fontSize: "22px",
-                  fontWeight: "regular",
-                }}
-              >
-                GameSync Pro
-              </span>
-              <span style={{ color: "white" }} className="notificaiton">
-                <a href="/UserValidation">
-                  <Space size={24}>
-                    {/* Notification badge */}
-                    <Badge count={positionNotification}>
-                      <Avatar
-                        shape="square"
-                        icon={
-                          <BellOutlined
-                            style={{
-                              fontSize: "22px",
-                            }}
-                          />
-                        }
-                      />
-                    </Badge>
-                  </Space>
-                </a>
-              </span>
-              {/* Email communication section */}
-              <a href="www">
-                <span style={{ color: "white" }} className="emailCommunication">
-                  <MailOutlined />
-                </span>
-              </a>
-            </Header>
-
-            {/* Title bar displaying the selected menu item */}
-            <div
-              className="title_bar"
-              style={{ color: "white", backgroundColor: "#1D5596" }}
-            >
-              <Text className="menuTitle" selectedMenuItem={selectedMenuItem} />
-            </div>
-            {/* Main content */}
-            {children}
-          </Layout>
-        </Layout>
-      ) : (
-        <Layout className="ant-layout-sider-children">
-          {/* Sidebar component */}
-          <Sider
-            trigger={null}
-            collapsible
-            collapsed={collapsed}
-            collapsedWidth={100} // Adjusted collapsed width
-          >
-            {/* Profile section */}
-            <div
-              style={{
-                backgroundColor: "#15295E",
-              }}
-              className="profile"
-            >
-              {collapsed ? (
-                <Avatar
-                  className="profileAvatar"
-                  src={<img src={userData.avatarUrl} alt="avatar" />}
+            {/* Main content layout */}
+            <Layout>
+              {/* Header component */}
+              <Header className="ant-layout-header">
+                {/* Trigger button */}
+                <Button
+                  className="trigger-button ant-btn"
+                  type="text"
+                  icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+                  onClick={handleTriggerButtonClick}
+                  style={{
+                    fontSize: "16px",
+                    width: 64,
+                    height: 64,
+                    backgroundColor: isHoveredButton2 ? "#526CAE" : "#15295E",
+                    color: isHoveredButton2 ? "white" : "white",
+                  }}
+                  onMouseEnter={handleHoverButton2}
+                  onMouseLeave={handleMouseLeaveButton2}
                 />
-              ) : (
-                <>
+                {/* Title and notification sections */}
+                <span
+                  className="title"
+                  style={{
+                    color: "white",
+                    marginLeft: "75px",
+                    letterSpacing: "1px",
+                    fontSize: "22px",
+                    fontWeight: "regular",
+                  }}
+                >
+                  GameSync Pro
+                </span>
+                <span style={{ color: "white" }} className="notificaiton">
+                  <a href="/UserValidation">
+                    <Space size={24}>
+                      {/* Notification badge */}
+                      <Badge count={positionNotification}>
+                        <Avatar
+                          shape="square"
+                          icon={
+                            <BellOutlined
+                              style={{
+                                fontSize: "22px",
+                              }}
+                            />
+                          }
+                        />
+                      </Badge>
+                    </Space>
+                  </a>
+                </span>
+                {/* Email communication section */}
+                <a href="www">
+                  <span style={{ color: "white" }} className="emailCommunication">
+                    <MailOutlined />
+                  </span>
+                </a>
+              </Header>
+
+              {/* Title bar displaying the selected menu item */}
+              <div
+                className="title_bar"
+                style={{ color: "white", backgroundColor: "#1D5596" }}
+              >
+                <Text className="menuTitle" selectedMenuItem={selectedMenuItem} />
+              </div>
+              {/* Main content */}
+              {children}
+            </Layout>
+          </Layout>
+        ) :
+
+        (
+          <Layout className="ant-layout-sider-children">
+            {/* Sidebar component */}
+            <Sider
+              trigger={null}
+              collapsible
+              collapsed={collapsed}
+              collapsedWidth={100} // Adjusted collapsed width
+            >
+              {/* Profile section */}
+              <div
+                style={{
+                  backgroundColor: "#15295E",
+                }}
+                className="profile"
+              >
+                {collapsed ? (
                   <Avatar
                     className="profileAvatar"
-                    src={<img src={url} alt="avatar" />}
+                    src={<img src={userData.avatarUrl} alt="avatar" />}
                   />
-                  <div style={{ color: "white" }} className="Username">
-                    {currentUserName}
-                  </div>
-                </>
-              )}
-            </div>
+                ) : (
+                  <>
+                    <Avatar
+                      className="profileAvatar"
+                      src={<img src={url} alt="avatar" />}
+                    />
+                    <div style={{ color: "white" }} className="Username">
+                      {currentUserName}
+                    </div>
+                  </>
+                )}
+              </div>
 
-            {/* Other sections of the sidebar, such as menu items */}
-            <div style={{ color: "white" }} className="welcome">
-              Welcome
-            </div>
-            <div className="demo-logo-vertical" />
-            <Menu
-              onSelect={handleMenuItemClick}
-              selectedKeys={[selectedMenuItem]}
-              theme="dark"
-              mode="inline"
-              defaultSelectedKeys={["1"]}
-              style={{
-                backgroundColor: "#15295E",
-                width: "100%",
-                height: "82.5vh",
-                fontSize: "16px",
-              }}
-            >
-              <Menu.Item key="1" icon={<DashboardOutlined />}>
-                <Link to="/dashboad">Dashboard</Link>
-              </Menu.Item>
-              <Menu.Item key="2" icon={<PendingActions />}>
-                <Link to="/apply-position">Apply Position</Link>
-              </Menu.Item>
-              {/* <Menu.Item key="3" icon={<ManageUser />}>
-                <Link to="/player-profile">Profile</Link>
-              </Menu.Item> */}
-              <Menu.Item
-                key="4"
-                icon={<PoweroffOutlined />}
+              {/* Other sections of the sidebar, such as menu items */}
+              <div style={{ color: "white" }} className="welcome">
+                Welcome
+              </div>
+              <div className="demo-logo-vertical" />
+              <Menu
+                onSelect={handleMenuItemClick}
+                selectedKeys={[selectedMenuItem]}
+                theme="dark"
+                mode="inline"
+                defaultSelectedKeys={["1"]}
                 style={{
-                  position: "absolute",
-                  bottom: 0,
-                  backgroundColor: isHoveredButton1 ? "#D94D34" : "#15295E",
-                  color: isHoveredButton1 ? "white" : "white",
+                  backgroundColor: "#15295E",
+                  width: "100%",
+                  height: "82.5vh",
                   fontSize: "16px",
                 }}
-                onMouseEnter={handleHoverButton1}
-                onMouseLeave={handleMouseLeaveButton1}
               >
-                <Link to="/LogOff">Log Off</Link>
-              </Menu.Item>
-            </Menu>
-          </Sider>
+                <Menu.Item key="1" icon={<DashboardOutlined />}>
+                  <Link to="/dashboad">Dashboard</Link>
+                </Menu.Item>
 
-          {/* Main content layout */}
-          <Layout>
-            {/* Header component */}
-            <Header className="ant-layout-header">
-              {/* Trigger button */}
-              <Button
-                className="trigger-button ant-btn"
-                type="text"
-                icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-                onClick={handleTriggerButtonClick}
-                style={{
-                  fontSize: "16px",
-                  width: 64,
-                  height: 64,
-                  backgroundColor: isHoveredButton2 ? "#526CAE" : "#15295E",
-                  color: isHoveredButton2 ? "white" : "white",
-                }}
-                onMouseEnter={handleHoverButton2}
-                onMouseLeave={handleMouseLeaveButton2}
-              />
-              {/* Title and notification sections */}
-              <span
-                className="title"
-                style={{
-                  color: "white",
-                  marginLeft: "75px",
-                  letterSpacing: "1px",
-                  fontSize: "22px",
-                  fontWeight: "regular",
-                }}
-              >
-                GameSync Pro
-              </span>
-              <span style={{ color: "white" }} className="notificaiton">
-                <a href="www">
-                  <Space size={24}>
-                    {/* Notification badge */}
-                    {/* <Badge count={5}>
+                {isCoach ? (
+                  <Menu.Item key="2" icon={<PendingActions />}>
+                    <Link to="/apply-position">Coach Dashboad</Link>
+                  </Menu.Item>
+                ) 
+                
+                : isPlayer ? (
+                  <Menu.Item key="2" icon={<PendingActions />}>
+                    <Link to="/apply-position">Player Dashboad</Link>
+                  </Menu.Item>
+                ) 
+                
+                : isEventOrganizer ? (
+                  <Menu.Item key="2" icon={<PendingActions />}>
+                    <Link to="/apply-position">Event organizer dashboad</Link>
+                  </Menu.Item>
+                ) 
+                
+                : isReferee ? (
+                  <Menu.Item key="2" icon={<PendingActions />}>
+                    <Link to="/apply-position">Referee dashboad</Link>
+                  </Menu.Item>
+                ) 
+                
+                : (
+                  <Menu.Item key="2" icon={<PendingActions />}>
+                    <Link to="/apply-position">Apply Position</Link>
+                  </Menu.Item>
+                )
+                
+                }
+
+                <Menu.Item
+                  key="4"
+                  icon={<PoweroffOutlined />}
+                  style={{
+                    position: "absolute",
+                    bottom: 0,
+                    backgroundColor: isHoveredButton1 ? "#D94D34" : "#15295E",
+                    color: isHoveredButton1 ? "white" : "white",
+                    fontSize: "16px",
+                  }}
+                  onMouseEnter={handleHoverButton1}
+                  onMouseLeave={handleMouseLeaveButton1}
+                >
+                  <Link to="/LogOff">Log Off</Link>
+                </Menu.Item>
+              </Menu>
+            </Sider>
+
+            {/* Main content layout */}
+            <Layout>
+              {/* Header component */}
+              <Header className="ant-layout-header">
+                {/* Trigger button */}
+                <Button
+                  className="trigger-button ant-btn"
+                  type="text"
+                  icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+                  onClick={handleTriggerButtonClick}
+                  style={{
+                    fontSize: "16px",
+                    width: 64,
+                    height: 64,
+                    backgroundColor: isHoveredButton2 ? "#526CAE" : "#15295E",
+                    color: isHoveredButton2 ? "white" : "white",
+                  }}
+                  onMouseEnter={handleHoverButton2}
+                  onMouseLeave={handleMouseLeaveButton2}
+                />
+                {/* Title and notification sections */}
+                <span
+                  className="title"
+                  style={{
+                    color: "white",
+                    marginLeft: "75px",
+                    letterSpacing: "1px",
+                    fontSize: "22px",
+                    fontWeight: "regular",
+                  }}
+                >
+                  GameSync Pro
+                </span>
+                <span style={{ color: "white" }} className="notificaiton">
+                  <a href="www">
+                    <Space size={24}>
+                      {/* Notification badge */}
+                      {/* <Badge count={5}>
                   <Avatar shape="square" icon={<UserOutlined />} />
                 </Badge> */}
-                  </Space>
-                </a>
-              </span>
-              {/* Email communication section */}
-              <a href="www">
-                <span className="emailCommunication" style={{ color: "white" }}>
-                  <MailOutlined />
+                    </Space>
+                  </a>
                 </span>
-              </a>
-            </Header>
+                {/* Email communication section */}
+                <a href="www">
+                  <span className="emailCommunication" style={{ color: "white" }}>
+                    <MailOutlined />
+                  </span>
+                </a>
+              </Header>
 
-            {/* Title bar displaying the selected menu item */}
-            <div
-              className="title_bar"
-              style={{ color: "white", backgroundColor: "#1D5596" }}
-            >
-              <Text className="menuTitle" selectedMenuItem={selectedMenuItem} />
-            </div>
-            {/* Main content */}
-            {children}
+              {/* Title bar displaying the selected menu item */}
+              <div
+                className="title_bar"
+                style={{ color: "white", backgroundColor: "#1D5596" }}
+              >
+                <Text className="menuTitle" selectedMenuItem={selectedMenuItem} />
+              </div>
+              {/* Main content */}
+              {children}
+            </Layout>
           </Layout>
-        </Layout>
-      )}
+        )
+
+      }
     </>
   );
 };
