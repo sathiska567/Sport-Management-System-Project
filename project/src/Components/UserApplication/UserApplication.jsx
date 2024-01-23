@@ -63,7 +63,7 @@ const handleStatus = async (id, status) => {
     //  ----------------------------------------------------------------------------------------------
     try {
 
-     // console.log(location.state.record.Email);
+     console.log(location.state.record.UserRole);
       const aproveResponse = await axios.post("http://localhost:8080/api/v1/aprove/aprove-user-model",{email:location.state.record.Email,userRole:location.state.record.UserRole})
       console.log("approve response : " ,aproveResponse);
 

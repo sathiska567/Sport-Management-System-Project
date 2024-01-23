@@ -361,9 +361,34 @@ const SideBar = ({ children }) => {
                 ) 
                 
                 : isEventOrganizer ? (
+                  <div>
                   <Menu.Item key="2" icon={<PendingActions />}>
-                    <Link to="/apply-position">Event organizer dashboad</Link>
+                    <Link to="/apply-position">Create Event</Link>
                   </Menu.Item>
+
+                  <Menu.Item key="2" icon={<PendingActions />}>
+                    <Link to="/apply-position">Event Staff</Link>
+                  </Menu.Item>
+
+                  <Menu.Item key="2" icon={<PendingActions />}>
+                    <Link to="/apply-position">Shuffle Teams</Link>
+                  </Menu.Item>
+
+                  <Menu.Item key="2" icon={<PendingActions />}>
+                    <Link to="/apply-position">Update Fixture</Link>
+                  </Menu.Item>
+
+                  <Menu.Item key="2" icon={<PendingActions />}>
+                    <Link to="/apply-position">Brackets</Link>
+                  </Menu.Item>
+
+                  <Menu.Item key="2" icon={<PendingActions />}>
+                    <Link to="/apply-position">My Profile</Link>
+                  </Menu.Item>
+
+
+
+                  </div>
                 ) 
                 
                 : isReferee ? (
