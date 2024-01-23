@@ -6,6 +6,7 @@ const cors = require("cors");
 const userRoutes = require("./routes/userRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 const forgottenPasswordRoute = require("./routes/ForgottenPasswordRoute");
+const ApproveActorModelRoute = require("./routes/ApproveActorModelRoute")
 
 require("./db/mongoDb"); 
 
@@ -17,7 +18,7 @@ app.use(cors());
 app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/admin", adminRoutes);
 app.use("/api/v1/forgotten", forgottenPasswordRoute);
-
+app.use("/api/v1/aprove",ApproveActorModelRoute)
 
 
 

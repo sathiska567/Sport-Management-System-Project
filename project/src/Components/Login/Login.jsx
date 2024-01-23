@@ -29,11 +29,11 @@ const Login = () => {
 
       localStorage.setItem('email', values.email);
       localStorage.setItem('token', res.data.token);
-
+      const id = res.data._id;
       // check backend validation
       if(res.data.success){
       // Redirect to the admin dashboard or another page after successful login
-      naviagte('/dashboad');
+       naviagte('/dashboad');
        message.success("Login successfull")
       }
 

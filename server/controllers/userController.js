@@ -110,7 +110,8 @@ const loginController = async (req, res) => {
     res.status(200).send({
             message: "Login Success",
             success: true,
-            token
+            token,
+            user
 
     });
 
@@ -123,7 +124,6 @@ const loginController = async (req, res) => {
 
 
 };
-
 
 // get current user details
 const getCurrentUserController = async(req,res)=>{

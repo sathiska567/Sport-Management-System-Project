@@ -121,7 +121,7 @@ const UserApplicationTable = () => {
                 className="Table"
                 columns={[
                   {
-                    title: "User Id",
+                    title: "User Role",
                     dataIndex: "uid",
                     render: (text, record) => <span>{record.UserRole}</span>,
                   },
@@ -142,11 +142,18 @@ const UserApplicationTable = () => {
                     render: (text, record) => <span>{record.Experience}</span>,
                   },
 
+                  // {
+                  //   title: "Distric",
+                  //   dataIndex: "Distric",
+                  //   key: "Distric",
+                  //   render: (text, record) => <span>{record.Distric}</span>,
+                  // },
+
                   {
-                    title: "Distric",
-                    dataIndex: "Distric",
-                    key: "Distric",
-                    render: (text, record) => <span>{record.Distric}</span>,
+                    title: "Status",
+                    dataIndex: "status",
+                    key: "status",
+                    render: (text, record) => <span>{record.status}</span>,
                   },
 
                   {
