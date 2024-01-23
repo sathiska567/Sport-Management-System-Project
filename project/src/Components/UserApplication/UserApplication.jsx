@@ -116,21 +116,21 @@ const handleStatus = async (id, status , userRole) => {
     }
   };
 
-// const getCurrentLoginUserDetails = async () => {
-//     try {
-//       const CurrentUserResponse = await axios.get("http://localhost:8080/api/v1/user/getCurrentUser",{
-//          headers:{
-//            Authorization:`Bearer ${localStorage.getItem("token")}`
-//          }
-//       })
-//       // Handle the response or do something with the data
-//       console.log(CurrentUserResponse);
+const getCurrentLoginUserDetails = async () => {
+    try {
+      const CurrentUserResponse = await axios.get("http://localhost:8080/api/v1/user/getCurrentUser",{
+         headers:{
+           Authorization:`Bearer ${localStorage.getItem("token")}`
+         }
+      })
+      // Handle the response or do something with the data
+      console.log(CurrentUserResponse);
   
-//     } catch (error) {
-//       // Handle errors
-//       console.error(error);
-//     }
-//   };
+    } catch (error) {
+      // Handle errors
+      console.error(error);
+    }
+  };
 
   // End
 
