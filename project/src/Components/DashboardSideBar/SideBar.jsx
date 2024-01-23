@@ -86,6 +86,8 @@ const SideBar = ({ children }) => {
 
       setCurrentUsername(res.data.user.username);
       setIsAdmin(res.data.user.isAdmin);
+
+      
     } catch (error) {
       message.error("Error have inside the Get currentUserData function");
     }

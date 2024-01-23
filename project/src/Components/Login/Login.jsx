@@ -33,7 +33,7 @@ const Login = () => {
       // check backend validation
       if(res.data.success){
       // Redirect to the admin dashboard or another page after successful login
-       naviagte('/dashboad',{state:{currentUserId:id}});
+       naviagte('/dashboad');
        message.success("Login successfull")
       }
 

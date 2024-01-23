@@ -125,7 +125,6 @@ const loginController = async (req, res) => {
 
 };
 
-
 // get current user details
 const getCurrentUserController = async(req,res)=>{
    try {

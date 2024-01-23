@@ -29,8 +29,8 @@ const UserApplication = () => {
   const [userRole, setUserRole] = useState();
   const [userApplicationData, setUserApplicationData] = useState([]);
 
-  const location = useLocation();
-  console.log(location);
+  const location = useLocation([]);
+  console.log("dashboad : " , location);
 
   const navigate = useNavigate();
   const [getApproval, setGetApproval] = useState();
@@ -41,7 +41,7 @@ const UserApplication = () => {
   const [distric, setNewDistric] = useState();
   // const location = useLocation();
 
-  const handleStatus = async (id, status , userRole) => {
+const handleStatus = async (id, status , userRole) => {
     console.log(userRole);
     try {
       // console.log(id,status);
@@ -116,11 +116,29 @@ const UserApplication = () => {
     }
   };
 
+// const getCurrentLoginUserDetails = async () => {
+//     try {
+//       const CurrentUserResponse = await axios.get("http://localhost:8080/api/v1/user/getCurrentUser",{
+//          headers:{
+//            Authorization:`Bearer ${localStorage.getItem("token")}`
+//          }
+//       })
+//       // Handle the response or do something with the data
+//       console.log(CurrentUserResponse);
+  
+//     } catch (error) {
+//       // Handle errors
+//       console.error(error);
+//     }
+//   };
+
   // End
 
   // Get the data from the backend
   // Start
-  useEffect(() => {}, []);
+  useEffect(() => {
+    getCurrentLoginUserDetails()
+  }, []);
   // End
 
   // JSX structure for the Navbar component
