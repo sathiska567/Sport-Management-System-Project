@@ -361,6 +361,7 @@ const SideBar = ({ children }) => {
                 ) 
                 
                 : isEventOrganizer ? (
+                  
                   <div>
                   <Menu.Item key="2" icon={<PendingActions />}>
                     <Link to="/apply-position">Create Event</Link>
