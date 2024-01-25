@@ -1,17 +1,19 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { SingleElimination } from 'tournament-pairings';
 import SideBar from '../DashboardSideBar/SideBar';
-import { Table } from 'antd';
+import { Button, Table } from 'antd';
 import html2canvas from 'html2canvas';
 import jspdf from "jspdf"
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
+import { DownloadOutlined } from '@ant-design/icons';
 
 export default function SetFixtureRound() {
   const [fixture, setFixture] = useState([]);
   const pdfRef = useRef();
   const location = useLocation([]);
   const players = location.state.teamsCount;
+  const [size, setSize] = useState('large');
 
   console.log(location);
 
@@ -123,7 +125,11 @@ const handleDownload = async()=>{
               </Table>
         </div>
 
-              <button onClick={handleDownload}>Download</button>
+              {/* <button onClick={handleDownload}>Download</button> */}
+
+          <Button type="primary" onClick={handleDownload} icon={<DownloadOutlined />} size={size}>
+            Download
+          </Button>
 
   </div>
 
