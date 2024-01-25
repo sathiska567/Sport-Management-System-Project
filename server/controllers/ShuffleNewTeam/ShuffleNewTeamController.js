@@ -1,4 +1,4 @@
-const ShuffledNewTeamModel = require("../../models/");
+const ShuffledNewTeamModel = require("../../models/ShuffleTeamModel/ShuffleTeamModel");
 
 const shuffledNewTeamController = async (req, res) => {
   try {
