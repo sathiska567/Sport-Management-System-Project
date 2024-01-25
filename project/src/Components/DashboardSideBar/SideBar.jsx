@@ -363,19 +363,11 @@ const SideBar = ({ children }) => {
                 : isEventOrganizer ? (
                   <div>
                   <Menu.Item key="2" icon={<PendingActions />}>
-                    <Link to="/apply-position">Create Event</Link>
+                    <Link to="/fixture">Fixture Shuffle</Link>
                   </Menu.Item>
 
                   <Menu.Item key="2" icon={<PendingActions />}>
-                    <Link to="/apply-position">Event Staff</Link>
-                  </Menu.Item>
-
-                  <Menu.Item key="2" icon={<PendingActions />}>
-                    <Link to="/apply-position">Shuffle Teams</Link>
-                  </Menu.Item>
-
-                  <Menu.Item key="2" icon={<PendingActions />}>
-                    <Link to="/apply-position">Update Fixture</Link>
+                    <Link to="/update-fixture">Update Fixture</Link>
                   </Menu.Item>
 
                   <Menu.Item key="2" icon={<PendingActions />}>
