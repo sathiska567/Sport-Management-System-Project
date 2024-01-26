@@ -53,6 +53,11 @@ seennotification : {
   default : []
 },
 
+messages : {
+  type : Array,
+  default : []
+},
+
 otp: { 
   type: Number, 
   required: false

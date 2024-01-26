@@ -17,15 +17,19 @@ const ApproveActorModelController = async(req,res)=>{
 
      if(userRole == "player"){
          result.isPlayer = true;
+         result.messages = "Player position Approved !";
      }
      else if(userRole == "event organizer"){
           result.isEventOrganizer = true;
+          result.messages = "Event organizer position Approved !";
      }
      else if(userRole == "coach"){
           result.isEventOrganizer = true;
+          result.messages = "Coach position Approved !";
      }
      else if(userRole == "referee"){
           result.isEventOrganizer = true;
+          result.messages = "Referee position Approved !";
      }
      else{
         return res.status(400).send({
@@ -37,6 +41,7 @@ const ApproveActorModelController = async(req,res)=>{
      await result.save();
 
      console.log("current result " , result);
+
 
     res.status(200).send({
         success:true,

@@ -79,7 +79,8 @@ const updateDetailsController = async(req,res)=>{
 
 const deleteDetailsController = async(req,res)=>{
 
-        try {
+
+try {
         
         //  handle delete notification
        const deletedNotification = await User.findOne({ isAdmin: true });
@@ -96,6 +97,7 @@ const deleteDetailsController = async(req,res)=>{
 
          const {deletedUserId,email} = req.body;
          console.log(deletedUserId,email);
+
          const deletedUser = await PlayerModel.findByIdAndDelete(deletedUserId)
 
          const findUser = await User.findOne({email:email})
