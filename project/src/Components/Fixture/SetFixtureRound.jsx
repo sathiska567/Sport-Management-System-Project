@@ -18,7 +18,7 @@ export default function SetFixtureRound() {
   console.log(location);
 
 const singleEliminate = async () => {
-    const elimBracket = SingleElimination(players, 1 , true);
+    const elimBracket = SingleElimination(players, 1 , false);
     setFixture(elimBracket);
     console.log(elimBracket);
   };

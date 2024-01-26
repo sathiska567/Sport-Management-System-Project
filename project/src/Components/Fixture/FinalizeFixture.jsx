@@ -102,6 +102,14 @@ export default function FinalizeFixture() {
             className="Table"
             columns={[
               {
+                title: "Team Number",
+                width: "10%",
+                dataIndex: "teamNumber",
+                render: (text, record, index) => (
+                  <span key={index}>{index + 1}</span>
+                )
+              },
+              {
                 title: "Teams Name",
                 dataIndex: "teamName",
                 render: (text, record) => (

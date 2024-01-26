@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import SideBar from '../DashboardSideBar/SideBar'
 import axios from 'axios'
-import { Input, Table, message } from 'antd'
+import { Button, Input, Table, message } from 'antd'
 import { useNavigate } from 'react-router-dom'
+import { DeleteOutlined, ToTopOutlined } from '@ant-design/icons'
 
 export default function FinalizeFixtureUpdate() {
   const [newTeamdata, setnewTeamData] = useState([])
@@ -98,9 +99,45 @@ const handleUpdate = async(id)=>{
                 render: (text, record) => (
                   <>
                                    
-                    <button onClick={()=>handleUpdate(record._id)}>Update</button>
+                    {/* <button onClick={()=>handleUpdate(record._id)}>Update</button> */}
 
-                    <button onClick={() => handleDelete(record._id)}>Delete</button>
+                    
+                    <Button
+                          type="primary"
+                          style={{
+                            backgroundColor: "#00ff7f",
+                            color: "#fff",
+                            fontSize: "14px",
+                            borderRadius: "5px",
+                            marginTop: "auto",
+                            marginBottom: "auto",
+                            marginLeft: "50px",
+                          }}
+                          onClick={()=>handleUpdate(record._id)}
+                        >
+                          <ToTopOutlined />
+                          Update
+                      </Button>
+
+                    {/* <button onClick={() => handleDelete(record._id)}>Delete</button> */}
+
+
+                    <Button
+                          type="primary"
+                          style={{
+                            backgroundColor: "#D94D34",
+                            color: "#fff",
+                            fontSize: "14px",
+                            borderRadius: "5px",
+                            marginTop: "auto",
+                            marginBottom: "auto",
+                            marginLeft:"10px"
+                          }}
+                          onClick={() => handleDelete(record._id)}
+                        >
+                          <DeleteOutlined />
+                          Delete
+                        </Button>
 
                   </>
                 )

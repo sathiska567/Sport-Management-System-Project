@@ -103,15 +103,15 @@ function App() {
           }
         />
 
-        {/* <Route
-          path="/create-new-password"
+        <Route
+          path="/profile"
           element={
             <ProtectedRoute>
-              
+               <PlayerProfile />
             </ProtectedRoute>
           }
 
-        /> */}
+        />
 
 
         <Route

@@ -1,7 +1,7 @@
 // Importing necessary libraries and components
 import "./SideBar.css";
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import {
   MenuFoldOutlined,
@@ -10,6 +10,10 @@ import {
   PoweroffOutlined,
   BellOutlined,
   MailOutlined,
+  SwapOutlined,
+  LoadingOutlined,
+  ToTopOutlined,
+  UserOutlined,
 } from "@ant-design/icons";
 
 import { Layout, Menu, Button, Avatar, Space, Badge, message } from "antd";
@@ -37,6 +41,7 @@ const SideBar = ({ children }) => {
   const [isEventOrganizer, setIsEventOrganizer] = useState("")
   const [isPlayer, setIsPlayer] = useState("")
   const [isReferee, setIsReferee] = useState("")
+  const navigate = useNavigate()
 
   // Event handlers for mouse hover events
   const handleHoverButton1 = () => {
@@ -137,6 +142,18 @@ const SideBar = ({ children }) => {
       });
   }, []);
 
+
+  // HANDLE LOGOUT
+  const handleLogOut = async()=>{
+     try {
+       localStorage.clear()
+       message.success("Logged out successfully!")
+       window.location.reload()
+     } catch (error) {
+       message.error("Error logging out!")
+     }
+  }
+
   // get admin or not status
   const sideBarMenu = isAdmin ? adminMenu : userMenu;
 
@@ -214,7 +231,7 @@ const SideBar = ({ children }) => {
                   onMouseEnter={handleHoverButton1}
                   onMouseLeave={handleMouseLeaveButton1}
                 >
-                  <Link to="/LogOff">Log Off</Link>
+                  <Link onClick={handleLogOut}>Log Off</Link>
                 </Menu.Item>
               </Menu>
             </Sider>
@@ -362,23 +379,23 @@ const SideBar = ({ children }) => {
                 
                 : isEventOrganizer ? (
                   <div>
-                  <Menu.Item key="2" icon={<PendingActions />}>
+                  <div>
+                  <Menu.Item key="3" icon={<SwapOutlined />} style={{padding:"20px"}}>
                     <Link to="/fixture">Fixture Shuffle</Link>
                   </Menu.Item>
+                  </div>
 
-                  <Menu.Item key="2" icon={<PendingActions />}>
+                  <Menu.Item key="4" icon={<ToTopOutlined />} style={{padding:"20px"}}>
                     <Link to="/update-fixture">Update Fixture</Link>
                   </Menu.Item>
 
-                  <Menu.Item key="2" icon={<PendingActions />}>
+                  <Menu.Item key="5" icon={<PendingActions />} style={{padding:"20px"}}>
                     <Link to="/apply-position">Brackets</Link>
                   </Menu.Item>
 
-                  <Menu.Item key="2" icon={<PendingActions />}>
-                    <Link to="/apply-position">My Profile</Link>
+                  <Menu.Item key="6" icon={<UserOutlined />} style={{padding:"20px"}}>
+                    <Link to="/profile">My Profile</Link>
                   </Menu.Item>
-
-
 
                   </div>
                 ) 
@@ -410,7 +427,7 @@ const SideBar = ({ children }) => {
                   onMouseEnter={handleHoverButton1}
                   onMouseLeave={handleMouseLeaveButton1}
                 >
-                  <Link to="/LogOff">Log Off</Link>
+                  <Link onClick={handleLogOut}>Log Off</Link>
                 </Menu.Item>
               </Menu>
             </Sider>
