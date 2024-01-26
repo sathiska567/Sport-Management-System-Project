@@ -43,13 +43,13 @@ const UserApplicationTable = () => {
   };
 
   const handleDelete = async (record) => {
-    console.log(record._id);
+    console.log(record.Email);
 
     try {
       const deletedUser = await axios.delete(
         "http://localhost:8080/api/v1/admin/delete-details",
         {
-          data: { deletedUserId: record._id },
+          data: { deletedUserId: record._id , email:record.Email},
         }
       );
 
