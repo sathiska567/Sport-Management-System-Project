@@ -13,6 +13,7 @@ import PlayerProfile from "./Components/PlayerComponents/PlayerProfile.jsx";
 import PublicRoute from "./Components/PublicRoute/PublicRoute.js";
 import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute.js";
 import SignUp from "./Components/Login/SignUp.jsx";
+import BracketPage from "./Pages/Organizer/Bracket.jsx";
 
 
 function App() {
@@ -106,6 +107,8 @@ function App() {
           }
 
         /> */}
+
+        <Route path="/brackets" element={<BracketPage/>} />
 
 
       </Routes>

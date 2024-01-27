@@ -1,5 +1,5 @@
 const express = require('express');
-const { SendOtpController, VerifyOtpController,ResetPasswordController } = require('../controllers/forgottenPasswordController');
+const { SendOtpController, VerifyOtpController,ResetPasswordController } = require('../controllers/ForgottenPasswordController');
 const router = express.Router();
 
 
