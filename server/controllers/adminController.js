@@ -79,10 +79,11 @@ const updateDetailsController = async(req,res)=>{
 
 const deleteDetailsController = async(req,res)=>{
 
-        try {
+
+try {
         
         //  handle delete notification
-        const deletedNotification = await User.findOne({ isAdmin: true });
+       const deletedNotification = await User.findOne({ isAdmin: true });
 
     if (deletedNotification) {
         const notification = deletedNotification.notification;
@@ -94,9 +95,31 @@ const deleteDetailsController = async(req,res)=>{
  
     }
 
-         const {deletedUserId} = req.body;
-         console.log(deletedUserId);
+         const {deletedUserId,email} = req.body;
+         console.log(deletedUserId,email);
+
          const deletedUser = await PlayerModel.findByIdAndDelete(deletedUserId)
+
+         const findUser = await User.findOne({email:email})
+
+         if(findUser.isEventOrganizer){
+             findUser.isEventOrganizer = false;
+         }
+          if(findUser.isCoach){
+                findUser.isCoach = false;
+         }
+          if(findUser.isPlayer){
+                findUser.isPlayer = false;
+         }
+         if(findUser.isReferee){
+                findUser.isReferee = false;
+         }
+
+
+         await findUser.save();
+
+         console.log(findUser);
+
          res.status(200).send({
                 message:"Deleted successfull",
                 success : true

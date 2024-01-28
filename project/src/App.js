@@ -13,6 +13,12 @@ import PlayerProfile from "./Components/PlayerComponents/PlayerProfile.jsx";
 import PublicRoute from "./Components/PublicRoute/PublicRoute.js";
 import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute.js";
 import SignUp from "./Components/Login/SignUp.jsx";
+import Fixture from "./Components/Fixture/Fixture.jsx";
+import FinalizeFixture from "./Components/Fixture/FinalizeFixture.jsx";
+import FinalizeFixtureUpdate from "./Components/Fixture/FinalizeFixtureUpdate.jsx";
+import FinalUpdate from "./Components/Fixture/FinalUpdate.jsx";
+import SetFixtureRound from "./Components/Fixture/SetFixtureRound.jsx";
+import AddTeam from "./Components/Fixture/AddTeam.jsx";
 
 
 function App() {
@@ -54,16 +60,16 @@ function App() {
         } />
 
         <Route path="/otp-reset-pass" element={
-        
-        <PublicRoute>
-          <OTPPage />
-        </PublicRoute>
-        
+
+          <PublicRoute>
+            <OTPPage />
+          </PublicRoute>
+
         } />
 
         <Route path="/reset-pass" element={
           <PublicRoute>
-            <ResetPassword/>
+            <ResetPassword />
           </PublicRoute>
 
         } />
@@ -97,16 +103,82 @@ function App() {
           }
         />
 
-        {/* <Route
-          path="/create-new-password"
+        <Route
+          path="/profile"
           element={
             <ProtectedRoute>
-              
+               <PlayerProfile />
             </ProtectedRoute>
           }
 
-        /> */}
+        />
 
+
+        <Route
+          // Need to change after add table of application
+          path="/fixture"
+          element={
+            <ProtectedRoute>
+              <Fixture />
+            </ProtectedRoute>
+          }
+        />
+
+
+
+        <Route
+          // Need to change after add table of application
+          path="/final-fixture"
+          element={
+            <ProtectedRoute>
+              <FinalizeFixture />
+            </ProtectedRoute>
+          }
+        />
+
+
+
+        <Route
+          // Need to change after add table of application
+          path="/update-fixture"
+          element={
+            <ProtectedRoute>
+              <FinalizeFixtureUpdate />
+            </ProtectedRoute>
+          }
+        />
+
+
+        <Route
+          // Need to change after add table of application
+          path="/final-update-fixture"
+          element={
+            <ProtectedRoute>
+              <FinalUpdate />
+            </ProtectedRoute>
+          }
+        />
+
+
+        <Route
+          // Need to change after add table of application
+          path="/test-fixture"
+          element={
+            <ProtectedRoute>
+              <SetFixtureRound />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          // Need to change after add table of application
+          path="/addTeam"
+          element={
+            <ProtectedRoute>
+              <AddTeam />
+            </ProtectedRoute>
+          }
+        />
 
       </Routes>
 

@@ -21,7 +21,7 @@ const UserApplicationTable = () => {
   const navigate = useNavigate();
   const location = useLocation([]);
 
-  const ApplyingUser = async () => {
+const ApplyingUser = async () => {
     try {
       const res = await axios.get(
         "http://localhost:8080/api/v1/admin/get-all-details"
@@ -42,14 +42,14 @@ const UserApplicationTable = () => {
     navigate("/Applying-Details", { state: { record: record } });
   };
 
-  const handleDelete = async (record) => {
-    console.log(record._id);
+const handleDelete = async (record) => {
+    console.log(record.Email);
 
     try {
       const deletedUser = await axios.delete(
         "http://localhost:8080/api/v1/admin/delete-details",
         {
-          data: { deletedUserId: record._id },
+          data: { deletedUserId: record._id , email:record.Email},
         }
       );
 

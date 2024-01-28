@@ -108,14 +108,14 @@ const handleStatus = async (id, status) => {
     }
   };
 
-  const handleReject = async (deletedUserId) => {
+  const handleReject = async (deletedUserId,email) => {
     try {
-      console.log(deletedUserId);
+      console.log(deletedUserId,email);
 
       const deletedUserResponse = await axios.delete(
         "http://localhost:8080/api/v1/admin/delete-details",
         {
-          data: { deletedUserId: deletedUserId },
+          data: { deletedUserId: deletedUserId , email:email},
         }
       );
 
@@ -289,7 +289,7 @@ const handleStatus = async (id, status) => {
                     </button>
                     <button
                       class="reject userAppBTn"
-                      onClick={() => handleReject(location.state?.record?._id)}
+                      onClick={() => handleReject(location.state?.record?._id , location.state?.record?.Email)}
                     >
                       <CloseCircleOutlined className="UserApplicationIcon" />
                       Reject

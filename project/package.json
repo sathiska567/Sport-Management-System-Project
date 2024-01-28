@@ -11,11 +11,14 @@
     "antd-img-crop": "^4.20.0",
     "axios": "^1.6.5",
     "font-awesome": "^4.7.0",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^2.5.1",
     "react": "^18.2.0",
     "react-countup": "^6.5.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.18.0",
     "react-scripts": "5.0.1",
+    "tournament-pairings": "^1.5.2",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
