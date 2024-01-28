@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { SingleElimination } from 'tournament-pairings';
-import SideBar from '../DashboardSideBar/SideBar';
+import EOSideBar from '../EOSideBar/EOSideBar';
 import { Button, Table } from 'antd';
 import html2canvas from 'html2canvas';
 import jspdf from "jspdf"
@@ -58,7 +58,7 @@ const handleDownload = async()=>{
 
   return (
     <>
-      <SideBar>
+      <EOSideBar>
 
   <div className="fixtureContainer">
         <div ref={pdfRef} style={{padding:"20px"}}>
@@ -134,7 +134,7 @@ const handleDownload = async()=>{
   </div>
 
         
-      </SideBar>
+      </EOSideBar>
     </>
   );
 }

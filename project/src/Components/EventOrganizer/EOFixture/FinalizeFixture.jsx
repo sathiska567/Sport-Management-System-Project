@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Checkbox, Divider, Radio, Table, Button } from 'antd';
-import SideBar from '../DashboardSideBar/SideBar'
+import EOSideBar from '../EOSideBar/EOSideBar'
 import { Navigate, useLocation, useNavigate } from 'react-router-dom'
 import { message } from 'antd';
 import axios from 'axios';
@@ -94,7 +94,7 @@ export default function FinalizeFixture() {
 
   return (
     <>
-      <SideBar>
+      <EOSideBar>
 
         <div className="fixtureContainer" ref={pdfRef}>
 
@@ -165,7 +165,7 @@ export default function FinalizeFixture() {
         </div>
 
 
-      </SideBar>
+      </EOSideBar>
     </>
   )
 }

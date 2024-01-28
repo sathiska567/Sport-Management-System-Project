@@ -13,12 +13,12 @@ import PlayerProfile from "./Components/PlayerComponents/PlayerProfile.jsx";
 import PublicRoute from "./Components/PublicRoute/PublicRoute.js";
 import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute.js";
 import SignUp from "./Components/Login/SignUp.jsx";
-import Fixture from "./Components/Fixture/Fixture.jsx";
-import FinalizeFixture from "./Components/Fixture/FinalizeFixture.jsx";
-import FinalizeFixtureUpdate from "./Components/Fixture/FinalizeFixtureUpdate.jsx";
-import FinalUpdate from "./Components/Fixture/FinalUpdate.jsx";
-import SetFixtureRound from "./Components/Fixture/SetFixtureRound.jsx";
-import AddTeam from "./Components/Fixture/AddTeam.jsx";
+import Fixture from "./Components/EventOrganizer/EOFixture/Fixture.jsx";
+import FinalizeFixture from "./Components/EventOrganizer/EOFixture/FinalizeFixture.jsx";
+import FinalizeFixtureUpdate from "./Components/EventOrganizer/EOFixture/FinalizeFixtureUpdate.jsx";
+import FinalUpdate from "./Components/EventOrganizer/EOFixture/FinalUpdate.jsx";
+import SetFixtureRound from "./Components/EventOrganizer/EOFixture/SetFixtureRound.jsx";
+import AddTeam from "./Components/EventOrganizer/EOFixture/AddTeam.jsx";
 import CreateEvent from "./Components/EventOrganizer/EOCreateEvent/EOCreateEvent.jsx"
 import EOStats from "./Components/EventOrganizer/EOStats/EOStats.jsx"
 
@@ -181,6 +181,7 @@ function App() {
           }
         />
       </Routes>
+      
 
       <Routes>
         <Route path="/create-event" element={

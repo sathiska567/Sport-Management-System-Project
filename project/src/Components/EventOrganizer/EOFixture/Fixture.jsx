@@ -63,7 +63,7 @@
 // }
 
 import React, { useEffect, useState } from 'react'
-import SideBar from '../DashboardSideBar/SideBar'
+import EOSideBar from '../EOSideBar/EOSideBar'
 import axios from 'axios'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { Button, Flex, Table, message } from 'antd'
@@ -156,7 +156,7 @@ export default function Fixture() {
 
   return (
     <>
-      <SideBar>
+      <EOSideBar>
         {/* <div>
              {shuffledNewArray.map((data)=>(
                 <p>{data.TeamName}</p>
@@ -257,7 +257,7 @@ export default function Fixture() {
 
         </div>
 
-      </SideBar>
+      </EOSideBar>
     </>
   )
 }

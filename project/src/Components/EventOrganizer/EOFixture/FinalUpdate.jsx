@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import SideBar from '../DashboardSideBar/SideBar'
+import EOSideBar from '../EOSideBar/EOSideBar'
 import { useLocation } from 'react-router-dom'
 import axios from 'axios';
 import { Table, message, Checkbox } from 'antd';
@@ -42,7 +42,7 @@ const handleDelete = async (id) => {
 
   return (
     <>
-      <SideBar>
+      <EOSideBar>
 
 
         {/* {currentfixture.map((data) => (
@@ -101,7 +101,7 @@ const handleDelete = async (id) => {
 
 
 
-      </SideBar>
+      </EOSideBar>
     </>
   )
 }

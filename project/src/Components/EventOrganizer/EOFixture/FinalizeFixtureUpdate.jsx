@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import SideBar from '../DashboardSideBar/SideBar'
+import EOSideBar from '../EOSideBar/EOSideBar'
 import axios from 'axios'
 import { Button, Input, Table, message } from 'antd'
 import { useNavigate } from 'react-router-dom'
@@ -53,7 +53,7 @@ const handleUpdate = async(id)=>{
 
   return (
     <>
-      <SideBar>
+      <EOSideBar>
         <div className="fixtureContainer">
 
           <Table
@@ -160,7 +160,7 @@ const handleUpdate = async(id)=>{
 
         {/* <Input placeholder="Basic usage" />; */}
 
-      </SideBar>
+      </EOSideBar>
 
     </>
   )

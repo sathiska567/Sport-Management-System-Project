@@ -137,6 +137,12 @@ const EOSizeBar = ({ children }) => {
 
   // get admin or not status
 
+  // handle logout
+  const handleLogOut = async()=>{
+     localStorage.clear();
+     window.location.reload()
+  }
+
   // JSX structure for the Navbar component
   return (
     <Layout className="ant-layout-sider-children">
@@ -198,8 +204,13 @@ const EOSizeBar = ({ children }) => {
             <NavLink to="#">Assign Staff</NavLink>
           </Menu.Item>
           <Menu.Item key="5" icon={<CalendarOutlined />}>
-            <NavLink to="#">Fixture</NavLink>
+            <NavLink to="/fixture">Fixture</NavLink>
           </Menu.Item>
+
+          <Menu.Item key="5" icon={<CalendarOutlined />}>
+            <NavLink to="/update-fixture">Update Fixture</NavLink>
+          </Menu.Item>
+
           <Menu.Item key="6" icon={<Bracket />}>
             <NavLink to="#">Bracket</NavLink>
           </Menu.Item>
@@ -222,7 +233,7 @@ const EOSizeBar = ({ children }) => {
             onMouseEnter={handleHoverButton1}
             onMouseLeave={handleMouseLeaveButton1}
           >
-            <NavLink to="/LogOff">Log Off</NavLink>
+            <NavLink to="/" onClick={handleLogOut}>Log Off</NavLink>
           </Menu.Item>
         </Menu>
       </Sider>

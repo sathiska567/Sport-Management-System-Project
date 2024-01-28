@@ -379,22 +379,8 @@ const SideBar = ({ children }) => {
                 
                 : isEventOrganizer ? (
                   <div>
-                  <div>
                   <Menu.Item key="3" icon={<SwapOutlined />} style={{padding:"20px"}}>
-                    <Link to="/fixture">Fixture Shuffle</Link>
-                  </Menu.Item>
-                  </div>
-
-                  <Menu.Item key="4" icon={<ToTopOutlined />} style={{padding:"20px"}}>
-                    <Link to="/update-fixture">Update Fixture</Link>
-                  </Menu.Item>
-
-                  <Menu.Item key="5" icon={<PendingActions />} style={{padding:"20px"}}>
-                    <Link to="/apply-position">Brackets</Link>
-                  </Menu.Item>
-
-                  <Menu.Item key="6" icon={<UserOutlined />} style={{padding:"20px"}}>
-                    <Link to="/profile">My Profile</Link>
+                    <Link to="/eo-stats">Event Organizer View</Link>
                   </Menu.Item>
 
                   </div>

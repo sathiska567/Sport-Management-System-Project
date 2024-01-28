@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Checkbox, Form, Input } from 'antd';
-import SideBar from '../DashboardSideBar/SideBar';
+import EOSideBar from '../EOSideBar/EOSideBar';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -25,7 +25,7 @@ const onFinish = async(values) => {
 
     return(
         <>
-        <SideBar>
+        <EOSideBar>
         <Form
          name="basic"
          labelCol={{
@@ -68,7 +68,7 @@ const onFinish = async(values) => {
            </Button>
          </Form.Item>
        </Form>
-        </SideBar>
+        </EOSideBar>
        
        </>
     )
