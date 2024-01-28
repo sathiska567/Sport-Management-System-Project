@@ -19,7 +19,8 @@ import FinalizeFixtureUpdate from "./Components/Fixture/FinalizeFixtureUpdate.js
 import FinalUpdate from "./Components/Fixture/FinalUpdate.jsx";
 import SetFixtureRound from "./Components/Fixture/SetFixtureRound.jsx";
 import AddTeam from "./Components/Fixture/AddTeam.jsx";
-
+import CreateEvent from "./Components/EventOrganizer/EOCreateEvent/EOCreateEvent.jsx"
+import EOStats from "./Components/EventOrganizer/EOStats/EOStats.jsx"
 
 function App() {
 
@@ -179,9 +180,23 @@ function App() {
             </ProtectedRoute>
           }
         />
-
       </Routes>
 
+      <Routes>
+        <Route path="/create-event" element={
+          <ProtectedRoute>
+            <CreateEvent />
+          </ProtectedRoute>
+        } />
+      </Routes>
+
+      <Routes>
+        <Route path="/eo-stats" element={
+          <ProtectedRoute>
+            <EOStats />
+          </ProtectedRoute>
+        } />
+      </Routes>
 
     </BrowserRouter>
 
