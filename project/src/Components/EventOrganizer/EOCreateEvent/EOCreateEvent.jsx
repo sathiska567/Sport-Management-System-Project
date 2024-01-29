@@ -6,9 +6,21 @@ import { CloseSquareOutlined, EditOutlined } from "@ant-design/icons";
 
 const EOCreateEvent = () => {
   const [numberOfTeams, setNumberOfTeams] = useState(0);
+
+  const [nameOfTheEvent, setNameOfTheEvent] = useState("");
+  const [location, setLocation] = useState("");
+  const [teamName, setTeamName] = useState([])
+  const [eventDate, setEventDate] = useState("")
+  const [eventTime, setEventTime] = useState("")
+
+
   const handleNumberOfTeamsChange = (event) => {
     setNumberOfTeams(event.target.value);
   };
+
+  const handleCreateEvent = async () => {
+    console.log(nameOfTheEvent, location, teamName, numberOfTeams,eventDate,eventTime);
+  }
 
   return (
     <div>
@@ -57,12 +69,12 @@ const EOCreateEvent = () => {
               <div className="InputData">
                 <div className="DataIem">
                   <label htmlFor="eventName">Name of the Event:</label>
-                  <Input type="text" id="eventName" name="eventName" required />
+                  <Input type="text" id="eventName" name="eventName" required onChange={(e) => setNameOfTheEvent(e.target.value)} />
                 </div>
 
                 <div className="DataIem">
                   <label htmlFor="location">Location:</label>
-                  <Input type="text" id="location" name="location" required />
+                  <Input type="text" id="location" name="location" required onChange={(e) => setLocation(e.target.value)} />
                 </div>
 
                 <div className="DataIem">
@@ -91,18 +103,22 @@ const EOCreateEvent = () => {
                       className="DataItemTeamsInput"
                       allowClear
                       required
+                      onChange={(e) => {
+                        teamName[index] = e.target.value;
+                        setTeamName(teamName);
+                      }}
                     />
                   </div>
                 ))}
 
                 <div className="DataIem">
                   <label htmlFor="EventDate">Event Date:</label>
-                  <DatePicker id="EventDate" name="EventDate" />
+                  <DatePicker id="EventDate" name="EventDate" onChange={(date) => setEventDate(date)} />
                 </div>
 
                 <div className="DataIem">
                   <label htmlFor="startingTime">Starting Time:</label>
-                  <TimePicker id="startingTime" name="startingTime" />
+                  <TimePicker id="startingTime" name="startingTime" onChange={(time) => setEventTime(time)} />
                 </div>
 
                 <div class="buttonSet">
@@ -110,6 +126,7 @@ const EOCreateEvent = () => {
                     <button
                       class="approve CreateEventBTn"
                       style={{ backgroundColor: "#05AD1B", width: "115px" }}
+                      onClick={handleCreateEvent}
                     >
                       <EditOutlined className="UserApplicationIcon" />
                       Create
