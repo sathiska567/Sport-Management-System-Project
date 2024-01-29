@@ -19,8 +19,8 @@ import FinalizeFixtureUpdate from "./Components/Fixture/FinalizeFixtureUpdate.js
 import FinalUpdate from "./Components/Fixture/FinalUpdate.jsx";
 import SetFixtureRound from "./Components/Fixture/SetFixtureRound.jsx";
 import AddTeam from "./Components/Fixture/AddTeam.jsx";
-import CreateEvent from "./Components/EventOrganizer/EOCreateEvent/EOCreateEvent.jsx"
 import EOStats from "./Components/EventOrganizer/EOStats/EOStats.jsx"
+import CreateFixture from "./Components/EventOrganizer/EOCreateFixture/EOCreateFixture.jsx";
 
 function App() {
 
@@ -31,11 +31,14 @@ function App() {
     <BrowserRouter>
       <Routes>
         {/* user login and registration */}
-        <Route path="/register" element={
-          <PublicRoute>
-            <SignUp />
-          </PublicRoute>
-        } />
+        <Route
+          path="/register"
+          element={
+            <PublicRoute>
+              <SignUp />
+            </PublicRoute>
+          }
+        />
 
         {/* <Route 
       path="/" 
@@ -43,57 +46,69 @@ function App() {
       /> */}
 
         <Route
-
-          path="/" element={
+          path="/"
+          element={
             <PublicRoute>
               <NewLogin />
             </PublicRoute>
-
           }
-
         />
 
-        <Route path="/forgot-password" element={
-          <PublicRoute>
-            <ForgotPassword />
-          </PublicRoute>
+        <Route
+          path="/forgot-password"
+          element={
+            <PublicRoute>
+              <ForgotPassword />
+            </PublicRoute>
+          }
+        />
 
-        } />
+        <Route
+          path="/otp-reset-pass"
+          element={
+            <PublicRoute>
+              <OTPPage />
+            </PublicRoute>
+          }
+        />
 
-        <Route path="/otp-reset-pass" element={
-
-          <PublicRoute>
-            <OTPPage />
-          </PublicRoute>
-
-        } />
-
-        <Route path="/reset-pass" element={
-          <PublicRoute>
-            <ResetPassword />
-          </PublicRoute>
-
-        } />
+        <Route
+          path="/reset-pass"
+          element={
+            <PublicRoute>
+              <ResetPassword />
+            </PublicRoute>
+          }
+        />
 
         {/* Apply position routes */}
-        <Route path="/apply-position" element={
-          <ProtectedRoute>
-            <ApplyPosition />
-          </ProtectedRoute>
-        } />
+        <Route
+          path="/apply-position"
+          element={
+            <ProtectedRoute>
+              <ApplyPosition />
+            </ProtectedRoute>
+          }
+        />
 
         {/* after login routes */}
-        <Route path="/dashboad" element={
-          <ProtectedRoute>
-            <StatCards />
-          </ProtectedRoute>
-        } />
+        <Route
+          path="/dashboad"
+          element={
+            <ProtectedRoute>
+              <StatCards />
+            </ProtectedRoute>
+          }
+        />
 
-        <Route path="/UserValidation" element={
-          <ProtectedRoute>
-            <UserApplicationTable />
-          </ProtectedRoute>
-        } />
+        <Route
+          path="/UserValidation"
+          element={
+            <ProtectedRoute>
+              <UserApplicationTable />
+            </ProtectedRoute>
+          }
+        />
         <Route
           // Need to change after add table of application
           path="/Applying-Details"
@@ -108,12 +123,10 @@ function App() {
           path="/profile"
           element={
             <ProtectedRoute>
-               <PlayerProfile />
+              <PlayerProfile />
             </ProtectedRoute>
           }
-
         />
-
 
         <Route
           // Need to change after add table of application
@@ -125,8 +138,6 @@ function App() {
           }
         />
 
-
-
         <Route
           // Need to change after add table of application
           path="/final-fixture"
@@ -136,8 +147,6 @@ function App() {
             </ProtectedRoute>
           }
         />
-
-
 
         <Route
           // Need to change after add table of application
@@ -149,7 +158,6 @@ function App() {
           }
         />
 
-
         <Route
           // Need to change after add table of application
           path="/final-update-fixture"
@@ -159,7 +167,6 @@ function App() {
             </ProtectedRoute>
           }
         />
-
 
         <Route
           // Need to change after add table of application
@@ -183,21 +190,26 @@ function App() {
       </Routes>
 
       <Routes>
-        <Route path="/create-event" element={
-          <ProtectedRoute>
-            <CreateEvent />
-          </ProtectedRoute>
-        } />
+        <Route
+          path="/create-fixture"
+          element={
+            <ProtectedRoute>
+              <CreateFixture />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
 
       <Routes>
-        <Route path="/eo-stats" element={
-          <ProtectedRoute>
-            <EOStats />
-          </ProtectedRoute>
-        } />
+        <Route
+          path="/eo-stats"
+          element={
+            <ProtectedRoute>
+              <EOStats />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
-
     </BrowserRouter>
 
     // <div className="App">

@@ -2,6 +2,8 @@
 import "./EOSideBar.css";
 import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCalendar } from "@fortawesome/free-solid-svg-icons";
 
 
 import {
@@ -67,10 +69,12 @@ const EOSizeBar = ({ children }) => {
       1: "Dashboard",
       2: "Create Event",
       3: "Edit Event",
-      4: "Assign Staff",
-      5: "Fixture",
-      6: "Bracket",
-      7: "My Profile",
+      4: "Create Fixture",
+      5: "Shuffle Fixture",
+      6: "Update Fixture",
+      7: "Assign Staff",
+      8: "Bracket",
+      9: "My Profile",
     };
 
     return <p>{text[selectedMenuItem]}</p>;
@@ -189,28 +193,34 @@ const EOSizeBar = ({ children }) => {
             <NavLink to="/eo-stats">Dashboard</NavLink>
           </Menu.Item>
           <Menu.Item key="2" icon={<EditOutlined />}>
-            <NavLink to="/create-event">Create Event</NavLink>
+            <NavLink to="#">Create Event</NavLink>
           </Menu.Item>
           <Menu.Item key="3" icon={<FormOutlined />}>
             <NavLink to="#">Edit Event</NavLink>
           </Menu.Item>
-          <Menu.Item key="4" icon={<UserAddOutlined />}>
+          <Menu.Item key="4" icon={<CalendarOutlined />}>
+            <NavLink to="/create-fixture">Create Fixture</NavLink>
+          </Menu.Item>
+          <Menu.Item key="5" icon={<FontAwesomeIcon icon={faCalendar} />}>
+    <NavLink to="#">Shuffle Fixture</NavLink>
+</Menu.Item>
+          <Menu.Item key="6" icon={<CalendarOutlined />}>
+            <NavLink to="#">Edit Fixture</NavLink>
+          </Menu.Item>
+          <Menu.Item key="7" icon={<UserAddOutlined />}>
             <NavLink to="#">Assign Staff</NavLink>
           </Menu.Item>
-          <Menu.Item key="5" icon={<CalendarOutlined />}>
-            <NavLink to="#">Fixture</NavLink>
-          </Menu.Item>
-          <Menu.Item key="6" icon={<Bracket />}>
+          <Menu.Item key="8" icon={<Bracket />}>
             <NavLink to="#">Bracket</NavLink>
           </Menu.Item>
-          <Menu.Item key="7" icon={<Profile />}>
+          <Menu.Item key="9" icon={<Profile />}>
             <NavLink to="#">My Profile</NavLink>
           </Menu.Item>
           {/* <Menu.Item key="3" icon={<ManageUser />}>
                 <Link to="/Manage">Notification</Link>
               </Menu.Item> */}
           <Menu.Item
-            key="4"
+            key="9"
             icon={<PoweroffOutlined />}
             style={{
               position: "absolute",
