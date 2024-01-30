@@ -1,6 +1,6 @@
 import { React, useState } from "react";
 import "./PlayerProfile.css";
-import SideBar from "../DashboardSideBar/SideBar";
+import SideBar from "../EventOrganizer/EOSideBar/EOSideBar";
 import { Upload, Modal, Input, Button, DatePicker, InputNumber } from "antd";
 import ImgCrop from "antd-img-crop";
 

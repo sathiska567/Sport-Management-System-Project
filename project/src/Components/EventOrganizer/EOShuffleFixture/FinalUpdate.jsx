@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import SideBar from '../DashboardSideBar/SideBar'
+import SideBar from '../EOSideBar/EOSideBar'
 import { useLocation } from 'react-router-dom'
 import axios from 'axios';
 import { Table, message, Checkbox } from 'antd';

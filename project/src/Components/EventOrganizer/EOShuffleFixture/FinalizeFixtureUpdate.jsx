@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import SideBar from '../DashboardSideBar/SideBar'
+import SideBar from '../EOSideBar/EOSideBar'
 import axios from 'axios'
 import { Button, Input, Table, message } from 'antd'
 import { useNavigate } from 'react-router-dom'

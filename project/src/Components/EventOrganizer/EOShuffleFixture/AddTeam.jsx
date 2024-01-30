@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Checkbox, Form, Input } from 'antd';
-import SideBar from '../DashboardSideBar/SideBar';
+import SideBar from '../EOSideBar/EOSideBar';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 

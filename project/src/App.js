@@ -13,12 +13,12 @@ import PlayerProfile from "./Components/PlayerComponents/PlayerProfile.jsx";
 import PublicRoute from "./Components/PublicRoute/PublicRoute.js";
 import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute.js";
 import SignUp from "./Components/Login/SignUp.jsx";
-import Fixture from "./Components/Fixture/Fixture.jsx";
-import FinalizeFixture from "./Components/Fixture/FinalizeFixture.jsx";
-import FinalizeFixtureUpdate from "./Components/Fixture/FinalizeFixtureUpdate.jsx";
-import FinalUpdate from "./Components/Fixture/FinalUpdate.jsx";
-import SetFixtureRound from "./Components/Fixture/SetFixtureRound.jsx";
-import AddTeam from "./Components/Fixture/AddTeam.jsx";
+import Fixture from "./Components/EventOrganizer/EOShuffleFixture/Fixture.jsx";
+import FinalizeFixture from "./Components/EventOrganizer/EOShuffleFixture/FinalizeFixture.jsx";
+import FinalizeFixtureUpdate from "./Components/EventOrganizer/EOShuffleFixture/FinalizeFixtureUpdate.jsx";
+import FinalUpdate from "./Components/EventOrganizer/EOShuffleFixture/FinalUpdate.jsx";
+import SetFixtureRound from "./Components/EventOrganizer/EOShuffleFixture/SetFixtureRound.jsx";
+import AddTeam from "./Components/EventOrganizer/EOShuffleFixture/AddTeam.jsx";
 import EOStats from "./Components/EventOrganizer/EOStats/EOStats.jsx"
 import CreateFixture from "./Components/EventOrganizer/EOCreateFixture/EOCreateFixture.jsx";
 
