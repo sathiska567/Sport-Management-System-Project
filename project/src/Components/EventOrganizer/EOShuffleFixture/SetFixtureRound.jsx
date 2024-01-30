@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { SingleElimination } from 'tournament-pairings';
-import SideBar from '../DashboardSideBar/SideBar';
+import SideBar from '../EOSideBar/EOSideBar';
 import { Button, Table } from 'antd';
 import html2canvas from 'html2canvas';
 import jspdf from "jspdf"

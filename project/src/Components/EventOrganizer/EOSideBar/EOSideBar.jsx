@@ -40,6 +40,7 @@ const EOSizeBar = ({ children }) => {
   const [currentUserName, setCurrentUsername] = useState();
   const [isAdmin, setIsAdmin] = useState(false);
   const [positionNotification, setPositionNotification] = useState();
+  const [isEventOrganizer, setIsEventOrganizer] = useState(false);
 
   // Event handlers for mouse hover events
   const handleHoverButton1 = () => {
@@ -92,12 +93,16 @@ const EOSizeBar = ({ children }) => {
         }
       );
 
-      console.log(res.data.user.notification[0]);
+      console.log(res.data.user.isEventOrganizer);
 
       setPositionNotification(res.data.user.notification.length);
 
       setCurrentUsername(res.data.user.username);
       setIsAdmin(res.data.user.isAdmin);
+      setIsEventOrganizer(res.data.user.isEventOrganizer)
+
+      console.log("Is event organizer is : ", isEventOrganizer);
+
     } catch (error) {
       message.error("Error have inside the Get currentUserData function");
     }
@@ -138,6 +143,19 @@ const EOSizeBar = ({ children }) => {
         console.error("Error fetching user data:", error);
       });
   }, []);
+
+
+  const handleLogOut = async () => {
+    try {
+      localStorage.clear()
+      window.location.reload();
+
+      message.success("Logout Successfully");
+
+    } catch (error) {
+      message.error("Logout failed");
+    }
+  }
 
   // get admin or not status
 
@@ -189,36 +207,51 @@ const EOSizeBar = ({ children }) => {
             fontSize: "16px",
           }}
         >
+
           <Menu.Item key="1" icon={<DashboardOutlined />}>
             <NavLink to="/eo-stats">Dashboard</NavLink>
           </Menu.Item>
-          <Menu.Item key="2" icon={<EditOutlined />}>
-            <NavLink to="#">Create Event</NavLink>
-          </Menu.Item>
-          <Menu.Item key="3" icon={<FormOutlined />}>
-            <NavLink to="#">Edit Event</NavLink>
-          </Menu.Item>
-          <Menu.Item key="4" icon={<CalendarOutlined />}>
-            <NavLink to="/create-fixture">Create Fixture</NavLink>
-          </Menu.Item>
-          <Menu.Item key="5" icon={<FontAwesomeIcon icon={faCalendar} />}>
-            <NavLink to="#">Shuffle Fixture</NavLink>
-          </Menu.Item>
-          <Menu.Item key="6" icon={<CalendarOutlined />}>
-            <NavLink to="#">Edit Fixture</NavLink>
-          </Menu.Item>
-          <Menu.Item key="7" icon={<UserAddOutlined />}>
-            <NavLink to="#">Assign Staff</NavLink>
-          </Menu.Item>
-          <Menu.Item key="8" icon={<Bracket />}>
-            <NavLink to="#">Bracket</NavLink>
-          </Menu.Item>
-          <Menu.Item key="9" icon={<Profile />}>
-            <NavLink to="#">My Profile</NavLink>
-          </Menu.Item>
-          {/* <Menu.Item key="3" icon={<ManageUser />}>
-                <Link to="/Manage">Notification</Link>
-              </Menu.Item> */}
+
+          {isEventOrganizer ? (
+            <div style={{paddingLeft:"23px"}}>
+              <Menu.Item key="2" icon={<EditOutlined />}>
+                <NavLink to="#">Create Event</NavLink>
+              </Menu.Item>
+              <Menu.Item key="3" icon={<FormOutlined />}>
+                <NavLink to="#">Edit Event</NavLink>
+              </Menu.Item>
+              <Menu.Item key="4" icon={<CalendarOutlined />}>
+                <NavLink to="/create-fixture">Create Fixture</NavLink>
+              </Menu.Item>
+              <Menu.Item key="5" icon={<FontAwesomeIcon icon={faCalendar} />}>
+                <NavLink to="/fixture">Shuffle Fixture</NavLink>
+              </Menu.Item>
+              <Menu.Item key="6" icon={<CalendarOutlined />}>
+                <NavLink to="/update-fixture">Edit Fixture</NavLink>
+              </Menu.Item>
+              <Menu.Item key="7" icon={<UserAddOutlined />}>
+                <NavLink to="#">Assign Staff</NavLink>
+              </Menu.Item>
+              <Menu.Item key="8" icon={<Bracket />}>
+                <NavLink to="#">Bracket</NavLink>
+              </Menu.Item>
+              <Menu.Item key="9" icon={<Profile />}>
+                <NavLink to="/profile">My Profile</NavLink>
+              </Menu.Item>
+            </div>
+          ) :
+
+            (
+              <div style={{paddingLeft:"23px"}}>
+                <Menu.Item key="9" icon={<Profile />}>
+                <NavLink to="/apply-position">Apply Position</NavLink>
+              </Menu.Item>
+              </div>
+            )
+
+          }
+
+
           <Menu.Item
             key="9"
             icon={<PoweroffOutlined />}
@@ -232,7 +265,7 @@ const EOSizeBar = ({ children }) => {
             onMouseEnter={handleHoverButton1}
             onMouseLeave={handleMouseLeaveButton1}
           >
-            <NavLink to="/LogOff">Log Off</NavLink>
+            <NavLink onClick={handleLogOut}>Log Off</NavLink>
           </Menu.Item>
         </Menu>
       </Sider>

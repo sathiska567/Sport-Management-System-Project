@@ -367,36 +367,23 @@ const SideBar = ({ children }) => {
 
                 {isCoach ? (
                   <Menu.Item key="2" icon={<PendingActions />}>
-                    <Link to="/apply-position">Coach Dashboad</Link>
+                    <Link to="#">Coach Dashboad</Link>
                   </Menu.Item>
                 ) 
                 
                 : isPlayer ? (
                   <Menu.Item key="2" icon={<PendingActions />}>
-                    <Link to="/apply-position">Player Dashboad</Link>
+                    <Link to="#">Player Dashboad</Link>
                   </Menu.Item>
                 ) 
                 
                 : isEventOrganizer ? (
                   <div>
-                  <div>
+
                   <Menu.Item key="3" icon={<SwapOutlined />} style={{padding:"20px"}}>
-                    <Link to="/fixture">Fixture Shuffle</Link>
+                    <Link to="/eo-stats">Event Organizer Dashboad</Link>
                   </Menu.Item>
-                  </div>
-
-                  <Menu.Item key="4" icon={<ToTopOutlined />} style={{padding:"20px"}}>
-                    <Link to="/update-fixture">Update Fixture</Link>
-                  </Menu.Item>
-
-                  <Menu.Item key="5" icon={<PendingActions />} style={{padding:"20px"}}>
-                    <Link to="/apply-position">Brackets</Link>
-                  </Menu.Item>
-
-                  <Menu.Item key="6" icon={<UserOutlined />} style={{padding:"20px"}}>
-                    <Link to="/profile">My Profile</Link>
-                  </Menu.Item>
-
+               
                   </div>
                 ) 
                 
