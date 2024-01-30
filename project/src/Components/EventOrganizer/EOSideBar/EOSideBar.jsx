@@ -202,8 +202,8 @@ const EOSizeBar = ({ children }) => {
             <NavLink to="/create-fixture">Create Fixture</NavLink>
           </Menu.Item>
           <Menu.Item key="5" icon={<FontAwesomeIcon icon={faCalendar} />}>
-    <NavLink to="#">Shuffle Fixture</NavLink>
-</Menu.Item>
+            <NavLink to="#">Shuffle Fixture</NavLink>
+          </Menu.Item>
           <Menu.Item key="6" icon={<CalendarOutlined />}>
             <NavLink to="#">Edit Fixture</NavLink>
           </Menu.Item>
