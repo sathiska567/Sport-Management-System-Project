@@ -1,14 +1,42 @@
 import React, { useState } from "react";
 import EOSidebar from "../EOSideBar/EOSideBar";
 import "./EOCreateFixture.css";
-import { Form, Input, DatePicker, TimePicker } from "antd";
+import { Form, Input, DatePicker, TimePicker, message } from "antd";
 import { CloseSquareOutlined, EditOutlined } from "@ant-design/icons";
+import axios from "axios";
 
 const EOCreateFixture = () => {
   const [numberOfTeams, setNumberOfTeams] = useState(0);
+  const [nameOfTheEvent,setEventName] = useState('');
+  const [nameOfTheTeam,setTeamName] = useState([]);
+  const [location,setLocation] = useState('');
+  const [eventDate,setEventDate] = useState('');
+  const [startingTime,setStartingTime] = useState('');
+
+
   const handleNumberOfTeamsChange = (event) => {
     setNumberOfTeams(event.target.value);
   };
+
+ const handleCreate = async()=>{
+     console.log(nameOfTheEvent,nameOfTheTeam,location,eventDate,startingTime);
+
+     try {
+      const response = await axios.post("http://localhost:8080/api/v1/create/create-fixture",{nameOfTheEvent:nameOfTheEvent,nameOfTheTeam:nameOfTheTeam,location:location})
+      console.log(response);
+
+      if(response.data.success){
+        message.success("Fixture Created Successfully")
+      }
+      else{
+        message.error("Fixture Create Have some error")
+      }
+
+     } catch (error) {
+      message.error("Fixture Create Have some error",error.message)
+     }
+ }
+
 
   return (
     <div>
@@ -57,12 +85,12 @@ const EOCreateFixture = () => {
               <div className="InputData">
                 <div className="DataIem">
                   <label htmlFor="eventName">Name of the Event:</label>
-                  <Input type="text" id="eventName" name="eventName" required />
+                  <Input type="text" id="eventName" name="eventName" required onChange={(e)=>setEventName(e.target.value)} />
                 </div>
 
                 <div className="DataIem">
                   <label htmlFor="location">Location:</label>
-                  <Input type="text" id="location" name="location" required />
+                  <Input type="text" id="location" name="location" required onChange={(e)=>setLocation(e.target.value)} />
                 </div>
 
                 <div className="DataIem">
@@ -91,18 +119,22 @@ const EOCreateFixture = () => {
                       className="DataItemTeamsInput"
                       allowClear
                       required
+                      onChange={(e) => setTeamName(() => {
+                        nameOfTheTeam[index] = e.target.value;
+                        return nameOfTheTeam;
+                      })}
                     />
                   </div>
                 ))}
 
                 <div className="DataIem">
                   <label htmlFor="EventDate">Event Date:</label>
-                  <DatePicker id="EventDate" name="EventDate" />
+                  <DatePicker id="EventDate" name="EventDate" onChange={(date) => setEventDate(date)} />
                 </div>
 
                 <div className="DataIem">
                   <label htmlFor="startingTime">Starting Time:</label>
-                  <TimePicker id="startingTime" name="startingTime" />
+                  <TimePicker id="startingTime" name="startingTime" onChange={(time) => setStartingTime(time)} />
                 </div>
 
                 <div class="buttonSet">
@@ -110,6 +142,7 @@ const EOCreateFixture = () => {
                     <button
                       class="approve CreateEventBTn"
                       style={{ backgroundColor: "#05AD1B", width: "115px" }}
+                      onClick={handleCreate}
                     >
                       <EditOutlined className="UserApplicationIcon" />
                       Create

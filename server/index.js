@@ -12,6 +12,7 @@ const StoreRoute = require("./routes/StoreRoute/StoreRoute");
 const shuffleNewTeamRoute = require("./routes/ShuffleNewTeamRoute/ShuffleNewTeamRoute")
 const fixtureRoute = require("./routes/FixtureRoute/FixtureRoute");
 const deleteRoute = require("./routes/DeleteRoute/DeleteRoute");
+const createFixtureRoute = require("./routes/CreateFixtureRoute/CreateFixtureRoute")
 
 require("./db/mongoDb"); 
 
@@ -32,6 +33,9 @@ app.use("/api/v1/update",updateFixtureRoute)
 app.use("/api/v1/store",StoreRoute)
 app.use("/api/v1/shuffle",shuffleNewTeamRoute)
 app.use("/api/v1/delete",deleteRoute)
+
+//HANDLE CREATE FIXTURE ROUTE
+app.use("/api/v1/create",createFixtureRoute)
 
 
 // //jwt
