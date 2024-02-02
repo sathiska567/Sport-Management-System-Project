@@ -1,42 +1,46 @@
 import React, { useState } from "react";
 import EOSidebar from "../EOSideBar/EOSideBar";
-import "./EOCreateFixture.css";
+import "./EOCreateEventForm.css";
 import { Form, Input, DatePicker, TimePicker, message } from "antd";
 import { CloseSquareOutlined, EditOutlined } from "@ant-design/icons";
 import axios from "axios";
 
-const EOCreateFixture = () => {
-  const [numberOfTeams, setNumberOfTeams] = useState(0);
-  const [nameOfTheEvent,setEventName] = useState('');
-  const [nameOfTheTeam,setTeamName] = useState([]);
-  const [location,setLocation] = useState('');
-  const [eventDate,setEventDate] = useState('');
-  const [startingTime,setStartingTime] = useState('');
+const EOCreateEventForm = () => {
+  const [nameOfTheEvent, setEventName] = useState("");
+  const [nameOfTheTeam, setTeamName] = useState([]);
+  const [location, setLocation] = useState("");
+  const [eventDate, setEventDate] = useState("");
+  const [startingTime, setStartingTime] = useState("");
 
+  const handleCreate = async () => {
+    console.log(
+      nameOfTheEvent,
+      nameOfTheTeam,
+      location,
+      eventDate,
+      startingTime
+    );
 
-  const handleNumberOfTeamsChange = (event) => {
-    setNumberOfTeams(event.target.value);
-  };
-
- const handleCreate = async()=>{
-     console.log(nameOfTheEvent,nameOfTheTeam,location,eventDate,startingTime);
-
-     try {
-      const response = await axios.post("http://localhost:8080/api/v1/create/create-fixture",{nameOfTheEvent:nameOfTheEvent,nameOfTheTeam:nameOfTheTeam,location:location})
+    try {
+      const response = await axios.post(
+        "http://localhost:8080/api/v1/create/create-fixture",
+        {
+          nameOfTheEvent: nameOfTheEvent,
+          nameOfTheTeam: nameOfTheTeam,
+          location: location,
+        }
+      );
       console.log(response);
 
-      if(response.data.success){
-        message.success("Fixture Created Successfully")
+      if (response.data.success) {
+        message.success("Fixture Created Successfully");
+      } else {
+        message.error("Fixture Create Have some error");
       }
-      else{
-        message.error("Fixture Create Have some error")
-      }
-
-     } catch (error) {
-      message.error("Fixture Create Have some error",error.message)
-     }
- }
-
+    } catch (error) {
+      message.error("Fixture Create Have some error", error.message);
+    }
+  };
 
   return (
     <div>
@@ -62,7 +66,7 @@ const EOCreateFixture = () => {
                   fontWeight: "500",
                 }}
               >
-                Create Fixture
+                Create Event
               </h3>
               <a href="#">
                 <CloseSquareOutlined
@@ -111,36 +115,9 @@ const EOCreateFixture = () => {
                     type="number"
                     id="numberOfTeams"
                     name="numberOfTeams"
-                    onChange={handleNumberOfTeamsChange}
                     required
                   />
                 </div>
-
-                {Array.from({ length: numberOfTeams }, (_, index) => (
-                  <div className="DataIem" key={index}>
-                    <label
-                      className="DataItemTeamsLabel"
-                      htmlFor={`teamName${index}`}
-                    >
-                      Team Name {index + 1}:
-                    </label>
-                    <Input
-                      type="text"
-                      id={`teamName${index}`}
-                      name={`teamName${index}`}
-                      className="DataItemTeamsInput"
-                      allowClear
-                      required
-                      onChange={(e) =>
-                        setTeamName(() => {
-                          nameOfTheTeam[index] = e.target.value;
-                          return nameOfTheTeam;
-                        })
-                      }
-                    />
-                  </div>
-                ))}
-
                 <div className="DataIem">
                   <label htmlFor="EventDate">Event Date:</label>
                   <DatePicker
@@ -163,11 +140,11 @@ const EOCreateFixture = () => {
                   <div>
                     <button
                       class="approve CreateEventBTn"
-                      style={{ backgroundColor: "#05AD1B" }}
+                      style={{ backgroundColor: "#05AD1B", width: "115px" }}
                       onClick={handleCreate}
                     >
                       <EditOutlined className="UserApplicationIcon" />
-                      Create Fixture
+                      Create Event
                     </button>
                   </div>
                 </div>
@@ -180,4 +157,4 @@ const EOCreateFixture = () => {
   );
 };
 
-export default EOCreateFixture;
+export default EOCreateEventForm;

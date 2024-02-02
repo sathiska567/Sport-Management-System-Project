@@ -5,8 +5,8 @@ import UserApplicationTable from "./Components/UserApplicationTable/UserApplicat
 import StatCards from "./Components/StatCard/StatCards.jsx";
 import Register from "./Pages/user/Register.jsx";
 import ForgotPassword from "./Components/Login/ForgetPassword.jsx";
-import OTPPage from "./Components/Login/OTPPage.jsx"
-import ResetPassword from "./Components/Login/CreateNewPassword.jsx"
+import OTPPage from "./Components/Login/OTPPage.jsx";
+import ResetPassword from "./Components/Login/CreateNewPassword.jsx";
 import ApplyPosition from "./Components/ApplyPosition/ApplyPosition.jsx";
 import NewLogin from "./Components/Login/Login.jsx";
 import PlayerProfile from "./Components/PlayerComponents/PlayerProfile.jsx";
@@ -19,13 +19,17 @@ import FinalizeFixtureUpdate from "./Components/EventOrganizer/EOShuffleFixture/
 import FinalUpdate from "./Components/EventOrganizer/EOShuffleFixture/FinalUpdate.jsx";
 import SetFixtureRound from "./Components/EventOrganizer/EOShuffleFixture/SetFixtureRound.jsx";
 import AddTeam from "./Components/EventOrganizer/EOShuffleFixture/AddTeam.jsx";
-import EOStats from "./Components/EventOrganizer/EOStats/EOStats.jsx"
+import EOStats from "./Components/EventOrganizer/EOStats/EOStats.jsx";
 import CreateFixture from "./Components/EventOrganizer/EOCreateFixture/EOCreateFixture.jsx";
+import AssignStaff from "./Components/EventOrganizer/EOAssignStaff/EOAssignStaff.jsx";
+import CreateEvent from "./Components/EventOrganizer/EOCreateEvent/EOCreateEventForm.jsx";
+import EditEvent from "./Components/EventOrganizer/EOEditEvent/EOEditEvent.jsx";
+import EditEventForm from "./Components/EventOrganizer/EOEditEvent/EOEditEventForm.jsx";
+
 
 function App() {
-
-  const isLoggedIn = window.localStorage.getItem('isLoggedIn');
-  console.log(isLoggedIn, 'login');
+  const isLoggedIn = window.localStorage.getItem("isLoggedIn");
+  console.log(isLoggedIn, "login");
 
   return (
     <BrowserRouter>
@@ -206,6 +210,48 @@ function App() {
           element={
             <ProtectedRoute>
               <EOStats />
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
+      <Routes>
+        <Route
+          path="/eo-assign-staff"
+          element={
+            <ProtectedRoute>
+              <AssignStaff />
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
+
+      <Routes>
+        <Route
+          path="/eo-create-event"
+          element={
+            <ProtectedRoute>
+              <CreateEvent />
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
+
+      <Routes>
+        <Route
+          path="/eo-edit-event"
+          element={
+            <ProtectedRoute>
+              <EditEvent />
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
+      <Routes>
+        <Route
+          path="/eo-edit-event-form"
+          element={
+            <ProtectedRoute>
+              <EditEventForm />
             </ProtectedRoute>
           }
         />

@@ -1,10 +1,10 @@
 // Importing necessary libraries and components
-import "./EOEditEvent.css";
+import "./EOAssignStaff.css";
 import React, { useState, useEffect } from "react";
 import SideBar from "../EOSideBar/EOSideBar";
-import { UserAddOutlined, EditOutlined } from "@ant-design/icons";
+import { UserOutlined, EditOutlined } from "@ant-design/icons";
 
-import { Layout, Button, Input, Table, message, DatePicker } from "antd";
+import { Layout, Button, Input, Table, message } from "antd";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -12,58 +12,51 @@ import { useLocation, useNavigate } from "react-router-dom";
 const { Content } = Layout;
 
 // Navbar component
-const EOEditEvent = () => {
+const EOAssignStaff = () => {
   // Get data from back end
 
-const initialDataSource = [
-  {
-    key: "1",
-    eid: "E001",
-    eventName: "Event 1",
-    eventDate: "2022-01-01",
-    location: "New York",
-    actions: "N/A",
-  },
-  {
-    key: "2",
-    eid: "E002",
-    eventName: "Event 2",
-    eventDate: "2022-02-01",
-    location: "Los Angeles",
-    actions: "N/A",
-  },
-  {
-    key: "3",
-    eid: "E003",
-    eventName: "Event 3",
-    eventDate: "2022-03-01",
-    location: "Chicago",
-    actions: "N/A",
-  },
-  // Add more data as needed
-];
+  const initialDataSource = [
+    {
+      key: "1",
+      sid: "S001",
+      name: "John Doe",
+      Experience: "5 years",
+      location: "New York",
+      actions: "N/A",
+    },
+    {
+      key: "2",
+      sid: "S002",
+      name: "Jane Doe",
+      Experience: "3 years",
+      location: "Los Angeles",
+      actions: "N/A",
+    },
+    {
+      key: "3",
+      sid: "S003",
+      name: "Bob Smith",
+      Experience: "2 years",
+      location: "Chicago",
+      actions: "N/A",
+    },
+    // Add more data as needed
+  ];
 
-  const [eventName, setEventName] = useState();
-  const [EventLocation, setEventLocation] = useState();
-  const [EventDate, setEventDate] = useState();
+  const [userName, setuserName] = useState("");
+  const [userLocation, setuserLocation] = useState("");
   const [dataSource, setDataSource] = useState(initialDataSource);
   const navigate = useNavigate();
 
-useEffect(() => {
-  setDataSource(
-    initialDataSource.filter(
-      (data) =>
-        data.eventName.toLowerCase().includes(eventName?.toLowerCase() || "") &&
-        data.location
-          .toLowerCase()
-          .includes(EventLocation?.toLowerCase() || "") &&
-        (EventDate
-          ? new Date(data.eventDate).toDateString() ===
-            new Date(EventDate).toDateString()
-          : true)
-    )
-  );
-}, [eventName, EventLocation, EventDate]);
+  useEffect(() => {
+    setDataSource(
+      initialDataSource.filter(
+        (data) =>
+          data.name.toLowerCase().includes(userName.toLowerCase()) &&
+          data.location.toLowerCase().includes(userLocation.toLowerCase())
+      )
+    );
+  }, [userName, userLocation]);
 
   // JSX structure for the Navbar component
   return (
@@ -85,24 +78,20 @@ useEffect(() => {
             {/* Search section */}
             <div className="search">
               <Input.Search
-                placeholder="Search Event Name..."
+                placeholder="Search User Name..."
                 styles={{
                   marginBottom: "8",
                 }}
-                onSearch={(value) => setEventName(value)}
-                onChange={(e) => setEventName(e.target.value)}
+                onSearch={(value) => setuserName(value)}
+                onChange={(e) => setuserName(e.target.value)}
               />
               <Input.Search
-                placeholder="Search Event Location..."
+                placeholder="Search Location..."
                 styles={{
                   marginBottom: "8",
                 }}
-                onSearch={(value) => setEventLocation(value)}
-                onChange={(e) => setEventLocation(e.target.value)}
-              />
-              <DatePicker
-                style={{ marginBottom: "8px", width: "100%", height: "32px" }}
-                onChange={(date, dateString) => setEventDate(dateString)}
+                onSearch={(value) => setuserLocation(value)}
+                onChange={(e) => setuserLocation(e.target.value)}
               />
             </div>
             {/* Table section */}
@@ -111,21 +100,21 @@ useEffect(() => {
                 className="Table"
                 columns={[
                   {
-                    title: "E_ID",
-                    dataIndex: "eid",
-                    key: "eid",
+                    title: "S_ID",
+                    dataIndex: "sid",
+                    key: "sid",
                   },
 
                   {
-                    title: "Event Name",
-                    dataIndex: "eventName",
-                    key: "eventName",
+                    title: "Name",
+                    dataIndex: "name",
+                    key: "name",
                   },
 
                   {
-                    title: "Event Date",
-                    dataIndex: "eventDate",
-                    key: "eventDate",
+                    title: "Experience",
+                    dataIndex: "Experience",
+                    key: "Experience",
                   },
 
                   {
@@ -144,12 +133,10 @@ useEffect(() => {
                           display: "flex",
                           flexDirection: "row",
                           gap: "10px",
-                          justifyContent: "center",
                         }}
                       >
                         <Button
                           type="primary"
-                          href="/eo-edit-event-form"
                           style={{
                             backgroundColor: "#05AD1B",
                             color: "#fff",
@@ -158,10 +145,10 @@ useEffect(() => {
                             borderRadius: "5px",
                             marginTop: "auto",
                             marginBottom: "auto",
-                            width: "80px",
                           }}
                         >
-                          View
+                          <UserOutlined />
+                          Assign
                         </Button>
                         <Button
                           type="primary"
@@ -173,9 +160,9 @@ useEffect(() => {
                             borderRadius: "5px",
                             marginTop: "auto",
                             marginBottom: "auto",
-                            width: "80px",
                           }}
                         >
+                          <EditOutlined />
                           Delete
                         </Button>
                       </span>
@@ -200,4 +187,4 @@ useEffect(() => {
 };
 
 // Exporting the Navbar component
-export default EOEditEvent;
+export default EOAssignStaff;

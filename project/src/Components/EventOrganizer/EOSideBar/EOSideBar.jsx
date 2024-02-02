@@ -3,7 +3,7 @@ import "./EOSideBar.css";
 import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCalendar } from "@fortawesome/free-solid-svg-icons";
+import { faCalendar,  } from "@fortawesome/free-solid-svg-icons";
 
 
 import {
@@ -13,7 +13,7 @@ import {
   PoweroffOutlined,
   FormOutlined,
   BellOutlined,
-  UserAddOutlined,
+  UserOutlined,
   EditOutlined,
   CalendarOutlined,
   MailOutlined,
@@ -21,10 +21,18 @@ import {
 
 import { ReactComponent as Bracket } from "../../icons/tournament.svg";
 import { ReactComponent as Profile } from "../../icons/Profile.svg";
-
-import { Layout, Menu, Button, Avatar, Space, Badge, message } from "antd";
+import { useLocation } from "react-router-dom";
+import {
+  Layout,
+  Menu,
+  Button,
+  Avatar,
+  Space,
+  Badge,
+  message,
+  theme,
+} from "antd";
 import axios from "axios";
-
 // Destructuring components from Ant Design's Layout
 const { Header, Sider } = Layout;
 
@@ -35,13 +43,12 @@ const EOSizeBar = ({ children }) => {
   const [isHoveredButton1, setIsHoveredButton1] = useState(false);
   const [isHoveredButton2, setIsHoveredButton2] = useState(false);
   const [selectedMenuItem, setSelectedMenuItem] = useState("1");
-
+  const location = useLocation();
   // set name
   const [currentUserName, setCurrentUsername] = useState();
   const [isAdmin, setIsAdmin] = useState(false);
   const [positionNotification, setPositionNotification] = useState();
   const [isEventOrganizer, setIsEventOrganizer] = useState(false);
-
   // Event handlers for mouse hover events
   const handleHoverButton1 = () => {
     setIsHoveredButton1(true);
@@ -65,21 +72,21 @@ const EOSizeBar = ({ children }) => {
   };
 
   // Functional component to display text based on selected menu item
-  const Text = ({ selectedMenuItem }) => {
-    const text = {
-      1: "Dashboard",
-      2: "Create Event",
-      3: "Edit Event",
-      4: "Create Fixture",
-      5: "Shuffle Fixture",
-      6: "Update Fixture",
-      7: "Assign Staff",
-      8: "Bracket",
-      9: "My Profile",
-    };
-
-    return <p>{text[selectedMenuItem]}</p>;
+const Text = ({ selectedMenuItem }) => {
+  const text = {
+    "/eo-stats": "Dashboard",
+    "/eo-create-event": "Create Event",
+    "/eo-edit-event": "Edit Event",
+    "/create-fixture": "Create Fixture",
+    "/fixture": "Shuffle Fixture",
+    "/update-fixture": "Update Fixture",
+    "/eo-assign-staff": "Assign Staff",
+    "#": "Bracket",
+    "/profile": "My Profile",
   };
+
+  return <p>{text[selectedMenuItem]}</p>;
+};
 
   //   // GET CURRENT USER DATA
   const currentUserData = async () => {
@@ -196,10 +203,10 @@ const EOSizeBar = ({ children }) => {
         <div className="demo-logo-vertical" />
         <Menu
           onSelect={handleMenuItemClick}
-          selectedKeys={[selectedMenuItem]}
           theme="dark"
           mode="inline"
-          defaultSelectedKeys={["1"]}
+          defaultSelectedKeys={["/eo-stats"]}
+          selectedKeys={[location.pathname]}
           style={{
             backgroundColor: "#15295E",
             width: "100%",
@@ -207,53 +214,50 @@ const EOSizeBar = ({ children }) => {
             fontSize: "16px",
           }}
         >
-
-          <Menu.Item key="1" icon={<DashboardOutlined />}>
+          <Menu.Item key="/eo-stats" icon={<DashboardOutlined />}>
             <NavLink to="/eo-stats">Dashboard</NavLink>
           </Menu.Item>
 
           {isEventOrganizer ? (
-            <div style={{paddingLeft:"23px"}}>
-              <Menu.Item key="2" icon={<EditOutlined />}>
-                <NavLink to="#">Create Event</NavLink>
+            <>
+              <Menu.Item key="/eo-create-event" icon={<EditOutlined />}>
+                <NavLink to="/eo-create-event">Create Event</NavLink>
               </Menu.Item>
-              <Menu.Item key="3" icon={<FormOutlined />}>
-                <NavLink to="#">Edit Event</NavLink>
+              <Menu.Item key="/eo-edit-event" icon={<FormOutlined />}>
+                <NavLink to="/eo-edit-event">Edit Event</NavLink>
               </Menu.Item>
-              <Menu.Item key="4" icon={<CalendarOutlined />}>
+              <Menu.Item key="/create-fixture" icon={<CalendarOutlined />}>
                 <NavLink to="/create-fixture">Create Fixture</NavLink>
               </Menu.Item>
-              <Menu.Item key="5" icon={<FontAwesomeIcon icon={faCalendar} />}>
+              <Menu.Item
+                key="/fixture"
+                icon={<FontAwesomeIcon icon={faCalendar} />}
+              >
                 <NavLink to="/fixture">Shuffle Fixture</NavLink>
               </Menu.Item>
-              <Menu.Item key="6" icon={<CalendarOutlined />}>
+              <Menu.Item key="/update-fixture" icon={<CalendarOutlined />}>
                 <NavLink to="/update-fixture">Edit Fixture</NavLink>
               </Menu.Item>
-              <Menu.Item key="7" icon={<UserAddOutlined />}>
-                <NavLink to="#">Assign Staff</NavLink>
+              <Menu.Item key="/eo-assign-staff" icon={<UserOutlined />}>
+                <NavLink to="/eo-assign-staff">Assign Staff</NavLink>
               </Menu.Item>
-              <Menu.Item key="8" icon={<Bracket />}>
+              <Menu.Item key="#" icon={<Bracket />}>
                 <NavLink to="#">Bracket</NavLink>
               </Menu.Item>
-              <Menu.Item key="9" icon={<Profile />}>
+              <Menu.Item key="/profile" icon={<Profile />}>
                 <NavLink to="/profile">My Profile</NavLink>
               </Menu.Item>
-            </div>
-          ) :
-
-            (
-              <div style={{paddingLeft:"23px"}}>
-                <Menu.Item key="9" icon={<Profile />}>
+            </>
+          ) : (
+            <>
+              <Menu.Item key="/apply-position" icon={<Profile />}>
                 <NavLink to="/apply-position">Apply Position</NavLink>
               </Menu.Item>
-              </div>
-            )
-
-          }
-
+            </>
+          )}
 
           <Menu.Item
-            key="9"
+            key="logoff"
             icon={<PoweroffOutlined />}
             style={{
               position: "absolute",
@@ -335,7 +339,7 @@ const EOSizeBar = ({ children }) => {
           className="title_bar"
           style={{ color: "white", backgroundColor: "#1D5596" }}
         >
-          <Text className="menuTitle" selectedMenuItem={selectedMenuItem} />
+          <Text className="menuTitle" selectedMenuItem={location.pathname} />
         </div>
         {/* Main content */}
         {children}
