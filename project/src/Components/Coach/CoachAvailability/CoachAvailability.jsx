@@ -162,7 +162,7 @@ const filteredData = dataSource.filter((data) => {
                     title: "Event Name",
                     dataIndex: "eventName",
                     key: "eventName",
-                    align: "center",
+                    align: "left",
                     // render: (text, record) => (
                     //   <span>{record.FirstName + " " + record.LastName}</span>
                     // ),
