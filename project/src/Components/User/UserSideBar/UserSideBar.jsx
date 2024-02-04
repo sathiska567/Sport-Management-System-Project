@@ -1,43 +1,26 @@
 // Importing necessary libraries and components
-import "./EOSideBar.css";
+import "./UserSideBar.css";
 import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCalendar,  } from "@fortawesome/free-solid-svg-icons";
-
 
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
   DashboardOutlined,
   PoweroffOutlined,
-  FormOutlined,
   BellOutlined,
-  UserOutlined,
   EditOutlined,
-  CalendarOutlined,
   MailOutlined,
 } from "@ant-design/icons";
 
-import { ReactComponent as Bracket } from "../../icons/tournament.svg";
-import { ReactComponent as Profile } from "../../icons/Profile.svg";
 import { useLocation } from "react-router-dom";
-import {
-  Layout,
-  Menu,
-  Button,
-  Avatar,
-  Space,
-  Badge,
-  message,
-  theme,
-} from "antd";
+import { Layout, Menu, Button, Avatar, Space, Badge, message } from "antd";
 import axios from "axios";
 // Destructuring components from Ant Design's Layout
 const { Header, Sider } = Layout;
 
 // Navbar component
-const EOSizeBar = ({ children }) => {
+const UserSideBar = ({ children }) => {
   // State variables for managing component state
   const [collapsed, setCollapsed] = useState(false);
   const [isHoveredButton1, setIsHoveredButton1] = useState(false);
@@ -72,23 +55,16 @@ const EOSizeBar = ({ children }) => {
   };
 
   // Functional component to display text based on selected menu item
-const Text = ({ selectedMenuItem }) => {
-  const text = {
-    "/eo-stats": "Dashboard",
-    "/eo-create-event": "Create Event",
-    "/eo-edit-event": "Edit Event",
-    "/create-fixture": "Create Fixture",
-    "/fixture": "Shuffle Fixture",
-    "/update-fixture": "Update Fixture",
-    "/eo-assign-staff": "Assign Staff",
-    "#": "Bracket",
-    "/profile": "My Profile",
+  const Text = ({ selectedMenuItem }) => {
+    const text = {
+      "/user-stats": "Dashboard",
+      "/user-apply-position": "Apply Position",
+    };
+
+    return <p>{text[selectedMenuItem]}</p>;
   };
 
-  return <p>{text[selectedMenuItem]}</p>;
-};
-
-  //   // GET CURRENT USER DATA
+  //GET CURRENT USER DATA
   const currentUserData = async () => {
     try {
       const res = await axios.get(
@@ -103,13 +79,11 @@ const Text = ({ selectedMenuItem }) => {
       console.log(res.data.user.isEventOrganizer);
 
       setPositionNotification(res.data.user.notification.length);
-
       setCurrentUsername(res.data.user.username);
       setIsAdmin(res.data.user.isAdmin);
-      setIsEventOrganizer(res.data.user.isEventOrganizer)
+      setIsEventOrganizer(res.data.user.isEventOrganizer);
 
       console.log("Is event organizer is : ", isEventOrganizer);
-
     } catch (error) {
       message.error("Error have inside the Get currentUserData function");
     }
@@ -151,18 +125,16 @@ const Text = ({ selectedMenuItem }) => {
       });
   }, []);
 
-
   const handleLogOut = async () => {
     try {
-      localStorage.clear()
+      localStorage.clear();
       window.location.reload();
 
       message.success("Logout Successfully");
-
     } catch (error) {
       message.error("Logout failed");
     }
-  }
+  };
 
   // get admin or not status
 
@@ -214,48 +186,12 @@ const Text = ({ selectedMenuItem }) => {
             fontSize: "16px",
           }}
         >
-          <Menu.Item key="/eo-stats" icon={<DashboardOutlined />}>
-            <NavLink to="/eo-stats">Dashboard</NavLink>
+          <Menu.Item key="/user-stats" icon={<DashboardOutlined />}>
+            <NavLink to="/user-stats">Dashboard</NavLink>
           </Menu.Item>
-
-          {isEventOrganizer ? (
-            <>
-              <Menu.Item key="/eo-create-event" icon={<EditOutlined />}>
-                <NavLink to="/eo-create-event">Create Event</NavLink>
-              </Menu.Item>
-              <Menu.Item key="/eo-edit-event" icon={<FormOutlined />}>
-                <NavLink to="/eo-edit-event">Edit Event</NavLink>
-              </Menu.Item>
-              <Menu.Item key="/create-fixture" icon={<CalendarOutlined />}>
-                <NavLink to="/create-fixture">Create Fixture</NavLink>
-              </Menu.Item>
-              <Menu.Item
-                key="/fixture"
-                icon={<FontAwesomeIcon icon={faCalendar} />}
-              >
-                <NavLink to="/fixture">Shuffle Fixture</NavLink>
-              </Menu.Item>
-              <Menu.Item key="/update-fixture" icon={<CalendarOutlined />}>
-                <NavLink to="/update-fixture">Edit Fixture</NavLink>
-              </Menu.Item>
-              <Menu.Item key="/eo-assign-staff" icon={<UserOutlined />}>
-                <NavLink to="/eo-assign-staff">Assign Staff</NavLink>
-              </Menu.Item>
-              <Menu.Item key="#" icon={<Bracket />}>
-                <NavLink to="#">Bracket</NavLink>
-              </Menu.Item>
-              <Menu.Item key="/profile" icon={<Profile />}>
-                <NavLink to="/profile">My Profile</NavLink>
-              </Menu.Item>
-            </>
-          ) : (
-            <>
-              <Menu.Item key="/apply-position" icon={<Profile />}>
-                <NavLink to="/apply-position">Apply Position</NavLink>
-              </Menu.Item>
-            </>
-          )}
-
+          <Menu.Item key="/user-apply-position" icon={<EditOutlined />}>
+            <NavLink to="/user-apply-position">Apply Position</NavLink>
+          </Menu.Item>
           <Menu.Item
             key="logoff"
             icon={<PoweroffOutlined />}
@@ -349,4 +285,4 @@ const Text = ({ selectedMenuItem }) => {
 };
 
 // Exporting the Navbar component
-export default EOSizeBar;
+export default UserSideBar;

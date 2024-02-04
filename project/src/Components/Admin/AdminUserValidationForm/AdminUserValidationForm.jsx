@@ -3,10 +3,10 @@ import { Button, Col, Form, Input, Row, message } from "antd";
 import SideBar from "../DashboardSideBar/SideBar";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import "./UserApplication.css";
+import "./AdminUserValidationForm.css";
 import { UserAddOutlined } from "@ant-design/icons";
 
-const UserApplication = () => {
+const AdminUserValidationForm = () => {
   const [componentSize, setComponentSize] = useState("default");
   const navigate = useNavigate();
   const [FirstName, setFirstName] = useState();
@@ -154,4 +154,4 @@ const UserApplication = () => {
   );
 };
 
-export default UserApplication;
+export default AdminUserValidationForm;

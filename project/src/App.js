@@ -25,6 +25,12 @@ import AssignStaff from "./Components/EventOrganizer/EOAssignStaff/EOAssignStaff
 import CreateEvent from "./Components/EventOrganizer/EOCreateEvent/EOCreateEventForm.jsx";
 import EditEvent from "./Components/EventOrganizer/EOEditEvent/EOEditEvent.jsx";
 import EditEventForm from "./Components/EventOrganizer/EOEditEvent/EOEditEventForm.jsx";
+import CoachAvailability from "./Components/Coach/CoachAvailability/CoachAvailability.jsx";
+import CoachStats from "./Components/Coach/CoachStats/CoachStats.jsx";
+import CoachCreateTeam from "./Components/Coach/CoachCreateTeam/CoachCreateTeam.jsx";
+import CoachEditTeam from "./Components/Coach/CoachEditTeam/CoachEditTeam.jsx";
+import CoachReviewPlayers from "./Components/Coach/CoachReviewPlayers/CoachReviewPlayers.jsx";
+import CoachProfile from "./Components/Coach/CoachProfile/CoachProfile.jsx";
 
 
 function App() {
@@ -256,6 +262,68 @@ function App() {
           }
         />
       </Routes>
+      <Routes>
+        <Route
+          path="/coach-availability"
+          element={
+            <ProtectedRoute>
+              <CoachAvailability />
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
+      <Routes>
+        <Route
+          path="/coach-stats"
+          element={
+            <ProtectedRoute>
+              <CoachStats />
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
+
+      <Routes>
+        <Route
+          path="/coach-create-team"
+          element={
+            <ProtectedRoute>
+              <CoachCreateTeam />
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
+      <Routes>
+        <Route
+          path="/coach-edit-team"
+          element={
+            <ProtectedRoute>
+              <CoachEditTeam />
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
+      <Routes>
+        <Route
+          path="/coach-review-players"
+          element={
+            <ProtectedRoute>
+              <CoachReviewPlayers />
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
+      <Routes>
+        <Route
+          path="/coach-profile"
+          element={
+            <ProtectedRoute>
+              <CoachProfile />
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
+
     </BrowserRouter>
 
     // <div className="App">
