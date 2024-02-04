@@ -1,5 +1,5 @@
 body {
-  height: 100vh;
+  height: 100vh !important;
   width: 100vw;
   overflow-y: hidden;
 }
@@ -21,9 +21,6 @@ body {
   align-items: center;
 }
 
-// menu text
-.ant-menu-title-content {
-}
 
 .ant-layout-header {
   padding: 0;

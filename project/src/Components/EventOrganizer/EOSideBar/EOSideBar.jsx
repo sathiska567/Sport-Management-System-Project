@@ -260,8 +260,7 @@ const Text = ({ selectedMenuItem }) => {
             key="logoff"
             icon={<PoweroffOutlined />}
             style={{
-              position: "absolute",
-              bottom: 5,
+              marginTop: "22.5vh",
               backgroundColor: isHoveredButton1 ? "#D94D34" : "#15295E",
               color: isHoveredButton1 ? "white" : "white",
               fontSize: "16px",

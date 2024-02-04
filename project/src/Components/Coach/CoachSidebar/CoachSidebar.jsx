@@ -166,7 +166,7 @@ const CoachSidebar = ({ children }) => {
         trigger={null}
         collapsible
         collapsed={collapsed}
-        collapsedWidth={100} // Adjusted collapsed width
+        collapsedWidth={100}
       >
         {/* Profile section */}
         <div style={{ backgroundColor: "#15295E" }} className="profile">
@@ -201,8 +201,6 @@ const CoachSidebar = ({ children }) => {
           selectedKeys={[location.pathname]}
           style={{
             backgroundColor: "#15295E",
-            width: "100%",
-            height: "82.5vh",
             fontSize: "16px",
           }}
         >
@@ -228,8 +226,7 @@ const CoachSidebar = ({ children }) => {
             key="logoff"
             icon={<PoweroffOutlined />}
             style={{
-              position: "absolute",
-              bottom: 5,
+              marginTop: "40vh",
               backgroundColor: isHoveredButton1 ? "#D94D34" : "#15295E",
               color: isHoveredButton1 ? "white" : "white",
               fontSize: "16px",

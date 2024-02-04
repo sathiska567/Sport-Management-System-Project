@@ -1,42 +1,51 @@
 import React, { useState } from "react";
-import EOSidebar from "../EOSideBar/EOSideBar";
 import "./EOCreateFixture.css";
+import EOSidebar from "../EOSideBar/EOSideBar";
 import { Form, Input, DatePicker, TimePicker, message } from "antd";
 import { CloseSquareOutlined, EditOutlined } from "@ant-design/icons";
 import axios from "axios";
 
 const EOCreateFixture = () => {
   const [numberOfTeams, setNumberOfTeams] = useState(0);
-  const [nameOfTheEvent,setEventName] = useState('');
-  const [nameOfTheTeam,setTeamName] = useState([]);
-  const [location,setLocation] = useState('');
-  const [eventDate,setEventDate] = useState('');
-  const [startingTime,setStartingTime] = useState('');
-
+  const [nameOfTheEvent, setEventName] = useState("");
+  const [nameOfTheTeam, setTeamName] = useState([]);
+  const [location, setLocation] = useState("");
+  const [eventDate, setEventDate] = useState("");
+  const [startingTime, setStartingTime] = useState("");
 
   const handleNumberOfTeamsChange = (event) => {
     setNumberOfTeams(event.target.value);
   };
 
- const handleCreate = async()=>{
-     console.log(nameOfTheEvent,nameOfTheTeam,location,eventDate,startingTime);
+  const handleCreate = async () => {
+    console.log(
+      nameOfTheEvent,
+      nameOfTheTeam,
+      location,
+      eventDate,
+      startingTime
+    );
 
-     try {
-      const response = await axios.post("http://localhost:8080/api/v1/create/create-fixture",{nameOfTheEvent:nameOfTheEvent,nameOfTheTeam:nameOfTheTeam,location:location})
+    try {
+      const response = await axios.post(
+        "http://localhost:8080/api/v1/create/create-fixture",
+        {
+          nameOfTheEvent: nameOfTheEvent,
+          nameOfTheTeam: nameOfTheTeam,
+          location: location,
+        }
+      );
       console.log(response);
 
-      if(response.data.success){
-        message.success("Fixture Created Successfully")
+      if (response.data.success) {
+        message.success("Fixture Created Successfully");
+      } else {
+        message.error("Fixture Create Have some error");
       }
-      else{
-        message.error("Fixture Create Have some error")
-      }
-
-     } catch (error) {
-      message.error("Fixture Create Have some error",error.message)
-     }
- }
-
+    } catch (error) {
+      message.error("Fixture Create Have some error", error.message);
+    }
+  };
 
   return (
     <div>
@@ -162,7 +171,7 @@ const EOCreateFixture = () => {
                 <div class="buttonSet">
                   <div>
                     <button
-                      class="approve CreateEventBTn"
+                      class="CreateEventBTn"
                       style={{ backgroundColor: "#05AD1B" }}
                       onClick={handleCreate}
                     >
