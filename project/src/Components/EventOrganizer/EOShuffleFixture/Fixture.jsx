@@ -17,12 +17,12 @@ export default function Fixture() {
   const matches = [];
 
   const getTeamData = async () => {
-    const response = await axios.get("http://localhost:8080/api/v1/fixture/get-team")
+    const response = await axios.get("http://localhost:8080/api/v1/get/get-fixture")
     console.log(response.data.data);
     setTeamData(response.data.data)
     setShuffledNewArray(response.data.data)
     // setNewArrayLength(response.data.data)
-    // console.log(newArrayLength.length);
+    // // console.log(newArrayLength.length);
   }
 
 
@@ -116,8 +116,8 @@ export default function Fixture() {
               {
                 title: "Teams Name",
                 dataIndex: "teamName",
-                render: (text, record) => (
-                  <span>{record.TeamName}</span>
+                render: (text, record,index) => (
+                  <span key={index}>{record.nameOfTheTeam}</span>
                 )
               },
 
@@ -130,7 +130,7 @@ export default function Fixture() {
               {
                 title: "Location",
                 dataIndex: "location",
-                render: (text, record) => <span>Ground 01</span>,
+                render: (text, record) => <span>{record.location}</span>,
               },
 
               {
@@ -139,26 +139,26 @@ export default function Fixture() {
                 render: (text, record) => (
                   <div>
                     <span><Button
-                          type="primary"
-                          style={{
-                            backgroundColor: "#D94D34",
-                            color: "#fff",
-                            fontSize: "14px",
-                            borderRadius: "5px",
-                            marginTop: "auto",
-                            marginBottom: "auto",
-                          }}
-                          onClick={() => handleDelete(record._id)}
-                        >
-                          <DeleteOutlined />
-                          Delete
-                        </Button>
-                    
-                  </span>
+                      type="primary"
+                      style={{
+                        backgroundColor: "#D94D34",
+                        color: "#fff",
+                        fontSize: "14px",
+                        borderRadius: "5px",
+                        marginTop: "auto",
+                        marginBottom: "auto",
+                      }}
+                      onClick={() => handleDelete(record._id)}
+                    >
+                      <DeleteOutlined />
+                      Delete
+                    </Button>
 
-                   
-                      {/* <Button type="danger" onClick={() => handleDelete(record._id)}>delete</Button> */}
-                    
+                    </span>
+
+
+                    {/* <Button type="danger" onClick={() => handleDelete(record._id)}>delete</Button> */}
+
                   </div>
                 ),
               },
@@ -178,10 +178,10 @@ export default function Fixture() {
           </Table>
 
           <Flex gap="small" wrap="wrap">
-            <Button 
-            type="primary"  
-            onClick={ShuffleData}>
-               Suffle               
+            <Button
+              type="primary"
+              onClick={ShuffleData}>
+              Suffle
             </Button>
             <Button type="primary" onClick={shuffleDataStore} icon={<CheckOutlined />}>Save Shuffle</Button>
           </Flex>

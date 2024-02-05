@@ -21,25 +21,6 @@ const EOCreateEventForm = () => {
       startingTime
     );
 
-    try {
-      const response = await axios.post(
-        "http://localhost:8080/api/v1/create/create-fixture",
-        {
-          nameOfTheEvent: nameOfTheEvent,
-          nameOfTheTeam: nameOfTheTeam,
-          location: location,
-        }
-      );
-      console.log(response);
-
-      if (response.data.success) {
-        message.success("Fixture Created Successfully");
-      } else {
-        message.error("Fixture Create Have some error");
-      }
-    } catch (error) {
-      message.error("Fixture Create Have some error", error.message);
-    }
   };
 
   return (

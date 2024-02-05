@@ -13,6 +13,8 @@ const shuffleNewTeamRoute = require("./routes/ShuffleNewTeamRoute/ShuffleNewTeam
 const fixtureRoute = require("./routes/FixtureRoute/FixtureRoute");
 const deleteRoute = require("./routes/DeleteRoute/DeleteRoute");
 const createFixtureRoute = require("./routes/CreateFixtureRoute/CreateFixtureRoute")
+const getFixtureRoute = require("./routes/CreateFixtureRoute/getFixtureRoute")
+const createEventRoute = require("./routes/CreateEventRoute/createEventRoute")
 
 require("./db/mongoDb"); 
 
@@ -36,6 +38,11 @@ app.use("/api/v1/delete",deleteRoute)
 
 //HANDLE CREATE FIXTURE ROUTE
 app.use("/api/v1/create",createFixtureRoute)
+app.use("/api/v1/get",getFixtureRoute)
+
+
+// HNDLE E=CREATE EVENT ROUTE
+app.use("/api/v1/event",createEventRoute);
 
 
 // //jwt
