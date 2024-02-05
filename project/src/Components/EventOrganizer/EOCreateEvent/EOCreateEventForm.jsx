@@ -121,7 +121,7 @@ const EOCreateEventForm = () => {
                   <div>
                     <button
                       class="approve CreateEventBTn"
-                      style={{ backgroundColor: "#05AD1B", width: "115px" }}
+                      style={{ backgroundColor: "#52c41a", width: "115px" }}
                       onClick={handleCreate}
                     >
                       <EditOutlined className="UserApplicationIcon" />

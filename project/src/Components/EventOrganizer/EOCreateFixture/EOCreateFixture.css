@@ -71,7 +71,7 @@ form {
   gap: 20px;
 }
 
-.CreateEventBTn {
+.CreateFixtureBTn {
   margin-top: 30px;
   font-size: 15px;
   margin-right: 10px;
@@ -82,7 +82,7 @@ form {
   width: 160px !important;
 }
 
-.CreateEventBTn:hover {
+.CreateFixtureBTn:hover {
   cursor: pointer !important;
 }
 

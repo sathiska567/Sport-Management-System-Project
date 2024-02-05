@@ -202,6 +202,7 @@ const CoachSidebar = ({ children }) => {
           style={{
             backgroundColor: "#15295E",
             fontSize: "16px",
+            height: "85vh",
           }}
         >
           <Menu.Item key="/coach-stats" icon={<DashboardOutlined />}>
@@ -225,12 +226,6 @@ const CoachSidebar = ({ children }) => {
           <Menu.Item
             key="logoff"
             icon={<PoweroffOutlined />}
-            style={{
-              marginTop: "40vh",
-              backgroundColor: isHoveredButton1 ? "#D94D34" : "#15295E",
-              color: isHoveredButton1 ? "white" : "white",
-              fontSize: "16px",
-            }}
             onMouseEnter={handleHoverButton1}
             onMouseLeave={handleMouseLeaveButton1}
           >

@@ -151,7 +151,7 @@ useEffect(() => {
                           type="primary"
                           href="/eo-edit-event-form"
                           style={{
-                            backgroundColor: "#05AD1B",
+                            backgroundColor: "#52c41a",
                             color: "#fff",
                             fontSize: "14px",
                             marginRight: "10px",
@@ -166,7 +166,7 @@ useEffect(() => {
                         <Button
                           type="primary"
                           style={{
-                            backgroundColor: "#D94D34",
+                            backgroundColor: "#f5222d",
                             color: "#fff",
                             fontSize: "14px",
                             marginRight: "10px",

@@ -3,8 +3,7 @@ import "./EOSideBar.css";
 import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCalendar,  } from "@fortawesome/free-solid-svg-icons";
-
+import { faCalendar } from "@fortawesome/free-solid-svg-icons";
 
 import {
   MenuFoldOutlined,
@@ -72,21 +71,23 @@ const EOSizeBar = ({ children }) => {
   };
 
   // Functional component to display text based on selected menu item
-const Text = ({ selectedMenuItem }) => {
-  const text = {
-    "/eo-stats": "Dashboard",
-    "/eo-create-event": "Create Event",
-    "/eo-edit-event": "Edit Event",
-    "/create-fixture": "Create Fixture",
-    "/fixture": "Shuffle Fixture",
-    "/update-fixture": "Update Fixture",
-    "/eo-assign-staff": "Assign Staff",
-    "#": "Bracket",
-    "/profile": "My Profile",
-  };
+  const Text = ({ selectedMenuItem }) => {
+    const text = {
+      "/eo-stats": "Dashboard",
+      "/eo-create-event": "Create Event",
+      "/eo-edit-event": "Edit Event",
+      "/create-fixture": "Create Fixture",
+      "/fixture": "Shuffle Fixture",
+      "/eo-view-fixture": "View Fixture",
+      "/update-fixture": "Update Fixture",
+      "/eo-assign-staff": "Assign Staff",
+      "#": "Bracket",
+      "/eo-profile": "My Profile",
+      "/logoff": "Log Off",
+    };
 
-  return <p>{text[selectedMenuItem]}</p>;
-};
+    return <p>{text[selectedMenuItem]}</p>;
+  };
 
   //   // GET CURRENT USER DATA
   const currentUserData = async () => {
@@ -106,10 +107,9 @@ const Text = ({ selectedMenuItem }) => {
 
       setCurrentUsername(res.data.user.username);
       setIsAdmin(res.data.user.isAdmin);
-      setIsEventOrganizer(res.data.user.isEventOrganizer)
+      setIsEventOrganizer(res.data.user.isEventOrganizer);
 
       console.log("Is event organizer is : ", isEventOrganizer);
-
     } catch (error) {
       message.error("Error have inside the Get currentUserData function");
     }
@@ -151,18 +151,16 @@ const Text = ({ selectedMenuItem }) => {
       });
   }, []);
 
-
   const handleLogOut = async () => {
     try {
-      localStorage.clear()
+      localStorage.clear();
       window.location.reload();
 
       message.success("Logout Successfully");
-
     } catch (error) {
       message.error("Logout failed");
     }
-  }
+  };
 
   // get admin or not status
 
@@ -229,11 +227,14 @@ const Text = ({ selectedMenuItem }) => {
               <Menu.Item key="/create-fixture" icon={<CalendarOutlined />}>
                 <NavLink to="/create-fixture">Create Fixture</NavLink>
               </Menu.Item>
+              <Menu.Item key="/eo-view-fixture" icon={<CalendarOutlined />}>
+                <NavLink to="/eo-view-fixture">View Fixture</NavLink>
+              </Menu.Item>
               <Menu.Item
-                key="/fixture"
+                key="/shuffle-fixture"
                 icon={<FontAwesomeIcon icon={faCalendar} />}
               >
-                <NavLink to="/fixture">Shuffle Fixture</NavLink>
+                <NavLink to="/shuffle-fixture">Shuffle Fixture</NavLink>
               </Menu.Item>
               <Menu.Item key="/update-fixture" icon={<CalendarOutlined />}>
                 <NavLink to="/update-fixture">Edit Fixture</NavLink>
@@ -244,8 +245,8 @@ const Text = ({ selectedMenuItem }) => {
               <Menu.Item key="#" icon={<Bracket />}>
                 <NavLink to="#">Bracket</NavLink>
               </Menu.Item>
-              <Menu.Item key="/profile" icon={<Profile />}>
-                <NavLink to="/profile">My Profile</NavLink>
+              <Menu.Item key="/eo-profile" icon={<Profile />}>
+                <NavLink to="/eo-profile">My Profile</NavLink>
               </Menu.Item>
             </>
           ) : (
@@ -257,14 +258,8 @@ const Text = ({ selectedMenuItem }) => {
           )}
 
           <Menu.Item
-            key="logoff"
+            key="/logoff"
             icon={<PoweroffOutlined />}
-            style={{
-              marginTop: "22.5vh",
-              backgroundColor: isHoveredButton1 ? "#D94D34" : "#15295E",
-              color: isHoveredButton1 ? "white" : "white",
-              fontSize: "16px",
-            }}
             onMouseEnter={handleHoverButton1}
             onMouseLeave={handleMouseLeaveButton1}
           >

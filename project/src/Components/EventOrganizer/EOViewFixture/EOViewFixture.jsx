@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import "./CoachAvailability.css";
-import EOSiderBar from "../CoachSidebar/CoachSidebar";
-import { Layout, Checkbox, Input, Table, message, DatePicker } from "antd";
+import "./EOViewFixture.css";
+import EOSiderBar from "../EOSideBar/EOSideBar";
+import { Layout, Button, Input, Table, message, DatePicker } from "antd";
 
 const { Content } = Layout;
 
@@ -29,7 +29,7 @@ const dataSource = [
   },
 ];
 
-const CoachAvailability = () => {
+const EOViewFixture = () => {
   const [eventLocation, setEventLocation] = useState("");
   const [userLocation, setUserLocation] = useState("");
 
@@ -44,15 +44,6 @@ const CoachAvailability = () => {
         data.eventDate.toLowerCase().includes(userLocation.toLowerCase()))
     );
   });
-
-  const handleCheckboxChange = (key, isChecked) => {
-    // Update your state or data here based on the checkbox state
-    console.log(
-      `Checkbox for row with key ${key} is now ${
-        isChecked ? "checked" : "unchecked"
-      }`
-    );
-  };
 
   return (
     <EOSiderBar>
@@ -120,11 +111,67 @@ const CoachAvailability = () => {
                         justifyContent: "center",
                       }}
                     >
-                      <Checkbox
-                        onChange={(e) =>
-                          handleCheckboxChange(record.key, e.target.checked)
-                        }
-                      />
+                      <Button
+                        type="primary"
+                        className="Button"
+                        style={{
+                          backgroundColor: "#52c41a",
+                          color: "#fff",
+                          fontSize: "14px",
+                          marginRight: "10px",
+                          borderRadius: "5px",
+                          marginTop: "auto",
+                          marginBottom: "auto",
+                          width: "70px",
+                        }}
+                      >
+                        View
+                      </Button>
+                      <Button
+                        type="primary"
+                        style={{
+                          backgroundColor: "#13c2c2",
+                          color: "#fff",
+                          fontSize: "14px",
+                          marginRight: "10px",
+                          borderRadius: "5px",
+                          marginTop: "auto",
+                          marginBottom: "auto",
+                          width: "70px",
+                        }}
+                      >
+                        Shuffle
+                      </Button>
+                      <Button
+                        type="primary"
+                        style={{
+                          backgroundColor: "#faad14",
+                          color: "#fff",
+                          fontSize: "14px",
+                          marginRight: "10px",
+                          borderRadius: "5px",
+                          marginTop: "auto",
+                          marginBottom: "auto",
+                          width: "70px",
+                        }}
+                      >
+                        Edit
+                      </Button>
+
+                      <Button
+                        type="primary"
+                        style={{
+                          backgroundColor: "#f5222d",
+                          color: "#fff",
+                          fontSize: "14px",
+                          borderRadius: "5px",
+                          marginTop: "auto",
+                          marginBottom: "auto",
+                          width: "70px",
+                        }}
+                      >
+                        Delete
+                      </Button>
                     </span>
                   ),
                 },
@@ -138,4 +185,4 @@ const CoachAvailability = () => {
   );
 };
 
-export default CoachAvailability;
+export default EOViewFixture;
