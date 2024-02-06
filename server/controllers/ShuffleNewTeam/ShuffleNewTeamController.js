@@ -1,34 +1,35 @@
 const ShuffledNewTeamModel = require("../../models/ShuffleTeamModel/ShuffleTeamModel");
+const createFixtureModel = require("../../models/CreateFixtureModel/CreateFixtureModel");
 
 const shuffledNewTeamController = async (req, res) => {
   try {
-    const dataArray = req.body;
-    console.log(dataArray);
+    const {shuffledNewArray,id} = req.body;
+    console.log(shuffledNewArray,id);
 
-    // Extract TeamName values from dataArray
-    const teamNames = dataArray.map(item => item.TeamName);
-    console.log(teamNames);
+    const createdFixtureData = await createFixtureModel.findById(id);
 
-    // Create a new document using the ShuffledNewTeamModel
-    const document = new ShuffledNewTeamModel({ newTeam: teamNames });
-    console.log(document);
-
-    // Save the document to the database
-    const savedDocument = await document.save();
-
-    // Respond with the saved document or an appropriate response
-    res.status(200).send({
-      success: true,
-      message: "Shuffle updated successfully",
-      savedDocument,
+    const data = new ShuffledNewTeamModel({
+      shuffleTeam: shuffledNewArray,
     });
+
+    await data.save();
+
+    createdFixtureData.createdFixtureId = data._id;
+
+    const createdShuffleId = data._id.toString();
+
+    await createdFixtureData.save();
+
+    console.log(createdShuffleId);
+    console.log(createdFixtureData);
+
     
   } catch (error) {
     console.error(error);
     res.status(400).send({
       success: false,
       message: "Error updating shuffle",
-    });
+   });
   }
 };
 
@@ -57,4 +58,4 @@ const getShuffledNewTeamController = async(req,res)=>{
 
 }
 
-module.exports = { shuffledNewTeamController,getShuffledNewTeamController };
+module.exports = { shuffledNewTeamController,getShuffledNewTeamController};

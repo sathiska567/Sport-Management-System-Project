@@ -230,12 +230,12 @@ const EOSizeBar = ({ children }) => {
               <Menu.Item key="/eo-view-fixture" icon={<CalendarOutlined />}>
                 <NavLink to="/eo-view-fixture">View Fixture</NavLink>
               </Menu.Item>
-              <Menu.Item
+              {/* <Menu.Item
                 key="/shuffle-fixture"
                 icon={<FontAwesomeIcon icon={faCalendar} />}
               >
                 <NavLink to="/shuffle-fixture">Shuffle Fixture</NavLink>
-              </Menu.Item>
+              </Menu.Item> */}
               <Menu.Item key="/update-fixture" icon={<CalendarOutlined />}>
                 <NavLink to="/update-fixture">Edit Fixture</NavLink>
               </Menu.Item>

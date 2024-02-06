@@ -3,7 +3,7 @@ import "./EOViewFixture.css";
 import EOSiderBar from "../EOSideBar/EOSideBar";
 import { Layout, Button, Input, Table, message, DatePicker } from "antd";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const { Content } = Layout;
 
@@ -36,9 +36,12 @@ const EOViewFixture = () => {
   const [userLocation, setUserLocation] = useState("");
   const [createdFixture, setCreatedFixture] = useState([]);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  console.log(location);
 
   // Filter userApplicationData based on userRole and Userlocation
-  const filteredData = dataSource.filter((data) => {
+const filteredData = dataSource.filter((data) => {
     return (
       (!eventLocation ||
         data.eventLocation
@@ -65,11 +68,16 @@ const getFixtureData = async()=>{
 }
 
 
-
-const handleView = async(id)=>{
+const handleShuffle = async(id)=>{
    console.log(id);
    navigate("/shuffle-fixture",{state:{id:id}})
 
+}
+
+
+const handleView = async(record)=>{
+   console.log(record.createdFixtureId);
+   navigate("/final-fixture",{state:{shuffledDataId:record.createdFixtureId}})
 }
 
 
@@ -162,8 +170,8 @@ useEffect(()=>{
                           marginTop: "auto",
                           marginBottom: "auto",
                           width: "70px",
-                        }}
-                        
+                        }}  
+                        onClick={() => handleView(record)}                      
                       >
                         View
                       </Button>
@@ -179,7 +187,7 @@ useEffect(()=>{
                           marginBottom: "auto",
                           width: "70px",
                         }}
-                        onClick={() => handleView(record._id) }
+                        onClick={() => handleShuffle(record._id) }
                       >
                         Shuffle
                       </Button>

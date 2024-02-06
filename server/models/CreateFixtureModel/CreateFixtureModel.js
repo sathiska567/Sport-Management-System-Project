@@ -21,6 +21,11 @@ const createFixtureSchema = new mongoose.Schema({
            required:[true ,'Team Name is required']
         },
 
+        createdFixtureId:{
+          type:Object,
+          default:""
+        }
+
         // eventDate:{
         //   type:String,
         //   required:[true ,'Event Date is required']
