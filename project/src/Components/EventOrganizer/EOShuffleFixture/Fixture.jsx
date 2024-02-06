@@ -16,23 +16,44 @@ export default function Fixture() {
   const location = useLocation()
   const matches = [];
 
-  const getTeamData = async () => {
-    const response = await axios.get("http://localhost:8080/api/v1/get/get-fixture")
-    console.log(response.data.data);
-    setTeamData(response.data.data)
-    setShuffledNewArray(response.data.data)
-    // setNewArrayLength(response.data.data)
-    // // console.log(newArrayLength.length);
-  }
+  const [teamDetails,setTeamDetails] = useState([])
+
+// console.log(location);
+
+const getOneCreatedFixture = async () => {
+    try {
+      const id = location.state.id
+      console.log("id : "  ,id);
+
+      const response = await axios.post("http://localhost:8080/api/v1/event/get-one-fixture",{id})
+      console.log(response.data.data.nameOfTheTeam);
+      setTeamDetails(response.data.data.nameOfTheTeam)
+      // setTeamData(response.data.data.nameOfTheTeam)
+
+    } catch (error) {
+       message.error("Error in fetching data");
+    }
+}
 
 
-  const ShuffleData = () => {
+
+// const getTeamData = async () => {
+//     const response = await axios.get("http://localhost:8080/api/v1/get/get-fixture")
+//     console.log("set team : " ,response.data.data);
+//     setTeamData(response.data.data)
+//     setShuffledNewArray(response.data.data)
+//     // setNewArrayLength(response.data.data)
+//     // // console.log(newArrayLength.length);
+//   }
+
+
+const ShuffleData = () => {
     let i = 0;
-    console.log(teamData);
+    // console.log("team data is : " ,teamDetails.length);
+    // console.log("Team length is : " , teamDetails.length);
+    while (i < teamDetails.length) {
 
-    while (i < teamData.length) {
-
-      const randomIndex = Math.floor(Math.random() * teamData.length)
+      const randomIndex = Math.floor(Math.random() * teamDetails.length)
       // console.log(randomIndex);
 
       if (!usedIndexes.includes(randomIndex)) {
@@ -46,13 +67,12 @@ export default function Fixture() {
 
     }
     setShuffledNewArray(shuffledArray)
-    console.log(shuffledArray);
-
+    console.log("shuffle array is : " , shuffledArray);
 
   }
 
 
-  const shuffleDataStore = async () => {
+const shuffleDataStore = async () => {
     try {
 
       console.log("shuffled data : ", shuffledNewArray);
@@ -85,8 +105,9 @@ export default function Fixture() {
 
 
   useEffect(() => {
-    getTeamData()
-    ShuffleData();
+    // getTeamData();
+    // ShuffleData();
+    getOneCreatedFixture();
   }, [])
 
 
@@ -107,7 +128,7 @@ export default function Fixture() {
             columns={[
               {
                 title: "Team Number",
-                width: "10%",
+                width: "20%",
                 dataIndex: "teamNumber",
                 render: (text, record, index) => (
                   <span key={index}>{index + 1}</span>
@@ -117,7 +138,7 @@ export default function Fixture() {
                 title: "Teams Name",
                 dataIndex: "teamName",
                 render: (text, record,index) => (
-                  <span key={index}>{record.nameOfTheTeam}</span>
+                  <span key={index}>{record}</span>
                 )
               },
 
@@ -125,12 +146,6 @@ export default function Fixture() {
                 title: "Event Time",
                 dataIndex: "time",
                 render: (text, record) => <span>8.30am</span>,
-              },
-
-              {
-                title: "Location",
-                dataIndex: "location",
-                render: (text, record) => <span>{record.location}</span>,
               },
 
               {
@@ -172,7 +187,7 @@ export default function Fixture() {
             }}
 
             // Displaying data from the backend
-            dataSource={shuffledNewArray}
+            dataSource={teamDetails}
           >
 
           </Table>

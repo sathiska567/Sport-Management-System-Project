@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./EOViewFixture.css";
 import EOSiderBar from "../EOSideBar/EOSideBar";
 import { Layout, Button, Input, Table, message, DatePicker } from "antd";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const { Content } = Layout;
 
@@ -32,6 +34,8 @@ const dataSource = [
 const EOViewFixture = () => {
   const [eventLocation, setEventLocation] = useState("");
   const [userLocation, setUserLocation] = useState("");
+  const [createdFixture, setCreatedFixture] = useState([]);
+  const navigate = useNavigate();
 
   // Filter userApplicationData based on userRole and Userlocation
   const filteredData = dataSource.filter((data) => {
@@ -44,6 +48,35 @@ const EOViewFixture = () => {
         data.eventDate.toLowerCase().includes(userLocation.toLowerCase()))
     );
   });
+
+
+//  GET ALL CREATED FIXTURE 
+const getFixtureData = async()=>{
+
+  try {
+    const response = await axios.get("http://localhost:8080/api/v1/get/get-fixture")
+    // console.log(response.data.data);
+    setCreatedFixture(response.data.data)
+    
+  } catch (error) {
+     message.error("Error fetching fixture data");
+  }
+
+}
+
+
+
+const handleView = async(id)=>{
+   console.log(id);
+   navigate("/shuffle-fixture",{state:{id:id}})
+
+}
+
+
+useEffect(()=>{
+   getFixtureData();
+},[])
+
 
   return (
     <EOSiderBar>
@@ -84,12 +117,18 @@ const EOViewFixture = () => {
                   dataIndex: "eventName",
                   width: "20%",
                   align: "center",
+                  render: (text,record) => (
+                    <span>{record.nameOfTheEvent}</span>
+                  )
                 },
                 {
                   title: "Event Location",
                   dataIndex: "eventLocation",
                   width: "20%",
                   align: "center",
+                  render: (text,record) => (
+                    <span>{record.location}</span>
+                  )
                 },
                 {
                   title: "Event Date",
@@ -124,6 +163,7 @@ const EOViewFixture = () => {
                           marginBottom: "auto",
                           width: "70px",
                         }}
+                        onClick={() => handleView(record._id) }
                       >
                         View
                       </Button>
@@ -176,7 +216,7 @@ const EOViewFixture = () => {
                   ),
                 },
               ]}
-              dataSource={filteredData}
+              dataSource={createdFixture}
             />
           </Content>
         </Layout>

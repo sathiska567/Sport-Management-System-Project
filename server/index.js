@@ -15,6 +15,7 @@ const deleteRoute = require("./routes/DeleteRoute/DeleteRoute");
 const createFixtureRoute = require("./routes/CreateFixtureRoute/CreateFixtureRoute")
 const getFixtureRoute = require("./routes/CreateFixtureRoute/getFixtureRoute")
 const createEventRoute = require("./routes/CreateEventRoute/createEventRoute")
+const getOneEventData = require("./routes/CreateFixtureRoute/getOneFixtureRoute")
 
 require("./db/mongoDb"); 
 
@@ -41,8 +42,9 @@ app.use("/api/v1/create",createFixtureRoute)
 app.use("/api/v1/get",getFixtureRoute)
 
 
-// HNDLE E=CREATE EVENT ROUTE
+// HNDLE CREATE EVENT ROUTE
 app.use("/api/v1/event",createEventRoute);
+app.use("/api/v1/event",getOneEventData);  
 
 
 // //jwt
