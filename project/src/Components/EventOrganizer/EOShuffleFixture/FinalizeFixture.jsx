@@ -22,12 +22,11 @@ export default function FinalizeFixture() {
   const [newArrayLength, setNewArrayLength] = useState([])
   const [size, setSize] = useState('large');
 
-
-
   console.log(location.state.shuffledDataId);
 
   const [loadings, setLoadings] = useState([]);
-  const enterLoading = (index) => {
+
+const enterLoading = (index) => {
     setLoadings((prevLoadings) => {
       const newLoadings = [...prevLoadings];
       newLoadings[index] = true;
@@ -43,14 +42,17 @@ export default function FinalizeFixture() {
   };
 
 
-  const getFinalizeShuffle = async () => {
+const getFinalizeShuffle = async () => {
     try {
       const id = location.state.shuffledDataId
+
+      console.log(id);
       const response = await axios.post("http://localhost:8080/api/v1/shuffle/newFixture", { id: id })
-      console.log(response.data.data.newTeam.length);
-      // setShuffledNewArray(response.data.data)
-      setNewArrayLength(response.data.data.newTeam)
-      setFinalShuffle(response.data.data.newTeam);
+      console.log(response.data.data.shuffleTeam);
+      setFinalShuffle(response.data.data.shuffleTeam)
+      // // setShuffledNewArray(response.data.data)
+      setNewArrayLength(response.data.data.shuffleTeam)
+      // setFinalShuffle(response.data.data.newTeam);
       console.log(newArrayLength.length);
 
     } catch (error) {
@@ -64,7 +66,7 @@ export default function FinalizeFixture() {
   }, [])
 
 
-  const handleDownload = async () => {
+const handleDownload = async () => {
 
     const input = pdfRef.current;
 
@@ -80,7 +82,6 @@ export default function FinalizeFixture() {
       const imgY = 30;
       pdf.addImage(imgData, "PNG", imgX, imgY, imgWidth * ratio, imgHeight * ratio)
       pdf.save("Fixture.pdf")
-
 
     })
 

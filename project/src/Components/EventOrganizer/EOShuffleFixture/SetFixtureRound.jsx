@@ -99,7 +99,7 @@ const handleDownload = async()=>{
                     render: (text, record) => (
                       <span>
                         {record.win ? (
-                          <span style={{color:"blue"}}>{("NextRoud" + " " + " --> " + record.win.round)}<br/><br />{("Next Match" + " --> " +record.win.match)}</span>
+                          <span style={{color:"blue",fontWeight:"600"}}>{("Next Roud" + "-" + " " + record.win.round)}<br/><br />{("Next Match" + "-" +record.win.match)}</span>
                         ) : (
                           (
                             <p style={{ color: "red" }}>🏆 Final</p>

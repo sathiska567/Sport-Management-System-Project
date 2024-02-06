@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
 
 const newTeamModelSchema = new mongoose.Schema({
-  newTeam: {
+  shuffleTeam: {
     type: [String], 
     default: [],
   },
 });
 
-const newTeam = mongoose.model('NewTeamModel', newTeamModelSchema);
+const newTeam = mongoose.model('shuffleTeamModel', newTeamModelSchema);
 
 module.exports = newTeam;

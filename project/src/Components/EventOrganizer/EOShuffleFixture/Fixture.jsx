@@ -20,7 +20,7 @@ export default function Fixture() {
 
   // console.log(location);
 
-  const getOneCreatedFixture = async () => {
+const getOneCreatedFixture = async () => {
     try {
       const id = location.state.id
       console.log("id : ", id);
@@ -36,19 +36,7 @@ export default function Fixture() {
     }
   }
 
-
-
-  // const getTeamData = async () => {
-  //     const response = await axios.get("http://localhost:8080/api/v1/get/get-fixture")
-  //     console.log("set team : " ,response.data.data);
-  //     setTeamData(response.data.data)
-  //     setShuffledNewArray(response.data.data)
-  //     // setNewArrayLength(response.data.data)
-  //     // // console.log(newArrayLength.length);
-  //   }
-
-
-  const ShuffleData = () => {
+const ShuffleData = () => {
     let i = 0;
     console.log(teamDetails.length);
     // window.location.reload();
@@ -65,48 +53,28 @@ export default function Fixture() {
 
     }
 
-    console.log("shuffle array is : " , shuffledArray);
-   setShuffledNewArray(shuffledArray)
+  console.log("shuffle array is : " , shuffledArray);
+  setShuffledNewArray(shuffledArray)
 
-    // while (i < teamDetails.length) {
-
-    //   const randomIndex = Math.floor(Math.random() * teamDetails.length)
-    //   // console.log(randomIndex);
-
-    //   if (!usedIndexes.includes(randomIndex)) {
-    //     shuffledArray.push(teamData[randomIndex])
-    //     usedIndexes.push(randomIndex)
-    //     i++
-    //   }
-
-    //   // console.log(shuffledArray);
-    //   // i++
-
-    // }
-    // setShuffledNewArray(shuffledArray)
-    // console.log("shuffle array is : " , shuffledArray);
 
   }
 
-
   const shuffleDataStore = async () => {
     try {
-
+      const id = location.state.id
       console.log("shuffled data : ", shuffledNewArray);
-      const response = await axios.post("http://localhost:8080/api/v1/shuffle/newTeam", shuffledNewArray)
+      
+      const response = await axios.post("http://localhost:8080/api/v1/shuffle/newTeam", {shuffledNewArray,id})
       // console.log(response.data.savedDocument._id);
-      const shuffledDataId = response.data.savedDocument._id
-      message.success(response.data.message)
-      navigate("/final-fixture", { state: { shuffledDataId: shuffledDataId } })
+      // const shuffledDataId = response.data.savedDocument._id
+      // message.success(response.data.message)
+      // navigate("/eo-view-fixture", { state: { shuffledDataId: shuffledDataId } })
 
     } catch (error) {
       message.error("Shuffle fixture save have an error")
     }
   }
 
-  //  const handleSingleEliminate = async()=>{
-  //   navigate("/test-fixture", { state: { teamsCount: newArrayLength.length } });
-  //  }
 
   const handleDelete = async (id) => {
     try {
@@ -212,10 +180,24 @@ export default function Fixture() {
           <Flex gap="small" wrap="wrap">
             <Button
               type="primary"
-              onClick={ShuffleData}>
+              onClick={ShuffleData}
+              style={{
+                borderRadius: "5px",
+              }}
+              
+              >
               Suffle
             </Button>
-            <Button type="primary" onClick={shuffleDataStore} icon={<CheckOutlined />}>Save Shuffle</Button>
+            <Button 
+            type="primary" 
+            onClick={shuffleDataStore}
+            style={{
+              borderRadius: "5px",
+            }}
+            >
+            Save Shuffle
+            
+            </Button>
           </Flex>
 
           {/* <button onClick={ShuffleData}>Suffle</button> */}
