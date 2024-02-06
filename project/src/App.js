@@ -31,7 +31,7 @@ import CoachCreateTeam from "./Components/Coach/CoachCreateTeam/CoachCreateTeam.
 import CoachEditTeam from "./Components/Coach/CoachEditTeam/CoachEditTeam.jsx";
 import CoachReviewPlayers from "./Components/Coach/CoachReviewPlayers/CoachReviewPlayers.jsx";
 import CoachProfile from "./Components/Coach/CoachProfile/CoachProfile.jsx";
-
+import EOViewFixture from "./Components/EventOrganizer/EOViewFixture/EOViewFixture.jsx";
 
 function App() {
   const isLoggedIn = window.localStorage.getItem("isLoggedIn");
@@ -140,7 +140,7 @@ function App() {
 
         <Route
           // Need to change after add table of application
-          path="/fixture"
+          path="/shuffle-fixture"
           element={
             <ProtectedRoute>
               <Fixture />
@@ -323,7 +323,16 @@ function App() {
           }
         />
       </Routes>
-
+      <Routes>
+        <Route
+          path="/eo-view-fixture"
+          element={
+            <ProtectedRoute>
+              <EOViewFixture />
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
     </BrowserRouter>
 
     // <div className="App">

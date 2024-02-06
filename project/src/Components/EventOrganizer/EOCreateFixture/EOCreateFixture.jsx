@@ -171,8 +171,8 @@ const EOCreateFixture = () => {
                 <div class="buttonSet">
                   <div>
                     <button
-                      class="CreateEventBTn"
-                      style={{ backgroundColor: "#05AD1B" }}
+                      class="CreateFixtureBTn"
+                      style={{ backgroundColor: "#52c41a", width: "200px" }}
                       onClick={handleCreate}
                     >
                       <EditOutlined className="UserApplicationIcon" />
