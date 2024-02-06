@@ -16,63 +16,80 @@ export default function Fixture() {
   const location = useLocation()
   const matches = [];
 
-  const [teamDetails,setTeamDetails] = useState([])
+  const [teamDetails, setTeamDetails] = useState([])
 
-// console.log(location);
+  // console.log(location);
 
-const getOneCreatedFixture = async () => {
+  const getOneCreatedFixture = async () => {
     try {
       const id = location.state.id
-      console.log("id : "  ,id);
+      console.log("id : ", id);
 
-      const response = await axios.post("http://localhost:8080/api/v1/event/get-one-fixture",{id})
+      const response = await axios.post("http://localhost:8080/api/v1/event/get-one-fixture", { id })
       console.log(response.data.data.nameOfTheTeam);
       setTeamDetails(response.data.data.nameOfTheTeam)
-      // setTeamData(response.data.data.nameOfTheTeam)
+      setTeamData(response.data.data.nameOfTheTeam)
+      setShuffledNewArray(response.data.data.nameOfTheTeam)
 
     } catch (error) {
-       message.error("Error in fetching data");
+      message.error("Error in fetching data");
     }
-}
+  }
 
 
 
-// const getTeamData = async () => {
-//     const response = await axios.get("http://localhost:8080/api/v1/get/get-fixture")
-//     console.log("set team : " ,response.data.data);
-//     setTeamData(response.data.data)
-//     setShuffledNewArray(response.data.data)
-//     // setNewArrayLength(response.data.data)
-//     // // console.log(newArrayLength.length);
-//   }
+  // const getTeamData = async () => {
+  //     const response = await axios.get("http://localhost:8080/api/v1/get/get-fixture")
+  //     console.log("set team : " ,response.data.data);
+  //     setTeamData(response.data.data)
+  //     setShuffledNewArray(response.data.data)
+  //     // setNewArrayLength(response.data.data)
+  //     // // console.log(newArrayLength.length);
+  //   }
 
 
-const ShuffleData = () => {
+  const ShuffleData = () => {
     let i = 0;
-    // console.log("team data is : " ,teamDetails.length);
-    // console.log("Team length is : " , teamDetails.length);
-    while (i < teamDetails.length) {
+    console.log(teamDetails.length);
+    // window.location.reload();
 
+    while (i < teamDetails.length) {
       const randomIndex = Math.floor(Math.random() * teamDetails.length)
       // console.log(randomIndex);
 
-      if (!usedIndexes.includes(randomIndex)) {
-        shuffledArray.push(teamData[randomIndex])
+      if(!usedIndexes.includes(randomIndex)){
+        shuffledArray.push(teamDetails[randomIndex])
         usedIndexes.push(randomIndex)
-        i++
+        i++ ;
       }
 
-      // console.log(shuffledArray);
-      // i++
-
     }
-    setShuffledNewArray(shuffledArray)
+
     console.log("shuffle array is : " , shuffledArray);
+   setShuffledNewArray(shuffledArray)
+
+    // while (i < teamDetails.length) {
+
+    //   const randomIndex = Math.floor(Math.random() * teamDetails.length)
+    //   // console.log(randomIndex);
+
+    //   if (!usedIndexes.includes(randomIndex)) {
+    //     shuffledArray.push(teamData[randomIndex])
+    //     usedIndexes.push(randomIndex)
+    //     i++
+    //   }
+
+    //   // console.log(shuffledArray);
+    //   // i++
+
+    // }
+    // setShuffledNewArray(shuffledArray)
+    // console.log("shuffle array is : " , shuffledArray);
 
   }
 
 
-const shuffleDataStore = async () => {
+  const shuffleDataStore = async () => {
     try {
 
       console.log("shuffled data : ", shuffledNewArray);
@@ -106,7 +123,7 @@ const shuffleDataStore = async () => {
 
   useEffect(() => {
     // getTeamData();
-    // ShuffleData();
+    ShuffleData();
     getOneCreatedFixture();
   }, [])
 
@@ -137,7 +154,7 @@ const shuffleDataStore = async () => {
               {
                 title: "Teams Name",
                 dataIndex: "teamName",
-                render: (text, record,index) => (
+                render: (text, record, index) => (
                   <span key={index}>{record}</span>
                 )
               },
@@ -187,7 +204,7 @@ const shuffleDataStore = async () => {
             }}
 
             // Displaying data from the backend
-            dataSource={teamDetails}
+            dataSource={shuffledNewArray}
           >
 
           </Table>

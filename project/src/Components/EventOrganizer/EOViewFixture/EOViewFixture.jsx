@@ -163,7 +163,7 @@ useEffect(()=>{
                           marginBottom: "auto",
                           width: "70px",
                         }}
-                        onClick={() => handleView(record._id) }
+                        
                       >
                         View
                       </Button>
@@ -179,6 +179,7 @@ useEffect(()=>{
                           marginBottom: "auto",
                           width: "70px",
                         }}
+                        onClick={() => handleView(record._id) }
                       >
                         Shuffle
                       </Button>
