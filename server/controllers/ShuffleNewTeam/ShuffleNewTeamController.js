@@ -23,6 +23,11 @@ const shuffledNewTeamController = async (req, res) => {
     console.log(createdShuffleId);
     console.log(createdFixtureData);
 
+    res.status(200).send({
+      success: true,
+      message: "Shuffle event save successfull",
+      data
+   });
     
   } catch (error) {
     console.error(error);

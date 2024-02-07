@@ -239,14 +239,15 @@ const EOSizeBar = ({ children }) => {
               <Menu.Item key="/update-fixture" icon={<CalendarOutlined />}>
                 <NavLink to="/update-fixture">Edit Fixture</NavLink>
               </Menu.Item>
-              <Menu.Item key="/eo-assign-staff" icon={<UserOutlined />}>
+              {/* <Menu.Item key="/eo-assign-staff" icon={<UserOutlined />}>
                 <NavLink to="/eo-assign-staff">Assign Staff</NavLink>
-              </Menu.Item>
+              </Menu.Item> */}
+
               <Menu.Item key="#" icon={<Bracket />}>
                 <NavLink to="#">Bracket</NavLink>
               </Menu.Item>
               <Menu.Item key="/eo-profile" icon={<Profile />}>
-                <NavLink to="/eo-profile">My Profile</NavLink>
+                <NavLink to="/profile">My Profile</NavLink>
               </Menu.Item>
             </>
           ) : (

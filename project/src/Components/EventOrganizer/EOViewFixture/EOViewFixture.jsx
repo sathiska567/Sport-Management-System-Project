@@ -80,6 +80,26 @@ const handleView = async(record)=>{
    navigate("/final-fixture",{state:{shuffledDataId:record.createdFixtureId}})
 }
 
+const handleDelete = async(id)=>{
+     console.log(id);
+
+     try {
+      const deleteResponse = await axios.post("http://localhost:8080/api/v1/delete/delete-fixture",{id})
+      console.log(deleteResponse);
+
+      if(deleteResponse.data.success){
+          message.success(deleteResponse.data.message);
+          window.location.reload();
+      }
+      else{
+         message.error(deleteResponse.data.message);
+      }
+      
+     } catch (error) {
+       message.error("Error deleting fixture data");
+     }
+}
+
 
 useEffect(()=>{
    getFixtureData();
@@ -218,6 +238,7 @@ useEffect(()=>{
                           marginBottom: "auto",
                           width: "70px",
                         }}
+                        onClick={()=>handleDelete(record._id)}
                       >
                         Delete
                       </Button>
