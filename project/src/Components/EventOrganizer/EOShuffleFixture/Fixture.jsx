@@ -65,10 +65,17 @@ const ShuffleData = () => {
       console.log("shuffled data : ", shuffledNewArray);
       
       const response = await axios.post("http://localhost:8080/api/v1/shuffle/newTeam", {shuffledNewArray,id})
-      // console.log(response.data.savedDocument._id);
-      // const shuffledDataId = response.data.savedDocument._id
-      // message.success(response.data.message)
-      // navigate("/eo-view-fixture", { state: { shuffledDataId: shuffledDataId } })
+      console.log(response);
+
+      if(response.data.success){
+         message.success(response.data.message)
+         navigate("/eo-view-fixture")
+      }
+
+      else{
+        message.error(response.data.message)
+      }
+ 
 
     } catch (error) {
       message.error("Shuffle fixture save have an error")

@@ -39,6 +39,7 @@ const EOCreateFixture = () => {
 
       if (response.data.success) {
         message.success("Fixture Created Successfully");
+        window.location.reload();
       } else {
         message.error("Fixture Create Have some error");
       }
