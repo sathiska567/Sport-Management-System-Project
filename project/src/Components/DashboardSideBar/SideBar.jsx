@@ -381,7 +381,7 @@ const SideBar = ({ children }) => {
                   <div>
 
                   <Menu.Item key="3" icon={<SwapOutlined />} style={{padding:"20px"}}>
-                    <Link to="/eo-stats">Event Organizer Dashboad</Link>
+                    <Link to="/eo-stats">Event Organizer</Link>
                   </Menu.Item>
                
                   </div>

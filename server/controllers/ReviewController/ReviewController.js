@@ -3,7 +3,8 @@ const reviewModel = require('../../models/ReviewModel/ReviewModel');
 const reviewController = async(req,res)=>{
  try {
 
-   const {review} = req.body;
+   const {data} = req.body;
+   console.log(data);
 
  } catch (error) {
      res.status(400).send({

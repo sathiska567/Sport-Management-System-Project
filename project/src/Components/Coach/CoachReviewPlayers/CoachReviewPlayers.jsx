@@ -1,14 +1,25 @@
 import React, { useState } from 'react'
 import "./CoachReviewPlayers.css";
 import CoachSidebar from "../CoachSidebar/CoachSidebar";
-import { Button, Flex, Rate } from 'antd';
+import { Button, Flex, Rate, message } from 'antd';
+import axios from 'axios';
 const desc = ['terrible', 'bad', 'normal', 'good', 'wonderful'];
 
 const CoachReviewPlayers = () => {
   const [value, setValue] = useState(3);
 
 const reviewValue = async()=>{
-   console.log(value ? desc[value - 1] : 'null');
+  const data = value ? desc[value - 1] : 'null'
+   console.log(data);
+   
+   try {
+    const response = await axios.post("http://localhost:8080/api/v1/review/coach-review",{data})
+    
+   } catch (error) {
+      message.error("Error in submitting review");
+   }
+
+
 }
 
 
