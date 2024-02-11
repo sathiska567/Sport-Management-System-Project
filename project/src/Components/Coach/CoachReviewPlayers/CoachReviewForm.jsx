@@ -1,22 +1,29 @@
+// Import necessary libraries and components
 import { useState, useEffect } from "react";
 import CoachSidebar from "../CoachSidebar/CoachSidebar";
 import "./CoachReviewForm.css";
 import { Form, Input, Rate, message } from "antd";
 import { CloseSquareOutlined, EditOutlined } from "@ant-design/icons";
+
+// Destructure TextArea from Input
 const { TextArea } = Input;
 
+// Define CoachReviewForm component
 const CoachReviewForm = () => {
+  // Define state variables for each rating
   const [battingRating, setBattingRating] = useState(0);
   const [bowlingRating, setBowlingRating] = useState(0);
   const [fieldingRating, setFieldingRating] = useState(0);
   const [overallRating, setOverallRating] = useState(0);
 
+  // Use useEffect to update overallRating whenever any of the other ratings change
   useEffect(() => {
     const newOverallRating =
       (battingRating + bowlingRating + fieldingRating) / 3;
     setOverallRating(newOverallRating);
   }, [battingRating, bowlingRating, fieldingRating]);
 
+  // Render the form
   return (
     <div>
       <CoachSidebar>
@@ -27,7 +34,7 @@ const CoachReviewForm = () => {
           }}
           layout="verticle"
         >
-          <div style={{}} className="CoachReviewForm">
+          <div className="CoachReviewForm">
             <div
               style={{
                 backgroundColor: "#15295E",
@@ -62,6 +69,7 @@ const CoachReviewForm = () => {
               className="CoachReviewFormApplication"
             >
               <div className="InputData">
+                {/* Render rating inputs for each category */}
                 <div className="DataIem">
                   <label htmlFor="batting">Batting:</label>
                   <Rate
@@ -114,6 +122,7 @@ const CoachReviewForm = () => {
                   </span>
                 </div>
 
+                {/* Render comment input */}
                 <div className="DataIem">
                   <label htmlFor="comment">Comment:</label>
                   <TextArea
@@ -123,10 +132,11 @@ const CoachReviewForm = () => {
                   />
                 </div>
 
-                <div class="buttonSet">
+                {/* Render submit button */}
+                <div className="buttonSet">
                   <div>
                     <button
-                      class="approve CoachReviewBTn"
+                      className="approve CoachReviewBTn"
                       style={{ backgroundColor: "#52c41a", width: "80px" }}
                     >
                       Post
@@ -142,4 +152,5 @@ const CoachReviewForm = () => {
   );
 };
 
+// Export CoachReviewForm component
 export default CoachReviewForm;
