@@ -1,0 +1,110 @@
+body {
+  height: 100vh;
+  width: 100vw;
+  overflow-x: hidden;
+}
+
+/*User Application*/
+
+.CoachReviewForm {
+    width: 60%;
+    margin: auto;
+}
+
+.CoachReviewFormHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #022c3b;
+  margin: 0;
+  padding: 10px;
+}
+
+.CoachReviewFormHeader h3 {
+  color: #e0f7ff;
+  margin: 0;
+  flex: 1;
+  text-align: center;
+}
+
+.CoachReviewFormApplication {
+  max-height: 500px !important;
+  overflow-y: auto;
+  border: 1px solid #e0f7ff;
+  border-radius: 4px;
+  background-color: #d6f5ff;
+  color: #022c3b;
+  font-weight: 500;
+  max-width: 800px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Style for Submit button */
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin: 50px;
+  padding-left: 25px;
+  padding-right: 25px;
+  color: #022c3b;
+}
+
+.buttonSet {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.CoachReviewBTn {
+  margin-top: 30px;
+  font-size: 15px;
+  margin-right: 10px;
+  color: #fff;
+  padding: 7px 16px 7px 16px;
+  border-radius: 5px;
+  border: none;
+  width: 100px !important;
+}
+
+.CreateEventBTn:hover {
+  cursor: pointer !important;
+}
+
+.UserApplicationIcon {
+  margin-right: 10px;
+}
+
+.InputData {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.DataIem {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+}
+
+.DataIem > label {
+  flex: 1;
+}
+
+
+.Comment {
+    flex: 2.25;
+}
+
+.review {
+    flex: 2;
+}
+
+.ratingValue {
+  margin-left: 10px;
+}

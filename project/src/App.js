@@ -32,6 +32,7 @@ import CoachEditTeam from "./Components/Coach/CoachEditTeam/CoachEditTeam.jsx";
 import CoachReviewPlayers from "./Components/Coach/CoachReviewPlayers/CoachReviewPlayers.jsx";
 import CoachProfile from "./Components/Coach/CoachProfile/CoachProfile.jsx";
 import EOViewFixture from "./Components/EventOrganizer/EOViewFixture/EOViewFixture.jsx";
+import CoachReviewForm from "./Components/Coach/CoachReviewPlayers/CoachReviewForm.jsx";
 
 function App() {
   const isLoggedIn = window.localStorage.getItem("isLoggedIn");
@@ -329,6 +330,16 @@ function App() {
           element={
             <ProtectedRoute>
               <EOViewFixture />
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
+      <Routes>
+        <Route
+          path="/coach-review-form"
+          element={
+            <ProtectedRoute>
+              <CoachReviewForm />
             </ProtectedRoute>
           }
         />
