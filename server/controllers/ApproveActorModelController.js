@@ -24,11 +24,11 @@ const ApproveActorModelController = async(req,res)=>{
           result.messages = "Event organizer position Approved !";
      }
      else if(userRole == "coach"){
-          result.isEventOrganizer = true;
+          result.isCoach = true;
           result.messages = "Coach position Approved !";
      }
      else if(userRole == "referee"){
-          result.isEventOrganizer = true;
+          result.isReferee = true;
           result.messages = "Referee position Approved !";
      }
      else{

@@ -367,7 +367,7 @@ const SideBar = ({ children }) => {
 
                 {isCoach ? (
                   <Menu.Item key="2" icon={<PendingActions />}>
-                    <Link to="#">Coach Dashboad</Link>
+                    <Link to="/coach-stats">Coach Dashboad</Link>
                   </Menu.Item>
                 ) 
                 
@@ -380,8 +380,8 @@ const SideBar = ({ children }) => {
                 : isEventOrganizer ? (
                   <div>
 
-                  <Menu.Item key="3" icon={<SwapOutlined />} style={{padding:"20px"}}>
-                    <Link to="/eo-stats">Event Organizer Dashboad</Link>
+                  <Menu.Item key="3" icon={<PendingActions />} style={{padding:"20px"}}>
+                    <Link to="/eo-stats">Event Organizer</Link>
                   </Menu.Item>
                
                   </div>

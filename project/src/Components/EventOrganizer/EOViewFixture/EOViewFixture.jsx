@@ -163,6 +163,9 @@ useEffect(()=>{
                   dataIndex: "eventDate",
                   width: "20%",
                   align: "center",
+                  render: (text,record) => (
+                    <span>2024-02-14</span>
+                  )
                 },
                 {
                   title: "Actions",
