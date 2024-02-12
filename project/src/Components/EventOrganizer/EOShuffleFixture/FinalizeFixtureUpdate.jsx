@@ -90,7 +90,7 @@ const handleUpdate = async(id)=>{
               {
                 title: "Location",
                 dataIndex: "location",
-                render: (text, record) => <span>Ground 01</span>,
+                render: (text, record) => <span>premadasa</span>,
               },
 
               {
