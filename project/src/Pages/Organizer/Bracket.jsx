@@ -9,7 +9,7 @@ const TournamentBracket = () => {
 
   const [rounds, setRounds] = useState([])
 
-  const matchId = 123; // Replace with the actual matchId
+  const matchId = "003"; // Replace with the actual matchId
   //const roundNo = 1; // Replace with the actual roundNo
   //const winnersArray = ['team1', 'team2'];
 

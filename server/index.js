@@ -7,6 +7,7 @@ const userRoutes = require("./routes/userRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 const forgottenPasswordRoute = require("./routes/ForgottenPasswordRoute");
 const organizerRoutes = require('./routes/organizerRoutes');
+const coachRoutes = require('./routes/coachRoutes')
 
 require("./db/mongoDb"); 
 
@@ -20,7 +21,7 @@ app.use("/api/v1/admin", adminRoutes);
 app.use("/api/v1/forgotten", forgottenPasswordRoute);
 
 app.use('/', organizerRoutes);
-
+app.use('/coach', coachRoutes);
 
 
 

@@ -1,7 +1,5 @@
-const mongoose = require('mongoose')
+
 const { Match } = require('../models/matchModel')
-const { Team } = require('../models/teamModel')
-const { saveMatchData } = require('../models/dummyMatchData')
 
 
 
@@ -44,14 +42,15 @@ const createRound = async (req, res) => {
         }
       }
     } else {
-      console.log("New round");
+      console.log("New round : ", roundNo);
 
       // If roundNumber does not exist, insert a new round
       let pairsArray;
 
-      if (roundNo === 1) {
+      if (roundNo == 1) {
         // For the first round, use the original teams
         pairsArray = createPairs(match.teams || []);
+        console.log(pairsArray)
       } else {
         // For subsequent rounds, use the winners from the previous round
         const previousRoundIndex = roundNo - 2;
@@ -59,8 +58,8 @@ const createRound = async (req, res) => {
         if (previousRoundIndex >= 0 && match.rounds[previousRoundIndex].winners) {
           pairsArray = createPairs(match.rounds[previousRoundIndex].winners);
         } else {
-          console.log("Error: Winners not found for the previous round");
-          return res.status(400).json({ error: 'Winners not found for the previous round' });
+          console.log("Error: Winners not found for the previous round.");
+          return res.status(400).json({ error: 'Winners not found for the previous round.' });
         }
       }
       
