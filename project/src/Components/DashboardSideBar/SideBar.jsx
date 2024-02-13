@@ -358,7 +358,7 @@ const SideBar = ({ children }) => {
                   <Link to="/dashboad">Dashboard</Link>
                 </Menu.Item>
 
-                {isCoach ? (
+                { isCoach ? (
                   <div>
                     <Menu.Item key="2" icon={<PendingActions />} style={{ padding: "20px" }}>
                       <Link to="/coach-stats">Coach Dashboad</Link>
