@@ -17,15 +17,15 @@ const createEventSchema = mongoose.Schema({
         required:["Please enter number of team of the event",true]
   },
 
-  eventDate:{
-        type:Object,
-        required:["Please enter Date of the event",false]
-  },
+//   eventDate:{
+//         type:Object,
+//         required:["Please enter Date of the event",false]
+//   },
 
-  startingTime :{
-        type:Object,
-        required:["Please enter Starting time of the event",false]
-  },
+//   startingTime :{
+//         type:Object,
+//         required:["Please enter Starting time of the event",false]
+//   },
    
 
 

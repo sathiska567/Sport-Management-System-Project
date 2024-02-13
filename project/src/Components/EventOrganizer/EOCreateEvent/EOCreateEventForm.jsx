@@ -23,13 +23,23 @@ const EOCreateEventForm = () => {
       numberOfTeams
     );
 
-  //  try {
-  //   const response = await axios.post("http://localhost:8080/api/v1/event/create-event",{nameOfTheEvent,location,numberOfTeams})
-  //   console.log(response);
+   try {
+    const response = await axios.post("http://localhost:8080/api/v1/event/create-event",{nameOfTheEvent,location,numberOfTeams})
+    console.log(response);
+
+    if(response.data.success){
+        message.success(response.data.message)
+        window.location.reload();
+    }
+
+    else{
+      message.success(response.data.message)
+      // window.location.reload();
+    }
     
-  //  } catch (error) {
-  //     message.error("Error creating event");
-  //  }     
+   } catch (error) {
+      message.error("Error creating event");
+   }     
 
   };
 

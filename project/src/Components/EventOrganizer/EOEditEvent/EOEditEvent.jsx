@@ -48,6 +48,7 @@ const initialDataSource = [
   const [EventDate, setEventDate] = useState();
   const [dataSource, setDataSource] = useState(initialDataSource);
   const navigate = useNavigate();
+  const [createdEvent,setCreatedEvent] = useState([]);
 
 useEffect(() => {
   setDataSource(
@@ -63,7 +64,26 @@ useEffect(() => {
           : true)
     )
   );
+  getAllCreatedEventData()
 }, [eventName, EventLocation, EventDate]);
+
+
+// GET ALL CREATED DATA || GET
+const getAllCreatedEventData = async()=>{
+   try {
+    const response = await axios.get("http://localhost:8080/api/v1/event/get-all-events");
+    console.log(response);
+
+    if(response.data.success){
+      message.success(response.data.message);
+      setCreatedEvent(response.data.data)
+    }
+    
+   } catch (error) {
+     message.error(error.message);
+   }
+}
+ 
 
   // JSX structure for the Navbar component
   return (
@@ -114,12 +134,18 @@ useEffect(() => {
                     title: "E_ID",
                     dataIndex: "eid",
                     key: "eid",
+                    // render:(trxt ,record)=>(
+                    //   <span>{record._id}</span>
+                    // )
                   },
 
                   {
                     title: "Event Name",
                     dataIndex: "eventName",
                     key: "eventName",
+                    render: (text,record)=>(
+                       <span>{record.nameOfTheEvent}</span>
+                    ),
                   },
 
                   {
@@ -189,7 +215,7 @@ useEffect(() => {
                   pageSize: 5,
                 }}
                 // Displaying data from the backend
-                dataSource={dataSource}
+                dataSource={createdEvent}
               ></Table>
             </div>
           </Content>
