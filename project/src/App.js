@@ -34,6 +34,10 @@ import CoachProfile from "./Components/Coach/CoachProfile/CoachProfile.jsx";
 import EOViewFixture from "./Components/EventOrganizer/EOViewFixture/EOViewFixture.jsx";
 import CoachReviewForm from "./Components/Coach/CoachReviewPlayers/CoachReviewForm.jsx";
 import EOBracket from "./Components/EventOrganizer/EOBracket/EOBracket.jsx";
+import CreateMatch from "./Pages/Coach/CreateMatch.jsx";
+import SelectPlayers from "./Pages/Coach/SelectPlayers.jsx";
+import CreateTeam from "./Pages/Coach/CreateTeam.jsx";
+import TournamentBracket from "./Pages/Organizer/Bracket.jsx";
 
 function App() {
   const isLoggedIn = window.localStorage.getItem("isLoggedIn");
@@ -355,6 +359,12 @@ function App() {
           }
         />
       </Routes>
+
+
+      <Route path="/brackets" element={<TournamentBracket/>} />
+        <Route path="/create-team" element={<CreateTeam/>}/>
+        <Route path="/select-players" element={<SelectPlayers/>}/>
+        <Route path="/create-match" element={<CreateMatch/>}/>
 
     </BrowserRouter>
 
