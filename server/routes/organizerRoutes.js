@@ -1,7 +1,9 @@
 const express = require('express');
-const { getWinners, setWinners, createRound} = require('../controllers/organizerController');
+const { getWinners, setWinners, createRound, getMatches} = require('../controllers/organizerController');
 const router = express.Router()
 
+
+router.get('/matches', getMatches)
 
 router.get('/create-round/:matchId/:roundNo', createRound);
 

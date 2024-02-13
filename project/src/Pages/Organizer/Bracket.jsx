@@ -2,6 +2,8 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 
 const TournamentBracket = () => {
+  const [matches, setMatches] = useState([])
+
   const [pairs, setPairs] = useState([]);
   const [winnersArray, setWinnersArray] = useState([]);
   const [roundNo, setroundNo] = useState(1);
@@ -12,6 +14,17 @@ const TournamentBracket = () => {
   const matchId = "003"; // Replace with the actual matchId
   //const roundNo = 1; // Replace with the actual roundNo
   //const winnersArray = ['team1', 'team2'];
+
+  useEffect(()=>{
+    axios.get(`http://localhost:8080/matches`)
+    .then(res=>{
+        console.log(res.data)
+        setMatches(res.data)
+    })
+    .catch(err=>{
+        console.log(err)
+    })
+  }, [])
 
 
   const pairsGet = async () => {

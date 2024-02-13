@@ -353,18 +353,20 @@ function App() {
         <Route
           path="/eo-bracket"
           element={
-            <ProtectedRoute>
+            
               <EOBracket />
-            </ProtectedRoute>
+            
           }
         />
       </Routes>
 
 
-      <Route path="/brackets" element={<TournamentBracket/>} />
+        <Routes>
+        <Route path="/brackets" element={<TournamentBracket/>} />
         <Route path="/create-team" element={<CreateTeam/>}/>
         <Route path="/select-players" element={<SelectPlayers/>}/>
         <Route path="/create-match" element={<CreateMatch/>}/>
+        </Routes>
 
     </BrowserRouter>
 

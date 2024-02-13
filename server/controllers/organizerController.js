@@ -2,6 +2,17 @@
 const { Match } = require('../models/matchModel')
 
 
+const getMatches = async (req, res) => {
+  try {
+      console.log('req came')
+      const matches = await Match.find();
+      
+      console.log(matches);
+      res.json(matches);
+  } catch (err) {
+      console.log(err);
+  }
+}
 
 const createRound = async (req, res) => {
   try {
@@ -187,4 +198,4 @@ const setWinners = async (req, res) => {
 
 
 
-module.exports = { getWinners, setWinners, createRound }
+module.exports = { getWinners, setWinners, createRound, getMatches }

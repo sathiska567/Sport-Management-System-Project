@@ -18,6 +18,10 @@ const createEventRoute = require("./routes/CreateEventRoute/createEventRoute")
 const getOneEventData = require("./routes/CreateFixtureRoute/getOneFixtureRoute")
 const deleteOneFixtureRouter = require("./routes/CreateFixtureRoute/deleteOneFixtureRoute")
 
+
+const coachRoutes = require("./routes/coachRoutes")
+const organizerRoutes = require("./routes/organizerRoutes")
+
 require("./db/mongoDb"); 
 
 const app = express();
@@ -47,6 +51,10 @@ app.use("/api/v1/get",getFixtureRoute)
 app.use("/api/v1/event",createEventRoute);
 app.use("/api/v1/event",getOneEventData);  
 app.use("/api/v1/delete",deleteOneFixtureRouter);  
+
+
+app.use("/coach", coachRoutes)
+app.use("/", organizerRoutes)
 
 
 // //jwt
