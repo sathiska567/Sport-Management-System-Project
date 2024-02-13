@@ -47,7 +47,7 @@ const CoachSidebar = ({ children }) => {
   const [currentUserName, setCurrentUsername] = useState();
   const [isAdmin, setIsAdmin] = useState(false);
   const [positionNotification, setPositionNotification] = useState();
-  const [isEventOrganizer, setIsEventOrganizer] = useState(false);
+  const [isCoach, setIsCoach] = useState(false);
   // Event handlers for mouse hover events
   const handleHoverButton1 = () => {
     setIsHoveredButton1(true);
@@ -96,14 +96,14 @@ const CoachSidebar = ({ children }) => {
         }
       );
 
-      console.log(res.data.user.isEventOrganizer);
+      console.log(res.data.user.isCoach);
+      setIsCoach(res.data.user.isCoach)
+      // setPositionNotification(res.data.user.notification.length);
+      // setCurrentUsername(res.data.user.username);
+      // setIsAdmin(res.data.user.isAdmin);
+      // setIsEventOrganizer(res.data.user.isEventOrganizer);
 
-      setPositionNotification(res.data.user.notification.length);
-      setCurrentUsername(res.data.user.username);
-      setIsAdmin(res.data.user.isAdmin);
-      setIsEventOrganizer(res.data.user.isEventOrganizer);
-
-      console.log("Is event organizer is : ", isEventOrganizer);
+      // console.log("Is event organizer is : ", isEventOrganizer);
     } catch (error) {
       message.error("Error have inside the Get currentUserData function");
     }
@@ -208,21 +208,42 @@ const CoachSidebar = ({ children }) => {
           <Menu.Item key="/coach-stats" icon={<DashboardOutlined />}>
             <NavLink to="/coach-stats">Dashboard</NavLink>
           </Menu.Item>
-          <Menu.Item key="/coach-availability" icon={<EditOutlined />}>
-            <NavLink to="/coach-availability">My Availability</NavLink>
-          </Menu.Item>
-          <Menu.Item key="/coach-create-team" icon={<EditOutlined />}>
-            <NavLink to="/coach-create-team">Create Team</NavLink>
-          </Menu.Item>
-          <Menu.Item key="/coach-edit-team" icon={<FormOutlined />}>
-            <NavLink to="/coach-edit-team">Edit Team</NavLink>
-          </Menu.Item>
-          <Menu.Item key="/coach-review-players" icon={<CalendarOutlined />}>
-            <NavLink to="/coach-review-players">Review Players</NavLink>
-          </Menu.Item>
-          <Menu.Item key="/coach-profile" icon={<Profile />}>
-            <NavLink to="/coach-profile">My Profile</NavLink>
-          </Menu.Item>
+
+          {isCoach ? (
+
+            <div style={{ paddingLeft: "20px" }}>
+
+              <Menu.Item key="/coach-availability" icon={<EditOutlined />}>
+                <NavLink to="/coach-availability">My Availability</NavLink>
+              </Menu.Item>
+              <Menu.Item key="/coach-create-team" icon={<EditOutlined />}>
+                <NavLink to="/coach-create-team">Create Team</NavLink>
+              </Menu.Item>
+              <Menu.Item key="/coach-edit-team" icon={<FormOutlined />}>
+                <NavLink to="/coach-edit-team">Edit Team</NavLink>
+              </Menu.Item>
+              <Menu.Item key="/coach-review-players" icon={<CalendarOutlined />}>
+                <NavLink to="/coach-review-players">Review Players</NavLink>
+              </Menu.Item>
+              <Menu.Item key="/coach-profile" icon={<Profile />}>
+                <NavLink to="/coach-profile">My Profile</NavLink>
+              </Menu.Item>
+
+            </div>
+
+
+          ) : (
+
+            <div style={{ paddingLeft: "20px" }}>
+              <Menu.Item key="/apply-position" icon={<Profile />}>
+                <NavLink to="/apply-position">Apply Position</NavLink>
+              </Menu.Item>
+            </div>
+
+          )}
+
+
+
           <Menu.Item
             key="logoff"
             icon={<PoweroffOutlined />}
