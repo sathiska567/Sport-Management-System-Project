@@ -1,0 +1,42 @@
+.bracket-container {
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  overflow-x: auto;
+  display: flex;
+  gap: 50px;
+}
+
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.inputContainer {
+  width: 90%;
+  margin-top: 2%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.team-label {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  background-color: transparent;
+  border: 2px solid #adc6ff;
+  margin-bottom: 10px;
+  gap: 10px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.team-checkbox {
+  margin-right: 10px !important;
+}
+
+.outer-container {
+  overflow-y: auto;
+  height: 70vh;
+  margin: auto;
+}

@@ -221,13 +221,6 @@ const SideBar = ({ children }) => {
                 <Menu.Item
                   key="4"
                   icon={<PoweroffOutlined />}
-                  style={{
-                    position: "absolute",
-                    bottom: 0,
-                    backgroundColor: isHoveredButton1 ? "#D94D34" : "#15295E",
-                    color: isHoveredButton1 ? "white" : "white",
-                    fontSize: "16px",
-                  }}
                   onMouseEnter={handleHoverButton1}
                   onMouseLeave={handleMouseLeaveButton1}
                 >
@@ -404,13 +397,6 @@ const SideBar = ({ children }) => {
                 <Menu.Item
                   key="4"
                   icon={<PoweroffOutlined />}
-                  style={{
-                    position: "absolute",
-                    bottom: 0,
-                    backgroundColor: isHoveredButton1 ? "#D94D34" : "#15295E",
-                    color: isHoveredButton1 ? "white" : "white",
-                    fontSize: "16px",
-                  }}
                   onMouseEnter={handleHoverButton1}
                   onMouseLeave={handleMouseLeaveButton1}
                 >

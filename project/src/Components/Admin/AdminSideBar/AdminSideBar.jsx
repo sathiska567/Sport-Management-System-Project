@@ -190,7 +190,7 @@ const AdminSideBar = ({ children }) => {
           style={{
             backgroundColor: "#15295E",
             width: "100%",
-            height: "82.5vh",
+            height: "80vh",
             fontSize: "16px",
           }}
         >

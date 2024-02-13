@@ -1,5 +1,5 @@
 body {
-  height: 100vh;
+  height: 80vh !important;
   width: 100vw;
   overflow-y: hidden;
 }

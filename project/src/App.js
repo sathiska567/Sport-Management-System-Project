@@ -33,6 +33,7 @@ import CoachReviewPlayers from "./Components/Coach/CoachReviewPlayers/CoachRevie
 import CoachProfile from "./Components/Coach/CoachProfile/CoachProfile.jsx";
 import EOViewFixture from "./Components/EventOrganizer/EOViewFixture/EOViewFixture.jsx";
 import CoachReviewForm from "./Components/Coach/CoachReviewPlayers/CoachReviewForm.jsx";
+import EOBracket from "./Components/EventOrganizer/EOBracket/EOBracket.jsx";
 
 function App() {
   const isLoggedIn = window.localStorage.getItem("isLoggedIn");
@@ -344,6 +345,17 @@ function App() {
           }
         />
       </Routes>
+      <Routes>
+        <Route
+          path="/eo-bracket"
+          element={
+            <ProtectedRoute>
+              <EOBracket />
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
+
     </BrowserRouter>
 
     // <div className="App">
