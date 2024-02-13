@@ -11,15 +11,35 @@ const EOCreateEventForm = () => {
   const [location, setLocation] = useState("");
   const [eventDate, setEventDate] = useState("");
   const [startingTime, setStartingTime] = useState("");
+  const [numberOfTeams, setNumberOfTeams] = useState(0);
 
   const handleCreate = async () => {
     console.log(
       nameOfTheEvent,
-      nameOfTheTeam,
+      // nameOfTheTeam,
       location,
-      eventDate,
-      startingTime
+      // eventDate,
+      // startingTime,
+      numberOfTeams
     );
+
+   try {
+    const response = await axios.post("http://localhost:8080/api/v1/event/create-event",{nameOfTheEvent,location,numberOfTeams})
+    console.log(response);
+
+    if(response.data.success){
+        message.success(response.data.message)
+        window.location.reload();
+    }
+
+    else{
+      message.success(response.data.message)
+      // window.location.reload();
+    }
+    
+   } catch (error) {
+      message.error("Error creating event");
+   }     
 
   };
 
@@ -97,6 +117,7 @@ const EOCreateEventForm = () => {
                     id="numberOfTeams"
                     name="numberOfTeams"
                     required
+                    onChange={(e) => setNumberOfTeams(e.target.value)}
                   />
                 </div>
                 <div className="DataIem">
