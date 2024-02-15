@@ -92,7 +92,7 @@ const PlayerProfile = () => {
         <div className="player-profile">
           <div className="ProfileHeaderSection">
             <div className="ProfileHeader">
-              <h3 className="playerDetails">Player Details</h3>
+              <h3 className="playerDetails">Details</h3>
             </div>
           </div>
           <div className="PlayerProfile" style={{ overflowX: "auto" }}>
