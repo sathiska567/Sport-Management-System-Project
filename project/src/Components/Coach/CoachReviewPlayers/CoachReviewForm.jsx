@@ -23,6 +23,11 @@ const CoachReviewForm = () => {
     setOverallRating(newOverallRating);
   }, [battingRating, bowlingRating, fieldingRating]);
 
+  const handleReviewSection = async()=>{
+    const formattedRating  = Number(overallRating.toFixed(2))
+    console.log(battingRating,bowlingRating,fieldingRating,formattedRating);
+  }
+
   // Render the form
   return (
     <div>
@@ -138,6 +143,7 @@ const CoachReviewForm = () => {
                     <button
                       className="approve CoachReviewBTn"
                       style={{ backgroundColor: "#52c41a", width: "80px" }}
+                      onClick={handleReviewSection}
                     >
                       Post
                     </button>
