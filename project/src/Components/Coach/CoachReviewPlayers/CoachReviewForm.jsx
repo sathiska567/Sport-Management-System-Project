@@ -4,6 +4,7 @@ import CoachSidebar from "../CoachSidebar/CoachSidebar";
 import "./CoachReviewForm.css";
 import { Form, Input, Rate, message } from "antd";
 import { CloseSquareOutlined, EditOutlined } from "@ant-design/icons";
+import axios from "axios";
 
 // Destructure TextArea from Input
 const { TextArea } = Input;
@@ -15,6 +16,7 @@ const CoachReviewForm = () => {
   const [bowlingRating, setBowlingRating] = useState(0);
   const [fieldingRating, setFieldingRating] = useState(0);
   const [overallRating, setOverallRating] = useState(0);
+  const [comments, setComments] = useState("");
 
   // Use useEffect to update overallRating whenever any of the other ratings change
   useEffect(() => {
@@ -23,9 +25,18 @@ const CoachReviewForm = () => {
     setOverallRating(newOverallRating);
   }, [battingRating, bowlingRating, fieldingRating]);
 
-  const handleReviewSection = async()=>{
+  const handleReviewSection = async(id)=>{
     const formattedRating  = Number(overallRating.toFixed(2))
-    console.log(battingRating,bowlingRating,fieldingRating,formattedRating);
+
+    console.log(battingRating,bowlingRating,fieldingRating,formattedRating,comments);
+
+    //  try {
+    //   // const response = await axios.post('http://localhost:8080/api/v1/review/create-review',{battingReview:battingRating,bowlingReview:bowlingRating,fieldingReview:fieldingRating,overallReview:formattedRating,comment,playerId})
+    //  } catch (error) {
+      
+    //  }
+
+
   }
 
   // Render the form
@@ -134,6 +145,7 @@ const CoachReviewForm = () => {
                     className="Comment"
                     placeholder="Enter the comment"
                     autoSize={{ minRows: 3, maxRows: 5 }}
+                    onChange={(e) => setComments(e.target.value)}
                   />
                 </div>
 

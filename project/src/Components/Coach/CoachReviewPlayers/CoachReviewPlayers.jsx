@@ -43,7 +43,7 @@ const CoachReviewPlayers = () => {
   console.log(location);
 
   // Filter userApplicationData based on userRole and Userlocation
-  const filteredData = PlayerReviews.filter((data) => {
+const filteredData = PlayerReviews.filter((data) => {
     return (
       (!playerName ||
         data.playerName.toLowerCase().includes(playerName.toLowerCase())) &&
@@ -51,6 +51,30 @@ const CoachReviewPlayers = () => {
         data.location.toLowerCase().includes(searchLocation.toLowerCase()))
     );
   });
+
+
+// get all palyer details
+  const handleGetAllPlayerDetails = async() => {
+      console.log("nice");
+
+      // try {
+      //   const response = await axios.get("http://localhost:8080/api/v1/admin/get-all-details")
+      //   console.log(response.data.allApplyingDetails.length);
+
+      //   for (let i = 0; i < array.length; i++) {
+      //     const element = array[i];
+          
+      //   }
+        
+      // } catch (error) {
+      //    message.error("Something went wrong");
+      // }
+
+  }
+
+useEffect(()=>{
+  handleGetAllPlayerDetails()
+},[])
 
   return (
     <CoachSidebar>
