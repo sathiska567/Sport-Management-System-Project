@@ -39,11 +39,12 @@ const CoachReviewPlayers = () => {
   const [searchLocation, setSearchLocation] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
+  const [playerDetails,setPlayerDetails] = useState([]);
 
   console.log(location);
 
   // Filter userApplicationData based on userRole and Userlocation
-  const filteredData = PlayerReviews.filter((data) => {
+const filteredData = PlayerReviews.filter((data) => {
     return (
       (!playerName ||
         data.playerName.toLowerCase().includes(playerName.toLowerCase())) &&
@@ -51,6 +52,29 @@ const CoachReviewPlayers = () => {
         data.location.toLowerCase().includes(searchLocation.toLowerCase()))
     );
   });
+
+
+// get all palyer details
+const handleGetAllPlayerDetails = async() => {
+    
+      try {
+        const response = await axios.get("http://localhost:8080/api/v1/player/player-details")
+        console.log(response.data.players);
+        
+        if(response.data.success){
+            message.success(response.data.message)
+            setPlayerDetails(response.data.players)
+        }
+        
+      } catch (error) {
+         message.error("Something went wrong");
+      }
+
+  }
+
+useEffect(()=>{
+  handleGetAllPlayerDetails()
+},[])
 
   return (
     <CoachSidebar>
@@ -95,18 +119,25 @@ const CoachReviewPlayers = () => {
                   dataIndex: "pid",
                   width: "10%",
                   align: "center",
+                  render:(text,record)=>(
+                     <span>PId</span>
+                  )
                 },
                 {
                   title: "Player Name",
                   dataIndex: "playerName",
                   width: "25%",
                   align: "center",
+                  render:(text,record)=>(
+                    <span>{record.username}</span>
+                  )
                 },
                 {
-                  title: "Location",
+                  title: "Email",
                   dataIndex: "location",
                   width: "15%",
                   align: "center",
+                  render: (text,record) => <span>{record.email}</span>,
                 },
                 {
                   title: "Review",
@@ -150,7 +181,7 @@ const CoachReviewPlayers = () => {
                   ),
                 },
               ]}
-              dataSource={filteredData}
+              dataSource={playerDetails}
             />
           </Content>
         </Layout>
