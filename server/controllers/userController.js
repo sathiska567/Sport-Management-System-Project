@@ -128,7 +128,6 @@ const loginController = async (req, res) => {
 // get current user details
 const getCurrentUserController = async(req,res)=>{
    try {
-
         const user = await User.findOne({_id : req.body.id})
         console.log(user);
 

@@ -85,7 +85,7 @@ const CoachSidebar = ({ children }) => {
   };
 
   //GET CURRENT USER DATA
-  const currentUserData = async () => {
+const currentUserData = async () => {
     try {
       const res = await axios.get(
         "http://localhost:8080/api/v1/user/getCurrentUser",
@@ -98,12 +98,7 @@ const CoachSidebar = ({ children }) => {
 
       console.log(res.data.user.isCoach);
       setIsCoach(res.data.user.isCoach)
-      // setPositionNotification(res.data.user.notification.length);
-      // setCurrentUsername(res.data.user.username);
-      // setIsAdmin(res.data.user.isAdmin);
-      // setIsEventOrganizer(res.data.user.isEventOrganizer);
 
-      // console.log("Is event organizer is : ", isEventOrganizer);
     } catch (error) {
       message.error("Error have inside the Get currentUserData function");
     }

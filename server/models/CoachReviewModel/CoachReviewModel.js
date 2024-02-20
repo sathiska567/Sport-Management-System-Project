@@ -20,6 +20,10 @@ const CoachreviewSchema = new mongoose.Schema({
 
   playerId:{
         type:String,
+  },
+
+  reviewGivenCoachId:{
+      type:String,
   }
 
 })
