@@ -34,12 +34,14 @@ const PlayerReviews = [
   },
 ];
 
+
 const CoachReviewPlayers = () => {
   const [playerName, setPlayerName] = useState("");
   const [searchLocation, setSearchLocation] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
   const [playerDetails,setPlayerDetails] = useState([]);
+  const [playerReview,setPlayerReview] = useState([]);
 
   console.log(location);
 
@@ -62,7 +64,7 @@ const handleGetAllPlayerDetails = async() => {
         console.log(response.data.players);
         
         if(response.data.success){
-            message.success(response.data.message)
+            // message.success(response.data.message)
             setPlayerDetails(response.data.players)
         }
         
@@ -72,8 +74,29 @@ const handleGetAllPlayerDetails = async() => {
 
   }
 
+const handleNavigate = async(id)=>{
+   console.log(id);
+   navigate("/coach-review-form",{state:{id:id}})
+}
+
+const getReview = async()=>{
+   try {
+    const reviewResponse = await axios.get("http://localhost:8080/api/v1/review/get-overall-review")
+    console.log(reviewResponse);
+
+    if(reviewResponse.data.success){
+      setPlayerReview(reviewResponse.data.review)
+      // message.success(reviewResponse.data.message)
+    }
+    
+   } catch (error) {
+      message.error("Something went wrong inside the get Review section");
+   }
+}
+
 useEffect(()=>{
   handleGetAllPlayerDetails()
+  getReview()
 },[])
 
   return (
@@ -140,12 +163,13 @@ useEffect(()=>{
                   render: (text,record) => <span>{record.email}</span>,
                 },
                 {
-                  title: "Review",
+                  title: "Overall Review",
                   dataIndex: "review",
                   width: "25%",
                   align: "center",
-                  render: () => <Rate disabled defaultValue={2} />,
+                  render: () => <Rate disabled defaultValue={3} />,
                 },
+
                 {
                   title: "Actions",
                   dataIndex: "Actions",
@@ -163,7 +187,7 @@ useEffect(()=>{
                       <Button
                         type="primary"
                         className="Button"
-                        href="/coach-review-form"
+                        // href="/coach-review-form"
                         style={{
                           backgroundColor: "#52c41a",
                           color: "#fff",
@@ -174,6 +198,7 @@ useEffect(()=>{
                           marginBottom: "auto",
                           width: "100px",
                         }}
+                        onClick={()=>handleNavigate(record._id)}
                       >
                         Comment
                       </Button>
