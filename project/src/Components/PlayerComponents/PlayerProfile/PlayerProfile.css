@@ -32,17 +32,12 @@
 }
 
 .PlayerProfile {
-    position: relative;
-    width: 100%;
-    height: 68vh;
-    font-size: 24px;
-    background-color: white;
-    border: 2px solid #e6e6e6;
-    shadow: 0px 0px 4px 0px rgba(0,0,0,0.75);
+    background-color: #fff;
 }
 
+
 .PlayerProfileForm {
-    height: 60vh !important;
+    height: 80vh !important;
     width: 100%;
 }
 
@@ -87,10 +82,7 @@
     background-Color: #52c41a !important;
     color: white;
     font-Weight: 300 !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
 }
 
-.parentDiv {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}

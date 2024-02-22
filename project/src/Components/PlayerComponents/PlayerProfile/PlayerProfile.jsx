@@ -95,7 +95,7 @@ const PlayerProfile = () => {
               <h3 className="playerDetails">My Profile</h3>
             </div>
           </div>
-          <div className="PlayerProfile" style={{ overflowX: "auto" }}>
+          <div className="PlayerProfile" style={{ overflowX: "auto",height: "75vh" }}>
             <form
               className="PlayerProfileForm"
               style={{ width: "80%", marginLeft: "auto", marginRight: "auto" }}
@@ -191,11 +191,9 @@ const PlayerProfile = () => {
                 </div>
               </div>
               <br />
-              <div className="parentDiv">
-                <Button className="submitBtn" type="ghost">
-                  Submit{" "}
-                </Button>
-              </div>
+              <Button className="submitBtn" type="ghost">
+                Submit{" "}
+              </Button>
             </form>
           </div>
         </div>
