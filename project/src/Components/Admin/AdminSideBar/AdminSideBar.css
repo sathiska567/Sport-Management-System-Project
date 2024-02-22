@@ -1,5 +1,5 @@
 body {
-  height: 80vh !important;
+  height: 100vh !important;
   width: 100vw;
   overflow-y: hidden;
 }
@@ -37,7 +37,7 @@ body {
 
 .trigger-button {
 position: fixed;
-top: -76px;
+top: -76px !important;
   color: #15295E;
   background-color: white;
 }

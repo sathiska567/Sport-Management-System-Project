@@ -197,7 +197,7 @@ const currentUserData = async () => {
           style={{
             backgroundColor: "#15295E",
             fontSize: "16px",
-            height: "85vh",
+            height: "100vh",
           }}
         >
           <Menu.Item key="/coach-stats" icon={<DashboardOutlined />}>

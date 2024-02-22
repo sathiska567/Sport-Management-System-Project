@@ -182,7 +182,7 @@ const UserSideBar = ({ children }) => {
           style={{
             backgroundColor: "#15295E",
             width: "100%",
-            height: "82.5vh",
+            height: "100vh",
             fontSize: "16px",
           }}
         >
