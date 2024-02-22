@@ -368,7 +368,7 @@ const SideBar = ({ children }) => {
 
                   : isPlayer ? (
                     <Menu.Item key="2" icon={<PendingActions />}>
-                      <Link to="#">Player Dashboad</Link>
+                      <Link to="/player-stats">Player Dashboad</Link>
                     </Menu.Item>
                   )
 
