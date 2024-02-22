@@ -2,49 +2,62 @@
 import React, { useState } from "react";
 import "./PlayerMatches.css";
 import PlayerSideBar from "../PlayerSideBar/PlayerSideBar";
-import { Layout, Button, Input, Table } from "antd";
+import { Layout, Button, Input, Table, DatePicker } from "antd";
 
 // Destructuring components from Ant Design's Layout
 const { Content } = Layout;
 
 // Navbar component
 const PlayerMatches = () => {
-  const [userRole, setUserRole] = useState("");
   const [Userlocation, setUserLocation] = useState("");
-
+  const [eventNameFilter, setEventNameFilter] = useState("");
+  const [districtFilter, setDistrictFilter] = useState("");
+  const [teamNameFilter, setTeamNameFilter] = useState("");
+const [dateFilter, setDateFilter] = useState("");
   const sampleData = [
     {
       key: "1",
-      pid: "123",
-      playerName: "John Doe",
-      district: "New York",
-      experience: "5 years",
+      eid: "E123",
+      eventName: "Event 1",
+      district: "District 1",
+      eventDate: "2022-01-01",
+      teamName: "Team A",
     },
     {
       key: "2",
-      pid: "456",
-      playerName: "Jane Smith",
-      district: "Los Angeles",
-      experience: "3 years",
+      eid: "E456",
+      eventName: "Event 2",
+      district: "District 2",
+      eventDate: "2022-02-01",
+      teamName: "Team B",
     },
     {
       key: "3",
-      pid: "789",
-      playerName: "Bob Johnson",
-      district: "Chicago",
-      experience: "10 years",
+      eid: "E789",
+      eventName: "Event 3",
+      district: "District 3",
+      eventDate: "2022-03-01",
+      teamName: "Team C",
     },
   ];
 
   // Filter sampleData based on userRole and Userlocation
-const filteredData = sampleData.filter((data) => {
-  return (
-    data.playerName &&
-    data.playerName.toLowerCase().startsWith(userRole.toLowerCase()) &&
-    data.district &&
-    data.district.toLowerCase().startsWith(Userlocation.toLowerCase())
-  );
-});
+  // Filter sampleData based on eventName, district, teamName, and eventDate
+  // Filter sampleData based on eventName, district, teamName, and eventDate
+  const filteredData = sampleData.filter((data) => {
+    return (
+      (!eventNameFilter ||
+        data.eventName
+          .toLowerCase()
+          .startsWith(eventNameFilter.toLowerCase())) &&
+      (!districtFilter ||
+        data.district.toLowerCase().startsWith(districtFilter.toLowerCase())) &&
+      (!teamNameFilter ||
+        data.teamName.toLowerCase().startsWith(teamNameFilter.toLowerCase())) &&
+      (!dateFilter ||
+        new Date(data.eventDate).getTime() === new Date(dateFilter).getTime())
+    );
+  });
 
   // JSX structure for the Navbar component
   return (
@@ -65,22 +78,39 @@ const filteredData = sampleData.filter((data) => {
           >
             {/* Search section */}
             <div className="search">
-              <Input.Search
-                placeholder="Search Player Name..."
-                styles={{
-                  marginBottom: "8",
-                }}
-                onSearch={(value) => setUserRole(value)}
-                onChange={(e) => setUserRole(e.target.value)}
-              />
-              <Input.Search
-                placeholder="Search District..."
-                styles={{
-                  marginBottom: "8",
-                }}
-                onSearch={(value) => setUserLocation(value)}
-                onChange={(e) => setUserLocation(e.target.value)}
-              />
+              <div
+                className="searchSub"
+                style={{ display: "flex", width: "100%", marginBottom: "8px" }}
+              >
+                <Input.Search
+                  placeholder="Search Event Name..."
+                  style={{ flex: 1 }}
+                  onSearch={(value) => setEventNameFilter(value)}
+                  onChange={(e) => setEventNameFilter(e.target.value)}
+                />
+                <Input.Search
+                  placeholder="Search District..."
+                  style={{ flex: 1 }}
+                  onSearch={(value) => setDistrictFilter(value)}
+                  onChange={(e) => setDistrictFilter(e.target.value)}
+                />
+              </div>
+              <div
+                className="searchSub"
+                style={{ display: "flex", width: "100%" }}
+              >
+                <DatePicker
+                  className="searchInputDate"
+                  style={{ flex: 1 }}
+                  onChange={(date, dateString) => setDateFilter(dateString)}
+                />
+                <Input.Search
+                  placeholder="Search Team Name..."
+                  style={{ flex: 1 }}
+                  onSearch={(value) => setTeamNameFilter(value)}
+                  onChange={(e) => setTeamNameFilter(e.target.value)}
+                />
+              </div>
             </div>
             {/* Table section */}
             <div className="tableContainer">
@@ -88,13 +118,13 @@ const filteredData = sampleData.filter((data) => {
                 className="Table"
                 columns={[
                   {
-                    title: "PID",
-                    dataIndex: "pid",
+                    title: "Event_ID",
+                    dataIndex: "eid",
                   },
                   {
-                    title: "Player Name",
-                    dataIndex: "playerName",
-                    key: "playerName",
+                    title: "Event Name",
+                    dataIndex: "eventName",
+                    key: "eventName",
                   },
                   {
                     title: "District",
@@ -102,9 +132,14 @@ const filteredData = sampleData.filter((data) => {
                     key: "district",
                   },
                   {
-                    title: "Experience",
-                    dataIndex: "experience",
-                    key: "experience",
+                    title: "Event Date",
+                    dataIndex: "eventDate",
+                    key: "eventDate",
+                  },
+                  {
+                    title: "Team Name",
+                    dataIndex: "teamName",
+                    key: "teamName",
                   },
                   {
                     title: "Actions",
