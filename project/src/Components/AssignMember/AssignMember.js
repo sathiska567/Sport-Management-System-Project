@@ -2,7 +2,7 @@ import 'antd/dist/antd'
 import React, { useEffect, useState } from 'react'
 import { Table, Button, Modal, Input, message } from 'antd'
 import axios from 'axios'
-
+import CoachSidebar from '../Coach/CoachSidebar/CoachSidebar';
 
 import './Assignbutton.css'
 
@@ -134,14 +134,14 @@ export default function AssignButton() {
 
     
     {
-
+      key:'1',
       title: 'ID',
       dataIndex: 'sid',
       
 
     },
     {
-      title: <span style={{ color: 'blue' }}>Name</span>,
+      title: 'Name',
 
       dataIndex: 'name',
       filterValue: ["s"], // Set filterValue directly to searchText
@@ -175,28 +175,30 @@ export default function AssignButton() {
 
   return (
     <div>
+      <CoachSidebar>
       <header>
 
-        <Input.Search
-          placeholder="search name..."
-          style={{ marginBottom: 8 }}
-          //  onSearch={(value) => {
-          //   setSearchedText(value)
-          //  }}
-            onChange={handleSearch}
-          
-        />
+<Input.Search
+  placeholder="search name..."
+  style={{ marginBottom: 8 }}
+  //  onSearch={(value) => {
+  //   setSearchedText(value)
+  //  }}
+    onChange={handleSearch}
+  
+/>
 
-        <Table
-          columns={columns }
-          dataSource={dataSource}
-          
-        >
+<Table
+  columns={columns }
+  dataSource={dataSource}
+  
+>
 
 
-        </Table>
+</Table>
 
-      </header>
+</header>
+      </CoachSidebar>
     </div>
   )
 }

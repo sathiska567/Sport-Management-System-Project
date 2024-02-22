@@ -34,7 +34,7 @@ import CoachProfile from "./Components/Coach/CoachProfile/CoachProfile.jsx";
 import EOViewFixture from "./Components/EventOrganizer/EOViewFixture/EOViewFixture.jsx";
 import CoachReviewForm from "./Components/Coach/CoachReviewPlayers/CoachReviewForm.jsx";
 import EOBracket from "./Components/EventOrganizer/EOBracket/EOBracket.jsx";
-
+import AssignMember from "./Components/AssignMember/AssignMember.js";
 function App() {
   const isLoggedIn = window.localStorage.getItem("isLoggedIn");
   console.log(isLoggedIn, "login");
@@ -354,6 +354,18 @@ function App() {
             </ProtectedRoute>
           }
         />
+      </Routes>
+      <Routes>
+        <Route
+        path='/AssignMmber'
+        element={
+          <AssignMember>
+           <AssignMember/>  
+          </AssignMember>
+        }
+        >
+          
+        </Route>
       </Routes>
 
     </BrowserRouter>
