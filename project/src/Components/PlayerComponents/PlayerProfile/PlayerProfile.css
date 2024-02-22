@@ -9,10 +9,10 @@
 .ProfileHeaderSection {
     position: relative;
     width: 100%;
-    height: auto;
-    background-color: #fff;
-    border-radius: 5px;
-    box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.75);
+    height: 10vh;
+    background-color: #15295E;
+    color: white;
+    font-weight: 300;
 }
 
 .playerDetails {
@@ -21,8 +21,10 @@
     height: 100%;
     padding: 10px;
     margin-left: 42%;
-    font-size: 24px;
+    font-size:20px;
     padding-top: 20px;
+    font-weight: 400;
+
 }
 
 .ProfileHeader {
@@ -32,12 +34,18 @@
 .PlayerProfile {
     position: relative;
     width: 100%;
-    height: 490px;
+    height: 68vh;
     font-size: 24px;
     background-color: white;
     border: 2px solid #e6e6e6;
     shadow: 0px 0px 4px 0px rgba(0,0,0,0.75);
 }
+
+.PlayerProfileForm {
+    height: 60vh !important;
+    width: 100%;
+}
+
 .upload-list-inline .ant-upload-list-item {
   float: left;
   width: 200px;
@@ -69,4 +77,20 @@
 
 .inputBox {
     margin-top: 10px;
+}
+
+.submitBtn {
+    height: 40px;
+    width: 10%;
+    fontWeight: bold;
+    border-radius: 5px;
+    background-Color: #52c41a !important;
+    color: white;
+    font-Weight: 300 !important;
+}
+
+.parentDiv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

@@ -1,6 +1,6 @@
 import { React, useState } from "react";
 import "./PlayerProfile.css";
-import SideBar from "../EventOrganizer/EOSideBar/EOSideBar";
+import PlayerSideBar from "../PlayerSideBar/PlayerSideBar";
 import { Upload, Modal, Input, Button, DatePicker, InputNumber } from "antd";
 import ImgCrop from "antd-img-crop";
 
@@ -88,16 +88,17 @@ const PlayerProfile = () => {
 
   return (
     <div>
-      <SideBar>
+      <PlayerSideBar>
         <div className="player-profile">
           <div className="ProfileHeaderSection">
             <div className="ProfileHeader">
-              <h3 className="playerDetails">Details</h3>
+              <h3 className="playerDetails">My Profile</h3>
             </div>
           </div>
           <div className="PlayerProfile" style={{ overflowX: "auto" }}>
             <form
-              style={{ width: "65%", marginLeft: "auto", marginRight: "auto" }}
+              className="PlayerProfileForm"
+              style={{ width: "80%", marginLeft: "auto", marginRight: "auto" }}
             >
               <label className="formLabel">
                 Name:
@@ -105,11 +106,7 @@ const PlayerProfile = () => {
               </label>
               <label className="formLabel">
                 Email:
-                <Input
-                  type="email"
-                  name="email"
-                  className="inputBox"
-                />
+                <Input type="email" name="email" className="inputBox" />
               </label>
 
               <div className="AgeSection">
@@ -194,21 +191,15 @@ const PlayerProfile = () => {
                 </div>
               </div>
               <br />
-              <Button
-                type="primary"
-                style={{
-                  width: "25%",
-                  marginLeft: "auto",
-                  marginRight: "auto",
-                  fontWeight: "bold",
-                }}
-              >
-                Submit{" "}
-              </Button>
+              <div className="parentDiv">
+                <Button className="submitBtn" type="ghost">
+                  Submit{" "}
+                </Button>
+              </div>
             </form>
           </div>
         </div>
-      </SideBar>
+      </PlayerSideBar>
     </div>
   );
 };

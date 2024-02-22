@@ -9,7 +9,6 @@ import OTPPage from "./Components/Login/OTPPage.jsx";
 import ResetPassword from "./Components/Login/CreateNewPassword.jsx";
 import ApplyPosition from "./Components/ApplyPosition/ApplyPosition.jsx";
 import NewLogin from "./Components/Login/Login.jsx";
-import PlayerProfile from "./Components/PlayerComponents/PlayerProfile.jsx";
 import PublicRoute from "./Components/PublicRoute/PublicRoute.js";
 import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute.js";
 import SignUp from "./Components/Login/SignUp.jsx";
@@ -34,6 +33,12 @@ import CoachProfile from "./Components/Coach/CoachProfile/CoachProfile.jsx";
 import EOViewFixture from "./Components/EventOrganizer/EOViewFixture/EOViewFixture.jsx";
 import CoachReviewForm from "./Components/Coach/CoachReviewPlayers/CoachReviewForm.jsx";
 import EOBracket from "./Components/EventOrganizer/EOBracket/EOBracket.jsx";
+import PlayerStats from "./Components/PlayerComponents/PlayerStats/PlayerStats.jsx";
+import PlayerAvailability from "./Components/PlayerComponents/PlayerAvailability/PlayerAvailability.jsx";
+import PlayerReviews from "./Components/PlayerComponents/PlayerReviews/PlayerReviews.jsx";
+import PlayerSearch from "./Components/PlayerComponents/PlayerSearch/PlayerSearch.jsx";
+import PlayerProfile from "./Components/PlayerComponents/PlayerProfile/PlayerProfile.jsx";
+
 
 function App() {
   const isLoggedIn = window.localStorage.getItem("isLoggedIn");
@@ -130,16 +135,6 @@ function App() {
             </ProtectedRoute>
           }
         />
-
-        <Route
-          path="/profile"
-          element={
-            <ProtectedRoute>
-              <PlayerProfile />
-            </ProtectedRoute>
-          }
-        />
-
         <Route
           // Need to change after add table of application
           path="/shuffle-fixture"
@@ -355,7 +350,56 @@ function App() {
           }
         />
       </Routes>
-
+      <Routes>
+        <Route
+          path="/player-stats"
+          element={
+            <ProtectedRoute>
+              <PlayerStats />
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
+      <Routes>
+        <Route
+          path="/player-availability"
+          element={
+            <ProtectedRoute>
+              <PlayerAvailability />
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
+      <Routes>
+        <Route
+          path="/player-reviews"
+          element={
+            <ProtectedRoute>
+              <PlayerReviews />
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
+      <Routes>
+        <Route
+          path="/player-search"
+          element={
+            <ProtectedRoute>
+              <PlayerSearch />
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
+      <Routes>
+        <Route
+          path="/player-profile"
+          element={
+            <ProtectedRoute>
+              <PlayerProfile />
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
     </BrowserRouter>
 
     // <div className="App">
