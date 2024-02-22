@@ -9,7 +9,14 @@ body {
 .search {
     display: flex;
     flex-direction: row;
-    gap: 15px;
+    gap: 25px;
+    width: 100%;
+}
+
+.searchSub {
+    display: flex;
+    flex-direction: row;
+    gap: 25px;
     width: 100%;
 }
 
@@ -49,4 +56,9 @@ body {
   table-layout: fixed;
 }
 
-
+.searchInputDate {
+  width: 100% !important;
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+}
