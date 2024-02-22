@@ -7,6 +7,7 @@ import {
   faCalendarCheck,
   faChartLine,
   faUsers,
+  faTrophy,
 } from "@fortawesome/free-solid-svg-icons";
 
 import {
@@ -21,7 +22,6 @@ import {
 
 import { useLocation } from "react-router-dom";
 import { Layout, Menu, Button, Avatar, Space, Badge, message } from "antd";
-import { ReactComponent as Profile } from "../../icons/Profile.svg";
 import axios from "axios";
 // Destructuring components from Ant Design's Layout
 const { Header, Sider } = Layout;
@@ -38,7 +38,7 @@ const PlayerSideBar = ({ children }) => {
   const [currentUserName, setCurrentUsername] = useState();
   const [isAdmin, setIsAdmin] = useState(false);
   const [positionNotification, setPositionNotification] = useState();
-  const [isPlayer, setIsPlayer] = useState(false);
+  const [isEventOrganizer, setIsEventOrganizer] = useState(false);
   // Event handlers for mouse hover events
   const handleHoverButton1 = () => {
     setIsHoveredButton1(true);
@@ -65,6 +65,7 @@ const PlayerSideBar = ({ children }) => {
   const Text = ({ selectedMenuItem }) => {
     const text = {
       "/player-stats": "Dashboard",
+      "/player-matches": "Matches",
       "/player-availability": "Availability",
       "/player-reviews": "My Reviews",
       "/player-search": "Search Players",
@@ -86,14 +87,14 @@ const PlayerSideBar = ({ children }) => {
         }
       );
 
-      console.log(res.data.user.isPlayer);
+      console.log(res.data.user.isEventOrganizer);
 
-      // setPositionNotification(res.data.user.notification.length);
+      setPositionNotification(res.data.user.notification.length);
       setCurrentUsername(res.data.user.username);
-      // setIsAdmin(res.data.user.isAdmin);
-      setIsPlayer(res.data.user.isPlayer);
+      setIsAdmin(res.data.user.isAdmin);
+      setIsEventOrganizer(res.data.user.isEventOrganizer);
 
-      // console.log("Is event organizer is : ", isEventOrganizer);
+      console.log("Is event organizer is : ", isEventOrganizer);
     } catch (error) {
       message.error("Error have inside the Get currentUserData function");
     }
@@ -199,43 +200,33 @@ const PlayerSideBar = ({ children }) => {
           <Menu.Item key="/player-stats" icon={<DashboardOutlined />}>
             <NavLink to="/player-stats">Dashboard</NavLink>
           </Menu.Item>
-
-          {isPlayer ? (
-            <div style={{ paddingLeft: "20px" }}>
-              <Menu.Item
-                key="/player-availability"
-                icon={<FontAwesomeIcon icon={faCalendarCheck} />}
-              >
-                <NavLink to="/player-availability">Availability</NavLink>
-              </Menu.Item>
-              <Menu.Item
-                key="/player-reviews"
-                icon={<FontAwesomeIcon icon={faChartLine} />}
-              >
-                <NavLink to="/player-reviews">My Reviews</NavLink>
-              </Menu.Item>
-              <Menu.Item
-                key="/player-search"
-                icon={<FontAwesomeIcon icon={faUsers} />}
-              >
-                <NavLink to="/player-search">Search Players</NavLink>
-              </Menu.Item>
-              <Menu.Item key="/player-profile" icon={<EditOutlined />}>
-                <NavLink to="/player-profile">My Profile</NavLink>
-              </Menu.Item>
-            </div>
-          ) : (
-
-            <div style={{ paddingLeft: "20px" }}>
-              <Menu.Item key="/apply-position" icon={<Profile />}>
-                <NavLink to="/apply-position">Apply Position</NavLink>
-              </Menu.Item>
-            </div>
-
-          )}
-
-
-
+          <Menu.Item
+            key="/player-availability"
+            icon={<FontAwesomeIcon icon={faCalendarCheck} />}
+          >
+            <NavLink to="/player-availability">Availability</NavLink>
+          </Menu.Item>
+          <Menu.Item
+            key="/player-matches"
+            icon={<FontAwesomeIcon icon={faTrophy} />}
+          >
+            <NavLink to="/player-matches">Matches</NavLink>
+          </Menu.Item>
+          <Menu.Item
+            key="/player-reviews"
+            icon={<FontAwesomeIcon icon={faChartLine} />}
+          >
+            <NavLink to="/player-reviews">My Reviews</NavLink>
+          </Menu.Item>
+          <Menu.Item
+            key="/player-search"
+            icon={<FontAwesomeIcon icon={faUsers} />}
+          >
+            <NavLink to="/player-search">Search Players</NavLink>
+          </Menu.Item>
+          <Menu.Item key="/player-profile" icon={<EditOutlined />}>
+            <NavLink to="/player-profile">My Profile</NavLink>
+          </Menu.Item>
           <Menu.Item
             key="logoff"
             icon={<PoweroffOutlined />}
