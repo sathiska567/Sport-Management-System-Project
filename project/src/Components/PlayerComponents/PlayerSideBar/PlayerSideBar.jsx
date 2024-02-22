@@ -21,6 +21,7 @@ import {
 
 import { useLocation } from "react-router-dom";
 import { Layout, Menu, Button, Avatar, Space, Badge, message } from "antd";
+import { ReactComponent as Profile } from "../../icons/Profile.svg";
 import axios from "axios";
 // Destructuring components from Ant Design's Layout
 const { Header, Sider } = Layout;
@@ -37,7 +38,7 @@ const PlayerSideBar = ({ children }) => {
   const [currentUserName, setCurrentUsername] = useState();
   const [isAdmin, setIsAdmin] = useState(false);
   const [positionNotification, setPositionNotification] = useState();
-  const [isEventOrganizer, setIsEventOrganizer] = useState(false);
+  const [isPlayer, setIsPlayer] = useState(false);
   // Event handlers for mouse hover events
   const handleHoverButton1 = () => {
     setIsHoveredButton1(true);
@@ -85,14 +86,14 @@ const PlayerSideBar = ({ children }) => {
         }
       );
 
-      console.log(res.data.user.isEventOrganizer);
+      console.log(res.data.user.isPlayer);
 
-      setPositionNotification(res.data.user.notification.length);
+      // setPositionNotification(res.data.user.notification.length);
       setCurrentUsername(res.data.user.username);
-      setIsAdmin(res.data.user.isAdmin);
-      setIsEventOrganizer(res.data.user.isEventOrganizer);
+      // setIsAdmin(res.data.user.isAdmin);
+      setIsPlayer(res.data.user.isPlayer);
 
-      console.log("Is event organizer is : ", isEventOrganizer);
+      // console.log("Is event organizer is : ", isEventOrganizer);
     } catch (error) {
       message.error("Error have inside the Get currentUserData function");
     }
@@ -198,27 +199,43 @@ const PlayerSideBar = ({ children }) => {
           <Menu.Item key="/player-stats" icon={<DashboardOutlined />}>
             <NavLink to="/player-stats">Dashboard</NavLink>
           </Menu.Item>
-          <Menu.Item
-            key="/player-availability"
-            icon={<FontAwesomeIcon icon={faCalendarCheck} />}
-          >
-            <NavLink to="/player-availability">Availability</NavLink>
-          </Menu.Item>
-          <Menu.Item
-            key="/player-reviews"
-            icon={<FontAwesomeIcon icon={faChartLine} />}
-          >
-            <NavLink to="/player-reviews">My Reviews</NavLink>
-          </Menu.Item>
-          <Menu.Item
-            key="/player-search"
-            icon={<FontAwesomeIcon icon={faUsers} />}
-          >
-            <NavLink to="/player-search">Search Players</NavLink>
-          </Menu.Item>
-          <Menu.Item key="/player-profile" icon={<EditOutlined />}>
-            <NavLink to="/player-profile">My Profile</NavLink>
-          </Menu.Item>
+
+          {isPlayer ? (
+            <div style={{ paddingLeft: "20px" }}>
+              <Menu.Item
+                key="/player-availability"
+                icon={<FontAwesomeIcon icon={faCalendarCheck} />}
+              >
+                <NavLink to="/player-availability">Availability</NavLink>
+              </Menu.Item>
+              <Menu.Item
+                key="/player-reviews"
+                icon={<FontAwesomeIcon icon={faChartLine} />}
+              >
+                <NavLink to="/player-reviews">My Reviews</NavLink>
+              </Menu.Item>
+              <Menu.Item
+                key="/player-search"
+                icon={<FontAwesomeIcon icon={faUsers} />}
+              >
+                <NavLink to="/player-search">Search Players</NavLink>
+              </Menu.Item>
+              <Menu.Item key="/player-profile" icon={<EditOutlined />}>
+                <NavLink to="/player-profile">My Profile</NavLink>
+              </Menu.Item>
+            </div>
+          ) : (
+
+            <div style={{ paddingLeft: "20px" }}>
+              <Menu.Item key="/apply-position" icon={<Profile />}>
+                <NavLink to="/apply-position">Apply Position</NavLink>
+              </Menu.Item>
+            </div>
+
+          )}
+
+
+
           <Menu.Item
             key="logoff"
             icon={<PoweroffOutlined />}
