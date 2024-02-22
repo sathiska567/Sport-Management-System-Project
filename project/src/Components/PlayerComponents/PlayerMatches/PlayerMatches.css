@@ -13,15 +13,6 @@ body {
     width: 100%;
 }
 
-.searchInputName {
-  flex: 1;
-}
-
-.searchInputDate {
-  flex: 1;
-  height: 32px;
-}
-
 .tableContainer {
     width: 100%;
     margin-top: 0px;

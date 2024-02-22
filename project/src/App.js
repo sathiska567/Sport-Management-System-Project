@@ -38,6 +38,7 @@ import PlayerAvailability from "./Components/PlayerComponents/PlayerAvailability
 import PlayerReviews from "./Components/PlayerComponents/PlayerReviews/PlayerReviews.jsx";
 import PlayerSearch from "./Components/PlayerComponents/PlayerSearch/PlayerSearch.jsx";
 import PlayerProfile from "./Components/PlayerComponents/PlayerProfile/PlayerProfile.jsx";
+import PlayerMatches from "./Components/PlayerComponents/PlayerMatches/PlayerMatches.jsx";
 
 
 function App() {
@@ -396,6 +397,16 @@ function App() {
           element={
             <ProtectedRoute>
               <PlayerProfile />
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
+      <Routes>
+        <Route
+          path="/player-matches"
+          element={
+            <ProtectedRoute>
+              <PlayerMatches />
             </ProtectedRoute>
           }
         />

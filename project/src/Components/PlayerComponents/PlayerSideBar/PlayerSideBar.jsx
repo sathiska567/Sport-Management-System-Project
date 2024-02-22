@@ -7,6 +7,7 @@ import {
   faCalendarCheck,
   faChartLine,
   faUsers,
+  faTrophy,
 } from "@fortawesome/free-solid-svg-icons";
 
 import {
@@ -64,6 +65,7 @@ const PlayerSideBar = ({ children }) => {
   const Text = ({ selectedMenuItem }) => {
     const text = {
       "/player-stats": "Dashboard",
+      "/player-matches": "Matches",
       "/player-availability": "Availability",
       "/player-reviews": "My Reviews",
       "/player-search": "Search Players",
@@ -203,6 +205,12 @@ const PlayerSideBar = ({ children }) => {
             icon={<FontAwesomeIcon icon={faCalendarCheck} />}
           >
             <NavLink to="/player-availability">Availability</NavLink>
+          </Menu.Item>
+          <Menu.Item
+            key="/player-matches"
+            icon={<FontAwesomeIcon icon={faTrophy} />}
+          >
+            <NavLink to="/player-matches">Matches</NavLink>
           </Menu.Item>
           <Menu.Item
             key="/player-reviews"
