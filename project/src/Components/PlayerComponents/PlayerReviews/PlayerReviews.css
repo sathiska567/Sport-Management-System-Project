@@ -1,0 +1,72 @@
+body {
+  height: 100vh;
+  width: 100vw;
+  overflow-x: hidden;
+}
+
+/* Style for the table */
+
+.search {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    width: 100%;
+}
+
+.tableContainer {
+    width: 100%;
+    margin-top: 0px;
+    /* Add a vertical scroll bar if the content overflows */
+}
+
+:where(.css-dev-only-do-not-override-qgg3xn).ant-table-wrapper .ant-table-thead >tr>th, :where(.css-dev-only-do-not-override-qgg3xn).ant-table-wrapper .ant-table-thead >tr>td {
+  background-color: #15295E;
+  color: #fff;
+  font-weight: 500;
+}
+
+.ant-table-row .ant-table-row-level-0 {
+  height: 10px !important ;/* Adjust the height as needed */
+}
+
+/* CSS */
+.tableContainer th {
+  position: sticky;
+  top: 0;
+  background: white;
+  z-index: 10;
+}
+
+.tableContainer tbody {
+  display: block;
+  height: 400px;
+  overflow: auto;
+}
+
+.tableContainer thead, .tableContainer tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+.search {
+    display: flex;
+    flex-direction: row;
+    gap: 25px;
+    width: 100%;
+}
+
+.searchSub {
+    display: flex;
+    flex-direction: row;
+    gap: 25px;
+    width: 100%;
+}
+
+.searchInputDate {
+  width: 100% !important;
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+}
+
+
