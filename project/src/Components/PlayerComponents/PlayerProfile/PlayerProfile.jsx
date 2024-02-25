@@ -1,7 +1,8 @@
 import { React, useEffect, useState } from "react";
 import "./PlayerProfile.css";
 import PlayerSideBar from "../PlayerSideBar/PlayerSideBar";
-import { Upload, Modal, Input, Button, DatePicker, InputNumber, message } from "antd";
+import { Upload, Modal, Input, Button, DatePicker, InputNumber, message, Flex } from "antd";
+import { PoweroffOutlined } from '@ant-design/icons';
 import ImgCrop from "antd-img-crop";
 import axios from "axios";
 
@@ -23,10 +24,11 @@ const PlayerProfile = () => {
   const [playerEmail, setPlayerEmail] = useState("")
   const [playerDateOfBirth, setPlayerDateOfBirth] = useState("")
   const [playerAge, setPlayerAge] = useState(0)
-  const [playerId,setPlayerId]= useState("")
-  const [formData , setFormData] = useState([])
-  const [NewfileList,setNewFileList] = useState([])
+  const [playerId, setPlayerId] = useState("")
+  const [formData, setFormData] = useState([])
+  const [NewfileList, setNewFileList] = useState([])
 
+  const [loadings, setLoadings] = useState([]);
 
   // GET CURRENT USER DETAILS
   const currentUserData = async () => {
@@ -49,26 +51,41 @@ const PlayerProfile = () => {
   };
 
 
-  const handleFormSubmit = async () => {
-    console.log(playerId, playerName, playerEmail, playerDateOfBirth, playerAge, NewfileList);
-  
+  const handleFormSubmit = async (index) => {
+    console.log(playerId, playerName, playerEmail, playerDateOfBirth, playerAge, NewfileList, index);
+
+    setLoadings((prevLoadings) => {
+      const newLoadings = [...prevLoadings];
+      newLoadings[index] = true;
+      return newLoadings;
+    });
+
+
+    setTimeout(() => {
+      setLoadings((prevLoadings) => {
+        const newLoadings = [...prevLoadings];
+        newLoadings[index] = false;
+        return newLoadings;
+      });
+    },20000);
+
     if (NewfileList.length > 0) {
       const file = NewfileList[0].originFileObj;
-  
+
       let formData = new FormData();
       formData.append("image", file);
       formData.append("playerId", playerId);
-  
+
       try {
         // Upload image and get the response
         const imageUploadResponse = await axios.post(
-          "http://localhost:8080/api/v1/profile/player-profile-image-upload",formData);
-          
-       console.log(imageUploadResponse.data);
-  
+          "http://localhost:8080/api/v1/profile/player-profile-image-upload", formData);
+
+        console.log(imageUploadResponse.data.success);
+
         // Extract image URL from the response
         const imageUrl = imageUploadResponse.data.data.PlayerprofileImageLink;
-  
+
         // Now, make a second API call to save player profile data with the image URL
         const playerProfileResponse = await axios.post(
           "http://localhost:8080/api/v1/profile/player-profile",
@@ -81,7 +98,7 @@ const PlayerProfile = () => {
             PlayerprofileImageLink: imageUrl,
           }
         );
-  
+
         // Handle response if needed
         console.log(playerProfileResponse.data);
       } catch (error) {
@@ -89,36 +106,18 @@ const PlayerProfile = () => {
       }
     }
   };
-  
-  
-
-
-  
-      // try {
-      //   const {data} = await axios.post("http://localhost:8080/api/v1/profile/player-profile-image-upload",formData)
-      //   console.log(data);
-        
-      // } catch (error) {
-      //     message.error("Error have inside the onChangeProfile function");
-      // }
-  
-      // // FormData is not an array, so there's no need to spread it in the console.log
-      // console.log([...formData]);
-      // setFormData([...formData])
-  
-      // setFileListProfile(NewfileList);
 
 
   useEffect(() => {
     currentUserData()
   }, [])
 
-  const onChangeProfile =async ({ fileList: newFileList }) => {
+  const onChangeProfile = async ({ fileList: newFileList }) => {
     console.log(newFileList);
     setNewFileList(newFileList)
 
   };
-  
+
 
 
   // const onChangeProfile = ({ fileList: newFileList }) => {
@@ -182,6 +181,7 @@ const PlayerProfile = () => {
   const onChange = ({ fileList: newFileList }) => {
     setFileList(newFileList);
   };
+
   const onPreview = async (file) => {
     let src = file.url;
     if (!src) {
@@ -243,7 +243,7 @@ const PlayerProfile = () => {
                     visible={previewVisibleProfile}
                     footer={null}
                     onCancel={() => setPreviewVisibleProfile(false)}
-                    // onChange={hanldeProfileImageUpload}
+                  // onChange={hanldeProfileImageUpload}
                   >
                     <img
                       alt="example"
@@ -305,9 +305,14 @@ const PlayerProfile = () => {
                 </div>
               </div>
               <br />
-              <Button className="submitBtn" type="ghost" onClick={handleFormSubmit}>
-                Submit{" "}
+              <Button className="submitBtn" loading={loadings[0]} type="ghost" onClick={() => handleFormSubmit(0)}>
+                Submit
               </Button>
+
+              {/* <Button type="primary" loading={loadings[0]} onClick={() => enterLoading(0)}>
+                Click me!
+              </Button> */}
+
             </form>
           </div>
         </div>
