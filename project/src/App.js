@@ -359,9 +359,10 @@ function App() {
         <Route
         path='/AssignMmber'
         element={
-          <AssignMember>
-           <AssignMember/>  
-          </AssignMember>
+          
+          <ProtectedRoute>
+            <AssignMember/>
+          </ProtectedRoute>
         }
         >
           

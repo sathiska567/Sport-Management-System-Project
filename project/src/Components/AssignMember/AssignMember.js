@@ -134,15 +134,18 @@ export default function AssignButton() {
 
     
     {
-      key:'1',
+      
       title: 'ID',
       dataIndex: 'sid',
+      width: "20%",
+      align: "center",
+     
       
-
     },
     {
       title: 'Name',
-
+      width: "20%",
+      align: "center",
       dataIndex: 'name',
       filterValue: ["s"], // Set filterValue directly to searchText
       onFilter: (value, record) => {
@@ -152,10 +155,13 @@ export default function AssignButton() {
     {
 
       title: 'Location',
-      dataIndex: 'location'
+      dataIndex: 'location',
+      width: "20%",
+      align: "center",
     },
     {
-
+      width: "20%",
+      align: "center",
       title: 'Actions',
       render: (text, record) => {
   
@@ -189,8 +195,17 @@ export default function AssignButton() {
 />
 
 <Table
+ className='Table4'
+ style={{
+  margin: "5px",
+  padding: 30,
+  minHeight: 10,
+  height: "100%",
+  background: "whitesmoke",
+}}
+ 
   columns={columns }
-  dataSource={dataSource}
+  dataSource={dataSource }
   
 >
 

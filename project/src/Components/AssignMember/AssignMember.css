@@ -10,3 +10,23 @@
     background-color: green;
     color: white;
   }
+   .table1 :where(.css-dev-only-do-not-override-qgg3xn).ant-table-wrapper .ant-table-thead >tr>th, :where(.css-dev-only-do-not-override-qgg3xn).ant-table-wrapper .ant-table-thead >tr>td {
+    background-color: #0d1f4b;
+    color: #fff;
+    font-weight: 500;
+  }
+  .ant-table-tbody >tr>td{
+    height: 5px;
+    padding: 4px;
+  }
+ 
+  .table4.ant-table-tbody > tr>td{
+ 
+    height: 5px;
+   
+
+  }
+  
+.ant-table-row .ant-table-row-level-0 {
+  height: 1px !important ;/* Adjust the height as needed */
+}

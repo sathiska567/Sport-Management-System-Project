@@ -12,6 +12,6 @@ router.get("/get-assignee", getMember)
 router.post("/change-status", changeStatus)
 
 // DELETE ASSIGNEE
-router.delete("/delete-status", deleteStatus)
+router.post("/delete-status", deleteStatus)
 
 module.exports = router;
