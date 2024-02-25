@@ -19,6 +19,7 @@ const getOneEventData = require("./routes/CreateFixtureRoute/getOneFixtureRoute"
 const deleteOneFixtureRouter = require("./routes/CreateFixtureRoute/deleteOneFixtureRoute")
 const giveReviewRoute = require("./routes/CoachReviewRoute/CreateReviewRoute")
 const getPlayerDetailsRoute = require('./routes/GetAllPlayerDetails/getPlayerDetailsRoute')
+const assignMember = require("./routes/AssignMemberRoute/AssignMember")
 
 require("./db/mongoDb"); 
 
@@ -57,7 +58,8 @@ app.use("/api/v1/review",giveReviewRoute);
 // GET ONLY PLAYER DETAILS ROUTE
 app.use("/api/v1/player",getPlayerDetailsRoute);
 
-
+// ASSIGN MEMBER
+app.use("/api/v1/assign",assignMember);
 
 // //jwt
 // app.post('/user/login', async (req, res) => {

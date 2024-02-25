@@ -4,11 +4,11 @@ import { Table, Button, Modal, Input, message } from 'antd'
 import axios from 'axios'
 import CoachSidebar from '../Coach/CoachSidebar/CoachSidebar';
 
-import './Assignbutton.css'
+import './AssignMember.css'
 
 
 
-axios.defaults.baseURL = "http://localhost:8080/"
+axios.defaults.baseURL = "http://localhost:8080/api/v1/assign"
 
 export default function AssignButton() {
 
@@ -36,7 +36,7 @@ export default function AssignButton() {
   // table
   const getFetchData = async () => {
 
-    const data = await axios.get("/")
+    const data = await axios.get("/get-assignee")
     console.log(data)
 
     if (data.data.success) {
@@ -64,7 +64,7 @@ export default function AssignButton() {
   
       if (confirmed) {
         console.log(id);
-        const response = await axios.post("/delete", { id: id });
+        const response = await axios.post("/delete-status", { id: id });
   
   
         if (response.data.success) {
@@ -100,7 +100,7 @@ export default function AssignButton() {
     
      
         await axios
-        .post("/status", { id: id }) // Adjust the endpoint URL accordingly
+        .post("/change-status", { id: id }) // Adjust the endpoint URL accordingly
         .then((res) => {
           if(res.data.success){
             // setIsAssigned(true)
@@ -176,7 +176,7 @@ export default function AssignButton() {
   return (
     <div>
       <CoachSidebar>
-      <header>
+          <header>
 
 <Input.Search
   placeholder="search name..."
