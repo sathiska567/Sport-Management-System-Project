@@ -1,8 +1,10 @@
-import { React, useState } from "react";
+import { React, useEffect, useState } from "react";
 import "./PlayerProfile.css";
 import PlayerSideBar from "../PlayerSideBar/PlayerSideBar";
-import { Upload, Modal, Input, Button, DatePicker, InputNumber } from "antd";
+import { Upload, Modal, Input, Button, DatePicker, InputNumber, message, Flex } from "antd";
+import { PoweroffOutlined } from '@ant-design/icons';
 import ImgCrop from "antd-img-crop";
+import axios from "axios";
 
 const getBase64 = (file) =>
   new Promise((resolve, reject) => {
@@ -18,9 +20,118 @@ const PlayerProfile = () => {
   const [previewImageProfile, setPreviewImageProfile] = useState("");
   const [fileListProfile, setFileListProfile] = useState([]);
 
-  const onChangeProfile = ({ fileList: newFileList }) => {
-    setFileListProfile(newFileList);
+  const [playerName, setPlayerName] = useState("")
+  const [playerEmail, setPlayerEmail] = useState("")
+  const [playerDateOfBirth, setPlayerDateOfBirth] = useState("")
+  const [playerAge, setPlayerAge] = useState(0)
+  const [playerId, setPlayerId] = useState("")
+  const [formData, setFormData] = useState([])
+  const [NewfileList, setNewFileList] = useState([])
+
+  const [loadings, setLoadings] = useState([]);
+
+  // GET CURRENT USER DETAILS
+  const currentUserData = async () => {
+    try {
+      const res = await axios.get("http://localhost:8080/api/v1/user/getCurrentUser",
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+
+      // console.log(res.data.user._id);
+      setPlayerId(res.data.user._id)
+
+
+    } catch (error) {
+      message.error("Error have inside the Get currentUserData function");
+    }
   };
+
+
+  const handleFormSubmit = async (index) => {
+    console.log(playerId, playerName, playerEmail, playerDateOfBirth, playerAge, NewfileList, index);
+
+    setLoadings((prevLoadings) => {
+      const newLoadings = [...prevLoadings];
+      newLoadings[index] = true;
+      return newLoadings;
+    });
+
+
+    setTimeout(() => {
+      setLoadings((prevLoadings) => {
+        const newLoadings = [...prevLoadings];
+        newLoadings[index] = false;
+        return newLoadings;
+      });
+    },20000);
+
+    if (NewfileList.length > 0) {
+      const file = NewfileList[0].originFileObj;
+
+      let formData = new FormData();
+      formData.append("image", file);
+      formData.append("playerId", playerId);
+
+      try {
+        // Upload image and get the response
+        const imageUploadResponse = await axios.post(
+          "http://localhost:8080/api/v1/profile/player-profile-image-upload", formData);
+
+        console.log(imageUploadResponse.data.success);
+
+        // Extract image URL from the response
+        const imageUrl = imageUploadResponse.data.data.PlayerprofileImageLink;
+
+        // Now, make a second API call to save player profile data with the image URL
+        const playerProfileResponse = await axios.post(
+          "http://localhost:8080/api/v1/profile/player-profile",
+          {
+            playerId: playerId,
+            playerName: playerName,
+            playerEmail: playerEmail,
+            playerDateOfBirth: playerDateOfBirth,
+            playerAge: playerAge,
+            PlayerprofileImageLink: imageUrl,
+          }
+        );
+
+        // Handle response if needed
+        console.log(playerProfileResponse.data);
+      } catch (error) {
+        message.error("Error occurred inside the handleFormSubmit function");
+      }
+    }
+  };
+
+
+  useEffect(() => {
+    currentUserData()
+  }, [])
+
+  const onChangeProfile = async ({ fileList: newFileList }) => {
+    console.log(newFileList);
+    setNewFileList(newFileList)
+
+  };
+
+
+
+  // const onChangeProfile = ({ fileList: newFileList }) => {
+  //   console.log(newFileList[0].originFileObj);
+  //   const file = newFileList
+  //   let formData = new FormData();
+
+  //   formData.append("image", file);
+
+  //   console.log([...formData]);
+
+  //   setFileListProfile(newFileList);
+
+  // };
 
   const onPreviewProfile = async (file) => {
     let src = file.url;
@@ -70,6 +181,7 @@ const PlayerProfile = () => {
   const onChange = ({ fileList: newFileList }) => {
     setFileList(newFileList);
   };
+
   const onPreview = async (file) => {
     let src = file.url;
     if (!src) {
@@ -95,18 +207,18 @@ const PlayerProfile = () => {
               <h3 className="playerDetails">My Profile</h3>
             </div>
           </div>
-          <div className="PlayerProfile" style={{ overflowX: "auto",height: "75vh" }}>
+          <div className="PlayerProfile" style={{ overflowX: "auto", height: "75vh" }}>
             <form
               className="PlayerProfileForm"
               style={{ width: "80%", marginLeft: "auto", marginRight: "auto" }}
             >
               <label className="formLabel">
                 Name:
-                <Input type="text" name="name" className="inputBox" />
+                <Input type="text" name="name" className="inputBox" onChange={(e) => setPlayerName(e.target.value)} />
               </label>
               <label className="formLabel">
                 Email:
-                <Input type="email" name="email" className="inputBox" />
+                <Input type="email" name="email" className="inputBox" onChange={(e) => setPlayerEmail(e.target.value)} />
               </label>
 
               <div className="AgeSection">
@@ -116,11 +228,12 @@ const PlayerProfile = () => {
                     style={{
                       width: "350%",
                     }}
+                    onChange={(date, dateString) => setPlayerDateOfBirth(dateString)}
                   />
                 </div>
                 <div>
                   <label className="formLabel">Age:</label>
-                  <InputNumber />
+                  <input type="number" onChange={(e) => setPlayerAge(e.target.value)} />
                 </div>
               </div>
               <div className="ImageUploading">
@@ -130,6 +243,7 @@ const PlayerProfile = () => {
                     visible={previewVisibleProfile}
                     footer={null}
                     onCancel={() => setPreviewVisibleProfile(false)}
+                  // onChange={hanldeProfileImageUpload}
                   >
                     <img
                       alt="example"
@@ -191,9 +305,14 @@ const PlayerProfile = () => {
                 </div>
               </div>
               <br />
-              <Button className="submitBtn" type="ghost">
-                Submit{" "}
+              <Button className="submitBtn" loading={loadings[0]} type="ghost" onClick={() => handleFormSubmit(0)}>
+                Submit
               </Button>
+
+              {/* <Button type="primary" loading={loadings[0]} onClick={() => enterLoading(0)}>
+                Click me!
+              </Button> */}
+
             </form>
           </div>
         </div>
