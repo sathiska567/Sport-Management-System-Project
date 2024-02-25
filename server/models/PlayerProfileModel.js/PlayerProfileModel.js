@@ -23,21 +23,6 @@ const playerProfileSchema = new mongoose.Schema({
         required:["Player age is Required",true]
      },
 
-     PlayerprofileImageSecureLink:{
-        type:String,
-     },
-
-     PlayerprofileImageLink:{
-        type:String,
-     },
-
-     playerCoverImageLink:{
-        type:String,
-     },
-
-     playerMedicalReportsLink:{
-        type:String,
-     }
 
 })
 

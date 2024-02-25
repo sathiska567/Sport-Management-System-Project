@@ -1,4 +1,5 @@
 const playerProfileModel = require('../../models/PlayerProfileModel.js/PlayerProfileModel');
+const playerImageModel = require('../../models/PlayerImageModel/PlayerImageModel');
 const cloudinary = require("cloudinary").v2;
 
 cloudinary.config({
@@ -8,6 +9,7 @@ cloudinary.config({
 });
 
 const playerProfileUploadController = async (req, res) => {
+        console.log(req.fields);
         try {
                 if (!req.files || !req.files.image) {
                         return res.status(400).send({
@@ -17,13 +19,21 @@ const playerProfileUploadController = async (req, res) => {
                 }
 
                 const result = await cloudinary.uploader.upload(req.files.image.path);
-                console.log(result);
+
+                const data = new playerImageModel({
+                        playerId : req.fields.playerId,
+                        PlayerprofileImageSecureLink: result.secure_url,
+                        PlayerprofileImageLink:result.url,
+
+                })
+
+                await data.save();
 
                 // we might want to send a response to the client indicating success
                 return res.status(200).send({
                         success: true,
                         message: 'Image uploaded successfully',
-                        result
+                        data
 
                 });
 
@@ -43,34 +53,34 @@ const playerProfileUploadController = async (req, res) => {
 const playerProfileController = async (req, res) => {
         const { playerId, playerName, playerEmail, playerDateOfBirth, playerAge } = req.body;
         console.log(playerId, playerName, playerEmail, playerDateOfBirth, playerAge);
-        console.log(req.files);
-        // try {
+        try {
 
-        //         if (!req.files || !req.files.image) {
-        //                 return res.status(400).send({
-        //                         success: false,
-        //                         message: 'No image file provided'
-        //                 });
-        //         }
+                const response = new playerProfileModel({
+                        playerName: playerName,
+                        playerEmail: playerEmail,
+                        playerDateOfBirth: playerDateOfBirth,
+                        playerAge: playerAge,
+                        playerId: playerId,
+                })
 
-        //         const result = await cloudinary.uploader.upload(req.files.image.path);
-        //         console.log(result);
+                await response.save();
+                console.log(response);
 
-        //         const response = new playerProfileModel({
-        //                 playerName: playerName,
-        //                 playerEmail: playerEmail,
-        //                 playerDateOfBirth: playerDateOfBirth,
-        //                 playerAge: playerAge,
-        //                 playerId: playerId,
-        //                 PlayerprofileImageSecureLink:result.secure_url,
-        //         })
+                return res.status(200).send({
+                        success: true,
+                        message: 'Details uploaded successfully',
+                        response
 
-        //         await response.save();
-        //         console.log(response);
+                });
 
-        // } catch (error) {
-        //         console.log(error);
-        // }
+        } catch (error) {
+             res.status(400).send({
+                        success: false,
+                        message: 'Details uploaded Unsuccessfully',
+                        error
+
+                });
+        }
 }
 
 

@@ -24,6 +24,8 @@ const PlayerProfile = () => {
   const [playerDateOfBirth, setPlayerDateOfBirth] = useState("")
   const [playerAge, setPlayerAge] = useState(0)
   const [playerId,setPlayerId]= useState("")
+  const [formData , setFormData] = useState([])
+  const [NewfileList,setNewFileList] = useState([])
 
 
   // GET CURRENT USER DETAILS
@@ -48,14 +50,63 @@ const PlayerProfile = () => {
 
 
   const handleFormSubmit = async () => {
-    console.log(playerId,playerName, playerEmail, playerDateOfBirth, playerAge);
-    try {
-      const response = await axios.post("http://localhost:8080/api/v1/profile/player-profile",{playerId:playerId ,playerName:playerName, playerEmail:playerEmail, playerDateOfBirth:playerDateOfBirth, playerAge:playerAge})
-      
-    } catch (error) {
-       message.error("Error have inside the handleFormSubmit function");
+    console.log(playerId, playerName, playerEmail, playerDateOfBirth, playerAge, NewfileList);
+  
+    if (NewfileList.length > 0) {
+      const file = NewfileList[0].originFileObj;
+  
+      let formData = new FormData();
+      formData.append("image", file);
+      formData.append("playerId", playerId);
+  
+      try {
+        // Upload image and get the response
+        const imageUploadResponse = await axios.post(
+          "http://localhost:8080/api/v1/profile/player-profile-image-upload",formData);
+          
+       console.log(imageUploadResponse.data);
+  
+        // Extract image URL from the response
+        const imageUrl = imageUploadResponse.data.data.PlayerprofileImageLink;
+  
+        // Now, make a second API call to save player profile data with the image URL
+        const playerProfileResponse = await axios.post(
+          "http://localhost:8080/api/v1/profile/player-profile",
+          {
+            playerId: playerId,
+            playerName: playerName,
+            playerEmail: playerEmail,
+            playerDateOfBirth: playerDateOfBirth,
+            playerAge: playerAge,
+            PlayerprofileImageLink: imageUrl,
+          }
+        );
+  
+        // Handle response if needed
+        console.log(playerProfileResponse.data);
+      } catch (error) {
+        message.error("Error occurred inside the handleFormSubmit function");
+      }
     }
-  }
+  };
+  
+  
+
+
+  
+      // try {
+      //   const {data} = await axios.post("http://localhost:8080/api/v1/profile/player-profile-image-upload",formData)
+      //   console.log(data);
+        
+      // } catch (error) {
+      //     message.error("Error have inside the onChangeProfile function");
+      // }
+  
+      // // FormData is not an array, so there's no need to spread it in the console.log
+      // console.log([...formData]);
+      // setFormData([...formData])
+  
+      // setFileListProfile(NewfileList);
 
 
   useEffect(() => {
@@ -63,26 +114,9 @@ const PlayerProfile = () => {
   }, [])
 
   const onChangeProfile =async ({ fileList: newFileList }) => {
-    if (newFileList.length > 0) {
-      const file = newFileList[0].originFileObj;
-      console.log(file);
-  
-      let formData = new FormData();
-      formData.append("image", file);
+    console.log(newFileList);
+    setNewFileList(newFileList)
 
-      try {
-        const {data} = await axios.post("http://localhost:8080/api/v1/profile/player-profile-image-upload",formData)
-        console.log(data);
-        
-      } catch (error) {
-          message.error("Error have inside the onChangeProfile function");
-      }
-  
-      // FormData is not an array, so there's no need to spread it in the console.log
-      console.log([...formData]);
-  
-      setFileListProfile(newFileList);
-    }
   };
   
 
