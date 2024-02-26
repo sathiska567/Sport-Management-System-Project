@@ -39,6 +39,11 @@ import PlayerReviews from "./Components/PlayerComponents/PlayerReviews/PlayerRev
 import PlayerSearch from "./Components/PlayerComponents/PlayerSearch/PlayerSearch.jsx";
 import PlayerProfile from "./Components/PlayerComponents/PlayerProfile/PlayerProfile.jsx";
 import PlayerMatches from "./Components/PlayerComponents/PlayerMatches/PlayerMatches.jsx";
+import RefereeStats from "./Components/Referee/RefereeStats/RefereeStats.jsx";
+import RefereeAvailability from "./Components/Referee/RefereeAvailability/RefereeAvailability.jsx";
+import RefereeMatches from "./Components/Referee/RefereeMatches/RefereeMatches.jsx";
+import RefereeProfile from "./Components/Referee/RefereeProfile/RefereeProfile.jsx";
+
 
 function App() {
   const isLoggedIn = window.localStorage.getItem("isLoggedIn");
@@ -406,6 +411,46 @@ function App() {
           element={
             <ProtectedRoute>
               <PlayerMatches />
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
+      <Routes>
+        <Route
+          path="/referee-stats"
+          element={
+            <ProtectedRoute>
+              <RefereeStats />
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
+      <Routes>
+        <Route
+          path="/referee-availability"
+          element={
+            <ProtectedRoute>
+              <RefereeAvailability />
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
+      <Routes>
+        <Route
+          path="/referee-matches"
+          element={
+            <ProtectedRoute>
+              <RefereeMatches />
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
+      <Routes>
+        <Route
+          path="/referee-profile"
+          element={
+            <ProtectedRoute>
+              <RefereeProfile />
             </ProtectedRoute>
           }
         />

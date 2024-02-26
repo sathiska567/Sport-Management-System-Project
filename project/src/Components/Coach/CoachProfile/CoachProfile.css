@@ -1,0 +1,88 @@
+.player-profile {
+    position: relative;
+    margin: 0 auto; 
+    margin-top: 0px;
+    width: 95%;
+    height: 600px;
+}
+
+.ProfileHeaderSection {
+    position: relative;
+    width: 100%;
+    height: 10vh;
+    background-color: #15295E;
+    color: white;
+    font-weight: 300;
+}
+
+.playerDetails {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    margin-left: 42%;
+    font-size:20px;
+    padding-top: 20px;
+    font-weight: 400;
+
+}
+
+.ProfileHeader {
+    border-bottom: 1px solid #e6e6e6;
+}
+
+.PlayerProfile {
+    background-color: #fff;
+}
+
+
+.PlayerProfileForm {
+    height: 80vh !important;
+    width: 100%;
+}
+
+.upload-list-inline .ant-upload-list-item {
+  float: left;
+  width: 200px;
+  margin-inline-end: 8px;
+}
+
+.ant-upload-rtl.upload-list-inline .ant-upload-list-item {
+  float: right;
+}
+.ImageUploading {
+    display: flex;
+    flex-direction: row;
+    gap: 20%;
+}
+
+.formLabel {
+    font-size: 16px;
+    font-weight: 400;
+    margin-top: 10px;
+    color: #001427;
+}
+
+.AgeSection {
+    display: flex;
+    flex-direction: space-between;
+    gap: 75%;
+    margin-bottom: 20px;
+}
+
+.inputBox {
+    margin-top: 10px;
+}
+
+.submitBtn {
+    height: 40px;
+    width: 10%;
+    fontWeight: bold;
+    border-radius: 5px;
+    background-Color: #52c41a !important;
+    color: white;
+    font-Weight: 300 !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
