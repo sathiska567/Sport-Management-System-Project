@@ -1,8 +1,9 @@
 // Importing necessary libraries and components
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./PlayerReviews.css";
 import PlayerSideBar from "../PlayerSideBar/PlayerSideBar";
-import { Layout, Input, Table, Image, DatePicker, Rate } from "antd";
+import { Layout, Input, Table, Image, DatePicker, Rate, message } from "antd";
+import axios from "axios";
 
 // Destructuring components from Ant Design's Layout
 const { Content } = Layout;
@@ -52,6 +53,35 @@ const filteredData = sampleData.filter((data) => {
     (!Userlocation || data.reviewDate.startsWith(Userlocation))
   );
 });
+
+
+ //GET CURRENT USER DATA
+ const currentUserData = async () => {
+  try {
+    const res = await axios.get(
+      "http://localhost:8080/api/v1/user/getCurrentUser",
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+
+    console.log(res.data);
+
+  } catch (error) {
+    message.error("Error have inside the Get currentUserData function");
+  }
+};
+
+
+useEffect(()=>{
+  currentUserData()
+},[])
+
+
+
+
 
   // JSX structure for the Navbar component
   return (

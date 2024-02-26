@@ -98,6 +98,7 @@ const currentUserData = async () => {
 
       console.log(res.data.user.isCoach);
       setIsCoach(res.data.user.isCoach)
+      setCurrentUsername(res.data.user.username)
 
     } catch (error) {
       message.error("Error have inside the Get currentUserData function");
