@@ -26,7 +26,10 @@ const PlayerProfile = () => {
   const [playerAge, setPlayerAge] = useState(0)
   const [playerId, setPlayerId] = useState("")
   const [formData, setFormData] = useState([])
+
+
   const [NewfileList, setNewFileList] = useState([])
+  const [coverImageFileList,setCoverImageFileList] = useState([]);
 
   const [loadings, setLoadings] = useState([]);
 
@@ -51,7 +54,7 @@ const PlayerProfile = () => {
   };
 
 
-  const handleFormSubmit = async (index) => {
+const handleFormSubmit = async (index) => {
     console.log(playerId, playerName, playerEmail, playerDateOfBirth, playerAge, NewfileList, index);
 
     setLoadings((prevLoadings) => {
@@ -69,7 +72,7 @@ const PlayerProfile = () => {
       });
     },20000);
 
-    if (NewfileList.length > 0) {
+  if (NewfileList.length > 0) {
       const file = NewfileList[0].originFileObj;
 
       let formData = new FormData();
@@ -77,34 +80,77 @@ const PlayerProfile = () => {
       formData.append("playerId", playerId);
 
       try {
-        // Upload image and get the response
-        const imageUploadResponse = await axios.post(
-          "http://localhost:8080/api/v1/profile/player-profile-image-upload", formData);
-
+        // Upload profile image and get the response
+        const imageUploadResponse = await axios.post("http://localhost:8080/api/v1/profile/player-profile-image-upload", formData);
         console.log(imageUploadResponse.data.success);
-
         // Extract image URL from the response
         const imageUrl = imageUploadResponse.data.data.PlayerprofileImageLink;
 
+        if(imageUploadResponse.data.success){
+          message.success(imageUploadResponse.data.message)
+          window.location.reload();
+       }
+      }catch (error) {
+        message.error("Error occurred inside the handleFormSubmit function");
+      }
+    } 
+
+
+    try {
+      // Check if coverImageFileList is not empty
+      if (coverImageFileList.length > 0) {
+        const coverImagefile = coverImageFileList[0].originFileObj;
+        let coverImageFormData = new FormData();
+        coverImageFormData.append("coverImage", coverImagefile);
+        coverImageFormData.append("playerId", playerId);
+    
+        // // Log FormData for debugging (optional)
+        // console.log([...coverImageFormData]);
+    
+        // Upload cover image
+        const coverImageResponse = await axios.post("http://localhost:8080/api/v1/profile/player-cover-image-upload", coverImageFormData);
+    
+        // Handle coverImageResponse if needed
+        console.log(coverImageResponse.data);
+
+        if(coverImageResponse.data.success){
+          message.success(coverImageResponse.data.message)
+          window.location.reload();
+        }
+    
+      } else {
+        message.error("No cover image selected");
+      }
+
+    } catch (error) {
+      // Log the error details (optional)
+      console.error("Error uploading cover image:", error);
+    
+      message.error("Error uploading cover image");
+    }
+    
+       
+    try {
         // Now, make a second API call to save player profile data with the image URL
-        const playerProfileResponse = await axios.post(
-          "http://localhost:8080/api/v1/profile/player-profile",
+        const playerProfileResponse = await axios.post("http://localhost:8080/api/v1/profile/player-profile",
           {
             playerId: playerId,
             playerName: playerName,
             playerEmail: playerEmail,
             playerDateOfBirth: playerDateOfBirth,
             playerAge: playerAge,
-            PlayerprofileImageLink: imageUrl,
+            // PlayerprofileImageLink: imageUrl,
           }
         );
 
         // Handle response if needed
         console.log(playerProfileResponse.data);
+        
       } catch (error) {
-        message.error("Error occurred inside the handleFormSubmit function");
+         message.error("Error occurred inside the handleFormSubmit function");
       }
-    }
+
+    
   };
 
 
@@ -119,20 +165,6 @@ const PlayerProfile = () => {
   };
 
 
-
-  // const onChangeProfile = ({ fileList: newFileList }) => {
-  //   console.log(newFileList[0].originFileObj);
-  //   const file = newFileList
-  //   let formData = new FormData();
-
-  //   formData.append("image", file);
-
-  //   console.log([...formData]);
-
-  //   setFileListProfile(newFileList);
-
-  // };
-
   const onPreviewProfile = async (file) => {
     let src = file.url;
     if (!src) {
@@ -145,6 +177,7 @@ const PlayerProfile = () => {
     setPreviewImageProfile(src);
     setPreviewVisibleProfile(true);
   };
+
   /*----------------------Profile Image upload-End--------------------*/
 
   /*----------------------Cover Image upload-Start--------------------*/
@@ -154,7 +187,10 @@ const PlayerProfile = () => {
 
   const onChangeCover = ({ fileList: newFileList }) => {
     setFileListCover(newFileList);
+    setCoverImageFileList(newFileList)
   };
+
+
   const onPreviewCover = async (file) => {
     let src = file.url;
     if (!src) {
