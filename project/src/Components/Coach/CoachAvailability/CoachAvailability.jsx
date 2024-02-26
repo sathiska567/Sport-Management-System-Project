@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./CoachAvailability.css";
 import EOSiderBar from "../CoachSidebar/CoachSidebar";
 import { Layout, Checkbox, Input, Table, message, DatePicker } from "antd";
+import axios from "axios";
 
 const { Content } = Layout;
 
@@ -32,9 +33,53 @@ const dataSource = [
 const CoachAvailability = () => {
   const [eventLocation, setEventLocation] = useState("");
   const [userLocation, setUserLocation] = useState("");
+  const [createdEvent,setCreateEvent] = useState([]);
+  const [coachId,setCoachId] = useState([])
+
+  const currentUserData = async () => {
+    try {
+      const res = await axios.get(
+        "http://localhost:8080/api/v1/user/getCurrentUser",
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      setCoachId(res.data.user._id)
+
+    } catch (error) {
+      message.error("Error have inside the Get currentUserData function");
+    }
+  };
+
+
+
+
+
+
+  // GET ALL CREATE EVENT 
+  const getAllCreateEvent = async () => {
+     try {
+       const response = await axios.get("http://localhost:8080/api/v1/event/get-all-events")
+
+       if(response.data.success){
+        setCreateEvent(response.data.data)
+        // console.log(response.data.data);
+       }
+       
+      
+     } catch (error) {
+       message.error("Error fetching data");
+     }
+  }
+
+
+
+
 
   // Filter userApplicationData based on userRole and Userlocation
-  const filteredData = dataSource.filter((data) => {
+  const filteredData = createdEvent.filter((data) => {
     return (
       (!eventLocation ||
         data.eventLocation
@@ -45,14 +90,38 @@ const CoachAvailability = () => {
     );
   });
 
-  const handleCheckboxChange = (key, isChecked) => {
+  const handleCheckboxChange = async(id,key, isChecked) => {
     // Update your state or data here based on the checkbox state
-    console.log(
-      `Checkbox for row with key ${key} is now ${
-        isChecked ? "checked" : "unchecked"
-      }`
-    );
+    console.log("Event Id",id);
+    console.log("Coach Id",coachId);
+    console.log(isChecked);
+
+    try {
+      const availabilityResponse = await axios.post("http://localhost:8080/api/v1/availability/save-coach-availability",{eventId:id,coachId:coachId,availability:isChecked})
+      console.log(availabilityResponse.data);
+      
+      if(availabilityResponse.data.success){
+         message.success(availabilityResponse.data.message)
+      }
+
+      else{
+        message.error(availabilityResponse.data.message)
+      }
+
+    } catch (error) {
+      message.error("Error adding availability");
+    }
+
+
+
+
   };
+
+
+  useEffect(()=>{
+    getAllCreateEvent()
+    currentUserData()
+  },[])
 
   return (
     <EOSiderBar>
@@ -93,18 +162,27 @@ const CoachAvailability = () => {
                   dataIndex: "eventName",
                   width: "20%",
                   align: "center",
+                  render:((text,record)=>(
+                    <span>{record.nameOfTheEvent}</span>
+                  ))
                 },
                 {
                   title: "Event Location",
                   dataIndex: "eventLocation",
                   width: "20%",
                   align: "center",
+                  render:((text,record)=>(
+                    <span>{record.location}</span>
+                  ))
                 },
                 {
                   title: "Event Date",
                   dataIndex: "eventDate",
                   width: "20%",
                   align: "center",
+                  render:((text,record)=>(
+                    <span>{"2024-02-03"}</span>
+                  ))
                 },
                 {
                   title: "Actions",
@@ -122,7 +200,7 @@ const CoachAvailability = () => {
                     >
                       <Checkbox
                         onChange={(e) =>
-                          handleCheckboxChange(record.key, e.target.checked)
+                          handleCheckboxChange(record._id,record.key, e.target.checked)
                         }
                       />
                     </span>
