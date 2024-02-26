@@ -1,0 +1,111 @@
+body {
+  height: 100vh;
+  width: 100vw;
+  overflow-y: hidden;
+}
+
+.ant-layout-sider-children {
+  background-color: #15295E;
+}
+
+.welcome {
+  color: white;
+  font-size: 18px;
+  text-align: center;
+  height: 51px;
+  background-color: #15295E;
+  border-bottom: 1px solid white;
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+// menu text
+.ant-menu-title-content {
+}
+
+.ant-layout-header {
+  padding: 0;
+  background-color: #15295E;
+}
+
+.ant-menu-item {
+  color: white;
+  background-color: #15295E;
+}
+
+.trigger-button {
+position: fixed;
+top: -76px;
+  color: #15295E;
+  background-color: white;
+}
+
+.trigger-button:hover {
+  border-radius: 0px;
+  color: #15295E;
+  background-color: white;
+}
+
+.title {
+  position: relative;
+  color: white;
+  font-size: 18px;
+  font-weight: 500;
+  margin-left: 20px;
+}
+
+.trigger-button:hover {
+  background-color: red;
+}
+
+.ant-menu {
+  background-color: #15295E;
+}
+
+.title_bar {
+  color: white;
+  font-size: 16px;
+  font-weight: 500;
+  background-color: #1e5c72;
+  width: 100%;
+  height: 50px;
+  padding-left: 25px;
+}
+
+.menuTitle {
+  width: auto;
+  margin-left: 50px;
+}
+
+.ant-layout-content {
+  background-color: red;
+}
+
+.profile {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+  align-items: center;
+  height:64px;
+  font-size: 16px;
+  color: white;
+  margin-right: 30px;
+  background-color: #1e5c72;
+  width: 100%;
+  padding-left: 25px;
+  cursor: pointer;
+}
+
+.notificaiton {
+position: fixed;
+right: 30px; 
+}
+.emailCommunication {
+  position: fixed;
+  right: 80px;
+  font-size: 22px;
+  color: white;
+  cursor: pointer;
+}
