@@ -13,7 +13,11 @@ const playerImageSchema = new mongoose.Schema({
                 type: String,
         },
 
-        playerCoverImageLink: {
+        PlayerCoverImageSecureLink: {
+                type: String,
+        },
+
+        PlayerCoverImageLink: {
                 type: String,
         },
 

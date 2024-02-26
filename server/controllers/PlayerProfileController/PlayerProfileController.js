@@ -1,5 +1,6 @@
 const playerProfileModel = require('../../models/PlayerProfileModel.js/PlayerProfileModel');
 const playerImageModel = require('../../models/PlayerImageModel/PlayerImageModel');
+const playerCoverImageModel = require('../../models/PlayerImageModel/PlayerCoverImageModel');
 const cloudinary = require("cloudinary").v2;
 
 cloudinary.config({
@@ -8,8 +9,43 @@ cloudinary.config({
         api_secret: process.env.CLOUDINARY_SECRET,
 });
 
+
+const playerProfileController = async (req, res) => {
+        const { playerId, playerName, playerEmail, playerDateOfBirth, playerAge } = req.body;
+        console.log(playerId, playerName, playerEmail, playerDateOfBirth, playerAge);
+        try {
+
+                const response = new playerProfileModel({
+                        playerName: playerName,
+                        playerEmail: playerEmail,
+                        playerDateOfBirth: playerDateOfBirth,
+                        playerAge: playerAge,
+                        playerId: playerId,
+                })
+
+                await response.save();
+                console.log(response);
+
+                return res.status(200).send({
+                        success: true,
+                        message: 'Details uploaded successfully',
+                        response
+
+                });
+
+        } catch (error) {
+             res.status(400).send({
+                        success: false,
+                        message: 'Details uploaded Unsuccessfully',
+                        error
+
+                });
+        }
+}
+
+
 const playerProfileUploadController = async (req, res) => {
-        console.log(req.fields);
+        // console.log(req.files);
         try {
                 if (!req.files || !req.files.image) {
                         return res.status(400).send({
@@ -50,42 +86,44 @@ const playerProfileUploadController = async (req, res) => {
 };
 
 
-const playerProfileController = async (req, res) => {
-        const { playerId, playerName, playerEmail, playerDateOfBirth, playerAge } = req.body;
-        console.log(playerId, playerName, playerEmail, playerDateOfBirth, playerAge);
+const playerCoverImageUploadController = async(req,res)=>{
         try {
+                if (!req.files || !req.files.coverImage) {
+                        return res.status(400).send({
+                                success: false,
+                                message: 'No image file provided'
+                        });
+                }
 
-                const response = new playerProfileModel({
-                        playerName: playerName,
-                        playerEmail: playerEmail,
-                        playerDateOfBirth: playerDateOfBirth,
-                        playerAge: playerAge,
-                        playerId: playerId,
+                const CoverImageResult = await cloudinary.uploader.upload(req.files.coverImage.path);
+
+                const CoverImageData = new playerCoverImageModel({
+                        playerId : req.fields.playerId,
+                        PlayerCoverImageSecureLink: CoverImageResult.secure_url,
+                        PlayerCoverImageLink:CoverImageResult.url,
+
                 })
 
-                await response.save();
-                console.log(response);
+                await CoverImageData.save();
 
+                // we might want to send a response to the client indicating success
                 return res.status(200).send({
                         success: true,
-                        message: 'Details uploaded successfully',
-                        response
+                        message: 'Image uploaded successfully',
+                        CoverImageData
 
                 });
 
         } catch (error) {
-             res.status(400).send({
-                        success: false,
-                        message: 'Details uploaded Unsuccessfully',
-                        error
+                console.error(error);
 
+                // Handle the error appropriately and send a relevant response
+                return res.status(500).send({
+                        success: false,
+                        message: 'Internal server error',
+                        error
                 });
         }
-}
-
-
-const playerCoverImageUploadController = async(req,res)=>{
-   console.log(res.body);
 }
 
 

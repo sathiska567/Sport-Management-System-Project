@@ -72,7 +72,7 @@ const handleFormSubmit = async (index) => {
       });
     },20000);
 
-    if (NewfileList.length > 0) {
+  if (NewfileList.length > 0) {
       const file = NewfileList[0].originFileObj;
 
       let formData = new FormData();
@@ -88,7 +88,7 @@ const handleFormSubmit = async (index) => {
 
         if(imageUploadResponse.data.success){
           message.success(imageUploadResponse.data.message)
-          // window.location.reload();
+          window.location.reload();
        }
       }catch (error) {
         message.error("Error occurred inside the handleFormSubmit function");
@@ -96,41 +96,43 @@ const handleFormSubmit = async (index) => {
     } 
 
 
-
-        // UPLOAD THE COVER IMAGE
-    // if(coverImageFileList > 0){
-    //   const CoverImagefile = coverImageFileList[0].originFileObj;
-
-    //   console.log(coverImageFileList);
-
-    //   let formData = new FormData();
-    //   formData.append("coverImage", CoverImagefile);
-    //   formData.append("playerId", playerId);
-
-    //    console.log([...formData]);
-
-    // }
-
-
     try {
-      const CoverImagefile = coverImageFileList[0].originFileObj;
-      let coverImageFormData = new FormData();
-      coverImageFormData.append("coverImage",CoverImagefile)
-      coverImageFormData.append("playerId", playerId);
+      // Check if coverImageFileList is not empty
+      if (coverImageFileList.length > 0) {
+        const coverImagefile = coverImageFileList[0].originFileObj;
+        let coverImageFormData = new FormData();
+        coverImageFormData.append("coverImage", coverImagefile);
+        coverImageFormData.append("playerId", playerId);
+    
+        // // Log FormData for debugging (optional)
+        // console.log([...coverImageFormData]);
+    
+        // Upload cover image
+        const coverImageResponse = await axios.post("http://localhost:8080/api/v1/profile/player-cover-image-upload", coverImageFormData);
+    
+        // Handle coverImageResponse if needed
+        console.log(coverImageResponse.data);
 
-      console.log([...coverImageFormData]);
+        if(coverImageResponse.data.success){
+          message.success(coverImageResponse.data.message)
+          window.location.reload();
+        }
+    
+      } else {
+        message.error("No cover image selected");
+      }
+
     } catch (error) {
-      
+      // Log the error details (optional)
+      console.error("Error uploading cover image:", error);
+    
+      message.error("Error uploading cover image");
     }
-
-
-
-
+    
        
-      try {
+    try {
         // Now, make a second API call to save player profile data with the image URL
-        const playerProfileResponse = await axios.post(
-          "http://localhost:8080/api/v1/profile/player-profile",
+        const playerProfileResponse = await axios.post("http://localhost:8080/api/v1/profile/player-profile",
           {
             playerId: playerId,
             playerName: playerName,
