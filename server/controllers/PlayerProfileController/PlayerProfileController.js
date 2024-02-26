@@ -84,5 +84,10 @@ const playerProfileController = async (req, res) => {
 }
 
 
+const playerCoverImageUploadController = async(req,res)=>{
+   console.log(res.body);
+}
 
-module.exports = { playerProfileController, playerProfileUploadController }
+
+
+module.exports = { playerProfileController, playerProfileUploadController,playerCoverImageUploadController }
