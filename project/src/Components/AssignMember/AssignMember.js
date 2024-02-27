@@ -24,7 +24,9 @@ export default function AssignButton() {
 
   ]);
 
-  const handleSearch = (e) => {
+  const [playerDetails,setPlayerDetails] = useState([])
+
+const handleSearch = (e) => {
     const searchText = e.target.value.toLowerCase();
     setSearchedText(searchText);
     
@@ -34,7 +36,7 @@ export default function AssignButton() {
 };
 
   // table
-  const getFetchData = async () => {
+const getFetchData = async () => {
 
     const data = await axios.get("/get-assignee")
     console.log(data)
@@ -44,9 +46,30 @@ export default function AssignButton() {
     }
 
   }
+
+// get all palyer details
+const handleGetAllPlayerDetails = async() => {
+    
+  try {
+    const response = await axios.get("http://localhost:8080/api/v1/player/player-details")
+    console.log(response.data.players);
+    
+    if(response.data.success){
+        // message.success(response.data.message)
+        setPlayerDetails(response.data.players)
+    }
+    
+  } catch (error) {
+     message.error("Something went wrong");
+  }
+
+}
+
+
+
   useEffect(() => {
     getFetchData()
-   
+    handleGetAllPlayerDetails()
   }, [])
 
   // delete button
@@ -149,15 +172,18 @@ export default function AssignButton() {
       dataIndex: 'name',
       filterValue: ["s"], // Set filterValue directly to searchText
       onFilter: (value, record) => {
-        return record.name.includes(value);
+        return record.username.includes(value);
       },
     },
     {
 
-      title: 'Location',
+      title: 'IsPlayer',
       dataIndex: 'location',
       width: "20%",
       align: "center",
+      render:((text,record)=>(
+        <span>{record.username}</span>
+      ))
     },
     {
       width: "20%",
@@ -205,7 +231,7 @@ export default function AssignButton() {
 }}
  
   columns={columns }
-  dataSource={dataSource }
+  dataSource={playerDetails }
   
 >
 
