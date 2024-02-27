@@ -54,10 +54,6 @@ const CoachAvailability = () => {
   };
 
 
-
-
-
-
   // GET ALL CREATE EVENT 
   const getAllCreateEvent = async () => {
      try {
@@ -73,9 +69,6 @@ const CoachAvailability = () => {
        message.error("Error fetching data");
      }
   }
-
-
-
 
 
   // Filter userApplicationData based on userRole and Userlocation
@@ -111,9 +104,6 @@ const CoachAvailability = () => {
     } catch (error) {
       message.error("Error adding availability");
     }
-
-
-
 
   };
 

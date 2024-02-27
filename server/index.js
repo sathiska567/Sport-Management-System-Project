@@ -21,6 +21,7 @@ const giveReviewRoute = require("./routes/CoachReviewRoute/CreateReviewRoute")
 const getPlayerDetailsRoute = require('./routes/GetAllPlayerDetails/getPlayerDetailsRoute')
 const PlayerProfileRoute = require('./routes/PlayerProfileRoute/PlayerProfileRoute')
 const coachAvailabilityRoute = require("./routes/CoachAvailabilityRoute/CoachAvailabilityRoute")
+const PlayerAvailabilityRoute = require("./routes/PlayerAvailabilityRoute/PlayerAvailabilityRoute")
 
 require("./db/mongoDb"); 
 
@@ -66,6 +67,9 @@ app.use("/api/v1/profile",PlayerProfileRoute);
 
 // COACH AVAILABILITY
 app.use("/api/v1/availability",coachAvailabilityRoute);
+
+// PLAYER AVAILABILITY
+app.use("/api/v1/player-availability",PlayerAvailabilityRoute);
 
 
 // //jwt
