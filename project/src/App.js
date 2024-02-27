@@ -3,7 +3,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import UserApplication from "./Components/UserApplication/UserApplication.jsx";
 import UserApplicationTable from "./Components/UserApplicationTable/UserApplicationTable.jsx";
 import StatCards from "./Components/StatCard/StatCards.jsx";
-import Register from "./Pages/user/Register.jsx";
 import ForgotPassword from "./Components/Login/ForgetPassword.jsx";
 import OTPPage from "./Components/Login/OTPPage.jsx";
 import ResetPassword from "./Components/Login/CreateNewPassword.jsx";
@@ -44,9 +43,10 @@ import RefereeAvailability from "./Components/Referee/RefereeAvailability/Refere
 import RefereeMatches from "./Components/Referee/RefereeMatches/RefereeMatches.jsx";
 import RefereeProfile from "./Components/Referee/RefereeProfile/RefereeProfile.jsx";
 import TeamManagerStats from "./Components/TeamManager/TeamManagerStats/TeamManagerStats.jsx";
-import TeamManagerCreateTeamTable from "./Components/TeamManager/TeamManagerCreateTeam/TeamManagerCreateTeamTable.jsx"
-import TeamManagerCreateTeamForm from "./Components/TeamManager/TeamManagerCreateTeam/TeamManagerCreateTeamForm.jsx"
-
+import TeamManagerCreateTeam from "./Components/TeamManager/TeamManagerCreateTeam/TeamManagerCreateTeam.jsx";
+import TeamManagerAssignMembersTable from "./Components/TeamManager/TeamManagerAssignMembers/TeamManagerAssignMembersTable.jsx";
+import TeamManagerAssignMembersCoach from "./Components/TeamManager/TeamManagerAssignMembers/TeamManagerAssignMembersCoach.jsx";
+import TeamManagerAssignMembersPlayer from "./Components/TeamManager/TeamManagerAssignMembers/TeamManagerAssignMembersPlayer.jsx";
 
 function App() {
   const isLoggedIn = window.localStorage.getItem("isLoggedIn");
@@ -470,20 +470,40 @@ function App() {
       </Routes>
       <Routes>
         <Route
-          path="/TeamManager-createTeamTable"
+          path="/TeamManager-create-team"
           element={
             <ProtectedRoute>
-              <TeamManagerCreateTeamTable />
+              <TeamManagerCreateTeam />
             </ProtectedRoute>
           }
         ></Route>
       </Routes>
       <Routes>
         <Route
-          path="/TeamManager-createTeamForm"
+          path="/TeamManager-assign-members"
           element={
             <ProtectedRoute>
-              <TeamManagerCreateTeamForm />
+              <TeamManagerAssignMembersTable />
+            </ProtectedRoute>
+          }
+        ></Route>
+      </Routes>
+      <Routes>
+        <Route
+          path="/TeamManager-assign-member-coach"
+          element={
+            <ProtectedRoute>
+              <TeamManagerAssignMembersCoach />
+            </ProtectedRoute>
+          }
+        ></Route>
+      </Routes>
+      <Routes>
+        <Route
+          path="/TeamManager-assign-member-player"
+          element={
+            <ProtectedRoute>
+              <TeamManagerAssignMembersPlayer />
             </ProtectedRoute>
           }
         ></Route>
