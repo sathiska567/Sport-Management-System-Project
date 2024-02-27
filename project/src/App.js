@@ -43,6 +43,9 @@ import RefereeStats from "./Components/Referee/RefereeStats/RefereeStats.jsx";
 import RefereeAvailability from "./Components/Referee/RefereeAvailability/RefereeAvailability.jsx";
 import RefereeMatches from "./Components/Referee/RefereeMatches/RefereeMatches.jsx";
 import RefereeProfile from "./Components/Referee/RefereeProfile/RefereeProfile.jsx";
+import TeamManagerStats from "./Components/TeamManager/TeamManagerStats/TeamManagerStats.jsx";
+import TeamManagerCreateTeamTable from "./Components/TeamManager/TeamManagerCreateTeam/TeamManagerCreateTeamTable.jsx"
+import TeamManagerCreateTeamForm from "./Components/TeamManager/TeamManagerCreateTeam/TeamManagerCreateTeamForm.jsx"
 
 
 function App() {
@@ -454,6 +457,36 @@ function App() {
             </ProtectedRoute>
           }
         />
+      </Routes>
+      <Routes>
+        <Route
+          path="/TeamManager-stats"
+          element={
+            <ProtectedRoute>
+              <TeamManagerStats />
+            </ProtectedRoute>
+          }
+        ></Route>
+      </Routes>
+      <Routes>
+        <Route
+          path="/TeamManager-createTeamTable"
+          element={
+            <ProtectedRoute>
+              <TeamManagerCreateTeamTable />
+            </ProtectedRoute>
+          }
+        ></Route>
+      </Routes>
+      <Routes>
+        <Route
+          path="/TeamManager-createTeamForm"
+          element={
+            <ProtectedRoute>
+              <TeamManagerCreateTeamForm />
+            </ProtectedRoute>
+          }
+        ></Route>
       </Routes>
     </BrowserRouter>
 

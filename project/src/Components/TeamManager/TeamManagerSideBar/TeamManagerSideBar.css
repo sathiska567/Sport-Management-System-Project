@@ -1,15 +1,11 @@
 body {
-  height: 100vh !important;
+  height: 100vh;
   width: 100vw;
   overflow-y: hidden;
 }
 
 .ant-layout-sider-children {
   background-color: #15295E;
-}
-
-.collapsed .nav-text {
-  display: none;
 }
 
 .welcome {
@@ -25,6 +21,9 @@ body {
   align-items: center;
 }
 
+// menu text
+.ant-menu-title-content {
+}
 
 .ant-layout-header {
   padding: 0;

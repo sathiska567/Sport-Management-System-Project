@@ -1,42 +1,33 @@
 // Importing necessary libraries and components
-import "./CoachSidebar.css";
+import "./TeamManagerSideBar.css";
 import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCalendar } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCalendarCheck,
+  faChartLine,
+  faUsers,
+  faTrophy,
+} from "@fortawesome/free-solid-svg-icons";
 
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
   DashboardOutlined,
   PoweroffOutlined,
-  FormOutlined,
   BellOutlined,
-  UserOutlined,
   EditOutlined,
-  CalendarOutlined,
   MailOutlined,
 } from "@ant-design/icons";
 
-import { ReactComponent as Bracket } from "../../icons/tournament.svg";
-import { ReactComponent as Profile } from "../../icons/Profile.svg";
 import { useLocation } from "react-router-dom";
-import {
-  Layout,
-  Menu,
-  Button,
-  Avatar,
-  Space,
-  Badge,
-  message,
-  theme,
-} from "antd";
+import { Layout, Menu, Button, Avatar, Space, Badge, message } from "antd";
 import axios from "axios";
 // Destructuring components from Ant Design's Layout
 const { Header, Sider } = Layout;
 
 // Navbar component
-const CoachSidebar = ({ children }) => {
+const TeamManagerSideBar = ({ children }) => {
   // State variables for managing component state
   const [collapsed, setCollapsed] = useState(false);
   const [isHoveredButton1, setIsHoveredButton1] = useState(false);
@@ -47,7 +38,7 @@ const CoachSidebar = ({ children }) => {
   const [currentUserName, setCurrentUsername] = useState();
   const [isAdmin, setIsAdmin] = useState(false);
   const [positionNotification, setPositionNotification] = useState();
-  const [isCoach, setIsCoach] = useState(false);
+  const [isEventOrganizer, setIsEventOrganizer] = useState(false);
   // Event handlers for mouse hover events
   const handleHoverButton1 = () => {
     setIsHoveredButton1(true);
@@ -73,19 +64,16 @@ const CoachSidebar = ({ children }) => {
   // Functional component to display text based on selected menu item
   const Text = ({ selectedMenuItem }) => {
     const text = {
-      "/coach-stats": "Dashboard",
-      "/coach-availability": "My Availability",
-      "/coach-create-team": "Create Team",
-      "/coach-edit-team": "Edit Team",
-      "/coach-review-players": "Review Players",
-      "/coach-profile": "My Profile",
+      "/TeamManager-stats": "Dashboard",
+      "/TeamManager-createTeamTable": "Create Team",
+      // "/player-profile": "My Profile",
     };
 
     return <p>{text[selectedMenuItem]}</p>;
   };
 
   //GET CURRENT USER DATA
-const currentUserData = async () => {
+  const currentUserData = async () => {
     try {
       const res = await axios.get(
         "http://localhost:8080/api/v1/user/getCurrentUser",
@@ -96,17 +84,19 @@ const currentUserData = async () => {
         }
       );
 
-      console.log(res.data.user.isCoach);
-      setIsCoach(res.data.user.isCoach)
-      setCurrentUsername(res.data.user.username)
+      console.log(res.data.user.isEventOrganizer);
 
+      setPositionNotification(res.data.user.notification.length);
+      setCurrentUsername(res.data.user.username);
+      setIsAdmin(res.data.user.isAdmin);
+      setIsEventOrganizer(res.data.user.isEventOrganizer);
+
+      console.log("Is event organizer is : ", isEventOrganizer);
     } catch (error) {
       message.error("Error have inside the Get currentUserData function");
     }
   };
 
-
-  
   // URL for the profile avatar
   const url =
     "https://static.vecteezy.com/system/resources/previews/009/383/461/non_2x/man-face-clipart-design-illustration-free-png.png";
@@ -164,8 +154,7 @@ const currentUserData = async () => {
         trigger={null}
         collapsible
         collapsed={collapsed}
-        collapsedWidth={100}
-        className={collapsed ? "collapsed" : ""}
+        collapsedWidth={100} // Adjusted collapsed width
       >
         {/* Profile section */}
         <div style={{ backgroundColor: "#15295E" }} className="profile">
@@ -200,53 +189,23 @@ const currentUserData = async () => {
           selectedKeys={[location.pathname]}
           style={{
             backgroundColor: "#15295E",
-            fontSize: "16px",
+            width: "100%",
             height: "100vh",
+            fontSize: "16px",
           }}
         >
-          <Menu.Item key="/coach-stats" icon={<DashboardOutlined />}>
-            <NavLink to="/coach-stats">Dashboard</NavLink>
+          <Menu.Item key="/TeamManager-stats" icon={<DashboardOutlined />}>
+            <NavLink to="/TeamManager-stats">Dashboard</NavLink>
           </Menu.Item>
-
-          {isCoach ? (
-            <div style={{ paddingLeft: "20px" }}>
-              <Menu.Item key="/coach-availability" icon={<EditOutlined />}>
-                <NavLink to="/coach-availability">
-                  <span className="nav-text">My Availability</span>
-                </NavLink>
-              </Menu.Item>
-              <Menu.Item key="/coach-create-team" icon={<EditOutlined />}>
-                <NavLink to="/coach-create-team">
-                  <span className="nav-text">Create Team</span>
-                </NavLink>
-              </Menu.Item>
-              <Menu.Item key="/coach-edit-team" icon={<FormOutlined />}>
-                <NavLink to="/coach-edit-team">
-                  <span className="nav-text">Edit Team</span>
-                </NavLink>
-              </Menu.Item>
-              <Menu.Item
-                key="/coach-review-players"
-                icon={<CalendarOutlined />}
-              >
-                <NavLink to="/coach-review-players">
-                  <span className="nav-text">Review Players</span>
-                </NavLink>
-              </Menu.Item>
-              <Menu.Item key="/coach-profile" icon={<Profile />}>
-                <NavLink to="/coach-profile">
-                  <span className="nav-text">My Profile</span>
-                </NavLink>
-              </Menu.Item>
-            </div>
-          ) : (
-            <div style={{ paddingLeft: "20px" }}>
-              <Menu.Item key="/apply-position" icon={<Profile />}>
-                <NavLink to="/apply-position">Apply Position</NavLink>
-              </Menu.Item>
-            </div>
-          )}
-
+          <Menu.Item
+            key="/TeamManager-createTeamTable"
+            icon={<FontAwesomeIcon icon={faCalendarCheck} />}
+          >
+            <NavLink to="/TeamManager-createTeamTable">Create Team</NavLink>
+          </Menu.Item>
+          {/* <Menu.Item key="/player-profile" icon={<EditOutlined />}>
+            <NavLink to="/player-profile">My Profile</NavLink>
+          </Menu.Item> */}
           <Menu.Item
             key="logoff"
             icon={<PoweroffOutlined />}
@@ -289,7 +248,7 @@ const currentUserData = async () => {
               fontWeight: "regular",
             }}
           >
-            GameSync Pro - Coach
+            GameSync Pro - Event Organizer
           </span>
           <span style={{ color: "white" }} className="notificaiton">
             <a href="/UserValidation">
@@ -333,4 +292,4 @@ const currentUserData = async () => {
 };
 
 // Exporting the Navbar component
-export default CoachSidebar;
+export default TeamManagerSideBar;
