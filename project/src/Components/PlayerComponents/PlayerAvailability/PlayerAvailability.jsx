@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./PlayerAvailability.css"
 import PlayerSideBar from "../PlayerSideBar/PlayerSideBar";
-import { Layout, Checkbox, Input, Table, message, DatePicker } from "antd";
+import { Layout, Checkbox, Input, Table, message, DatePicker, Button } from "antd";
 import axios from "axios";
 
 const { Content } = Layout;
@@ -33,8 +33,8 @@ const dataSource = [
 const PlayerAvailability = () => {
   const [eventLocation, setEventLocation] = useState("");
   const [userLocation, setUserLocation] = useState("");
-  const [createdEvent,setCreateEvent] = useState([]);
-  const [playerId,setPlayerId] = useState([])
+  const [createdEvent, setCreateEvent] = useState([]);
+  const [playerId, setPlayerId] = useState([])
 
   // Filter userApplicationData based on userRole and Userlocation
   const filteredData = dataSource.filter((data) => {
@@ -48,7 +48,8 @@ const PlayerAvailability = () => {
     );
   });
 
-const currentUserData = async () => {
+  // GET CURRENT USER DATA
+  const currentUserData = async () => {
     try {
       const res = await axios.get(
         "http://localhost:8080/api/v1/user/getCurrentUser",
@@ -63,26 +64,26 @@ const currentUserData = async () => {
     } catch (error) {
       message.error("Error have inside the Get currentUserData function");
     }
-  };  
+  };
 
 
-
-const handleCheckboxChange = async(id,key, isChecked) => {
+  // HANDLE CHECKBOX CHANGE
+  const handleCheckboxChange = async (id, key, isChecked) => {
 
     // Update your state or data here based on the checkbox state
-    console.log("Event Id",id);
-    console.log("Coach Id",playerId);
+    console.log("Event Id", id);
+    console.log("Coach Id", playerId);
     console.log(isChecked);
 
     try {
-      const availabilityResponse = await axios.post("http://localhost:8080/api/v1/player-availability/save-player-availability",{eventId:id,playerId:playerId,availability:isChecked})
+      const availabilityResponse = await axios.post("http://localhost:8080/api/v1/player-availability/save-player-availability", { eventId: id, playerId: playerId, availability: isChecked })
       console.log(availabilityResponse.data);
-      
-      if(availabilityResponse.data.success){
-         message.success(availabilityResponse.data.message)
+
+      if (availabilityResponse.data.success) {
+        message.success(availabilityResponse.data.message)
       }
 
-      else{
+      else {
         message.error(availabilityResponse.data.message)
       }
 
@@ -93,26 +94,49 @@ const handleCheckboxChange = async(id,key, isChecked) => {
 
   };
 
+
   // GET ALL CREATE EVENT 
 const getAllCreateEvent = async () => {
     try {
       const response = await axios.get("http://localhost:8080/api/v1/event/get-all-events")
 
-      if(response.data.success){
-       setCreateEvent(response.data.data)
-      //  console.log(response.data.data);
+      if (response.data.success) {
+        setCreateEvent(response.data.data)
+        //  console.log(response.data.data);
       }
-      
-     
+
+
     } catch (error) {
       message.error("Error fetching data");
     }
- }  
+  }
 
- useEffect(()=>{
-  getAllCreateEvent()
-  currentUserData()
- },[])
+
+const searchPlayer = async (e) => {
+    console.log(eventLocation);
+    try {
+      const searchResponse = await axios.post("http://localhost:8080/api/v1/search/search-player-location", {eventLocation})
+      // console.log(searchResponse.data.event);
+      
+      if(searchResponse.data.event === null){
+         window.location.reload()
+      }
+
+
+      setCreateEvent(searchResponse.data.event)
+
+
+
+    } catch (error) {
+      message.error("Error fetching data");
+    }
+  }
+
+
+  useEffect(() => {
+    getAllCreateEvent()
+    currentUserData()
+  }, [])
 
 
 
@@ -122,6 +146,7 @@ const getAllCreateEvent = async () => {
         {/* Main content layout */}
         <Layout>
           {/* Content section with statistics */}
+
           <Content
             className="ant-layout-content"
             style={{
@@ -132,8 +157,10 @@ const getAllCreateEvent = async () => {
               background: "whitesmoke",
             }}
           >
+
             <div className="search">
-              <Input.Search
+
+              {/* <Input.Search
                 className="searchInputName"
                 placeholder="Search Event Location..."
                 style={{
@@ -141,13 +168,27 @@ const getAllCreateEvent = async () => {
                 }}
                 onSearch={(value) => setEventLocation(value)}
                 onChange={(e) => setEventLocation(e.target.value)}
+                onClick={() => searchPlayer()}
+              />    */}
+
+              <Input
+                className="searchInputName"
+                placeholder="Search Event Location..."
+                style={{
+                  marginBottom: "8px",
+                }}
+                onSearch={(value) => setEventLocation(value)}
+                onChange={(e) => setEventLocation(e.target.value)}
+                addonAfter={<Button onClick={() => searchPlayer()}>Search</Button>}
               />
+
               <DatePicker
                 className="searchInputDate"
                 style={{ marginBottom: 8 }}
                 onChange={(date, dateString) => setUserLocation(dateString)}
               />
             </div>
+
             <Table
               columns={[
                 {
@@ -155,7 +196,7 @@ const getAllCreateEvent = async () => {
                   dataIndex: "eventName",
                   width: "20%",
                   align: "center",
-                  render:((text,record)=>(
+                  render: ((text, record) => (
                     <span>{record.nameOfTheEvent}</span>
                   ))
                 },
@@ -164,7 +205,7 @@ const getAllCreateEvent = async () => {
                   dataIndex: "eventLocation",
                   width: "20%",
                   align: "center",
-                  render:((text,record)=>(
+                  render: ((text, record) => (
                     <span>{record.location}</span>
                   ))
                 },
@@ -173,7 +214,7 @@ const getAllCreateEvent = async () => {
                   dataIndex: "eventDate",
                   width: "20%",
                   align: "center",
-                  render:((text,record)=>(
+                  render: ((text, record) => (
                     <span>2024-03-02</span>
                   ))
                 },
@@ -193,7 +234,7 @@ const getAllCreateEvent = async () => {
                     >
                       <Checkbox
                         onChange={(e) =>
-                          handleCheckboxChange(record._id,record.key, e.target.checked)
+                          handleCheckboxChange(record._id, record.key, e.target.checked)
                         }
                       />
                     </span>

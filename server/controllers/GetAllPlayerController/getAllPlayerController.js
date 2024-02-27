@@ -1,6 +1,5 @@
 const userModel = require("../../models/userModel")
 
-
 const getPlayerDetailsController = async (req, res) => {
    try {
       const players = [];
