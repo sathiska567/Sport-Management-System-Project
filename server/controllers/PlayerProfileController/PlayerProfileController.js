@@ -1,6 +1,7 @@
 const playerProfileModel = require('../../models/PlayerProfileModel.js/PlayerProfileModel');
 const playerImageModel = require('../../models/PlayerImageModel/PlayerImageModel');
 const playerCoverImageModel = require('../../models/PlayerImageModel/PlayerCoverImageModel');
+const playerMedicalReportModel = require('../../models/PlayerImageModel/PlayerMedicalReportModel');
 const cloudinary = require("cloudinary").v2;
 
 cloudinary.config({
@@ -127,5 +128,49 @@ const playerCoverImageUploadController = async(req,res)=>{
 }
 
 
+const playerMedicalReportUploadController = async(req,res)=>{
+        console.log(req.files);
+        try {
+                if (!req.files || !req.files.medicalReport) {
+                        return res.status(400).send({
+                                success: false,
+                                message: 'No image file provided'
+                        });
+                }
 
-module.exports = { playerProfileController, playerProfileUploadController,playerCoverImageUploadController }
+                const medicalReportResult = await cloudinary.uploader.upload(req.files.medicalReport.path);
+
+                console.log(medicalReportResult);
+
+                const medicalReportData = new playerMedicalReportModel({
+                        playerId : req.fields.playerId,
+                        PlayermedicalReportSecureLink: medicalReportResult.secure_url,
+                        PlayerMedicalReportLink:medicalReportResult.url,
+
+                })
+
+                await medicalReportData.save();
+
+                // we might want to send a response to the client indicating success
+                return res.status(200).send({
+                        success: true,
+                        message: 'Medical Report submition successfully',
+                        medicalReportData
+
+                });
+
+        } catch (error) {
+                console.error(error);
+
+                // Handle the error appropriately and send a relevant response
+                return res.status(500).send({
+                        success: false,
+                        message: 'Internal server error',
+                        error
+                });
+        }
+}
+
+
+
+module.exports = { playerProfileController, playerProfileUploadController,playerCoverImageUploadController,playerMedicalReportUploadController}

@@ -1,5 +1,5 @@
 const express = require('express');
-const { playerProfileController, playerProfileUploadController,playerCoverImageUploadController } = require('../../controllers/PlayerProfileController/PlayerProfileController');
+const { playerProfileController, playerProfileUploadController,playerCoverImageUploadController,playerMedicalReportUploadController } = require('../../controllers/PlayerProfileController/PlayerProfileController');
 
 const router = express.Router();
 
@@ -14,6 +14,9 @@ router.post("/player-profile-image-upload",expressFormidable({maxFileSize:5*1024
 
 // PLAYER COVER IMAGE UPLOAD CONTROLLER
 router.post("/player-cover-image-upload",expressFormidable({maxFileSize:5*1024*1024}), playerCoverImageUploadController)
+
+// PLAYER COVER IMAGE UPLOAD CONTROLLER
+router.post("/player-medical-report-upload",expressFormidable({maxFileSize:5*1024*1024}), playerMedicalReportUploadController)
 
 
 module.exports = router;
