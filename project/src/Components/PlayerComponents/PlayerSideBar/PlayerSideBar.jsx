@@ -269,7 +269,7 @@ const PlayerSideBar = ({ children }) => {
               fontWeight: "regular",
             }}
           >
-            GameSync Pro - Event Organizer
+            GameSync Pro - Player
           </span>
           <span style={{ color: "white" }} className="notificaiton">
             <a href="/UserValidation">

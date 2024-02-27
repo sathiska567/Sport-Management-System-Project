@@ -2,21 +2,16 @@
 import "./TeamManagerSideBar.css";
 import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCalendarCheck,
-  faChartLine,
-  faUsers,
-  faTrophy,
-} from "@fortawesome/free-solid-svg-icons";
+import { faPeopleGroup } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon, } from "@fortawesome/react-fontawesome";
 
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
   DashboardOutlined,
+  UserAddOutlined,
   PoweroffOutlined,
   BellOutlined,
-  EditOutlined,
   MailOutlined,
 } from "@ant-design/icons";
 
@@ -65,8 +60,9 @@ const TeamManagerSideBar = ({ children }) => {
   const Text = ({ selectedMenuItem }) => {
     const text = {
       "/TeamManager-stats": "Dashboard",
-      "/TeamManager-createTeamTable": "Create Team",
-      // "/player-profile": "My Profile",
+      "/TeamManager-assign-members": "Assign Members",
+      "/TeamManager-create-team": "Create Team",
+      "/TeamManager-assign-team-form": "Assign Members",
     };
 
     return <p>{text[selectedMenuItem]}</p>;
@@ -96,7 +92,7 @@ const TeamManagerSideBar = ({ children }) => {
       message.error("Error have inside the Get currentUserData function");
     }
   };
-
+  
   // URL for the profile avatar
   const url =
     "https://static.vecteezy.com/system/resources/previews/009/383/461/non_2x/man-face-clipart-design-illustration-free-png.png";
@@ -185,8 +181,13 @@ const TeamManagerSideBar = ({ children }) => {
           onSelect={handleMenuItemClick}
           theme="dark"
           mode="inline"
-          defaultSelectedKeys={["/eo-stats"]}
-          selectedKeys={[location.pathname]}
+          defaultSelectedKeys={["/TeamManager-stats"]}
+          selectedKeys={[
+            location.pathname === "/TeamManager-assign-team-form" ||
+            location.pathname === "/TeamManager-assign-members"
+              ? "/TeamManager-assign-members"
+              : location.pathname,
+          ]}
           style={{
             backgroundColor: "#15295E",
             width: "100%",
@@ -198,10 +199,16 @@ const TeamManagerSideBar = ({ children }) => {
             <NavLink to="/TeamManager-stats">Dashboard</NavLink>
           </Menu.Item>
           <Menu.Item
-            key="/TeamManager-createTeamTable"
-            icon={<FontAwesomeIcon icon={faCalendarCheck} />}
+            key="/TeamManager-create-team"
+            icon={<FontAwesomeIcon icon={faPeopleGroup} />}
           >
-            <NavLink to="/TeamManager-createTeamTable">Create Team</NavLink>
+            <NavLink to="/TeamManager-create-team">Create Team</NavLink>
+          </Menu.Item>
+          <Menu.Item
+            key="/TeamManager-assign-members"
+            icon={<UserAddOutlined />}
+          >
+            <NavLink to="/TeamManager-assign-members">Assign Members</NavLink>
           </Menu.Item>
           {/* <Menu.Item key="/player-profile" icon={<EditOutlined />}>
             <NavLink to="/player-profile">My Profile</NavLink>
@@ -248,7 +255,7 @@ const TeamManagerSideBar = ({ children }) => {
               fontWeight: "regular",
             }}
           >
-            GameSync Pro - Event Organizer
+            GameSync Pro - Team Manager
           </span>
           <span style={{ color: "white" }} className="notificaiton">
             <a href="/UserValidation">
