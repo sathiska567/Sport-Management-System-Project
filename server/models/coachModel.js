@@ -4,7 +4,7 @@ const coachSchema = new mongoose.Schema({
   name: String,
   coachId: String,
   teams: [{
-    type: String, unique:true,
+    type: String,
     ref: 'Team'
   }]
 });

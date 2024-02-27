@@ -6,7 +6,7 @@ const CreateTeam = () => {
     const navigate = useNavigate()
     const [matches, setMatches] = useState([])
 
-    const coachId = 'C001';
+    const coachId = 'C002';
 
     useEffect(()=>{
         axios.get(`http://localhost:8080/coach/matches?coachId=${coachId}`)

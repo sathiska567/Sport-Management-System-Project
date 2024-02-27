@@ -28,7 +28,7 @@ const createRound = async (req, res) => {
     }
 
     // Check if the round with the specified roundNumber already exists
-    const existingRoundIndex = match.rounds.findIndex(round => round.roundNumber === parseInt(roundNo, 10));
+    const existingRoundIndex = match.rounds.findIndex(round => round.roundNumber == roundNo);
 
     console.log(existingRoundIndex);
 
@@ -38,7 +38,7 @@ const createRound = async (req, res) => {
       // If roundNumber exists, update the existing round
       const currentRound = match.rounds[existingRoundIndex];
 
-      if (parseInt(roundNo, 10) === 1) {
+      if (roundNo == 1) {
         // For the first round, use the original teams
         currentRound.pairs = createPairs(match.teams || []);
       } else {
