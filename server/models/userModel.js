@@ -64,6 +64,10 @@ otp: {
 
 },
 
+availability:{
+  type:Boolean
+}
+
 
 
 });

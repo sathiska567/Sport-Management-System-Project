@@ -32,6 +32,9 @@ const onFinish = async()=>{
         message.success("Registration is successfull")
         navigate("/")
     }
+    else{
+      message.success(response.data.message)
+    }
     
   } catch (error) {
     message.error(error)

@@ -47,7 +47,7 @@ const CoachSidebar = ({ children }) => {
   const [currentUserName, setCurrentUsername] = useState();
   const [isAdmin, setIsAdmin] = useState(false);
   const [positionNotification, setPositionNotification] = useState();
-  const [isEventOrganizer, setIsEventOrganizer] = useState(false);
+  const [isCoach, setIsCoach] = useState(false);
   // Event handlers for mouse hover events
   const handleHoverButton1 = () => {
     setIsHoveredButton1(true);
@@ -85,7 +85,7 @@ const CoachSidebar = ({ children }) => {
   };
 
   //GET CURRENT USER DATA
-  const currentUserData = async () => {
+const currentUserData = async () => {
     try {
       const res = await axios.get(
         "http://localhost:8080/api/v1/user/getCurrentUser",
@@ -96,19 +96,17 @@ const CoachSidebar = ({ children }) => {
         }
       );
 
-      console.log(res.data.user.isEventOrganizer);
+      console.log(res.data.user.isCoach);
+      setIsCoach(res.data.user.isCoach)
+      setCurrentUsername(res.data.user.username)
 
-      setPositionNotification(res.data.user.notification.length);
-      setCurrentUsername(res.data.user.username);
-      setIsAdmin(res.data.user.isAdmin);
-      setIsEventOrganizer(res.data.user.isEventOrganizer);
-
-      console.log("Is event organizer is : ", isEventOrganizer);
     } catch (error) {
       message.error("Error have inside the Get currentUserData function");
     }
   };
 
+
+  
   // URL for the profile avatar
   const url =
     "https://static.vecteezy.com/system/resources/previews/009/383/461/non_2x/man-face-clipart-design-illustration-free-png.png";
@@ -167,6 +165,7 @@ const CoachSidebar = ({ children }) => {
         collapsible
         collapsed={collapsed}
         collapsedWidth={100}
+        className={collapsed ? "collapsed" : ""}
       >
         {/* Profile section */}
         <div style={{ backgroundColor: "#15295E" }} className="profile">
@@ -202,27 +201,52 @@ const CoachSidebar = ({ children }) => {
           style={{
             backgroundColor: "#15295E",
             fontSize: "16px",
-            height: "85vh",
+            height: "100vh",
           }}
         >
           <Menu.Item key="/coach-stats" icon={<DashboardOutlined />}>
             <NavLink to="/coach-stats">Dashboard</NavLink>
           </Menu.Item>
-          <Menu.Item key="/coach-availability" icon={<EditOutlined />}>
-            <NavLink to="/coach-availability">My Availability</NavLink>
-          </Menu.Item>
-          <Menu.Item key="/coach-create-team" icon={<EditOutlined />}>
-            <NavLink to="/coach-create-team">Create Team</NavLink>
-          </Menu.Item>
-          <Menu.Item key="/coach-edit-team" icon={<FormOutlined />}>
-            <NavLink to="/coach-edit-team">Edit Team</NavLink>
-          </Menu.Item>
-          <Menu.Item key="/coach-review-players" icon={<CalendarOutlined />}>
-            <NavLink to="/coach-review-players">Review Players</NavLink>
-          </Menu.Item>
-          <Menu.Item key="/coach-profile" icon={<Profile />}>
-            <NavLink to="/coach-profile">My Profile</NavLink>
-          </Menu.Item>
+
+          {isCoach ? (
+            <div style={{ paddingLeft: "20px" }}>
+              <Menu.Item key="/coach-availability" icon={<EditOutlined />}>
+                <NavLink to="/coach-availability">
+                  <span className="nav-text">My Availability</span>
+                </NavLink>
+              </Menu.Item>
+              <Menu.Item key="/coach-create-team" icon={<EditOutlined />}>
+                <NavLink to="/coach-create-team">
+                  <span className="nav-text">Create Team</span>
+                </NavLink>
+              </Menu.Item>
+              <Menu.Item key="/coach-edit-team" icon={<FormOutlined />}>
+                <NavLink to="/coach-edit-team">
+                  <span className="nav-text">Edit Team</span>
+                </NavLink>
+              </Menu.Item>
+              <Menu.Item
+                key="/coach-review-players"
+                icon={<CalendarOutlined />}
+              >
+                <NavLink to="/coach-review-players">
+                  <span className="nav-text">Review Players</span>
+                </NavLink>
+              </Menu.Item>
+              <Menu.Item key="/coach-profile" icon={<Profile />}>
+                <NavLink to="/coach-profile">
+                  <span className="nav-text">My Profile</span>
+                </NavLink>
+              </Menu.Item>
+            </div>
+          ) : (
+            <div style={{ paddingLeft: "20px" }}>
+              <Menu.Item key="/apply-position" icon={<Profile />}>
+                <NavLink to="/apply-position">Apply Position</NavLink>
+              </Menu.Item>
+            </div>
+          )}
+
           <Menu.Item
             key="logoff"
             icon={<PoweroffOutlined />}
@@ -265,7 +289,7 @@ const CoachSidebar = ({ children }) => {
               fontWeight: "regular",
             }}
           >
-            GameSync Pro - Event Organizer
+            GameSync Pro - Coach
           </span>
           <span style={{ color: "white" }} className="notificaiton">
             <a href="/UserValidation">

@@ -8,6 +8,10 @@ body {
   background-color: #15295E;
 }
 
+.collapsed .nav-text {
+  display: none;
+}
+
 .welcome {
   color: white;
   font-size: 18px;

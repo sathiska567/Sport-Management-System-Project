@@ -5,7 +5,7 @@ body {
 }
 
 .ant-layout-sider-children {
-  background-color: #15295E;
+  background-color: #15295e;
 }
 
 .welcome {
@@ -13,7 +13,7 @@ body {
   font-size: 18px;
   text-align: center;
   height: 51px;
-  background-color: #15295E;
+  background-color: #15295e;
   border-bottom: 1px solid white;
   margin-bottom: 15px;
   display: flex;
@@ -27,24 +27,24 @@ body {
 
 .ant-layout-header {
   padding: 0;
-  background-color: #15295E;
+  background-color: #15295e;
 }
 
 .ant-menu-item {
   color: white;
-  background-color: #15295E;
+  background-color: #15295e;
 }
 
 .trigger-button {
-position: fixed;
-top: -76px;
-  color: #15295E;
+  position: absolute !important;
+  top: -95+px !important;
+  color: #15295e;
   background-color: white;
 }
 
 .trigger-button:hover {
   border-radius: 0px;
-  color: #15295E;
+  color: #15295e;
   background-color: white;
 }
 
@@ -74,7 +74,7 @@ top: -76px;
 }
 
 .ant-menu {
-  background-color: #15295E;
+  background-color: #15295e;
 }
 .ant-menu-root {
 }
@@ -107,7 +107,7 @@ top: -76px;
   flex-direction: row;
   gap: 15px;
   align-items: center;
-  height:64px;
+  height: 64px;
   font-size: 16px;
   color: white;
   margin-right: 30px;
@@ -118,8 +118,8 @@ top: -76px;
 }
 
 .notificaiton {
-position: fixed;
-right: 30px; 
+  position: fixed;
+  right: 30px;
 }
 .emailCommunication {
   position: fixed;

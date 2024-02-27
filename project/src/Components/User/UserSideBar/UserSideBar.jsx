@@ -182,7 +182,7 @@ const UserSideBar = ({ children }) => {
           style={{
             backgroundColor: "#15295E",
             width: "100%",
-            height: "82.5vh",
+            height: "100vh",
             fontSize: "16px",
           }}
         >
@@ -234,7 +234,7 @@ const UserSideBar = ({ children }) => {
               fontWeight: "regular",
             }}
           >
-            GameSync Pro - Event Organizer
+            GameSync Pro - User
           </span>
           <span style={{ color: "white" }} className="notificaiton">
             <a href="/UserValidation">

@@ -144,14 +144,14 @@ const SideBar = ({ children }) => {
 
 
   // HANDLE LOGOUT
-  const handleLogOut = async()=>{
-     try {
-       localStorage.clear()
-       message.success("Logged out successfully!")
-       window.location.reload()
-     } catch (error) {
-       message.error("Error logging out!")
-     }
+  const handleLogOut = async () => {
+    try {
+      localStorage.clear()
+      message.success("Logged out successfully!")
+      window.location.reload()
+    } catch (error) {
+      message.error("Error logging out!")
+    }
   }
 
   // get admin or not status
@@ -205,7 +205,7 @@ const SideBar = ({ children }) => {
                 style={{
                   backgroundColor: "#15295E",
                   width: "100%",
-                  height: "82.5vh",
+                  height: "100vh",
                   fontSize: "16px",
                 }}
               >
@@ -358,40 +358,42 @@ const SideBar = ({ children }) => {
                   <Link to="/dashboad">Dashboard</Link>
                 </Menu.Item>
 
-                {isCoach ? (
-                  <Menu.Item key="2" icon={<PendingActions />}>
-                    <Link to="/coach-stats">Coach Dashboad</Link>
-                  </Menu.Item>
-                ) 
-                
-                : isPlayer ? (
-                  <Menu.Item key="2" icon={<PendingActions />}>
-                    <Link to="#">Player Dashboad</Link>
-                  </Menu.Item>
-                ) 
-                
-                : isEventOrganizer ? (
+                { isCoach ? (
                   <div>
-
-                  <Menu.Item key="3" icon={<PendingActions />} style={{padding:"20px"}}>
-                    <Link to="/eo-stats">Event Organizer</Link>
-                  </Menu.Item>
-               
+                    <Menu.Item key="2" icon={<PendingActions />} style={{ padding: "20px" }}>
+                      <Link to="/coach-stats">Coach Dashboad</Link>
+                    </Menu.Item>
                   </div>
-                ) 
-                
-                : isReferee ? (
-                  <Menu.Item key="2" icon={<PendingActions />}>
-                    <Link to="/apply-position">Referee dashboad</Link>
-                  </Menu.Item>
-                ) 
-                
-                : (
-                  <Menu.Item key="2" icon={<PendingActions />}>
-                    <Link to="/apply-position">Apply Position</Link>
-                  </Menu.Item>
                 )
-                
+
+                  : isPlayer ? (
+                    <Menu.Item key="2" icon={<PendingActions />}>
+                      <Link to="/player-stats">Player Dashboad</Link>
+                    </Menu.Item>
+                  )
+
+                    : isEventOrganizer ? (
+                      <div>
+
+                        <Menu.Item key="3" icon={<PendingActions />} style={{ padding: "20px" }}>
+                          <Link to="/eo-stats">Event Organizer</Link>
+                        </Menu.Item>
+
+                      </div>
+                    )
+
+                      : isReferee ? (
+                        <Menu.Item key="2" icon={<PendingActions />}>
+                          <Link to="/apply-position">Referee dashboad</Link>
+                        </Menu.Item>
+                      )
+
+                        : (
+                          <Menu.Item key="2" icon={<PendingActions />}>
+                            <Link to="/apply-position">Apply Position</Link>
+                          </Menu.Item>
+                        )
+
                 }
 
                 <Menu.Item
