@@ -17,7 +17,7 @@ const PlayerReviews = () => {
   const [currentPlayerId, setCurrentPlayerId] = useState("");
   const [reviews, setReviews] = useState([]);
   const [currentPlayerReviews, setCurrentPlayerReviews] = useState([]);
-
+  
   const sampleData = [
     {
       key: "1",
@@ -69,38 +69,48 @@ const PlayerReviews = () => {
           },
         }
       );
-
-      console.log(res.data.user._id);
-      setCurrentPlayerId(res.data.user._id)
-
+  
+      // Update the state with the current user ID
+      setCurrentPlayerId(res.data.user._id);
+  
+      const playerReviewResponse = await axios.get("http://localhost:8080/api/v1/review/get-overall-review");
+      console.log(playerReviewResponse.data.review);
+  
+      if (playerReviewResponse.data.success) {
+        message.success(playerReviewResponse.data.message);
+      }
+  
+      const newReview = [];
+  
+      for (let i = 0; i < playerReviewResponse.data.review.length; i++) {
+        if (playerReviewResponse.data.review[i].playerId === res.data.user._id) {
+          newReview.push(playerReviewResponse.data.review[i]);
+        }
+  
+        // console.log(playerReviewResponse.data.review[i].playerId);
+      }
+  
+      // Update the state with the reviews for the current player
+      setCurrentPlayerReviews(newReview);
+  
+      console.log("Current player Review", newReview);
     } catch (error) {
-      message.error("Error have inside the Get currentUserData function");
+      message.error("Error inside the Get currentUserData function");
     }
   };
+  
 
 
-  // In here cannot post current playerId and cannot get suitable player details.because currentUserData function assign to the player Id to useState and this Id want to sent backend..cannot do these things same time.this is an error..therefore want to do these things inside the frontend.
-  const getCurrentPlayerReview = async () => {
-    try {
-      const playerReviewResponse = await axios.get("http://localhost:8080/api/v1/review/get-overall-review")
-      console.log(playerReviewResponse.data.review);
-
-      if (playerReviewResponse.data.success) {
-        message.success(playerReviewResponse.data.message)
-        setReviews(playerReviewResponse.data.review)
-      }
-
-    } catch (error) {
-      message.error("Error have inside the Get currentPlayerId function");
-    }
-  }
-
-
-  // set current player reviews
-  // const currentPlayerReviewsFunction = () => {
+  // // In here cannot post current playerId and cannot get suitable player details.because currentUserData function assign to the player Id to useState and this Id want to sent backend..cannot do these things same time.this is an error..therefore want to do these things inside the frontend.
+  // const getCurrentPlayerReview = async () => {
   //   try {
-  //     console.log("current player reviews", reviews);
-  //     console.log(currentPlayerId);
+  //     const playerReviewResponse = await axios.get("http://localhost:8080/api/v1/review/get-overall-review")
+  //     console.log(playerReviewResponse.data.review);
+
+  //     if (playerReviewResponse.data.success) {
+  //       message.success(playerReviewResponse.data.message)
+  //       setReviews(playerReviewResponse.data.review)
+  //     }
 
   //   } catch (error) {
   //     message.error("Error have inside the Get currentPlayerId function");
@@ -108,15 +118,36 @@ const PlayerReviews = () => {
   // }
 
 
-  useEffect(() => {
-    const fetchData = async () => {
-      await currentUserData(); // Wait for currentUserData to finish before proceeding
-      await getCurrentPlayerReview(); // Wait for getCurrentPlayerReview to finish before proceeding
-      // currentPlayerReviewsFunction(); // Now it should have the updated currentPlayerId and reviews
-    };
+  // // set current player reviews
+  // const currentPlayerReviewsFunction = async() => {
+  //   try {
+  //     // console.log("current player reviews", reviews);
+  //     console.log(currentPlayerId);
 
-    fetchData();
-  }, []);
+  //     for (let i = 0; i < reviews.length; i++) {
+  //       if(reviews[i].playerId === currentPlayerId){
+  //         newReview.push(reviews[i])
+  //       }
+        
+  //     }
+
+  //     console.log("Current player Review" ,newReview);
+
+  //   } catch (error) {
+  //     message.error("Error have inside the Get currentPlayerId function");
+  //   }
+  // }
+
+// const fetchData = async () => {
+//       await currentUserData(); // Wait for currentUserData to finish before proceeding
+//       await getCurrentPlayerReview(); // Wait for getCurrentPlayerReview to finish before proceeding
+//       await currentPlayerReviewsFunction(); // Now it should have the updated currentPlayerId and reviews
+//     };
+
+
+    useEffect(()=>{
+      currentUserData();
+    },[])
 
 
 
@@ -186,11 +217,15 @@ const PlayerReviews = () => {
                     title: "Coach Name",
                     dataIndex: "coachName",
                     key: "coachName",
+                    render:((text,record)=>(
+                      <span>{record.reviewGivenCoachId}</span>
+                    ))
                   },
                   {
                     title: "Review Date",
                     dataIndex: "reviewDate",
                     key: "reviewDate",
+                   
                   },
                   {
                     title: "Rating",
@@ -218,7 +253,7 @@ const PlayerReviews = () => {
                   pageSize: 5,
                 }}
                 // Displaying data from the frontend
-                dataSource={filteredData} // Use filteredData instead of sampleData
+                dataSource={currentPlayerReviews} // Use filteredData instead of sampleData
               ></Table>
             </div>
           </Content>
