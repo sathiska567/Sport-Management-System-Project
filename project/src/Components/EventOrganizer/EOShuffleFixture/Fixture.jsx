@@ -123,21 +123,21 @@ const ShuffleData = () => {
                 width: "20%",
                 dataIndex: "teamNumber",
                 render: (text, record, index) => (
-                  <span key={index}>{index + 1}</span>
+                  <span key={index} style={{color:"black",fontFamily:"sans-serif",fontWeight:"bold"}}>{"Team Number "+(index + 1)}</span>
                 )
               },
               {
                 title: "Teams Name",
-                dataIndex: "teamName",
+                dataIndex: "teamName",               
                 render: (text, record, index) => (
-                  <span key={index}>{record}</span>
+                  <span key={index} style={{color:"green",fontFamily:"sans-serif",fontWeight:"bold"}}>{record}</span>
                 )
               },
 
               {
                 title: "Event Time",
                 dataIndex: "time",
-                render: (text, record) => <span>8.30am</span>,
+                render: (text, record) => <span style={{color:"blue",fontFamily:"sans-serif",fontWeight:"bold"}}>8.30am</span>,
               },
 
               {
