@@ -17,6 +17,9 @@ const PlayerReviews = () => {
   const [currentPlayerId, setCurrentPlayerId] = useState("");
   const [reviews, setReviews] = useState([]);
   const [currentPlayerReviews, setCurrentPlayerReviews] = useState([]);
+  const [reviewGivenCoachId,setReviewGivenCoachId] = useState([]);
+  const [reviewGivenCoachName,setReviewGivenCoachName] = useState([]);
+  const [reviewGivenCoachEmail,setReviewGivenCoachEmail] = useState([]);
   
   const sampleData = [
     {
@@ -59,7 +62,7 @@ const PlayerReviews = () => {
 
 
   //GET CURRENT USER DATA
-  const currentUserData = async () => {
+const currentUserData = async () => {
     try {
       const res = await axios.get(
         "http://localhost:8080/api/v1/user/getCurrentUser",
@@ -79,70 +82,51 @@ const PlayerReviews = () => {
       if (playerReviewResponse.data.success) {
         message.success(playerReviewResponse.data.message);
       }
+
+
   
       const newReview = [];
+      const coachId = [];
+
   
       for (let i = 0; i < playerReviewResponse.data.review.length; i++) {
         if (playerReviewResponse.data.review[i].playerId === res.data.user._id) {
           newReview.push(playerReviewResponse.data.review[i]);
+          coachId.push(playerReviewResponse.data.review[i].reviewGivenCoachId);
+
         }
   
         // console.log(playerReviewResponse.data.review[i].playerId);
       }
+
+      const coachName = [];
+      const coachEmail = []
+
+      for (let i = 0; i < coachId.length; i++) {
+          const coachProfileResponse = await axios.post("http://localhost:8080/api/v1/review-give-coach/details", { coachId: coachId[i] });
+          coachName.push(coachProfileResponse.data.data.username);
+          coachEmail.push(coachProfileResponse.data.data.email);
+          // console.log(coachProfileResponse.data.data.email);
+         
+          setReviewGivenCoachName(coachName)
+          setReviewGivenCoachEmail(coachEmail)
+
+          // Handle the response as needed
+      }
+      
   
       // Update the state with the reviews for the current player
       setCurrentPlayerReviews(newReview);
+      setReviewGivenCoachId(coachId)
   
       console.log("Current player Review", newReview);
+      console.log("Current coachId ", coachId);
+      console.log("Current coach Name ", coachName);
+
     } catch (error) {
       message.error("Error inside the Get currentUserData function");
     }
   };
-  
-
-
-  // // In here cannot post current playerId and cannot get suitable player details.because currentUserData function assign to the player Id to useState and this Id want to sent backend..cannot do these things same time.this is an error..therefore want to do these things inside the frontend.
-  // const getCurrentPlayerReview = async () => {
-  //   try {
-  //     const playerReviewResponse = await axios.get("http://localhost:8080/api/v1/review/get-overall-review")
-  //     console.log(playerReviewResponse.data.review);
-
-  //     if (playerReviewResponse.data.success) {
-  //       message.success(playerReviewResponse.data.message)
-  //       setReviews(playerReviewResponse.data.review)
-  //     }
-
-  //   } catch (error) {
-  //     message.error("Error have inside the Get currentPlayerId function");
-  //   }
-  // }
-
-
-  // // set current player reviews
-  // const currentPlayerReviewsFunction = async() => {
-  //   try {
-  //     // console.log("current player reviews", reviews);
-  //     console.log(currentPlayerId);
-
-  //     for (let i = 0; i < reviews.length; i++) {
-  //       if(reviews[i].playerId === currentPlayerId){
-  //         newReview.push(reviews[i])
-  //       }
-        
-  //     }
-
-  //     console.log("Current player Review" ,newReview);
-
-  //   } catch (error) {
-  //     message.error("Error have inside the Get currentPlayerId function");
-  //   }
-  // }
-
-// const fetchData = async () => {
-//       await currentUserData(); // Wait for currentUserData to finish before proceeding
-//       await getCurrentPlayerReview(); // Wait for getCurrentPlayerReview to finish before proceeding
-//       await currentPlayerReviewsFunction(); // Now it should have the updated currentPlayerId and reviews
-//     };
 
 
     useEffect(()=>{
@@ -217,26 +201,41 @@ const PlayerReviews = () => {
                     title: "Coach Name",
                     dataIndex: "coachName",
                     key: "coachName",
-                    render:((text,record)=>(
-                      <span>{record.reviewGivenCoachId}</span>
-                    ))
+                    render: (text, record) => (
+                      <span>
+                        {reviewGivenCoachName.map((data, index) => (
+                          <span key={index}>{index}</span>
+                        ))}
+                      </span>
+                    ),
                   },
+                  
+                                 
+                  
                   {
-                    title: "Review Date",
-                    dataIndex: "reviewDate",
-                    key: "reviewDate",
-                   
+                    title: "Coach Email",
+                    dataIndex: "coachEmail",
+                    key: "coachEmail",
+                    render: (text, record) => {
+                      let coachEmail = "";
+                      for (let i = 0; i < reviewGivenCoachEmail.length; i++) {
+                        // Assuming reviewGivenCoachEmail is an array of coach emails
+                        return <span>{reviewGivenCoachEmail[i]}</span>
+                      }
+                      
+                    },
                   },
+                  
                   {
                     title: "Rating",
                     dataIndex: "rating",
                     key: "rating",
-                    render: (rating) => (
+                    render: (text,record) => (
                       <div style={{ display: "flex", alignItems: "center" }}>
-                        <Rate disabled defaultValue={rating} />
+                        <Rate disabled defaultValue={record.overallReview} />
                         <span
                           style={{ marginLeft: "25px" }}
-                        >{`${rating} / 5.0`}</span>
+                        >{`${record.overallReview} / 5.0`}</span>
                       </div>
                     ),
                   },
