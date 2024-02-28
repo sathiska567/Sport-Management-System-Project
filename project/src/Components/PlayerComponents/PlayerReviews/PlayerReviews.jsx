@@ -14,7 +14,9 @@ const PlayerReviews = () => {
   const [Userlocation, setUserLocation] = useState("");
   const [eventNameFilter, setEventNameFilter] = useState("");
   const [dateFilter, setDateFilter] = useState("");
-  const [currentPlayerId , setCurrentPlayerId] = useState("");
+  const [currentPlayerId, setCurrentPlayerId] = useState("");
+  const [reviews, setReviews] = useState([]);
+  const [currentPlayerReviews, setCurrentPlayerReviews] = useState([]);
 
   const sampleData = [
     {
@@ -47,52 +49,74 @@ const PlayerReviews = () => {
   ];
 
   // Filter sampleData based on userRole and Userlocation
-const filteredData = sampleData.filter((data) => {
-  return (
-    (!userRole ||
-      data.coachName.toLowerCase().startsWith(userRole.toLowerCase())) &&
-    (!Userlocation || data.reviewDate.startsWith(Userlocation))
-  );
-});
-
-
- //GET CURRENT USER DATA
- const currentUserData = async () => {
-  try {
-    const res = await axios.get(
-      "http://localhost:8080/api/v1/user/getCurrentUser",
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      }
+  const filteredData = sampleData.filter((data) => {
+    return (
+      (!userRole ||
+        data.coachName.toLowerCase().startsWith(userRole.toLowerCase())) &&
+      (!Userlocation || data.reviewDate.startsWith(Userlocation))
     );
+  });
 
-    // console.log(res.data.user._id);
-    // setCurrentPlayerId(res.data.user._id)
 
-  } catch (error) {
-    message.error("Error have inside the Get currentUserData function");
+  //GET CURRENT USER DATA
+  const currentUserData = async () => {
+    try {
+      const res = await axios.get(
+        "http://localhost:8080/api/v1/user/getCurrentUser",
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+
+      console.log(res.data.user._id);
+      setCurrentPlayerId(res.data.user._id)
+
+    } catch (error) {
+      message.error("Error have inside the Get currentUserData function");
+    }
+  };
+
+
+  // In here cannot post current playerId and cannot get suitable player details.because currentUserData function assign to the player Id to useState and this Id want to sent backend..cannot do these things same time.this is an error..therefore want to do these things inside the frontend.
+  const getCurrentPlayerReview = async () => {
+    try {
+      const playerReviewResponse = await axios.get("http://localhost:8080/api/v1/review/get-overall-review")
+      console.log(playerReviewResponse.data.review);
+
+      if (playerReviewResponse.data.success) {
+        message.success(playerReviewResponse.data.message)
+        setReviews(playerReviewResponse.data.review)
+      }
+
+    } catch (error) {
+      message.error("Error have inside the Get currentPlayerId function");
+    }
   }
-};
 
 
+  // set current player reviews
+  // const currentPlayerReviewsFunction = () => {
+  //   try {
+  //     console.log("current player reviews", reviews);
+  //     console.log(currentPlayerId);
 
-// In here cannot post current playerId and cannot get suitable player details.because currentUserData function assign to the player Id to useState and this Id want to sent backend..cannot do these things same time.this is an error..therefore want to do these things inside the frontend.
-const getCurrentPlayerReview = async()=>{
-  try {
-     const playerReviewResponse = await axios.get("http://localhost:8080/api/v1/review/get-overall-review")
-     console.log(playerReviewResponse.data);
+  //   } catch (error) {
+  //     message.error("Error have inside the Get currentPlayerId function");
+  //   }
+  // }
 
-  } catch (error) {
-    message.error("Error have inside the Get currentPlayerId function");
-  }
-}
 
-useEffect(()=>{
-  currentUserData();
-  getCurrentPlayerReview();
-},[])
+  useEffect(() => {
+    const fetchData = async () => {
+      await currentUserData(); // Wait for currentUserData to finish before proceeding
+      await getCurrentPlayerReview(); // Wait for getCurrentPlayerReview to finish before proceeding
+      // currentPlayerReviewsFunction(); // Now it should have the updated currentPlayerId and reviews
+    };
+
+    fetchData();
+  }, []);
 
 
 
