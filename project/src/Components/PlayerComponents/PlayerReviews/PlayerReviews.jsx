@@ -14,6 +14,7 @@ const PlayerReviews = () => {
   const [Userlocation, setUserLocation] = useState("");
   const [eventNameFilter, setEventNameFilter] = useState("");
   const [dateFilter, setDateFilter] = useState("");
+  const [currentPlayerId , setCurrentPlayerId] = useState("");
 
   const sampleData = [
     {
@@ -67,7 +68,8 @@ const filteredData = sampleData.filter((data) => {
       }
     );
 
-    console.log(res.data);
+    // console.log(res.data.user._id);
+    // setCurrentPlayerId(res.data.user._id)
 
   } catch (error) {
     message.error("Error have inside the Get currentUserData function");
@@ -76,13 +78,21 @@ const filteredData = sampleData.filter((data) => {
 
 
 
+// In here cannot post current playerId and cannot get suitable player details.because currentUserData function assign to the player Id to useState and this Id want to sent backend..cannot do these things same time.this is an error..therefore want to do these things inside the frontend.
+const getCurrentPlayerReview = async()=>{
+  try {
+     const playerReviewResponse = await axios.get("http://localhost:8080/api/v1/review/get-overall-review")
+     console.log(playerReviewResponse.data);
 
+  } catch (error) {
+    message.error("Error have inside the Get currentPlayerId function");
+  }
+}
 
 useEffect(()=>{
-  currentUserData()
+  currentUserData();
+  getCurrentPlayerReview();
 },[])
-
-
 
 
 

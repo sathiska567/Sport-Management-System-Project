@@ -22,6 +22,7 @@ const getPlayerDetailsRoute = require('./routes/GetAllPlayerDetails/getPlayerDet
 const PlayerProfileRoute = require('./routes/PlayerProfileRoute/PlayerProfileRoute')
 const coachAvailabilityRoute = require("./routes/CoachAvailabilityRoute/CoachAvailabilityRoute")
 const PlayerAvailabilityRoute = require("./routes/PlayerAvailabilityRoute/PlayerAvailabilityRoute")
+const getPlayerReviewRoute = require("./routes/CoachReviewRoute/getCurrentPlayerReviewRoute")
 
 require("./db/mongoDb"); 
 
@@ -55,6 +56,7 @@ app.use("/api/v1/delete",deleteOneFixtureRouter);
 
 // HANDLE GIVE REVIEW ROUTE
 app.use("/api/v1/review",giveReviewRoute);
+app.use("/api/v1/player-review",getPlayerReviewRoute);
 
 
 // GET ONLY PLAYER ROUTE
