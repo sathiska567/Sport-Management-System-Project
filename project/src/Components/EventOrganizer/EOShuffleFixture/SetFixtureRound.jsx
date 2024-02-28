@@ -70,14 +70,14 @@ const handleDownload = async()=>{
                     dataIndex: "round",
                     backgroundColor:"blue",
                     render: (text, record) =>(
-                      <span style={{color:"red"}}>{record.round + " " + " "}</span>
+                      <span style={{color:"red"}}>{"Round " + record.round + " " + " "}</span>
                     )
                   },
 
                   {
                     title: "Match",
                     dataIndex: "match",
-                    render: (text, record) => <span style={{color:"green"}}>{ record.match}</span>,
+                    render: (text, record) => <span style={{color:"green"}}>{"Match " + record.match}</span>,
                   },
 
                   
