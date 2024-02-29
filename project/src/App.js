@@ -32,12 +32,6 @@ import CoachProfile from "./Components/Coach/CoachProfile/CoachProfile.jsx";
 import EOViewFixture from "./Components/EventOrganizer/EOViewFixture/EOViewFixture.jsx";
 import CoachReviewForm from "./Components/Coach/CoachReviewPlayers/CoachReviewForm.jsx";
 import EOBracket from "./Components/EventOrganizer/EOBracket/EOBracket.jsx";
-
-import CreateMatch from "./Pages/Coach/CreateMatch.jsx";
-import SelectPlayers from "./Pages/Coach/SelectPlayers.jsx";
-import CreateTeam from "./Pages/Coach/CreateTeam.jsx";
-import TournamentBracket from "./Pages/Organizer/Bracket.jsx";
-
 import PlayerStats from "./Components/PlayerComponents/PlayerStats/PlayerStats.jsx";
 import PlayerAvailability from "./Components/PlayerComponents/PlayerAvailability/PlayerAvailability.jsx";
 import PlayerReviews from "./Components/PlayerComponents/PlayerReviews/PlayerReviews.jsx";
@@ -53,7 +47,6 @@ import TeamManagerCreateTeam from "./Components/TeamManager/TeamManagerCreateTea
 import TeamManagerAssignMembersTable from "./Components/TeamManager/TeamManagerAssignMembers/TeamManagerAssignMembersTable.jsx";
 import TeamManagerAssignMembersCoach from "./Components/TeamManager/TeamManagerAssignMembers/TeamManagerAssignMembersCoach.jsx";
 import TeamManagerAssignMembersPlayer from "./Components/TeamManager/TeamManagerAssignMembers/TeamManagerAssignMembersPlayer.jsx";
-
 
 function App() {
   const isLoggedIn = window.localStorage.getItem("isLoggedIn");
@@ -359,25 +352,12 @@ function App() {
         <Route
           path="/eo-bracket"
           element={
-            
+            <ProtectedRoute>
               <EOBracket />
-            
+            </ProtectedRoute>
           }
         />
       </Routes>
-
-
-
-        <Routes>
-        <Route path="/brackets" element={<TournamentBracket/>} />
-        <Route path="/create-team" element={<CreateTeam/>}/>
-        <Route path="/select-players" element={<SelectPlayers/>}/>
-        <Route path="/create-match" element={<CreateMatch/>}/>
-    
-        </Routes>
-
-
-
       <Routes>
         <Route
           path="/player-stats"
@@ -528,7 +508,6 @@ function App() {
           }
         ></Route>
       </Routes>
-
     </BrowserRouter>
 
     // <div className="App">
