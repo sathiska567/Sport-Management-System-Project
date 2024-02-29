@@ -23,7 +23,7 @@ const PlayerProfileRoute = require('./routes/PlayerProfileRoute/PlayerProfileRou
 const coachAvailabilityRoute = require("./routes/CoachAvailabilityRoute/CoachAvailabilityRoute")
 const PlayerAvailabilityRoute = require("./routes/PlayerAvailabilityRoute/PlayerAvailabilityRoute")
 const getPlayerReviewRoute = require("./routes/CoachReviewRoute/getCurrentPlayerReviewRoute")
-
+const assignMember = require("./routes/assignMember/AssignMember")
 require("./db/mongoDb"); 
 
 const app = express();
@@ -73,7 +73,8 @@ app.use("/api/v1/availability",coachAvailabilityRoute);
 // PLAYER AVAILABILITY
 app.use("/api/v1/player-availability",PlayerAvailabilityRoute);
 
-
+// ASSIGN MEMBER
+app.use("/api/v1/assign",assignMember);
 // //jwt
 // app.post('/user/login', async (req, res) => {
 //     const { username, password } = req.body;
