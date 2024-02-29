@@ -3,7 +3,7 @@ const { getCurrentPlayerReviewController } = require('../../controllers/CoachRev
 
 const router = express.Router();
 
-router.post("/current-player-review",getCurrentPlayerReviewController)
+router.post("/details",getCurrentPlayerReviewController)
 
 
 module.exports = router;

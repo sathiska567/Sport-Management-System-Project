@@ -19,6 +19,8 @@ const CoachReviewForm = () => {
   const [overallRating, setOverallRating] = useState(0);
   const [comments, setComments] = useState("");
   const [reviewGivenCoachId,setReviewGivenCoachId] = useState("");
+  const [reviewGivenCoachEmail , setReviewGivenCoachEmail] = useState("");
+  const [reviewGivenCoachName , setReviewGivenCoachName] = useState("");
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -41,6 +43,9 @@ const CoachReviewForm = () => {
     if(res.data.success){
       // message.success("Successfully get current user data");
       setReviewGivenCoachId(res.data.user._id)
+      setReviewGivenCoachEmail(res.data.user.email)
+      setReviewGivenCoachName(res.data.user.username)
+      
     } 
 
     } catch (error) {
@@ -65,7 +70,7 @@ const handleReviewSection = async()=>{
     console.log(battingRating,bowlingRating,fieldingRating,formattedRating,comments);
 
      try {
-      const response = await axios.post('http://localhost:8080/api/v1/review/create-review',{battingReview:battingRating,bowlingReview:bowlingRating,fieldingReview:fieldingRating,overallReview:formattedRating,comments:comments,playerId:id,reviewGivenCoachId:reviewGivenCoachId})
+      const response = await axios.post('http://localhost:8080/api/v1/review/create-review',{battingReview:battingRating,bowlingReview:bowlingRating,fieldingReview:fieldingRating,overallReview:formattedRating,comment:comments,playerId:id,reviewGivenCoachId:reviewGivenCoachId,reviewGivenCoachEmail:reviewGivenCoachEmail,reviewGivenCoachName:reviewGivenCoachName})
       console.log(response);
 
       if(response.data.success){

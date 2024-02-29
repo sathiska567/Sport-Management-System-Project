@@ -56,7 +56,7 @@ app.use("/api/v1/delete",deleteOneFixtureRouter);
 
 // HANDLE GIVE REVIEW ROUTE
 app.use("/api/v1/review",giveReviewRoute);
-app.use("/api/v1/player-review",getPlayerReviewRoute);
+app.use("/api/v1/review-give-coach",getPlayerReviewRoute);
 
 
 // GET ONLY PLAYER ROUTE
