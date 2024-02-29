@@ -68,14 +68,13 @@ const AdminUserValidationTable = () => {
   }, []);
 
   // Filter userApplicationData based on userRole and Userlocation
-  const filteredData = userApplicationData.filter((data) => {
-    return (
-      data.UserRole &&
-      data.UserRole.toLowerCase().includes(userRole) &&
-      data.Distric &&
-      data.Distric.toLowerCase().includes(Userlocation)
-    );
-  });
+  const handleUserRoleSearch = (value) => {
+    console.log("User Role Searched: ", value);
+  };
+
+  const handleUserLocationSearch = (value) => {
+    console.log("User Location Searched: ", value);
+  };
 
   // End
 
@@ -103,7 +102,7 @@ const AdminUserValidationTable = () => {
                 styles={{
                   marginBottom: "8",
                 }}
-                onSearch={(value) => setUserRole(value)}
+                onSearch={handleUserRoleSearch}
                 onChange={(e) => setUserRole(e.target.value)}
               />
               <Input.Search
@@ -111,7 +110,7 @@ const AdminUserValidationTable = () => {
                 styles={{
                   marginBottom: "8",
                 }}
-                onSearch={(value) => setUserLocation(value)}
+                onSearch={handleUserLocationSearch}
                 onChange={(e) => setUserLocation(e.target.value)}
               />
             </div>
@@ -229,8 +228,6 @@ const AdminUserValidationTable = () => {
                   },
                   pageSize: 5,
                 }}
-                // Displaying data from the backend
-                dataSource={filteredData}
               ></Table>
             </div>
           </Content>
