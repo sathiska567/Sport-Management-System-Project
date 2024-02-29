@@ -99,34 +99,19 @@ const currentUserData = async () => {
         // console.log(playerReviewResponse.data.review[i].playerId);
       }
 
-      const coachName = [];
-      const coachEmail = []
-
-      for (let i = 0; i < coachId.length; i++) {
-          const coachProfileResponse = await axios.post("http://localhost:8080/api/v1/review-give-coach/details", { coachId: coachId[i] });
-          coachName.push(coachProfileResponse.data.data.username);
-          coachEmail.push(coachProfileResponse.data.data.email);
-          // console.log(coachProfileResponse.data.data.email);
-         
-          setReviewGivenCoachName(coachName)
-          setReviewGivenCoachEmail(coachEmail)
-
-          // Handle the response as needed
-      }
-      
-  
-      // Update the state with the reviews for the current player
       setCurrentPlayerReviews(newReview);
       setReviewGivenCoachId(coachId)
   
       console.log("Current player Review", newReview);
-      console.log("Current coachId ", coachId);
-      console.log("Current coach Name ", coachName);
+
 
     } catch (error) {
       message.error("Error inside the Get currentUserData function");
     }
   };
+
+
+  const combineTable = [...currentPlayerReviews ,reviewGivenCoachName ]
 
 
     useEffect(()=>{
@@ -202,28 +187,18 @@ const currentUserData = async () => {
                     dataIndex: "coachName",
                     key: "coachName",
                     render: (text, record) => (
-                      <span>
-                        {reviewGivenCoachName.map((data, index) => (
-                          <span key={index}>{index}</span>
-                        ))}
-                      </span>
-                    ),
+                      <span>{record.reviewGivenCoachName}</span>
+                    )
                   },
-                  
-                                 
+                                                                                    
                   
                   {
                     title: "Coach Email",
                     dataIndex: "coachEmail",
                     key: "coachEmail",
-                    render: (text, record) => {
-                      let coachEmail = "";
-                      for (let i = 0; i < reviewGivenCoachEmail.length; i++) {
-                        // Assuming reviewGivenCoachEmail is an array of coach emails
-                        return <span>{reviewGivenCoachEmail[i]}</span>
-                      }
-                      
-                    },
+                    render: (text, record) => (
+                      <span>{record.reviewGivenCoachEmail}</span>
+                    )
                   },
                   
                   {
@@ -243,6 +218,9 @@ const currentUserData = async () => {
                     title: "Comment",
                     dataIndex: "comment",
                     key: "comment",
+                    render:((text,record)=>(
+                         <span>{record.comment || "No Comment"}</span>
+                    ))
                   },
                 ]}
                 pagination={{
@@ -264,3 +242,31 @@ const currentUserData = async () => {
 
 // Exporting the Navbar component
 export default PlayerReviews;
+
+
+// // Assume these are your two data sources
+// const dataSource1 = [
+//   {
+//     key: '1',
+//     eventName: 'Event 1',
+//     teamName: 'Team A',
+//     eventDate: '2022-01-01',
+//   },
+//   // ...
+// ];
+
+// const dataSource2 = [
+//   {
+//     key: '4',
+//     eventName: 'Event 4',
+//     teamName: 'Team D',
+//     eventDate: '2022-04-01',
+//   },
+//   // ...
+// ];
+
+// // You can combine them into one array using the spread operator
+// const combinedData = [...dataSource1, ...dataSource2];
+
+// // Then you can pass combinedData to the dataSource prop of the Table component
+// <Table dataSource={combinedData} /* other props */ />;mehema

@@ -1,17 +1,19 @@
 const reviewModel = require('../../models/CoachReviewModel/CoachReviewModel');
 
 const coachReviewCreateController = async (req, res) => {
-    const { battingReview, bowlingReview, fieldingReview, overallReview, comments, playerId,reviewGivenCoachId } = req.body;
-    console.log(battingReview, bowlingReview, fieldingReview, overallReview, comments, playerId,reviewGivenCoachId);
+    const { battingReview, bowlingReview, fieldingReview, overallReview, comment, playerId,reviewGivenCoachId,reviewGivenCoachName,reviewGivenCoachEmail } = req.body;
+    console.log(battingReview, bowlingReview, fieldingReview, overallReview, comment, playerId,reviewGivenCoachId,reviewGivenCoachName,reviewGivenCoachEmail );
     try {
         const data = new reviewModel({
             battingReview: battingReview,
             bowlingReview: bowlingReview,
             fieldingReview: fieldingReview,
             overallReview: overallReview,
-            comments: comments,
+            comment: comment,
             playerId: playerId,
-            reviewGivenCoachId:reviewGivenCoachId
+            reviewGivenCoachId:reviewGivenCoachId,
+            reviewGivenCoachName:reviewGivenCoachName,
+            reviewGivenCoachEmail:reviewGivenCoachEmail
         })
 
         await data.save();
