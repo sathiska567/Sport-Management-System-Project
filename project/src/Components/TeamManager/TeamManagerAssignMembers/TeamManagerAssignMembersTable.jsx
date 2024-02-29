@@ -27,36 +27,37 @@ const TeamManagerCreateTeamTable = () => {
   const location = useLocation([]);
 
 
-const sampleData = [
-  {
-    key: "1",
-    eventName: "Event 1",
-    teamName: "Team A",
-    eventDate: "2022-01-01",
-  },
-  {
-    key: "2",
-    eventName: "Event 2",
-    teamName: "Team B",
-    eventDate: "2022-02-01",
-  },
-  {
-    key: "3",
-    eventName: "Event 3",
-    teamName: "Team C",
-    eventDate: "2022-03-01",
-  },
-];
+  const sampleData = [
+    {
+      key: "1",
+      eventName: "Event 1",
+      teamName: "Team A",
+      eventDate: "2022-01-01",
+    },
+    {
+      key: "2",
+      eventName: "Event 2",
+      teamName: "Team B",
+      eventDate: "2022-02-01",
+    },
+    {
+      key: "3",
+      eventName: "Event 3",
+      teamName: "Team C",
+      eventDate: "2022-03-01",
+    },
+  ];
 
   // Filter userApplicationData based on userRole and Userlocation
-  const filteredData = userApplicationData.filter((data) => {
-    return (
-      data.UserRole &&
-      data.UserRole.toLowerCase().includes(userRole) &&
-      data.Distric &&
-      data.Distric.toLowerCase().includes(Userlocation)
-    );
-  });
+  const handleEventNameSearch = (value) => {
+    console.log("Event Name Searched: ", value);
+    setUserRole(value);
+  };
+
+  const handleTeamNameSearch = (value) => {
+    console.log("Team Name Searched: ", value);
+    setUserLocation(value);
+  };
 
   // End
 
@@ -84,16 +85,18 @@ const sampleData = [
                 styles={{
                   marginBottom: "8",
                 }}
-                onSearch={(value) => setUserRole(value)}
-                onChange={(e) => setUserRole(e.target.value)}
+                onSearch={handleEventNameSearch}
+                // onChange={(e) => handleEventNameSearch(e.target.value)}
+                allowClear
               />
               <Input.Search
                 placeholder="Search Team Name..."
                 styles={{
                   marginBottom: "8",
                 }}
-                onSearch={(value) => setUserLocation(value)}
-                onChange={(e) => setUserLocation(e.target.value)}
+                onSearch={handleTeamNameSearch}
+                // onChange={(e) => handleTeamNameSearch(e.target.value)}
+                allowClear
               />
             </div>
             {/* Table section */}

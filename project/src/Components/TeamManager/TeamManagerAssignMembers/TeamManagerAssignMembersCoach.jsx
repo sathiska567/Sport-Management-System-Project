@@ -52,6 +52,11 @@ const TeamManagerAssignMembersCoach = () => {
     console.log(`switch to ${checked}`);
   };
 
+  // filter
+  const handleCoachNameSearch = (value) => {
+    console.log("Coach Name Searched: ", value);
+  };
+
   // JSX structure for the Navbar component
   return (
     <TeamManagerSideBar>
@@ -78,20 +83,15 @@ const TeamManagerAssignMembersCoach = () => {
                 <Input.Search
                   placeholder="Search Coach Name..."
                   style={{ flex: 1 }}
-                  onSearch={(value) => setUserRole(value)}
-                  onChange={(e) => setUserRole(e.target.value)}
+                  onSearch={handleCoachNameSearch}
+                  // onChange={(e) => handleCoachNameSearch(e.target.value)}
+                  allowClear
                 />
               </div>
               <div
                 className="searchSub"
                 style={{ display: "flex", width: "100%" }}
-              >
-                <DatePicker
-                  className="searchInputDate"
-                  style={{ flex: 1 }}
-                  onChange={(date, dateString) => setUserLocation(dateString)}
-                />
-              </div>
+              ></div>
             </div>
             {/* Table section */}
             <div className="tableContainer">

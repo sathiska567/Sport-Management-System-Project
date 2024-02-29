@@ -34,70 +34,68 @@ const PlayerReviews = [
   },
 ];
 
-
 const CoachReviewPlayers = () => {
   const [playerName, setPlayerName] = useState("");
   const [searchLocation, setSearchLocation] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
-  const [playerDetails,setPlayerDetails] = useState([]);
-  const [playerReview,setPlayerReview] = useState([]);
+  const [playerDetails, setPlayerDetails] = useState([]);
+  const [playerReview, setPlayerReview] = useState([]);
 
   console.log(location);
+  // get all palyer details
+  const handleGetAllPlayerDetails = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:8080/api/v1/player/player-details"
+      );
+      console.log(response.data.players);
+
+      if (response.data.success) {
+        // message.success(response.data.message)
+        setPlayerDetails(response.data.players);
+      }
+    } catch (error) {
+      message.error("Something went wrong");
+    }
+  };
+
+  const handleNavigate = async (id) => {
+    console.log(id);
+    navigate("/coach-review-form", { state: { id: id } });
+  };
+
+  const getReview = async () => {
+    try {
+      const reviewResponse = await axios.get(
+        "http://localhost:8080/api/v1/review/get-overall-review"
+      );
+      console.log(reviewResponse);
+
+      if (reviewResponse.data.success) {
+        setPlayerReview(reviewResponse.data.review);
+        // message.success(reviewResponse.data.message)
+      }
+    } catch (error) {
+      message.error("Something went wrong inside the get Review section");
+    }
+  };
+
+  useEffect(() => {
+    handleGetAllPlayerDetails();
+    getReview();
+  }, []);
+
 
   // Filter userApplicationData based on userRole and Userlocation
-const filteredData = PlayerReviews.filter((data) => {
-    return (
-      (!playerName ||
-        data.playerName.toLowerCase().includes(playerName.toLowerCase())) &&
-      (!searchLocation ||
-        data.location.toLowerCase().includes(searchLocation.toLowerCase()))
-    );
-  });
+  const handlePlayerNameSearch = (value) => {
+    console.log(value);
+  };
 
+  const handleEventLocationSearch = (value) => {
+    console.log(value);
+  };
 
-// get all palyer details
-const handleGetAllPlayerDetails = async() => {
-    
-      try {
-        const response = await axios.get("http://localhost:8080/api/v1/player/player-details")
-        console.log(response.data.players);
-        
-        if(response.data.success){
-            // message.success(response.data.message)
-            setPlayerDetails(response.data.players)
-        }
-        
-      } catch (error) {
-         message.error("Something went wrong");
-      }
-
-  }
-
-const handleNavigate = async(id)=>{
-   console.log(id);
-   navigate("/coach-review-form",{state:{id:id}})
-}
-
-const getReview = async()=>{
-   try {
-    const reviewResponse = await axios.get("http://localhost:8080/api/v1/review/get-overall-review")
-    console.log(reviewResponse);
-
-    if(reviewResponse.data.success){
-      setPlayerReview(reviewResponse.data.review)
-      // message.success(reviewResponse.data.message)
-    }
-    
-   } catch (error) {
-      message.error("Something went wrong inside the get Review section");
-   }
-}
-
-useEffect(()=>{
-  handleGetAllPlayerDetails()
-  getReview()
-},[])
 
   return (
     <CoachSidebar>
@@ -122,8 +120,8 @@ useEffect(()=>{
                 style={{
                   marginBottom: "8px",
                 }}
-                onSearch={(value) => setPlayerName(value)}
-                onChange={(e) => setPlayerName(e.target.value)}
+                onSearch={handlePlayerNameSearch}
+                allowClear
               />
               <Input.Search
                 className="searchInputName"
@@ -131,8 +129,8 @@ useEffect(()=>{
                 style={{
                   marginBottom: "8px",
                 }}
-                onSearch={(value) => setSearchLocation(value)}
-                onChange={(e) => setSearchLocation(e.target.value)}
+                onSearch={handleEventLocationSearch}
+                allowClear
               />
             </div>
             <Table
@@ -142,25 +140,21 @@ useEffect(()=>{
                   dataIndex: "pid",
                   width: "10%",
                   align: "center",
-                  render:(text,record)=>(
-                     <span>PId</span>
-                  )
+                  render: (text, record) => <span>PId</span>,
                 },
                 {
                   title: "Player Name",
                   dataIndex: "playerName",
                   width: "25%",
                   align: "center",
-                  render:(text,record)=>(
-                    <span>{record.username}</span>
-                  )
+                  render: (text, record) => <span>{record.username}</span>,
                 },
                 {
                   title: "Email",
                   dataIndex: "location",
                   width: "15%",
                   align: "center",
-                  render: (text,record) => <span>{record.email}</span>,
+                  render: (text, record) => <span>{record.email}</span>,
                 },
                 {
                   title: "Overall Review",
@@ -198,7 +192,7 @@ useEffect(()=>{
                           marginBottom: "auto",
                           width: "100px",
                         }}
-                        onClick={()=>handleNavigate(record._id)}
+                        onClick={() => handleNavigate(record._id)}
                       >
                         Comment
                       </Button>

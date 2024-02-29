@@ -44,21 +44,21 @@ const RefereeMatches = () => {
   // Filter sampleData based on userRole and Userlocation
   // Filter sampleData based on eventName, district, teamName, and eventDate
   // Filter sampleData based on eventName, district, teamName, and eventDate
-  const filteredData = sampleData.filter((data) => {
-    return (
-      (!eventNameFilter ||
-        data.eventName
-          .toLowerCase()
-          .startsWith(eventNameFilter.toLowerCase())) &&
-      (!districtFilter ||
-        data.district.toLowerCase().startsWith(districtFilter.toLowerCase())) &&
-      (!teamNameFilter ||
-        data.teamName.toLowerCase().startsWith(teamNameFilter.toLowerCase())) &&
-      (!dateFilter ||
-        new Date(data.eventDate).getTime() === new Date(dateFilter).getTime())
-    );
-  });
+const handleEventNameSearch = (value) => {
+  console.log("Event Name Searched: ", value);
+};
 
+const handleDistrictSearch = (value) => {
+  console.log("District Searched: ", value);
+};
+
+const handleDateChange = (date, dateString) => {
+  console.log("Date Selected: ", dateString);
+};
+
+const handleTeamNameSearch = (value) => {
+  console.log("Team Name Searched: ", value);
+};
   // JSX structure for the Navbar component
   return (
     <RefereeSideBar>
@@ -85,14 +85,16 @@ const RefereeMatches = () => {
                 <Input.Search
                   placeholder="Search Event Name..."
                   style={{ flex: 1 }}
-                  onSearch={(value) => setEventNameFilter(value)}
-                  onChange={(e) => setEventNameFilter(e.target.value)}
+                  onSearch={handleEventNameSearch}
+                  // onChange={(e) => handleEventNameSearch(e.target.value)}
+                  allowClear
                 />
                 <Input.Search
                   placeholder="Search District..."
                   style={{ flex: 1 }}
-                  onSearch={(value) => setDistrictFilter(value)}
-                  onChange={(e) => setDistrictFilter(e.target.value)}
+                  onSearch={handleDistrictSearch}
+                  // onChange={(e) => handleDistrictSearch(e.target.value)}
+                  allowClear
                 />
               </div>
               <div
@@ -102,13 +104,14 @@ const RefereeMatches = () => {
                 <DatePicker
                   className="searchInputDate"
                   style={{ flex: 1 }}
-                  onChange={(date, dateString) => setDateFilter(dateString)}
+                  onChange={handleDateChange}
                 />
                 <Input.Search
                   placeholder="Search Team Name..."
                   style={{ flex: 1 }}
-                  onSearch={(value) => setTeamNameFilter(value)}
-                  onChange={(e) => setTeamNameFilter(e.target.value)}
+                  onSearch={handleTeamNameSearch}
+                  // onChange={(e) => handleTeamNameSearch(e.target.value)}
+                  allowClear
                 />
               </div>
             </div>
@@ -183,7 +186,7 @@ const RefereeMatches = () => {
                   pageSize: 5,
                 }}
                 // Displaying data from the frontend
-                dataSource={filteredData} // Use filteredData instead of sampleData
+                dataSource={sampleData} // Use filteredData instead of sampleData
               ></Table>
             </div>
           </Content>
