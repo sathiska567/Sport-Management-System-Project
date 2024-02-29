@@ -2,52 +2,64 @@ const mongoose = require("mongoose")
 
 const palyerSchema = new mongoose.Schema({
 
-FirstName : {
-     type : String,
-     require : [true,"First name is required"]
+      PlayerId: {type: String, unique:true},
 
-  },
+      FirstName: {
+            type: String,
+            require: [true, "First name is required"]
 
-LastName : {
-     type : String,
-     require : [true,"Last name is required"]
+      },
 
-  },
+      LastName: {
+            type: String,
+            require: [true, "Last name is required"]
 
-  Email:{
-        type :String,
-        require : [true,"Email is required"]
-  },
+      },
 
-  Age:{
-        type :Number,
-        require : [true,"Age is required"]
-  },
+      Email: {
+            type: String,
+            require: [true, "Email is required"]
+      },
 
-  Experience:{
-        type :String,
-        require : [true,"Experience is required"]
-  },
+      Age: {
+            type: Number,
+            require: [true, "Age is required"]
+      },
 
-  Distric:{
-        type :String,
-        require : [true,"Distric is required"]
-  },
+      Experience: {
+            type: String,
+            require: [true, "Experience is required"]
+      },
 
-  UserRole:{
-        type :String,
-        require : [true,"UserRole is required"]
-  },
+      Distric: {
+            type: String,
+            require: [true, "Distric is required"]
+      },
 
-  status : {
-      type:String,
-      default :'pending'
-   
-     },
+      UserRole: {
+            type: String,
+            require: [true, "UserRole is required"]
+      },
+
+      Status: {
+            type: String,
+            default: 'pending'
+
+      },
+
+      teams: [{
+            type: String,
+            ref: 'Team'
+          }],
+      
+      matches:[{
+            type: String, unique:true,
+            ref: 'Match'
+      }]
 
 })
 
 
-const PlayerModel = mongoose.model("Player",palyerSchema)
+const Player = mongoose.model("Player", palyerSchema)
 
-module.exports = PlayerModel;
+module.exports = {Player};
