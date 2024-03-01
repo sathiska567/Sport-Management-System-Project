@@ -1,9 +1,9 @@
-.coach-profile {
+.player-profile {
     position: relative;
     width: 95%;
     overflowX: auto !important;
     margin: auto;
-    margin-top: 6vh;
+    margin-top: 6vh !important;
 }
 
 .ProfileHeader {
@@ -77,7 +77,7 @@
     margin-right: auto !important;
 }
 
-.coachProfileForm {
+.playerProfileForm {
     height: 50vh !important;
     margin-bottom: 10vh !important;
 }

@@ -1,9 +1,10 @@
-.player-profile {
+.referee-profile{
     position: relative;
     margin: 0 auto; 
     margin-top: 0px;
     width: 95%;
     height: 600px;
+    margin-top: 5vh !important;
 }
 
 .ProfileHeaderSection {
@@ -31,15 +32,6 @@
     border-bottom: 1px solid #e6e6e6;
 }
 
-.PlayerProfile {
-    background-color: #fff;
-}
-
-
-.PlayerProfileForm {
-    height: 80vh !important;
-    width: 100%;
-}
 
 .upload-list-inline .ant-upload-list-item {
   float: left;
@@ -86,3 +78,8 @@
     margin-right: auto !important;
 }
 
+
+.refereeProfileForm {
+    height: 50vh !important;
+    margin-bottom: 10vh !important;
+}

@@ -275,15 +275,15 @@ const handleFormSubmit = async (index) => {
   return (
     <div>
       <PlayerSideBar>
-        <div className="coach-profile">
+        <div className="player-profile">
           <div className="ProfileHeader">
-            <h3 className="coachDetails">My Profile</h3>
+            <h3>My Profile</h3>
           </div>
           <div
             className="coachProfile"
             style={{ overflowX: "auto", height: "65vh" }}
           >
-            <form className="coachProfileForm">
+            <form className="playerProfileForm">
               <label className="formLabel">
                 Name:
                 <Input

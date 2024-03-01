@@ -283,15 +283,14 @@ const EOProfile = () => {
   return (
     <div>
       <EOSizeBar>
-        <div className="coach-profile">
+        <div className="EO-profile">
           <div className="ProfileHeader">
-            <h3 className="coachDetails">My Profile</h3>
+            <h3>My Profile</h3>
           </div>
           <div
-            className="coachProfile"
             style={{ overflowX: "auto", height: "65vh" }}
           >
-            <form className="coachProfileForm">
+            <form className="EOProfileForm">
               <label className="formLabel">
                 Name:
                 <Input
