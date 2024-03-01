@@ -89,7 +89,11 @@ const SideBar = ({ children }) => {
         }
       );
 
-      console.log(res.data.user);
+    if(res.data.user.messages.length > 0){
+      // console.log(res.data.user.messages[0]);
+      message.success(res.data.user.messages[0])
+      // console.log(res.data.user);
+    }
 
       setPositionNotification(res.data.user.notification.length);
 
