@@ -23,6 +23,7 @@ import AssignStaff from "./Components/EventOrganizer/EOAssignStaff/EOAssignStaff
 import CreateEvent from "./Components/EventOrganizer/EOCreateEvent/EOCreateEventForm.jsx";
 import EditEvent from "./Components/EventOrganizer/EOEditEvent/EOEditEvent.jsx";
 import EditEventForm from "./Components/EventOrganizer/EOEditEvent/EOEditEventForm.jsx";
+import EOProfile from "./Components/EventOrganizer/EOProfile/EOProfile.jsx";
 import CoachAvailability from "./Components/Coach/CoachAvailability/CoachAvailability.jsx";
 import CoachStats from "./Components/Coach/CoachStats/CoachStats.jsx";
 import CoachCreateTeam from "./Components/Coach/CoachCreateTeam/CoachCreateTeam.jsx";
@@ -47,6 +48,7 @@ import TeamManagerCreateTeam from "./Components/TeamManager/TeamManagerCreateTea
 import TeamManagerAssignMembersTable from "./Components/TeamManager/TeamManagerAssignMembers/TeamManagerAssignMembersTable.jsx";
 import TeamManagerAssignMembersCoach from "./Components/TeamManager/TeamManagerAssignMembers/TeamManagerAssignMembersCoach.jsx";
 import TeamManagerAssignMembersPlayer from "./Components/TeamManager/TeamManagerAssignMembers/TeamManagerAssignMembersPlayer.jsx";
+import TeamManagerProfile from "./Components/TeamManager/TeamManagerProfile/TeamManagerProfile.jsx";
 
 function App() {
   const isLoggedIn = window.localStorage.getItem("isLoggedIn");
@@ -267,6 +269,17 @@ function App() {
           }
         />
       </Routes>
+      <Routes>
+        <Route
+          path="/eo-profile"
+          element={
+            <ProtectedRoute>
+              <EOProfile />
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
+
       <Routes>
         <Route
           path="/coach-availability"
@@ -504,6 +517,16 @@ function App() {
           element={
             <ProtectedRoute>
               <TeamManagerAssignMembersPlayer />
+            </ProtectedRoute>
+          }
+        ></Route>
+      </Routes>
+      <Routes>
+        <Route
+          path="/TeamManager-profile"
+          element={
+            <ProtectedRoute>
+              <TeamManagerProfile />
             </ProtectedRoute>
           }
         ></Route>

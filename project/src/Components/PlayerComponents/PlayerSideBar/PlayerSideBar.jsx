@@ -3,6 +3,7 @@ import "./PlayerSideBar.css";
 import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { ReactComponent as Profile } from "../../icons/Profile.svg";
 import {
   faCalendarCheck,
   faChartLine,
@@ -224,7 +225,7 @@ const PlayerSideBar = ({ children }) => {
           >
             <NavLink to="/player-search">Search Players</NavLink>
           </Menu.Item>
-          <Menu.Item key="/player-profile" icon={<EditOutlined />}>
+          <Menu.Item key="/player-profile" icon={<Profile />}>
             <NavLink to="/player-profile">My Profile</NavLink>
           </Menu.Item>
           <Menu.Item

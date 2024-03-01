@@ -285,18 +285,15 @@ const handleFormSubmit = async (index) => {
     <div>
       <CoachSideBar>
         <div className="coach-profile">
-          <div className="ProfileHeaderSection">
             <div className="ProfileHeader">
               <h3 className="coachDetails">My Profile</h3>
             </div>
-          </div>
           <div
             className="coachProfile"
-            style={{ overflowX: "auto", height: "75vh" }}
+            style={{ overflowX: "auto", height: "65vh" }}
           >
             <form
               className="coachProfileForm"
-              style={{ width: "80%", marginLeft: "auto", marginRight: "auto" }}
             >
               <label className="formLabel">
                 Name:
@@ -322,7 +319,7 @@ const handleFormSubmit = async (index) => {
                   <label className="formLabel">Date of Birth:</label>
                   <DatePicker
                     style={{
-                      width: "350%",
+                      width: "300%",
                     }}
                     onChange={(date, dateString) =>
                       setcoachDateOfBirth(dateString)

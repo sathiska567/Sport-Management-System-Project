@@ -3,6 +3,8 @@ import "./RefereeSideBar.css";
 import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { ReactComponent as Profile } from "../../icons/Profile.svg";
+
 import {
   faCalendarCheck,
   faChartLine,
@@ -212,7 +214,7 @@ const RefereeSideBar = ({ children }) => {
           >
             <NavLink to="/referee-matches">Matches</NavLink>
           </Menu.Item>
-          <Menu.Item key="/referee-profile" icon={<UserOutlined />}>
+          <Menu.Item key="/referee-profile" icon={<Profile />}>
             <NavLink to="/referee-profile">My Profile</NavLink>
           </Menu.Item>
           <Menu.Item

@@ -1,8 +1,17 @@
 import { React, useEffect, useState } from "react";
-import "./PlayerProfile.css";
-import PlayerSideBar from "../PlayerSideBar/PlayerSideBar";
-import { Upload, Modal, Input, Button, DatePicker, InputNumber, message, Flex } from "antd";
-import { PoweroffOutlined } from '@ant-design/icons';
+import "./TeamManagerProfile.css";
+import TeamManagerSideBar from "../TeamManagerSideBar/TeamManagerSideBar";
+import {
+  Upload,
+  Modal,
+  Input,
+  Button,
+  DatePicker,
+  InputNumber,
+  message,
+  Flex,
+} from "antd";
+import { PoweroffOutlined } from "@ant-design/icons";
 import ImgCrop from "antd-img-crop";
 import axios from "axios";
 
@@ -14,21 +23,20 @@ const getBase64 = (file) =>
     reader.onerror = (error) => reject(error);
   });
 
-const PlayerProfile = () => {
+const TeamManagerProfile = () => {
   /*----------------------Profile Image upload-Start--------------------*/
   const [previewVisibleProfile, setPreviewVisibleProfile] = useState(false);
   const [previewImageProfile, setPreviewImageProfile] = useState("");
   const [fileListProfile, setFileListProfile] = useState([]);
 
-  const [playerName, setPlayerName] = useState("")
-  const [playerEmail, setPlayerEmail] = useState("")
-  const [playerDateOfBirth, setPlayerDateOfBirth] = useState("")
-  const [playerAge, setPlayerAge] = useState(0)
-  const [playerId, setPlayerId] = useState("")
-  const [formData, setFormData] = useState([])
+  const [playerName, setPlayerName] = useState("");
+  const [playerEmail, setPlayerEmail] = useState("");
+  const [playerDateOfBirth, setPlayerDateOfBirth] = useState("");
+  const [playerAge, setPlayerAge] = useState(0);
+  const [playerId, setPlayerId] = useState("");
+  const [formData, setFormData] = useState([]);
 
-
-  const [NewfileList, setNewFileList] = useState([])
+  const [NewfileList, setNewFileList] = useState([]);
   const [coverImageFileList, setCoverImageFileList] = useState([]);
   const [medicalReportFileList, setMedicalReportFileList] = useState([]);
 
@@ -37,7 +45,8 @@ const PlayerProfile = () => {
   // GET CURRENT USER DETAILS
   const currentUserData = async () => {
     try {
-      const res = await axios.get("http://localhost:8080/api/v1/user/getCurrentUser",
+      const res = await axios.get(
+        "http://localhost:8080/api/v1/user/getCurrentUser",
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -46,24 +55,28 @@ const PlayerProfile = () => {
       );
 
       // console.log(res.data.user._id);
-      setPlayerId(res.data.user._id)
-
-
+      setPlayerId(res.data.user._id);
     } catch (error) {
       message.error("Error have inside the Get currentUserData function");
     }
   };
 
-
-const handleFormSubmit = async (index) => {
-    console.log(playerId, playerName, playerEmail, playerDateOfBirth, playerAge, NewfileList, index);
+  const handleFormSubmit = async (index) => {
+    console.log(
+      playerId,
+      playerName,
+      playerEmail,
+      playerDateOfBirth,
+      playerAge,
+      NewfileList,
+      index
+    );
 
     setLoadings((prevLoadings) => {
       const newLoadings = [...prevLoadings];
       newLoadings[index] = true;
       return newLoadings;
     });
-
 
     setTimeout(() => {
       setLoadings((prevLoadings) => {
@@ -82,13 +95,16 @@ const handleFormSubmit = async (index) => {
 
       try {
         // Upload profile image and get the response
-        const imageUploadResponse = await axios.post("http://localhost:8080/api/v1/profile/player-profile-image-upload", formData);
+        const imageUploadResponse = await axios.post(
+          "http://localhost:8080/api/v1/profile/player-profile-image-upload",
+          formData
+        );
         console.log(imageUploadResponse.data.success);
         // Extract image URL from the response
         const imageUrl = imageUploadResponse.data.data.PlayerprofileImageLink;
 
         if (imageUploadResponse.data.success) {
-          message.success(imageUploadResponse.data.message)
+          message.success(imageUploadResponse.data.message);
           // window.location.reload();
         }
       } catch (error) {
@@ -96,8 +112,7 @@ const handleFormSubmit = async (index) => {
       }
     }
 
-
-  try {
+    try {
       // Check if coverImageFileList is not empty
       if (coverImageFileList.length > 0) {
         const coverImagefile = coverImageFileList[0].originFileObj;
@@ -109,28 +124,27 @@ const handleFormSubmit = async (index) => {
         // console.log([...coverImageFormData]);
 
         // Upload cover image
-        const coverImageResponse = await axios.post("http://localhost:8080/api/v1/profile/player-cover-image-upload", coverImageFormData);
+        const coverImageResponse = await axios.post(
+          "http://localhost:8080/api/v1/profile/player-cover-image-upload",
+          coverImageFormData
+        );
 
         // Handle coverImageResponse if needed
         console.log(coverImageResponse.data);
 
         if (coverImageResponse.data.success) {
-          message.success(coverImageResponse.data.message)
+          message.success(coverImageResponse.data.message);
           // window.location.reload();
         }
-
       } else {
         message.error("No cover image selected");
       }
-
     } catch (error) {
       // Log the error details (optional)
       console.error("Error uploading cover image:", error);
 
       message.error("Error uploading cover image");
     }
-
-   
 
     try {
       console.log(medicalReportFileList);
@@ -146,15 +160,17 @@ const handleFormSubmit = async (index) => {
         console.log([...medicalReportFormData]);
 
         // Upload Medical report
-        const coverImageResponse = await axios.post("http://localhost:8080/api/v1/profile/player-medical-report-upload", medicalReportFormData);
+        const coverImageResponse = await axios.post(
+          "http://localhost:8080/api/v1/profile/player-medical-report-upload",
+          medicalReportFormData
+        );
 
         // Handle coverImageResponse if needed
         console.log(coverImageResponse.data);
 
-        if(coverImageResponse.data.success){
-          message.success(coverImageResponse.data.message)
+        if (coverImageResponse.data.success) {
+          message.success(coverImageResponse.data.message);
         }
-
       } else {
         message.error("No cover image selected");
       }
@@ -162,11 +178,10 @@ const handleFormSubmit = async (index) => {
       message.error("Error uploading medical report");
     }
 
-
-
     try {
       // Now, make a second API call to save player profile data with the image URL
-      const playerProfileResponse = await axios.post("http://localhost:8080/api/v1/profile/player-profile",
+      const playerProfileResponse = await axios.post(
+        "http://localhost:8080/api/v1/profile/player-profile",
         {
           playerId: playerId,
           playerName: playerName,
@@ -180,28 +195,22 @@ const handleFormSubmit = async (index) => {
       // Handle response if needed
       console.log(playerProfileResponse.data);
       if (playerProfileResponse.data.success) {
-        message.success(playerProfileResponse.data.message)
+        message.success(playerProfileResponse.data.message);
         window.location.reload();
       }
-
     } catch (error) {
       message.error("Error occurred inside the handleFormSubmit function");
     }
-
-
   };
 
-
   useEffect(() => {
-    currentUserData()
-  }, [])
+    currentUserData();
+  }, []);
 
   const onChangeProfile = async ({ fileList: newFileList }) => {
     console.log(newFileList);
-    setNewFileList(newFileList)
-
+    setNewFileList(newFileList);
   };
-
 
   const onPreviewProfile = async (file) => {
     let src = file.url;
@@ -225,9 +234,8 @@ const handleFormSubmit = async (index) => {
 
   const onChangeCover = ({ fileList: newFileList }) => {
     setFileListCover(newFileList);
-    setCoverImageFileList(newFileList)
+    setCoverImageFileList(newFileList);
   };
-
 
   const onPreviewCover = async (file) => {
     let src = file.url;
@@ -253,7 +261,7 @@ const handleFormSubmit = async (index) => {
     },
   ]);
   const onChange = ({ fileList: newFileList }) => {
-    setMedicalReportFileList(newFileList);    
+    setMedicalReportFileList(newFileList);
   };
 
   const onPreview = async (file) => {
@@ -274,7 +282,7 @@ const handleFormSubmit = async (index) => {
 
   return (
     <div>
-      <PlayerSideBar>
+      <TeamManagerSideBar>
         <div className="coach-profile">
           <div className="ProfileHeader">
             <h3 className="coachDetails">My Profile</h3>
@@ -407,9 +415,9 @@ const handleFormSubmit = async (index) => {
             </form>
           </div>
         </div>
-      </PlayerSideBar>
+      </TeamManagerSideBar>
     </div>
   );
 };
 
-export default PlayerProfile;
+export default TeamManagerProfile;

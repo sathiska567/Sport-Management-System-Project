@@ -213,20 +213,15 @@ const RefereeProfile = () => {
   return (
     <div>
       <RefereeSideBar>
-        <div className="player-profile">
-          <div className="ProfileHeaderSection">
-            <div className="ProfileHeader">
-              <h3 className="playerDetails">My Profile</h3>
-            </div>
+        <div className="coach-profile">
+          <div className="ProfileHeader">
+            <h3 className="coachDetails">My Profile</h3>
           </div>
           <div
-            className="PlayerProfile"
-            style={{ overflowX: "auto", height: "75vh" }}
+            className="coachProfile"
+            style={{ overflowX: "auto", height: "65vh" }}
           >
-            <form
-              className="PlayerProfileForm"
-              style={{ width: "80%", marginLeft: "auto", marginRight: "auto" }}
-            >
+            <form className="coachProfileForm">
               <label className="formLabel">
                 Name:
                 <Input
