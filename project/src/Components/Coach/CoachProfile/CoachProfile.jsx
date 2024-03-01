@@ -29,21 +29,24 @@ const CoachProfile = () => {
   const [previewImageProfile, setPreviewImageProfile] = useState("");
   const [fileListProfile, setFileListProfile] = useState([]);
 
-  const [playerName, setPlayerName] = useState("");
-  const [playerEmail, setPlayerEmail] = useState("");
-  const [playerDateOfBirth, setPlayerDateOfBirth] = useState("");
-  const [playerAge, setPlayerAge] = useState(0);
-  const [playerId, setPlayerId] = useState("");
-  const [formData, setFormData] = useState([]);
-  const [NewfileList, setNewFileList] = useState([]);
+  const [coachName, setcoachName] = useState("")
+  const [coachEmail, setcoachEmail] = useState("")
+  const [coachDateOfBirth, setcoachDateOfBirth] = useState("")
+  const [coachAge, setcoachAge] = useState(0)
+  const [coachId, setcoachId] = useState("")
+  const [formData, setFormData] = useState([])
+
+
+  const [NewfileList, setNewFileList] = useState([])
+  const [coverImageFileList, setCoverImageFileList] = useState([]);
+  const [medicalReportFileList, setMedicalReportFileList] = useState([]);
 
   const [loadings, setLoadings] = useState([]);
 
   // GET CURRENT USER DETAILS
   const currentUserData = async () => {
     try {
-      const res = await axios.get(
-        "http://localhost:8080/api/v1/user/getCurrentUser",
+      const res = await axios.get("http://localhost:8080/api/v1/user/getCurrentUser",
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -52,28 +55,24 @@ const CoachProfile = () => {
       );
 
       // console.log(res.data.user._id);
-      setPlayerId(res.data.user._id);
+      setcoachId(res.data.user._id)
+
+
     } catch (error) {
       message.error("Error have inside the Get currentUserData function");
     }
   };
 
-  const handleFormSubmit = async (index) => {
-    console.log(
-      playerId,
-      playerName,
-      playerEmail,
-      playerDateOfBirth,
-      playerAge,
-      NewfileList,
-      index
-    );
+
+const handleFormSubmit = async (index) => {
+    console.log(coachId, coachName, coachEmail, coachDateOfBirth, coachAge, NewfileList, index);
 
     setLoadings((prevLoadings) => {
       const newLoadings = [...prevLoadings];
       newLoadings[index] = true;
       return newLoadings;
     });
+
 
     setTimeout(() => {
       setLoadings((prevLoadings) => {
@@ -88,62 +87,130 @@ const CoachProfile = () => {
 
       let formData = new FormData();
       formData.append("image", file);
-      formData.append("playerId", playerId);
+      formData.append("coachId", coachId);
 
       try {
-        // Upload image and get the response
-        const imageUploadResponse = await axios.post(
-          "http://localhost:8080/api/v1/profile/player-profile-image-upload",
-          formData
-        );
-
+        // Upload profile image and get the response
+        const imageUploadResponse = await axios.post("http://localhost:8080/api/v1/profile/coach-profile-image-upload", formData);
         console.log(imageUploadResponse.data.success);
-
         // Extract image URL from the response
-        const imageUrl = imageUploadResponse.data.data.PlayerprofileImageLink;
+        const imageUrl = imageUploadResponse.data.data.coachprofileImageLink;
 
-        // Now, make a second API call to save player profile data with the image URL
-        const playerProfileResponse = await axios.post(
-          "http://localhost:8080/api/v1/profile/player-profile",
-          {
-            playerId: playerId,
-            playerName: playerName,
-            playerEmail: playerEmail,
-            playerDateOfBirth: playerDateOfBirth,
-            playerAge: playerAge,
-            PlayerprofileImageLink: imageUrl,
-          }
-        );
-
-        // Handle response if needed
-        console.log(playerProfileResponse.data);
+        if (imageUploadResponse.data.success) {
+          message.success(imageUploadResponse.data.message)
+          // window.location.reload();
+        }
       } catch (error) {
         message.error("Error occurred inside the handleFormSubmit function");
       }
     }
+
+
+  try {
+      // Check if coverImageFileList is not empty
+      if (coverImageFileList.length > 0) {
+        const coverImagefile = coverImageFileList[0].originFileObj;
+        let coverImageFormData = new FormData();
+        coverImageFormData.append("coverImage", coverImagefile);
+        coverImageFormData.append("coachId", coachId);
+
+        // // Log FormData for debugging (optional)
+        // console.log([...coverImageFormData]);
+
+        // Upload cover image
+        const coverImageResponse = await axios.post("http://localhost:8080/api/v1/profile/coach-cover-image-upload", coverImageFormData);
+
+        // Handle coverImageResponse if needed
+        console.log(coverImageResponse.data);
+
+        if (coverImageResponse.data.success) {
+          message.success(coverImageResponse.data.message)
+          // window.location.reload();
+        }
+
+      } else {
+        message.error("No cover image selected");
+      }
+
+    } catch (error) {
+      // Log the error details (optional)
+      console.error("Error uploading cover image:", error);
+
+      message.error("Error uploading cover image");
+    }
+
+   
+
+    try {
+      console.log(medicalReportFileList);
+
+      if (medicalReportFileList.length > 0) {
+        const medicalReportfile = medicalReportFileList[1].originFileObj;
+
+        let medicalReportFormData = new FormData();
+        medicalReportFormData.append("medicalReport", medicalReportfile);
+        medicalReportFormData.append("coachId", coachId);
+
+        // Log FormData for debugging (optional)
+        console.log([...medicalReportFormData]);
+
+        // Upload Medical report
+        const coverImageResponse = await axios.post("http://localhost:8080/api/v1/profile/coach-medical-report-upload", medicalReportFormData);
+
+        // Handle coverImageResponse if needed
+        console.log(coverImageResponse.data);
+
+        if(coverImageResponse.data.success){
+          message.success(coverImageResponse.data.message)
+        }
+
+      } else {
+        message.error("No cover image selected");
+      }
+    } catch (error) {
+      message.error("Error uploading medical report");
+    }
+
+
+
+    try {
+      // Now, make a second API call to save coach profile data with the image URL
+      const coachProfileResponse = await axios.post("http://localhost:8080/api/v1/profile/coach-profile",
+        {
+          coachId: coachId,
+          coachName: coachName,
+          coachEmail: coachEmail,
+          coachDateOfBirth: coachDateOfBirth,
+          coachAge: coachAge,
+          // coachprofileImageLink: imageUrl,
+        }
+      );
+
+      // Handle response if needed
+      console.log(coachProfileResponse.data);
+      if (coachProfileResponse.data.success) {
+        message.success(coachProfileResponse.data.message)
+        window.location.reload();
+      }
+
+    } catch (error) {
+      message.error("Error occurred inside the handleFormSubmit function");
+    }
+
+
   };
 
+
   useEffect(() => {
-    currentUserData();
-  }, []);
+    currentUserData()
+  }, [])
 
   const onChangeProfile = async ({ fileList: newFileList }) => {
     console.log(newFileList);
-    setNewFileList(newFileList);
+    setNewFileList(newFileList)
+
   };
 
-  // const onChangeProfile = ({ fileList: newFileList }) => {
-  //   console.log(newFileList[0].originFileObj);
-  //   const file = newFileList
-  //   let formData = new FormData();
-
-  //   formData.append("image", file);
-
-  //   console.log([...formData]);
-
-  //   setFileListProfile(newFileList);
-
-  // };
 
   const onPreviewProfile = async (file) => {
     let src = file.url;
@@ -157,6 +224,7 @@ const CoachProfile = () => {
     setPreviewImageProfile(src);
     setPreviewVisibleProfile(true);
   };
+
   /*----------------------Profile Image upload-End--------------------*/
 
   /*----------------------Cover Image upload-Start--------------------*/
@@ -166,7 +234,10 @@ const CoachProfile = () => {
 
   const onChangeCover = ({ fileList: newFileList }) => {
     setFileListCover(newFileList);
+    setCoverImageFileList(newFileList)
   };
+
+
   const onPreviewCover = async (file) => {
     let src = file.url;
     if (!src) {
@@ -191,7 +262,7 @@ const CoachProfile = () => {
     },
   ]);
   const onChange = ({ fileList: newFileList }) => {
-    setFileList(newFileList);
+    setMedicalReportFileList(newFileList);    
   };
 
   const onPreview = async (file) => {
@@ -213,18 +284,18 @@ const CoachProfile = () => {
   return (
     <div>
       <CoachSideBar>
-        <div className="player-profile">
+        <div className="coach-profile">
           <div className="ProfileHeaderSection">
             <div className="ProfileHeader">
-              <h3 className="playerDetails">My Profile</h3>
+              <h3 className="coachDetails">My Profile</h3>
             </div>
           </div>
           <div
-            className="PlayerProfile"
+            className="coachProfile"
             style={{ overflowX: "auto", height: "75vh" }}
           >
             <form
-              className="PlayerProfileForm"
+              className="coachProfileForm"
               style={{ width: "80%", marginLeft: "auto", marginRight: "auto" }}
             >
               <label className="formLabel">
@@ -233,7 +304,7 @@ const CoachProfile = () => {
                   type="text"
                   name="name"
                   className="inputBox"
-                  onChange={(e) => setPlayerName(e.target.value)}
+                  onChange={(e) => setcoachName(e.target.value)}
                 />
               </label>
               <label className="formLabel">
@@ -242,7 +313,7 @@ const CoachProfile = () => {
                   type="email"
                   name="email"
                   className="inputBox"
-                  onChange={(e) => setPlayerEmail(e.target.value)}
+                  onChange={(e) => setcoachEmail(e.target.value)}
                 />
               </label>
 
@@ -254,7 +325,7 @@ const CoachProfile = () => {
                       width: "350%",
                     }}
                     onChange={(date, dateString) =>
-                      setPlayerDateOfBirth(dateString)
+                      setcoachDateOfBirth(dateString)
                     }
                   />
                 </div>
@@ -262,7 +333,7 @@ const CoachProfile = () => {
                   <label className="formLabel">Age:</label>
                   <input
                     type="number"
-                    onChange={(e) => setPlayerAge(e.target.value)}
+                    onChange={(e) => setcoachAge(e.target.value)}
                   />
                 </div>
               </div>
