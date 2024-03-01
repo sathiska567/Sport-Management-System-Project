@@ -1,7 +1,7 @@
-const playerProfileModel = require('../../models/PlayerProfileModel/PlayerProfileModel');
-const playerImageModel = require('../../models/PlayerImageModel/PlayerImageModel');
-const playerCoverImageModel = require('../../models/PlayerImageModel/PlayerCoverImageModel');
-const playerMedicalReportModel = require('../../models/PlayerImageModel/PlayerMedicalReportModel');
+const coachProfileModel = require('../../models/CoachProfileModel/CoachProfileModel');
+const coachImageModel = require('../../models/CoachImageModel/CoachImageModel');
+const coachCoverImageModel = require('../../models/CoachImageModel/CoachCoverImageModel');
+const coachMedicalReportModel = require('../../models/CoachImageModel/CoachMedicalReportModel');
 const cloudinary = require("cloudinary").v2;
 
 cloudinary.config({
@@ -11,17 +11,17 @@ cloudinary.config({
 });
 
 
-const playerProfileController = async (req, res) => {
-        const { playerId, playerName, playerEmail, playerDateOfBirth, playerAge } = req.body;
-        console.log(playerId, playerName, playerEmail, playerDateOfBirth, playerAge);
+const coachProfileController = async (req, res) => {
+        const { coachId, coachName, coachEmail, coachDateOfBirth, coachAge } = req.body;
+        console.log(coachId, coachName, coachEmail, coachDateOfBirth, coachAge);
         try {
 
-                const response = new playerProfileModel({
-                        playerName: playerName,
-                        playerEmail: playerEmail,
-                        playerDateOfBirth: playerDateOfBirth,
-                        playerAge: playerAge,
-                        playerId: playerId,
+                const response = new coachProfileModel({
+                        coachName: coachName,
+                        coachEmail: coachEmail,
+                        coachDateOfBirth: coachDateOfBirth,
+                        coachAge: coachAge,
+                        coachId: coachId,
                 })
 
                 await response.save();
@@ -45,7 +45,7 @@ const playerProfileController = async (req, res) => {
 }
 
 
-const playerProfileUploadController = async (req, res) => {
+const coachProfileUploadController = async (req, res) => {
         // console.log(req.files);
         try {
                 if (!req.files || !req.files.image) {
@@ -57,10 +57,10 @@ const playerProfileUploadController = async (req, res) => {
 
                 const result = await cloudinary.uploader.upload(req.files.image.path);
 
-                const data = new playerImageModel({
-                        playerId : req.fields.playerId,
-                        PlayerprofileImageSecureLink: result.secure_url,
-                        PlayerprofileImageLink:result.url,
+                const data = new coachImageModel({
+                        coachId : req.fields.coachId,
+                        coachprofileImageSecureLink: result.secure_url,
+                        coachprofileImageLink:result.url,
 
                 })
 
@@ -87,7 +87,7 @@ const playerProfileUploadController = async (req, res) => {
 };
 
 
-const playerCoverImageUploadController = async(req,res)=>{
+const coachCoverImageUploadController = async(req,res)=>{
         try {
                 if (!req.files || !req.files.coverImage) {
                         return res.status(400).send({
@@ -98,10 +98,10 @@ const playerCoverImageUploadController = async(req,res)=>{
 
                 const CoverImageResult = await cloudinary.uploader.upload(req.files.coverImage.path);
 
-                const CoverImageData = new playerCoverImageModel({
-                        playerId : req.fields.playerId,
-                        PlayerCoverImageSecureLink: CoverImageResult.secure_url,
-                        PlayerCoverImageLink:CoverImageResult.url,
+                const CoverImageData = new coachCoverImageModel({
+                        coachId : req.fields.coachId,
+                        coachCoverImageSecureLink: CoverImageResult.secure_url,
+                        coachCoverImageLink:CoverImageResult.url,
 
                 })
 
@@ -128,7 +128,7 @@ const playerCoverImageUploadController = async(req,res)=>{
 }
 
 
-const playerMedicalReportUploadController = async(req,res)=>{
+const coachMedicalReportUploadController = async(req,res)=>{
         console.log(req.files);
         try {
                 if (!req.files || !req.files.medicalReport) {
@@ -142,10 +142,10 @@ const playerMedicalReportUploadController = async(req,res)=>{
 
                 console.log(medicalReportResult);
 
-                const medicalReportData = new playerMedicalReportModel({
-                        playerId : req.fields.playerId,
-                        PlayermedicalReportSecureLink: medicalReportResult.secure_url,
-                        PlayerMedicalReportLink:medicalReportResult.url,
+                const medicalReportData = new coachMedicalReportModel({
+                        coachId : req.fields.coachId,
+                        coachmedicalReportSecureLink: medicalReportResult.secure_url,
+                        coachMedicalReportLink:medicalReportResult.url,
 
                 })
 
@@ -173,4 +173,4 @@ const playerMedicalReportUploadController = async(req,res)=>{
 
 
 
-module.exports = { playerProfileController, playerProfileUploadController,playerCoverImageUploadController,playerMedicalReportUploadController}
+module.exports = { coachProfileController, coachProfileUploadController,coachCoverImageUploadController,coachMedicalReportUploadController}

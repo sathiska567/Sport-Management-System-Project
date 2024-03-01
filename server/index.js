@@ -19,7 +19,10 @@ const getOneEventData = require("./routes/CreateFixtureRoute/getOneFixtureRoute"
 const deleteOneFixtureRouter = require("./routes/CreateFixtureRoute/deleteOneFixtureRoute")
 const giveReviewRoute = require("./routes/CoachReviewRoute/CreateReviewRoute")
 const getPlayerDetailsRoute = require('./routes/GetAllPlayerDetails/getPlayerDetailsRoute')
+
 const PlayerProfileRoute = require('./routes/PlayerProfileRoute/PlayerProfileRoute')
+const coachProfileRoute = require('./routes/CoachProfileRoute/CoachProfileRoute')
+
 const coachAvailabilityRoute = require("./routes/CoachAvailabilityRoute/CoachAvailabilityRoute")
 const PlayerAvailabilityRoute = require("./routes/PlayerAvailabilityRoute/PlayerAvailabilityRoute")
 const getPlayerReviewRoute = require("./routes/CoachReviewRoute/getCurrentPlayerReviewRoute")
@@ -65,6 +68,9 @@ app.use("/api/v1/player",getPlayerDetailsRoute);
 
 // PLAYER ROUTE
 app.use("/api/v1/profile",PlayerProfileRoute);
+
+// COACH ROUTE
+app.use("/api/v1/profile",coachProfileRoute);
 
 
 // COACH AVAILABILITY
