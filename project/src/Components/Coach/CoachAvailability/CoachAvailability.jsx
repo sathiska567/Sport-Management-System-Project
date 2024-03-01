@@ -33,9 +33,8 @@ const dataSource = [
 const CoachAvailability = () => {
   const [eventLocation, setEventLocation] = useState("");
   const [userLocation, setUserLocation] = useState("");
-  const [createdEvent,setCreateEvent] = useState([]);
   const [coachId,setCoachId] = useState([])
-
+  const [createEvent, setCreateEvent] = useState([]);
   const currentUserData = async () => {
     try {
       const res = await axios.get(
@@ -55,33 +54,22 @@ const CoachAvailability = () => {
 
 
   // GET ALL CREATE EVENT 
-  const getAllCreateEvent = async () => {
-     try {
-       const response = await axios.get("http://localhost:8080/api/v1/event/get-all-events")
+const getAllCreateEvent = async () => {
+  try {
+    const response = await axios.get(
+      "http://localhost:8080/api/v1/event/get-all-events"
+    );
 
-       if(response.data.success){
-        setCreateEvent(response.data.data)
-        // console.log(response.data.data);
-       }
-       
-      
-     } catch (error) {
-       message.error("Error fetching data");
-     }
+    if (response.data.success) {
+      setCreateEvent(response.data.data);
+    }
+  } catch (error) {
+    message.error("Error fetching data");
   }
+};
 
 
   // Filter userApplicationData based on userRole and Userlocation
-  const filteredData = createdEvent.filter((data) => {
-    return (
-      (!eventLocation ||
-        data.eventLocation
-          .toLowerCase()
-          .includes(eventLocation.toLowerCase())) &&
-      (!userLocation ||
-        data.eventDate.toLowerCase().includes(userLocation.toLowerCase()))
-    );
-  });
 
   const handleCheckboxChange = async(id,key, isChecked) => {
     // Update your state or data here based on the checkbox state
@@ -106,12 +94,21 @@ const CoachAvailability = () => {
     }
 
   };
-
-
   useEffect(()=>{
     getAllCreateEvent()
     currentUserData()
   },[])
+
+
+  //filter data
+  const handleEventLocationSearch = (value) => {
+    console.log("Event Location Searched: ", value);
+  };
+
+  const handleDateChange = (date, dateString) => {
+    console.log("Date Selected: ", dateString);
+  };
+
 
   return (
     <EOSiderBar>
@@ -136,13 +133,14 @@ const CoachAvailability = () => {
                 style={{
                   marginBottom: "8px",
                 }}
-                onSearch={(value) => setEventLocation(value)}
-                onChange={(e) => setEventLocation(e.target.value)}
+                onSearch={handleEventLocationSearch}
+                allowClear
               />
+
               <DatePicker
                 className="searchInputDate"
                 style={{ marginBottom: 8 }}
-                onChange={(date, dateString) => setUserLocation(dateString)}
+                onChange={handleDateChange}
               />
             </div>
             <Table
@@ -152,27 +150,23 @@ const CoachAvailability = () => {
                   dataIndex: "eventName",
                   width: "20%",
                   align: "center",
-                  render:((text,record)=>(
+                  render: (text, record) => (
                     <span>{record.nameOfTheEvent}</span>
-                  ))
+                  ),
                 },
                 {
                   title: "Event Location",
                   dataIndex: "eventLocation",
                   width: "20%",
                   align: "center",
-                  render:((text,record)=>(
-                    <span>{record.location}</span>
-                  ))
+                  render: (text, record) => <span>{record.location}</span>,
                 },
                 {
                   title: "Event Date",
                   dataIndex: "eventDate",
                   width: "20%",
                   align: "center",
-                  render:((text,record)=>(
-                    <span>{"2024-02-03"}</span>
-                  ))
+                  render: (text, record) => <span>{"2024-02-03"}</span>,
                 },
                 {
                   title: "Actions",
@@ -190,14 +184,18 @@ const CoachAvailability = () => {
                     >
                       <Checkbox
                         onChange={(e) =>
-                          handleCheckboxChange(record._id,record.key, e.target.checked)
+                          handleCheckboxChange(
+                            record._id,
+                            record.key,
+                            e.target.checked
+                          )
                         }
                       />
                     </span>
                   ),
                 },
               ]}
-              dataSource={filteredData}
+              dataSource={createEvent}
             />
           </Content>
         </Layout>

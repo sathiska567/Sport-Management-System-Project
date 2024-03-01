@@ -34,22 +34,17 @@ const RefereeAvailability = () => {
   const [userLocation, setUserLocation] = useState("");
 
   // Filter userApplicationData based on userRole and Userlocation
-  const filteredData = dataSource.filter((data) => {
-    return (
-      (!eventLocation ||
-        data.eventLocation
-          .toLowerCase()
-          .includes(eventLocation.toLowerCase())) &&
-      (!userLocation ||
-        data.eventDate.toLowerCase().includes(userLocation.toLowerCase()))
-    );
-  });
+  const handleEventLocationSearch = (value) => {
+    console.log("Event Location Searched: ", value);
+  };
 
+  const handleDateChange = (date, dateString) => {
+    console.log("Date Selected: ", dateString);
+  };
   const handleCheckboxChange = (key, isChecked) => {
     // Update your state or data here based on the checkbox state
     console.log(
-      `Checkbox for row with key ${key} is now ${
-        isChecked ? "checked" : "unchecked"
+      `Checkbox for row with key ${key} is now ${isChecked ? "checked" : "unchecked"
       }`
     );
   };
@@ -77,13 +72,14 @@ const RefereeAvailability = () => {
                 style={{
                   marginBottom: "8px",
                 }}
-                onSearch={(value) => setEventLocation(value)}
-                onChange={(e) => setEventLocation(e.target.value)}
+                onSearch={handleEventLocationSearch}
+                // onChange={(e) => handleEventLocationSearch(e.target.value)}
+                allowClear
               />
               <DatePicker
                 className="searchInputDate"
                 style={{ marginBottom: 8 }}
-                onChange={(date, dateString) => setUserLocation(dateString)}
+                onChange={handleDateChange}
               />
             </div>
             <Table
@@ -129,7 +125,7 @@ const RefereeAvailability = () => {
                   ),
                 },
               ]}
-              dataSource={filteredData}
+              dataSource={dataSource}
             />
           </Content>
         </Layout>

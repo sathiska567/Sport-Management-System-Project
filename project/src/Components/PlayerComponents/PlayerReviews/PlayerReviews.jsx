@@ -17,10 +17,10 @@ const PlayerReviews = () => {
   const [currentPlayerId, setCurrentPlayerId] = useState("");
   const [reviews, setReviews] = useState([]);
   const [currentPlayerReviews, setCurrentPlayerReviews] = useState([]);
-  const [reviewGivenCoachId,setReviewGivenCoachId] = useState([]);
-  const [reviewGivenCoachName,setReviewGivenCoachName] = useState([]);
-  const [reviewGivenCoachEmail,setReviewGivenCoachEmail] = useState([]);
-  
+  const [reviewGivenCoachId, setReviewGivenCoachId] = useState([]);
+  const [reviewGivenCoachName, setReviewGivenCoachName] = useState([]);
+  const [reviewGivenCoachEmail, setReviewGivenCoachEmail] = useState([]);
+
   const sampleData = [
     {
       key: "1",
@@ -51,18 +51,8 @@ const PlayerReviews = () => {
     },
   ];
 
-  // Filter sampleData based on userRole and Userlocation
-  const filteredData = sampleData.filter((data) => {
-    return (
-      (!userRole ||
-        data.coachName.toLowerCase().startsWith(userRole.toLowerCase())) &&
-      (!Userlocation || data.reviewDate.startsWith(Userlocation))
-    );
-  });
-
-
   //GET CURRENT USER DATA
-const currentUserData = async () => {
+  const currentUserData = async () => {
     try {
       const res = await axios.get(
         "http://localhost:8080/api/v1/user/getCurrentUser",
@@ -72,53 +62,58 @@ const currentUserData = async () => {
           },
         }
       );
-  
+
       // Update the state with the current user ID
       setCurrentPlayerId(res.data.user._id);
-  
-      const playerReviewResponse = await axios.get("http://localhost:8080/api/v1/review/get-overall-review");
+
+      const playerReviewResponse = await axios.get(
+        "http://localhost:8080/api/v1/review/get-overall-review"
+      );
       console.log(playerReviewResponse.data.review);
-  
+
       if (playerReviewResponse.data.success) {
         message.success(playerReviewResponse.data.message);
       }
 
-
-  
       const newReview = [];
       const coachId = [];
 
-  
       for (let i = 0; i < playerReviewResponse.data.review.length; i++) {
-        if (playerReviewResponse.data.review[i].playerId === res.data.user._id) {
+        if (
+          playerReviewResponse.data.review[i].playerId === res.data.user._id
+        ) {
           newReview.push(playerReviewResponse.data.review[i]);
           coachId.push(playerReviewResponse.data.review[i].reviewGivenCoachId);
-
         }
-  
+
         // console.log(playerReviewResponse.data.review[i].playerId);
       }
 
       setCurrentPlayerReviews(newReview);
-      setReviewGivenCoachId(coachId)
-  
+      setReviewGivenCoachId(coachId);
+
       console.log("Current player Review", newReview);
-
-
     } catch (error) {
       message.error("Error inside the Get currentUserData function");
     }
   };
 
+  const combineTable = [...currentPlayerReviews, reviewGivenCoachName];
 
-  const combineTable = [...currentPlayerReviews ,reviewGivenCoachName ]
+  useEffect(() => {
+    currentUserData();
+  }, []);
 
+  // Filter sampleData based on userRole and Userlocation
+  const handleCoachNameSearch = (value) => {
+    console.log("Coach Name Searched: ", value);
+    setUserRole(value);
+  };
 
-    useEffect(()=>{
-      currentUserData();
-    },[])
-
-
+  const handleDateChange = (date, dateString) => {
+    console.log("Date Selected: ", dateString);
+    setUserLocation(dateString);
+  };
 
   // JSX structure for the Navbar component
   return (
@@ -146,8 +141,9 @@ const currentUserData = async () => {
                 <Input.Search
                   placeholder="Search Coach Name..."
                   style={{ flex: 1 }}
-                  onSearch={(value) => setUserRole(value)}
-                  onChange={(e) => setUserRole(e.target.value)}
+                  onSearch={handleCoachNameSearch}
+                  // onChange={(e) => handleCoachNameSearch(e.target.value)}
+                  allowClear
                 />
               </div>
               <div
@@ -157,7 +153,7 @@ const currentUserData = async () => {
                 <DatePicker
                   className="searchInputDate"
                   style={{ flex: 1 }}
-                  onChange={(date, dateString) => setUserLocation(dateString)}
+                  onChange={handleDateChange}
                 />
               </div>
             </div>
@@ -188,24 +184,23 @@ const currentUserData = async () => {
                     key: "coachName",
                     render: (text, record) => (
                       <span>{record.reviewGivenCoachName}</span>
-                    )
+                    ),
                   },
-                                                                                    
-                  
+
                   {
                     title: "Coach Email",
                     dataIndex: "coachEmail",
                     key: "coachEmail",
                     render: (text, record) => (
                       <span>{record.reviewGivenCoachEmail}</span>
-                    )
+                    ),
                   },
-                  
+
                   {
                     title: "Rating",
                     dataIndex: "rating",
                     key: "rating",
-                    render: (text,record) => (
+                    render: (text, record) => (
                       <div style={{ display: "flex", alignItems: "center" }}>
                         <Rate disabled defaultValue={record.overallReview} />
                         <span
@@ -218,9 +213,9 @@ const currentUserData = async () => {
                     title: "Comment",
                     dataIndex: "comment",
                     key: "comment",
-                    render:((text,record)=>(
-                         <span>{record.comment || "No Comment"}</span>
-                    ))
+                    render: (text, record) => (
+                      <span>{record.comment || "No Comment"}</span>
+                    ),
                   },
                 ]}
                 pagination={{
@@ -242,7 +237,6 @@ const currentUserData = async () => {
 
 // Exporting the Navbar component
 export default PlayerReviews;
-
 
 // // Assume these are your two data sources
 // const dataSource1 = [
