@@ -96,7 +96,6 @@ const currentUserData = async () => {
         }
       );
 
-      console.log(res.data.user.isCoach);
       setIsCoach(res.data.user.isCoach)
       setCurrentUsername(res.data.user.username)
 

@@ -36,6 +36,8 @@ const handleStatusController = async(req,res)=>{
 
          const updatedUser = await User.findOne({isAdmin:true}) 
          const notification = updatedUser.notification;
+
+        //  console.log(UpdatedUser);
         
          notification.pop();
          await updatedUser.save();
