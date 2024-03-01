@@ -1,6 +1,6 @@
 import { React, useEffect, useState } from "react";
-import "./RefereeProfile.css";
-import RefereeSideBar from "../RefereeSideBar/RefereeSideBar";
+import "./EOProfile.css";
+import EOSizeBar from "../EOSideBar/EOSideBar";
 import {
   Upload,
   Modal,
@@ -23,7 +23,7 @@ const getBase64 = (file) =>
     reader.onerror = (error) => reject(error);
   });
 
-const RefereeProfile = () => {
+const EOProfile = () => {
   /*----------------------Profile Image upload-Start--------------------*/
   const [previewVisibleProfile, setPreviewVisibleProfile] = useState(false);
   const [previewImageProfile, setPreviewImageProfile] = useState("");
@@ -35,7 +35,10 @@ const RefereeProfile = () => {
   const [playerAge, setPlayerAge] = useState(0);
   const [playerId, setPlayerId] = useState("");
   const [formData, setFormData] = useState([]);
+
   const [NewfileList, setNewFileList] = useState([]);
+  const [coverImageFileList, setCoverImageFileList] = useState([]);
+  const [medicalReportFileList, setMedicalReportFileList] = useState([]);
 
   const [loadings, setLoadings] = useState([]);
 
@@ -91,35 +94,112 @@ const RefereeProfile = () => {
       formData.append("playerId", playerId);
 
       try {
-        // Upload image and get the response
+        // Upload profile image and get the response
         const imageUploadResponse = await axios.post(
           "http://localhost:8080/api/v1/profile/player-profile-image-upload",
           formData
         );
-
         console.log(imageUploadResponse.data.success);
-
         // Extract image URL from the response
         const imageUrl = imageUploadResponse.data.data.PlayerprofileImageLink;
 
-        // Now, make a second API call to save player profile data with the image URL
-        const playerProfileResponse = await axios.post(
-          "http://localhost:8080/api/v1/profile/player-profile",
-          {
-            playerId: playerId,
-            playerName: playerName,
-            playerEmail: playerEmail,
-            playerDateOfBirth: playerDateOfBirth,
-            playerAge: playerAge,
-            PlayerprofileImageLink: imageUrl,
-          }
-        );
-
-        // Handle response if needed
-        console.log(playerProfileResponse.data);
+        if (imageUploadResponse.data.success) {
+          message.success(imageUploadResponse.data.message);
+          // window.location.reload();
+        }
       } catch (error) {
         message.error("Error occurred inside the handleFormSubmit function");
       }
+    }
+
+    try {
+      // Check if coverImageFileList is not empty
+      if (coverImageFileList.length > 0) {
+        const coverImagefile = coverImageFileList[0].originFileObj;
+        let coverImageFormData = new FormData();
+        coverImageFormData.append("coverImage", coverImagefile);
+        coverImageFormData.append("playerId", playerId);
+
+        // // Log FormData for debugging (optional)
+        // console.log([...coverImageFormData]);
+
+        // Upload cover image
+        const coverImageResponse = await axios.post(
+          "http://localhost:8080/api/v1/profile/player-cover-image-upload",
+          coverImageFormData
+        );
+
+        // Handle coverImageResponse if needed
+        console.log(coverImageResponse.data);
+
+        if (coverImageResponse.data.success) {
+          message.success(coverImageResponse.data.message);
+          // window.location.reload();
+        }
+      } else {
+        message.error("No cover image selected");
+      }
+    } catch (error) {
+      // Log the error details (optional)
+      console.error("Error uploading cover image:", error);
+
+      message.error("Error uploading cover image");
+    }
+
+    try {
+      console.log(medicalReportFileList);
+
+      if (medicalReportFileList.length > 0) {
+        const medicalReportfile = medicalReportFileList[1].originFileObj;
+
+        let medicalReportFormData = new FormData();
+        medicalReportFormData.append("medicalReport", medicalReportfile);
+        medicalReportFormData.append("playerId", playerId);
+
+        // Log FormData for debugging (optional)
+        console.log([...medicalReportFormData]);
+
+        // Upload Medical report
+        const coverImageResponse = await axios.post(
+          "http://localhost:8080/api/v1/profile/player-medical-report-upload",
+          medicalReportFormData
+        );
+
+        // Handle coverImageResponse if needed
+        console.log(coverImageResponse.data);
+
+        if (coverImageResponse.data.success) {
+          message.success(coverImageResponse.data.message);
+        }
+      } else {
+        message.error("No cover image selected");
+      }
+    } catch (error) {
+      message.error("Error uploading medical report");
+    }
+
+    try {
+      // Now, make a second API call to save player profile data with the image URL
+      const playerProfileResponse = await axios.post(
+        "http://localhost:8080/api/v1/profile/player-profile",
+        {
+          playerId: playerId,
+          playerName: playerName,
+          playerEmail: playerEmail,
+          playerDateOfBirth: playerDateOfBirth,
+          playerAge: playerAge,
+          // PlayerprofileImageLink: imageUrl,
+        }
+      );
+
+      // Handle response if needed
+      console.log(playerProfileResponse.data);
+      if (playerProfileResponse.data.success) {
+        message.success(playerProfileResponse.data.message);
+        window.location.reload();
+      }
+    } catch (error) {
+      message.error("Error occurred inside the handleFormSubmit function");
     }
   };
 
@@ -131,19 +211,6 @@ const RefereeProfile = () => {
     console.log(newFileList);
     setNewFileList(newFileList);
   };
-
-  // const onChangeProfile = ({ fileList: newFileList }) => {
-  //   console.log(newFileList[0].originFileObj);
-  //   const file = newFileList
-  //   let formData = new FormData();
-
-  //   formData.append("image", file);
-
-  //   console.log([...formData]);
-
-  //   setFileListProfile(newFileList);
-
-  // };
 
   const onPreviewProfile = async (file) => {
     let src = file.url;
@@ -157,6 +224,7 @@ const RefereeProfile = () => {
     setPreviewImageProfile(src);
     setPreviewVisibleProfile(true);
   };
+
   /*----------------------Profile Image upload-End--------------------*/
 
   /*----------------------Cover Image upload-Start--------------------*/
@@ -166,7 +234,9 @@ const RefereeProfile = () => {
 
   const onChangeCover = ({ fileList: newFileList }) => {
     setFileListCover(newFileList);
+    setCoverImageFileList(newFileList);
   };
+
   const onPreviewCover = async (file) => {
     let src = file.url;
     if (!src) {
@@ -191,7 +261,7 @@ const RefereeProfile = () => {
     },
   ]);
   const onChange = ({ fileList: newFileList }) => {
-    setFileList(newFileList);
+    setMedicalReportFileList(newFileList);
   };
 
   const onPreview = async (file) => {
@@ -212,15 +282,15 @@ const RefereeProfile = () => {
 
   return (
     <div>
-      <RefereeSideBar>
-        <div className="referee-profile">
+      <EOSizeBar>
+        <div className="EO-profile">
           <div className="ProfileHeader">
             <h3>My Profile</h3>
           </div>
           <div
             style={{ overflowX: "auto", height: "65vh" }}
           >
-            <form className="refereeProfileForm">
+            <form className="EOProfileForm">
               <label className="formLabel">
                 Name:
                 <Input
@@ -344,9 +414,9 @@ const RefereeProfile = () => {
             </form>
           </div>
         </div>
-      </RefereeSideBar>
+      </EOSizeBar>
     </div>
   );
 };
 
-export default RefereeProfile;
+export default EOProfile;

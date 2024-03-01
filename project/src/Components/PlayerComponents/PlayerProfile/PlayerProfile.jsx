@@ -276,23 +276,31 @@ const handleFormSubmit = async (index) => {
     <div>
       <PlayerSideBar>
         <div className="player-profile">
-          <div className="ProfileHeaderSection">
-            <div className="ProfileHeader">
-              <h3 className="playerDetails">My Profile</h3>
-            </div>
+          <div className="ProfileHeader">
+            <h3>My Profile</h3>
           </div>
-          <div className="PlayerProfile" style={{ overflowX: "auto", height: "75vh" }}>
-            <form
-              className="PlayerProfileForm"
-              style={{ width: "80%", marginLeft: "auto", marginRight: "auto" }}
-            >
+          <div
+            className="coachProfile"
+            style={{ overflowX: "auto", height: "65vh" }}
+          >
+            <form className="playerProfileForm">
               <label className="formLabel">
                 Name:
-                <Input type="text" name="name" className="inputBox" onChange={(e) => setPlayerName(e.target.value)} />
+                <Input
+                  type="text"
+                  name="name"
+                  className="inputBox"
+                  onChange={(e) => setPlayerName(e.target.value)}
+                />
               </label>
               <label className="formLabel">
                 Email:
-                <Input type="email" name="email" className="inputBox" onChange={(e) => setPlayerEmail(e.target.value)} />
+                <Input
+                  type="email"
+                  name="email"
+                  className="inputBox"
+                  onChange={(e) => setPlayerEmail(e.target.value)}
+                />
               </label>
 
               <div className="AgeSection">
@@ -302,12 +310,17 @@ const handleFormSubmit = async (index) => {
                     style={{
                       width: "350%",
                     }}
-                    onChange={(date, dateString) => setPlayerDateOfBirth(dateString)}
+                    onChange={(date, dateString) =>
+                      setPlayerDateOfBirth(dateString)
+                    }
                   />
                 </div>
                 <div>
                   <label className="formLabel">Age:</label>
-                  <input type="number" onChange={(e) => setPlayerAge(e.target.value)} />
+                  <input
+                    type="number"
+                    onChange={(e) => setPlayerAge(e.target.value)}
+                  />
                 </div>
               </div>
               <div className="ImageUploading">
@@ -317,7 +330,7 @@ const handleFormSubmit = async (index) => {
                     visible={previewVisibleProfile}
                     footer={null}
                     onCancel={() => setPreviewVisibleProfile(false)}
-                  // onChange={hanldeProfileImageUpload}
+                    // onChange={hanldeProfileImageUpload}
                   >
                     <img
                       alt="example"
@@ -379,14 +392,18 @@ const handleFormSubmit = async (index) => {
                 </div>
               </div>
               <br />
-              <Button className="submitBtn" loading={loadings[0]} type="ghost" onClick={() => handleFormSubmit(0)}>
+              <Button
+                className="submitBtn"
+                loading={loadings[0]}
+                type="ghost"
+                onClick={() => handleFormSubmit(0)}
+              >
                 Submit
               </Button>
 
               {/* <Button type="primary" loading={loadings[0]} onClick={() => enterLoading(0)}>
                 Click me!
               </Button> */}
-
             </form>
           </div>
         </div>

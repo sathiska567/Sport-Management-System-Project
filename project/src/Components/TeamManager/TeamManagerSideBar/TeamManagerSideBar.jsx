@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { faPeopleGroup } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon, } from "@fortawesome/react-fontawesome";
+import { ReactComponent as Profile } from "../../icons/Profile.svg";
 
 import {
   MenuFoldOutlined,
@@ -63,6 +64,7 @@ const TeamManagerSideBar = ({ children }) => {
       "/TeamManager-assign-members": "Assign Members",
       "/TeamManager-create-team": "Create Team",
       "/TeamManager-assign-team-form": "Assign Members",
+      "/TeamManager-profile": "My Profile",
     };
 
     return <p>{text[selectedMenuItem]}</p>;
@@ -210,9 +212,9 @@ const TeamManagerSideBar = ({ children }) => {
           >
             <NavLink to="/TeamManager-assign-members">Assign Members</NavLink>
           </Menu.Item>
-          {/* <Menu.Item key="/player-profile" icon={<EditOutlined />}>
-            <NavLink to="/player-profile">My Profile</NavLink>
-          </Menu.Item> */}
+          <Menu.Item key="/TeamManager-profile" icon={<Profile />}>
+            <NavLink to="/TeamManager-profile">My Profile</NavLink>
+          </Menu.Item>
           <Menu.Item
             key="logoff"
             icon={<PoweroffOutlined />}

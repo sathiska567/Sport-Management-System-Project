@@ -1,18 +1,19 @@
 .player-profile {
     position: relative;
-    margin: 0 auto; 
-    margin-top: 0px;
     width: 95%;
-    height: 600px;
+    overflowX: auto !important;
+    margin: auto;
+    margin-top: 6vh !important;
 }
 
-.ProfileHeaderSection {
-    position: relative;
-    width: 100%;
-    height: 10vh;
+.ProfileHeader {
     background-color: #15295E;
+    height: 8vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
     color: white;
-    font-weight: 300;
 }
 
 .playerDetails {
@@ -26,19 +27,14 @@
     font-weight: 400;
 
 }
-
-.ProfileHeader {
-    border-bottom: 1px solid #e6e6e6;
-}
-
 .PlayerProfile {
     background-color: #fff;
 }
 
 
-.PlayerProfileForm {
-    height: 80vh !important;
-    width: 100%;
+.ImageUploading {
+    display: flex;
+    justify-content: space-between;
 }
 
 .upload-list-inline .ant-upload-list-item {
@@ -49,11 +45,6 @@
 
 .ant-upload-rtl.upload-list-inline .ant-upload-list-item {
   float: right;
-}
-.ImageUploading {
-    display: flex;
-    flex-direction: row;
-    gap: 20%;
 }
 
 .formLabel {
@@ -86,3 +77,7 @@
     margin-right: auto !important;
 }
 
+.playerProfileForm {
+    height: 50vh !important;
+    margin-bottom: 10vh !important;
+}

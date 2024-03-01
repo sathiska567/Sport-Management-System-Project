@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendar } from "@fortawesome/free-solid-svg-icons";
-
+import { ReactComponent as Profile } from "../../icons/Profile.svg";
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
@@ -19,7 +19,6 @@ import {
 } from "@ant-design/icons";
 
 import { ReactComponent as Bracket } from "../../icons/tournament.svg";
-import { ReactComponent as Profile } from "../../icons/Profile.svg";
 import { useLocation } from "react-router-dom";
 import {
   Layout,
@@ -75,8 +74,6 @@ const CoachSidebar = ({ children }) => {
     const text = {
       "/coach-stats": "Dashboard",
       "/coach-availability": "My Availability",
-      "/coach-create-team": "Create Team",
-      "/coach-edit-team": "Edit Team",
       "/coach-review-players": "Review Players",
       "/coach-profile": "My Profile",
     };
@@ -214,7 +211,7 @@ const currentUserData = async () => {
                   <span className="nav-text">My Availability</span>
                 </NavLink>
               </Menu.Item>
-              <Menu.Item key="/coach-create-team" icon={<EditOutlined />}>
+              {/* <Menu.Item key="/coach-create-team" icon={<EditOutlined />}>
                 <NavLink to="/coach-create-team">
                   <span className="nav-text">Create Team</span>
                 </NavLink>
@@ -223,7 +220,7 @@ const currentUserData = async () => {
                 <NavLink to="/coach-edit-team">
                   <span className="nav-text">Edit Team</span>
                 </NavLink>
-              </Menu.Item>
+              </Menu.Item> */}
               <Menu.Item
                 key="/coach-review-players"
                 icon={<CalendarOutlined />}
