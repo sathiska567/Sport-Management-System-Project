@@ -1,28 +1,31 @@
 const mongoose = require('mongoose');
 
 const matchSchema = new mongoose.Schema({
-    name: String,
+  name: String,
 
-    matchId: {type: String, unique:true},
+  matchNo: { type: String, unique: true },
 
-    location: String,
+  location: String,
 
-    teams: [{
-      type: String,
+  teams: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Team'
+  }],
+
+  coaches: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Coach'
+  }],
+
+  rounds: [{
+    roundNumber: String,
+    pairs: [],
+    winners: [{
+      type: mongoose.Schema.Types.ObjectId,
       ref: 'Team'
     }],
-
-    coaches: [{
-      type: String,
-      ref: 'Coach'
-    }],
-    
-    rounds: [{
-      roundNumber: String,
-      pairs: [],
-      winners: [],
-    }],
-  });
+  }],
+});
 
 
 const Match = mongoose.model('Match', matchSchema);

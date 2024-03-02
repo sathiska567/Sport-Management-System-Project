@@ -53,6 +53,8 @@ import TeamManagerCreateTeam from "./Components/TeamManager/TeamManagerCreateTea
 import TeamManagerAssignMembersTable from "./Components/TeamManager/TeamManagerAssignMembers/TeamManagerAssignMembersTable.jsx";
 import TeamManagerAssignMembersCoach from "./Components/TeamManager/TeamManagerAssignMembers/TeamManagerAssignMembersCoach.jsx";
 import TeamManagerAssignMembersPlayer from "./Components/TeamManager/TeamManagerAssignMembers/TeamManagerAssignMembersPlayer.jsx";
+import EditTeam from "./Pages/Coach/EditTeam.jsx";
+import UpdateTeam from "./Pages/Coach/UpdateTeam.jsx";
 
 
 function App() {
@@ -367,13 +369,14 @@ function App() {
       </Routes>
 
 
-
+          {/*Aatheek developing routes */}
         <Routes>
         <Route path="/brackets" element={<TournamentBracket/>} />
         <Route path="/create-team" element={<CreateTeam/>}/>
         <Route path="/select-players" element={<SelectPlayers/>}/>
         <Route path="/create-match" element={<CreateMatch/>}/>
-    
+        <Route path="/edit-team" element={<EditTeam/>}/>
+        <Route path="/update-team" element={<UpdateTeam/>} />
         </Routes>
 
 

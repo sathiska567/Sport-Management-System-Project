@@ -2,7 +2,7 @@ const mongoose = require("mongoose")
 
 const palyerSchema = new mongoose.Schema({
 
-      PlayerId: {type: String, unique:true},
+      PlayerNo: {type: String, unique:true},
 
       FirstName: {
             type: String,
@@ -48,12 +48,12 @@ const palyerSchema = new mongoose.Schema({
       },
 
       teams: [{
-            type: String,
+            type: mongoose.Schema.Types.ObjectId,
             ref: 'Team'
           }],
       
       matches:[{
-            type: String, unique:true,
+            type: mongoose.Schema.Types.ObjectId,
             ref: 'Match'
       }]
 

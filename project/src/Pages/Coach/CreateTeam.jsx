@@ -6,10 +6,10 @@ const CreateTeam = () => {
     const navigate = useNavigate()
     const [matches, setMatches] = useState([])
 
-    const coachId = 'C002';
+    const coach_id = '65e2ce0e786bfbf7502c4d73';
 
     useEffect(()=>{
-        axios.get(`http://localhost:8080/coach/matches?coachId=${coachId}`)
+        axios.get(`http://localhost:8080/coach/matches?coach_id=${coach_id}`)
         .then(res => {
             console.log(res.data);
             setMatches(res.data)
@@ -19,8 +19,8 @@ const CreateTeam = () => {
         })
     }, [])
 
-    const handleCreate = (matchId) => {
-        navigate(`/select-players?matchId=${matchId}&coachId=${coachId}`)
+    const handleCreate = (match_id) => {
+        navigate(`/select-players?matchId=${match_id}&coachId=${coach_id}`)
     }
 
     return (
@@ -36,11 +36,11 @@ const CreateTeam = () => {
                     <tbody>
                         {matches.map((match, index) => (
                             <tr key={index}>
-                                <td style={{ textAlign: 'center' }} >{match.matchId}</td>
+                                <td style={{ textAlign: 'center' }} >{match.matchNo}</td>
                                 <td style={{ textAlign: 'center' }}>{match.name}</td>
                                 <td style={{ textAlign: 'center' }}>{match.location}</td>
                                 {/* Render other properties of the match object */}
-                                <td style={{ textAlign: 'center' }}><button onClick={()=>handleCreate(match.matchId)}>Create</button></td>
+                                <td style={{ textAlign: 'center' }}><button onClick={()=>handleCreate(match._id)}>Create</button></td>
                             </tr>
                         ))}
                     </tbody>

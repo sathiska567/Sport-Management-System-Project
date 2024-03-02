@@ -11,6 +11,7 @@ const TournamentBracket = () => {
   const [finalWinner, setFinalWinner] = useState(null)
 
   const [rounds, setRounds] = useState([])
+  const [teams, setTeams] = useState([])
 
 
   const [selectedMatchId, setSelectedMatchId] = useState('');
@@ -35,8 +36,8 @@ const TournamentBracket = () => {
       console.log(roundNo, ' : roundNo')
       console.log(selectedMatchId, ' : matchId')
       const response = await axios.get(`http://localhost:8080/create-round/${selectedMatchId}/${roundNo}`);
-      setPairs(response.data.rounds[roundNo - 1].pairs);
-      console.log(response.data.rounds[roundNo - 1].pairs);
+      console.log('data received : ', response.data)
+      setPairs(response.data);
 
     } catch (error) {
       console.error("Error fetching pairs:", error);
@@ -54,7 +55,7 @@ const TournamentBracket = () => {
     axios.post(`http://localhost:8080/setWinners/${selectedMatchId}/${roundNo}`, { winnersArray })
       .then(res => {
         console.log(winnersArray)
-        console.log(`Round ${roundNo} winners sent successfully:`, res.data.mess);
+        console.log(`Round ${roundNo} winners sent successfully:`, res.data);
         setroundNo(roundNo + 1);
         setWinnersArray([]);
 
@@ -65,8 +66,8 @@ const TournamentBracket = () => {
         });
 
         if (res.data.finalWinner) {
-          console.log(res.data.message, ' : ', res.data.finalWinner)
-          setFinalWinner(res.data.finalWinner);
+          console.log(res.data.message, ' : ', res.data.finalWinner.teamName)
+          setFinalWinner(res.data.finalWinner.teamName);
         }
 
       })
@@ -77,7 +78,7 @@ const TournamentBracket = () => {
 
   const handleTeamSelection = (pairIndex, teamIndex) => {
     const updatedwinnersArray = [...winnersArray];
-    updatedwinnersArray[pairIndex] = pairs[pairIndex][teamIndex];
+    updatedwinnersArray[pairIndex] = pairs[pairIndex][teamIndex]._id;
     setWinnersArray(updatedwinnersArray);
   };
 
@@ -85,7 +86,9 @@ const TournamentBracket = () => {
   const handleViewWinners = async () => {
     try {
       const res = await axios.get(`http://localhost:8080/getWinners/${selectedMatchId}`);
+      console.log("winn", res.data)
       setRounds(res.data.match.rounds)
+      setTeams(res.data.match.teams)
       console.log("rounds w", rounds)
 
     } catch (err) {
@@ -103,12 +106,12 @@ const TournamentBracket = () => {
           <select onChange={handleSelectMatch} value={selectedMatchId}>
             <option value="default">Select a match</option> {/* Default option */}
             {matches.map(match => (
-              <option key={match.matchId} value={match.matchId}>
-                {match.name} : {match.matchId}
+              <option key={match.matchNo} value={match.matchNo}>
+                {match.name} : {match.matchNo}
               </option>
             ))}
           </select>
-          <p>Selected Match ID: {selectedMatchId}</p>
+          <p>Selected Match No: {selectedMatchId}</p>
         </div>
 
         {(!finalWinner) && (
@@ -124,7 +127,7 @@ const TournamentBracket = () => {
                     <ul>
                       {pair.map((team, teamIndex) => (
                         <li key={teamIndex}>
-                          {team}
+                          {team.teamName}
                           <input
                             type='radio'
                             style={{ width: 20 }}
@@ -149,7 +152,7 @@ const TournamentBracket = () => {
         )}
       </div>
 
-      {/*view*/}
+      {/*view winners*/}
 
       <div style={{ backgroundColor: 'greenyellow', marginTop: 30, width: '100%', height: '100%', display: 'flex', flexDirection: 'column' }}>
 
@@ -164,18 +167,20 @@ const TournamentBracket = () => {
                 <div>
                   {round.pairs.map((pair, pairIndex) => (
                     <div key={pairIndex}>
-                      <ul style={{ backgroundColor: 'red' }}>
-                        {pair.map((team, teamIndex) => (
-                          <li key={teamIndex}>
-                            {team}
+                      <ul style={{ backgroundColor: 'red', listStyleType:'none', marginLeft:0, paddingLeft:0}}>
+                        {pair.map((team, teamIndex) =>{ const tName = teams.find(t=>t._id==team).teamName 
+                        return (
+                          <li key={teamIndex} style={{display:'flex', justifyContent:'space-between', padding:3 }}>
+                            {tName}
                             <input
                               type='radio'
                               style={{ width: 20, }}
 
-                              checked={round.winners.includes(team)}
+                              checked={round.winners.some(winner=>winner._id==team)}
                             />
                           </li>
-                        ))}
+                        )
+                        })}
                       </ul>
                     </div>
                   ))}

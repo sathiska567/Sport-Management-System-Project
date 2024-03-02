@@ -3,18 +3,18 @@ const mongoose = require('mongoose');
 const teamSchema = new mongoose.Schema({
   teamName: String,
 
-  teamId: {type:String, unique:true},
+  teamNo: {type:String, unique:true},
 
-  coachId: {
-    type: String,
+  coach_id: {
+    type: mongoose.Schema.Types.ObjectId,
     ref: 'Coach'
   },
   players: [{
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
     ref: 'Player'
   }],
-  matchId: {
-    type: String,
+  match_id: {
+    type: mongoose.Schema.Types.ObjectId,
     ref: 'Match'
   }
 });
