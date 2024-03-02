@@ -39,6 +39,8 @@ import PlayerReviews from "./Components/PlayerComponents/PlayerReviews/PlayerRev
 import PlayerSearch from "./Components/PlayerComponents/PlayerSearch/PlayerSearch.jsx";
 import PlayerProfile from "./Components/PlayerComponents/PlayerProfile/PlayerProfile.jsx";
 import PlayerMatches from "./Components/PlayerComponents/PlayerMatches/PlayerMatches.jsx";
+import EventForm from "./Components/CreateEvent/EventForm.js";
+import CreateEvent1 from "./Components/CreateEvent/CreateEvent1.js";
 
 function App() {
   const isLoggedIn = window.localStorage.getItem("isLoggedIn");
@@ -409,6 +411,28 @@ function App() {
             </ProtectedRoute>
           }
         />
+      </Routes>
+
+      <Routes>
+      <Route 
+      path="/EventForm"
+      element={
+        <ProtectedRoute>
+         <EventForm/>
+        </ProtectedRoute>
+      }
+      />
+      </Routes>
+
+      <Routes>
+      <Route 
+      path="/CreateEvent1"
+      element={
+        <ProtectedRoute>
+         <CreateEvent1/>
+        </ProtectedRoute>
+      }
+      />
       </Routes>
     </BrowserRouter>
 
