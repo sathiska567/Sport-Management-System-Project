@@ -50,6 +50,12 @@ import TeamManagerAssignMembersPlayer from "./Components/TeamManager/TeamManager
 import EditTeam from "./Pages/Coach/EditTeam.jsx";
 import UpdateTeam from "./Pages/Coach/UpdateTeam.jsx";
 
+
+import TournamentBracket from "./Pages/Organizer/Bracket.jsx";
+import CreateTeam from "./Pages/Coach/CreateTeam.jsx"
+import SelectPlayers from "./Pages/Coach/SelectPlayers.jsx"
+
+
 function App() {
   const isLoggedIn = window.localStorage.getItem("isLoggedIn");
   console.log(isLoggedIn, "login");
@@ -513,29 +519,12 @@ function App() {
       </Routes>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
       {/*Aatheek developing routes */}
       <Routes>
         <Route path="/brackets" element={<TournamentBracket />} />
         <Route path="/create-team" element={<CreateTeam />} />
         <Route path="/select-players" element={<SelectPlayers />} />
-        <Route path="/create-match" element={<CreateMatch />} />
+        {/* <Route path="/create-match" element={<CreateMatch />} /> */}
         <Route path="/edit-team" element={<EditTeam />} />
         <Route path="/update-team" element={<UpdateTeam />} />
       </Routes>

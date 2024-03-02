@@ -168,7 +168,7 @@ const TournamentBracket = () => {
                   {round.pairs.map((pair, pairIndex) => (
                     <div key={pairIndex}>
                       <ul style={{ backgroundColor: 'red', listStyleType:'none', marginLeft:0, paddingLeft:0}}>
-                        {pair.map((team, teamIndex) =>{ const tName = teams.find(t=>t._id==team).teamName 
+                        {pair.map((team, teamIndex) =>{ const tName = teams.find(t=>t._id===team).teamName 
                         return (
                           <li key={teamIndex} style={{display:'flex', justifyContent:'space-between', padding:3 }}>
                             {tName}
@@ -176,7 +176,7 @@ const TournamentBracket = () => {
                               type='radio'
                               style={{ width: 20, }}
 
-                              checked={round.winners.some(winner=>winner._id==team)}
+                              checked={round.winners.some(winner=>winner._id===team)}
                             />
                           </li>
                         )
