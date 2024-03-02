@@ -24,6 +24,13 @@ const CoachreviewSchema = new mongoose.Schema({
 
   reviewGivenCoachId:{
       type:String,
+  },
+  reviewGivenCoachName:{
+      type:String, 
+  },
+
+  reviewGivenCoachEmail:{
+      type:String, 
   }
 
 })

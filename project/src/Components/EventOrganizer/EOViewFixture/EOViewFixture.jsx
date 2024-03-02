@@ -37,73 +37,67 @@ const EOViewFixture = () => {
   const [createdFixture, setCreatedFixture] = useState([]);
   const navigate = useNavigate();
   const location = useLocation();
-
   console.log(location);
 
-  // Filter userApplicationData based on userRole and Userlocation
-const filteredData = dataSource.filter((data) => {
-    return (
-      (!eventLocation ||
-        data.eventLocation
-          .toLowerCase()
-          .includes(eventLocation.toLowerCase())) &&
-      (!userLocation ||
-        data.eventDate.toLowerCase().includes(userLocation.toLowerCase()))
-    );
-  });
+  //  GET ALL CREATED FIXTURE
+  const getFixtureData = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:8080/api/v1/get/get-fixture"
+      );
+      // console.log(response.data.data);
+      setCreatedFixture(response.data.data);
+    } catch (error) {
+      message.error("Error fetching fixture data");
+    }
+  };
 
+  const handleShuffle = async (id) => {
+    console.log(id);
+    navigate("/shuffle-fixture", { state: { id: id } });
+  };
 
-//  GET ALL CREATED FIXTURE 
-const getFixtureData = async()=>{
+  const handleView = async (record) => {
+    console.log(record.createdFixtureId);
+    navigate("/final-fixture", {
+      state: { shuffledDataId: record.createdFixtureId },
+    });
+  };
 
-  try {
-    const response = await axios.get("http://localhost:8080/api/v1/get/get-fixture")
-    // console.log(response.data.data);
-    setCreatedFixture(response.data.data)
-    
-  } catch (error) {
-     message.error("Error fetching fixture data");
-  }
+  const handleDelete = async (id) => {
+    console.log(id);
 
-}
-
-
-const handleShuffle = async(id)=>{
-   console.log(id);
-   navigate("/shuffle-fixture",{state:{id:id}})
-
-}
-
-
-const handleView = async(record)=>{
-   console.log(record.createdFixtureId);
-   navigate("/final-fixture",{state:{shuffledDataId:record.createdFixtureId}})
-}
-
-const handleDelete = async(id)=>{
-     console.log(id);
-
-     try {
-      const deleteResponse = await axios.post("http://localhost:8080/api/v1/delete/delete-fixture",{id})
+    try {
+      const deleteResponse = await axios.post(
+        "http://localhost:8080/api/v1/delete/delete-fixture",
+        { id }
+      );
       console.log(deleteResponse);
 
-      if(deleteResponse.data.success){
-          message.success(deleteResponse.data.message);
-          window.location.reload();
+      if (deleteResponse.data.success) {
+        message.success(deleteResponse.data.message);
+        window.location.reload();
+      } else {
+        message.error(deleteResponse.data.message);
       }
-      else{
-         message.error(deleteResponse.data.message);
-      }
-      
-     } catch (error) {
-       message.error("Error deleting fixture data");
-     }
-}
+    } catch (error) {
+      message.error("Error deleting fixture data");
+    }
+  };
 
+  useEffect(() => {
+    getFixtureData();
+  }, []);
 
-useEffect(()=>{
-   getFixtureData();
-},[])
+  // Filter userApplicationData based on userRole and Userlocation
+const handleEventLocationSearch = (value) => {
+  console.log("Event Location Searched: ", value);
+};
+
+const handleDateChange = (date, dateString) => {
+  console.log("Date Selected: ", dateString);
+};
+
 
 
   return (
@@ -129,13 +123,13 @@ useEffect(()=>{
                 style={{
                   marginBottom: "8px",
                 }}
-                onSearch={(value) => setEventLocation(value)}
-                onChange={(e) => setEventLocation(e.target.value)}
+                onSearch={handleEventLocationSearch}
+                allowClear
               />
               <DatePicker
                 className="searchInputDate"
                 style={{ marginBottom: 8 }}
-                onChange={(date, dateString) => setUserLocation(dateString)}
+                onChange={handleDateChange}
               />
             </div>
             <Table
@@ -144,28 +138,21 @@ useEffect(()=>{
                   title: "Event Name",
                   dataIndex: "eventName",
                   width: "20%",
-                  align: "center",
-                  render: (text,record) => (
+                  render: (text, record) => (
                     <span>{record.nameOfTheEvent}</span>
-                  )
+                  ),
                 },
                 {
                   title: "Event Location",
                   dataIndex: "eventLocation",
                   width: "20%",
-                  align: "center",
-                  render: (text,record) => (
-                    <span>{record.location}</span>
-                  )
+                  render: (text, record) => <span>{record.location}</span>,
                 },
                 {
                   title: "Event Date",
                   dataIndex: "eventDate",
                   width: "20%",
-                  align: "center",
-                  render: (text,record) => (
-                    <span>2024-02-14</span>
-                  )
+                  render: (text, record) => <span>2024-02-14</span>,
                 },
                 {
                   title: "Actions",
@@ -193,8 +180,8 @@ useEffect(()=>{
                           marginTop: "auto",
                           marginBottom: "auto",
                           width: "70px",
-                        }}  
-                        onClick={() => handleView(record)}                      
+                        }}
+                        onClick={() => handleView(record)}
                       >
                         View
                       </Button>
@@ -210,7 +197,7 @@ useEffect(()=>{
                           marginBottom: "auto",
                           width: "70px",
                         }}
-                        onClick={() => handleShuffle(record._id) }
+                        onClick={() => handleShuffle(record._id)}
                       >
                         Shuffle
                       </Button>
@@ -241,7 +228,7 @@ useEffect(()=>{
                           marginBottom: "auto",
                           width: "70px",
                         }}
-                        onClick={()=>handleDelete(record._id)}
+                        onClick={() => handleDelete(record._id)}
                       >
                         Delete
                       </Button>

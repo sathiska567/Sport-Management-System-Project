@@ -104,30 +104,30 @@ const handleDownload = async () => {
             columns={[
               {
                 title: "Team Number",
-                width: "10%",
+                width: "20%",
                 dataIndex: "teamNumber",
                 render: (text, record, index) => (
-                  <span key={index}>{index + 1}</span>
+                  <span key={index} style={{color:"black",fontFamily:"sans-serif",fontWeight:"bold"}}>{"Team Number "+(index + 1)}</span>
                 )
               },
               {
                 title: "Teams Name",
                 dataIndex: "teamName",
                 render: (text, record) => (
-                  <span>{record}</span>
+                  <span style={{color:"green",fontFamily:"sans-serif",fontWeight:"bold"}}>{record}</span>
                 )
               },
 
               {
                 title: "Event Time",
                 dataIndex: "time",
-                render: (text, record) => <span>8.30am</span>,
+                render: (text, record) => <span style={{color:"blue",fontFamily:"sans-serif",fontWeight:"bold"}}>8.30am</span>,
               },
 
               {
                 title: "Location",
                 dataIndex: "location",
-                render: (text, record) => <span>Ground 01</span>,
+                render: (text, record) => <span style={{color:"green",fontFamily:"sans-serif",fontWeight:"bold"}}>Ground 01</span>,
               },
 
             ]}

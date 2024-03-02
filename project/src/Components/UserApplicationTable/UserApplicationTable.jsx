@@ -142,12 +142,12 @@ const handleDelete = async (record) => {
                     render: (text, record) => <span>{record.Experience}</span>,
                   },
 
-                  // {
-                  //   title: "Distric",
-                  //   dataIndex: "Distric",
-                  //   key: "Distric",
-                  //   render: (text, record) => <span>{record.Distric}</span>,
-                  // },
+                  {
+                    title: "Distric",
+                    dataIndex: "Distric",
+                    key: "Distric",
+                    render: (text, record) => <span>{record.Distric}</span>,
+                  },
 
                   {
                     title: "Status",
@@ -179,10 +179,10 @@ const handleDelete = async (record) => {
                               borderRadius: "5px",
                               marginTop: "auto",
                               marginBottom: "auto",
+                              width: "70px",
                             }}
                             onClick={() => NavigateDetailsPage(record)}
                           >
-                            <UserOutlined />
                             View
                           </Button>
                         ) : (
@@ -196,10 +196,10 @@ const handleDelete = async (record) => {
                               borderRadius: "5px",
                               marginTop: "auto",
                               marginBottom: "auto",
+                              width: "70px",
                             }}
                             onClick={() => NavigateDetailsPage(record)}
                           >
-                            <EditOutlined />
                             Update
                           </Button>
                         )}
@@ -213,10 +213,10 @@ const handleDelete = async (record) => {
                             borderRadius: "5px",
                             marginTop: "auto",
                             marginBottom: "auto",
+                            width: "70px",
                           }}
                           onClick={() => handleDelete(record)}
                         >
-                          <DeleteOutlined />
                           Delete
                         </Button>
                       </span>

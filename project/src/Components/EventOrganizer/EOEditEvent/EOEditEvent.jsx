@@ -15,75 +15,77 @@ const { Content } = Layout;
 const EOEditEvent = () => {
   // Get data from back end
 
-const initialDataSource = [
-  {
-    key: "1",
-    eid: "E001",
-    eventName: "Event 1",
-    eventDate: "2022-01-01",
-    location: "New York",
-    actions: "N/A",
-  },
-  {
-    key: "2",
-    eid: "E002",
-    eventName: "Event 2",
-    eventDate: "2022-02-01",
-    location: "Los Angeles",
-    actions: "N/A",
-  },
-  {
-    key: "3",
-    eid: "E003",
-    eventName: "Event 3",
-    eventDate: "2022-03-01",
-    location: "Chicago",
-    actions: "N/A",
-  },
-  // Add more data as needed
-];
+  const initialDataSource = [
+    {
+      key: "1",
+      eid: "E001",
+      eventName: "Event 1",
+      eventDate: "2022-01-01",
+      location: "New York",
+      actions: "N/A",
+    },
+    {
+      key: "2",
+      eid: "E002",
+      eventName: "Event 2",
+      eventDate: "2022-02-01",
+      location: "Los Angeles",
+      actions: "N/A",
+    },
+    {
+      key: "3",
+      eid: "E003",
+      eventName: "Event 3",
+      eventDate: "2022-03-01",
+      location: "Chicago",
+      actions: "N/A",
+    },
+    // Add more data as needed
+  ];
 
   const [eventName, setEventName] = useState();
   const [EventLocation, setEventLocation] = useState();
   const [EventDate, setEventDate] = useState();
   const [dataSource, setDataSource] = useState(initialDataSource);
   const navigate = useNavigate();
-  const [createdEvent,setCreatedEvent] = useState([]);
+  const [createdEvent, setCreatedEvent] = useState([]);
 
-useEffect(() => {
-  setDataSource(
-    initialDataSource.filter(
-      (data) =>
-        data.eventName.toLowerCase().includes(eventName?.toLowerCase() || "") &&
-        data.location
-          .toLowerCase()
-          .includes(EventLocation?.toLowerCase() || "") &&
-        (EventDate
-          ? new Date(data.eventDate).toDateString() ===
-            new Date(EventDate).toDateString()
-          : true)
-    )
-  );
-  getAllCreatedEventData()
-}, [eventName, EventLocation, EventDate]);
+  // GET ALL CREATED DATA || GET
+  const getAllCreatedEventData = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:8080/api/v1/event/get-all-events"
+      );
+      console.log(response);
 
-
-// GET ALL CREATED DATA || GET
-const getAllCreatedEventData = async()=>{
-   try {
-    const response = await axios.get("http://localhost:8080/api/v1/event/get-all-events");
-    console.log(response);
-
-    if(response.data.success){
-      message.success(response.data.message);
-      setCreatedEvent(response.data.data)
+      if (response.data.success) {
+        message.success(response.data.message);
+        setCreatedEvent(response.data.data);
+      }
+    } catch (error) {
+      message.error(error.message);
     }
-    
-   } catch (error) {
-     message.error(error.message);
-   }
-}
- 
+  };
+useEffect(() => {
+  getAllCreatedEventData();
+}, []);
+
+// filter data
+// console the value to search name of the event
+const handleEventNameSearch = (value) => {
+  console.log("Event Name Searched: ", value);
+};
+
+// console the value to search location of the event
+const handleEventLocationSearch = (value) => {
+  console.log("Event Location Searched: ", value);
+};
+
+// console the value to search date of the event
+const handleDateChange = (date, dateString) => {
+  console.log("Event Date Selected: ", dateString);
+};
+
 
   // JSX structure for the Navbar component
   return (
@@ -109,20 +111,21 @@ const getAllCreatedEventData = async()=>{
                 styles={{
                   marginBottom: "8",
                 }}
-                onSearch={(value) => setEventName(value)}
-                onChange={(e) => setEventName(e.target.value)}
+                onSearch={handleEventNameSearch}
+                allowClear
               />
               <Input.Search
                 placeholder="Search Event Location..."
                 styles={{
                   marginBottom: "8",
                 }}
-                onSearch={(value) => setEventLocation(value)}
-                onChange={(e) => setEventLocation(e.target.value)}
+                onSearch={handleEventLocationSearch}
+                allowClear
               />
+
               <DatePicker
                 style={{ marginBottom: "8px", width: "100%", height: "32px" }}
-                onChange={(date, dateString) => setEventDate(dateString)}
+                onChange={handleDateChange}
               />
             </div>
             {/* Table section */}
@@ -134,17 +137,15 @@ const getAllCreatedEventData = async()=>{
                     title: "E_ID",
                     dataIndex: "eid",
                     key: "eid",
-                    // render:(trxt ,record)=>(
-                    //   <span>{record._id}</span>
-                    // )
+                    render: (text, record) => <span>{record._id}</span>,
                   },
 
                   {
                     title: "Event Name",
                     dataIndex: "eventName",
                     key: "eventName",
-                    render: (text,record)=>(
-                       <span>{record.nameOfTheEvent}</span>
+                    render: (text, record) => (
+                      <span>{record.nameOfTheEvent}</span>
                     ),
                   },
 

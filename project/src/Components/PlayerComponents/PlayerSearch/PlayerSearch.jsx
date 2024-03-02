@@ -37,14 +37,13 @@ const PlayerSearch = () => {
   ];
 
   // Filter sampleData based on userRole and Userlocation
-  const filteredData = sampleData.filter((data) => {
-    return (
-      data.playerName &&
-      data.playerName.toLowerCase().startsWith(userRole.toLowerCase()) &&
-      data.district &&
-      data.district.toLowerCase().startsWith(Userlocation.toLowerCase())
-    );
-  });
+  const handlePlayerNameSearch = (value) => {
+    console.log("Player Name Searched: ", value);
+  };
+
+  const handleDistrictSearch = (value) => {
+    console.log("District Searched: ", value);
+  };
 
   // JSX structure for the Navbar component
   return (
@@ -70,16 +69,18 @@ const PlayerSearch = () => {
                 styles={{
                   marginBottom: "8",
                 }}
-                onSearch={(value) => setUserRole(value)}
-                onChange={(e) => setUserRole(e.target.value)}
+                onSearch={handlePlayerNameSearch}
+                // onChange={(e) => handlePlayerNameSearch(e.target.value)}
+                allowClear
               />
               <Input.Search
                 placeholder="Search District..."
                 styles={{
                   marginBottom: "8",
                 }}
-                onSearch={(value) => setUserLocation(value)}
-                onChange={(e) => setUserLocation(e.target.value)}
+                onSearch={handleDistrictSearch}
+                // onChange={(e) => handleDistrictSearch(e.target.value)}
+                allowClear
               />
             </div>
             {/* Table section */}
@@ -148,7 +149,7 @@ const PlayerSearch = () => {
                   pageSize: 5,
                 }}
                 // Displaying data from the frontend
-                dataSource={filteredData} // Use filteredData instead of sampleData
+                dataSource={sampleData} // Use filteredData instead of sampleData
               ></Table>
             </div>
           </Content>

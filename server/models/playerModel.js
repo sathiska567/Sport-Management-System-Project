@@ -2,8 +2,7 @@ const mongoose = require("mongoose")
 
 const palyerSchema = new mongoose.Schema({
 
-      PlayerNo: {type: String, unique:true},
-
+      PlayerNo: { type: String, unique: true },
       FirstName: {
             type: String,
             require: [true, "First name is required"]
@@ -41,6 +40,11 @@ const palyerSchema = new mongoose.Schema({
             require: [true, "UserRole is required"]
       },
 
+      UserRole: {
+            type: String,
+            require: [true, "UserRole is required"]
+      },
+
       Status: {
             type: String,
             default: 'pending'
@@ -50,9 +54,9 @@ const palyerSchema = new mongoose.Schema({
       teams: [{
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Team'
-          }],
-      
-      matches:[{
+      }],
+
+      matches: [{
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Match'
       }]
@@ -60,6 +64,6 @@ const palyerSchema = new mongoose.Schema({
 })
 
 
-const Player = mongoose.model("Player", palyerSchema)
+const PlayerModel = mongoose.model("Player", palyerSchema)
 
-module.exports = {Player};
+module.exports = PlayerModel;
