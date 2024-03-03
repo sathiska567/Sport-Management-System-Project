@@ -41,6 +41,7 @@ const SideBar = ({ children }) => {
   const [isEventOrganizer, setIsEventOrganizer] = useState("")
   const [isPlayer, setIsPlayer] = useState("")
   const [isReferee, setIsReferee] = useState("")
+  const [isTeamManager, setIsTeamManager] = useState("")
   const navigate = useNavigate()
 
   // Event handlers for mouse hover events
@@ -103,8 +104,9 @@ const SideBar = ({ children }) => {
       setIsEventOrganizer(res.data.user.isEventOrganizer)
       setIsPlayer(res.data.user.isPlayer)
       setIsReferee(res.data.user.isReferee)
+      setIsTeamManager(res.data.user.isTeamManager)
 
-
+    console.log(res.data.user);
     } catch (error) {
       message.error("Error have inside the Get currentUserData function");
     }
@@ -386,9 +388,9 @@ const SideBar = ({ children }) => {
                       </div>
                     )
 
-                      : isReferee ? (
-                        <Menu.Item key="2" icon={<PendingActions />}>
-                          <Link to="/apply-position">Referee dashboad</Link>
+                      : isTeamManager ? (
+                        <Menu.Item key="4" icon={<PendingActions />}>
+                          <Link to="/TeamManager-stats">Team Manager</Link>
                         </Menu.Item>
                       )
 

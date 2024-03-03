@@ -34,7 +34,7 @@ const TeamManagerSideBar = ({ children }) => {
   const [currentUserName, setCurrentUsername] = useState();
   const [isAdmin, setIsAdmin] = useState(false);
   const [positionNotification, setPositionNotification] = useState();
-  const [isEventOrganizer, setIsEventOrganizer] = useState(false);
+  const [isTeamManager, setIsTeamManager] = useState(false);
   // Event handlers for mouse hover events
   const handleHoverButton1 = () => {
     setIsHoveredButton1(true);
@@ -87,14 +87,15 @@ const TeamManagerSideBar = ({ children }) => {
       setPositionNotification(res.data.user.notification.length);
       setCurrentUsername(res.data.user.username);
       setIsAdmin(res.data.user.isAdmin);
-      setIsEventOrganizer(res.data.user.isEventOrganizer);
+      setIsTeamManager(res.data.user.isTeamManager);
 
-      console.log("Is event organizer is : ", isEventOrganizer);
+      console.log("Is TeamManager is : ", isTeamManager);
+
     } catch (error) {
       message.error("Error have inside the Get currentUserData function");
     }
   };
-  
+
   // URL for the profile avatar
   const url =
     "https://static.vecteezy.com/system/resources/previews/009/383/461/non_2x/man-face-clipart-design-illustration-free-png.png";
@@ -186,7 +187,7 @@ const TeamManagerSideBar = ({ children }) => {
           defaultSelectedKeys={["/TeamManager-stats"]}
           selectedKeys={[
             location.pathname === "/TeamManager-assign-team-form" ||
-            location.pathname === "/TeamManager-assign-members"
+              location.pathname === "/TeamManager-assign-members"
               ? "/TeamManager-assign-members"
               : location.pathname,
           ]}
@@ -197,24 +198,38 @@ const TeamManagerSideBar = ({ children }) => {
             fontSize: "16px",
           }}
         >
-          <Menu.Item key="/TeamManager-stats" icon={<DashboardOutlined />}>
-            <NavLink to="/TeamManager-stats">Dashboard</NavLink>
-          </Menu.Item>
-          <Menu.Item
-            key="/TeamManager-create-team"
-            icon={<FontAwesomeIcon icon={faPeopleGroup} />}
-          >
-            <NavLink to="/TeamManager-create-team">Create Team</NavLink>
-          </Menu.Item>
-          <Menu.Item
-            key="/TeamManager-assign-members"
-            icon={<UserAddOutlined />}
-          >
-            <NavLink to="/TeamManager-assign-members">Assign Members</NavLink>
-          </Menu.Item>
-          <Menu.Item key="/TeamManager-profile" icon={<Profile />}>
-            <NavLink to="/TeamManager-profile">My Profile</NavLink>
-          </Menu.Item>
+          {isTeamManager ? (
+            <div  style={{
+              paddingLeft: "21px"
+            }}>
+              <Menu.Item key="/TeamManager-stats" icon={<DashboardOutlined />}>
+                <NavLink to="/TeamManager-stats">Dashboard</NavLink>
+              </Menu.Item>
+              <Menu.Item
+                key="/TeamManager-create-team"
+                icon={<FontAwesomeIcon icon={faPeopleGroup} />}
+              >
+                <NavLink to="/TeamManager-create-team">Create Team</NavLink>
+              </Menu.Item>
+              <Menu.Item
+                key="/TeamManager-assign-members"
+                icon={<UserAddOutlined />}
+              >
+                <NavLink to="/TeamManager-assign-members">Assign Members</NavLink>
+              </Menu.Item>
+              <Menu.Item key="/TeamManager-profile" icon={<Profile />}>
+                <NavLink to="/TeamManager-profile">My Profile</NavLink>
+              </Menu.Item>
+            </div>
+          ) : (
+            <>
+              <Menu.Item key="/apply-position" icon={<Profile />}>
+                <NavLink to="/apply-position">Apply Position</NavLink>
+              </Menu.Item>
+
+            </>
+
+          )}
           <Menu.Item
             key="logoff"
             icon={<PoweroffOutlined />}

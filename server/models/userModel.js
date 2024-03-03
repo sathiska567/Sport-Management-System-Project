@@ -42,6 +42,11 @@ isReferee:{
   type:Boolean,
   default:false
 },
+
+isTeamManager:{
+  type:Boolean,
+  default:false
+},
  
 notification : {
   type : Array,
