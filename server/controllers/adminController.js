@@ -106,15 +106,24 @@ try {
 
          if(findUser.isEventOrganizer){
              findUser.isEventOrganizer = false;
+             findUser.messages = []
          }
           if(findUser.isCoach){
                 findUser.isCoach = false;
+                findUser.messages = []
          }
           if(findUser.isPlayer){
                 findUser.isPlayer = false;
+                findUser.messages = []
+
          }
          if(findUser.isReferee){
                 findUser.isReferee = false;
+                findUser.messages = []
+         }
+         if(findUser.isTeamManager){
+                findUser.isTeamManager = false;
+                findUser.messages = []
          }
 
 
