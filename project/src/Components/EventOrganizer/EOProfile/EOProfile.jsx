@@ -29,11 +29,14 @@ const EOProfile = () => {
   const [previewImageProfile, setPreviewImageProfile] = useState("");
   const [fileListProfile, setFileListProfile] = useState([]);
 
-  const [playerName, setPlayerName] = useState("");
-  const [playerEmail, setPlayerEmail] = useState("");
-  const [playerDateOfBirth, setPlayerDateOfBirth] = useState("");
-  const [playerAge, setPlayerAge] = useState(0);
-  const [playerId, setPlayerId] = useState("");
+  // eventOrganizerId, eventOrganizerName, eventOrganizerEmail, eventOrganizerDateOfBirth, eventOrganizerAge
+
+
+  const [eventOrganizerName, seteventOrganizerName] = useState("");
+  const [eventOrganizerEmail, seteventOrganizerEmail] = useState("");
+  const [eventOrganizerDateOfBirth, seteventOrganizerDateOfBirth] = useState("");
+  const [eventOrganizerAge, seteventOrganizerAge] = useState(0);
+  const [eventOrganizerId, seteventOrganizerId] = useState("");
   const [formData, setFormData] = useState([]);
 
   const [NewfileList, setNewFileList] = useState([]);
@@ -55,7 +58,7 @@ const EOProfile = () => {
       );
 
       // console.log(res.data.user._id);
-      setPlayerId(res.data.user._id);
+      seteventOrganizerId(res.data.user._id);
     } catch (error) {
       message.error("Error have inside the Get currentUserData function");
     }
@@ -63,11 +66,11 @@ const EOProfile = () => {
 
   const handleFormSubmit = async (index) => {
     console.log(
-      playerId,
-      playerName,
-      playerEmail,
-      playerDateOfBirth,
-      playerAge,
+      eventOrganizerId,
+      eventOrganizerName,
+      eventOrganizerEmail,
+      eventOrganizerDateOfBirth,
+      eventOrganizerAge,
       NewfileList,
       index
     );
@@ -91,17 +94,17 @@ const EOProfile = () => {
 
       let formData = new FormData();
       formData.append("image", file);
-      formData.append("playerId", playerId);
+      formData.append("eventOrganizerId", eventOrganizerId);
 
       try {
         // Upload profile image and get the response
         const imageUploadResponse = await axios.post(
-          "http://localhost:8080/api/v1/profile/player-profile-image-upload",
+          "http://localhost:8080/api/v1/profile/eventOrganizer-profile-image-upload",
           formData
         );
         console.log(imageUploadResponse.data.success);
         // Extract image URL from the response
-        const imageUrl = imageUploadResponse.data.data.PlayerprofileImageLink;
+        const imageUrl = imageUploadResponse.data.data.eventOrganizerprofileImageLink;
 
         if (imageUploadResponse.data.success) {
           message.success(imageUploadResponse.data.message);
@@ -118,14 +121,14 @@ const EOProfile = () => {
         const coverImagefile = coverImageFileList[0].originFileObj;
         let coverImageFormData = new FormData();
         coverImageFormData.append("coverImage", coverImagefile);
-        coverImageFormData.append("playerId", playerId);
+        coverImageFormData.append("eventOrganizerId", eventOrganizerId);
 
         // // Log FormData for debugging (optional)
         // console.log([...coverImageFormData]);
 
         // Upload cover image
         const coverImageResponse = await axios.post(
-          "http://localhost:8080/api/v1/profile/player-cover-image-upload",
+          "http://localhost:8080/api/v1/profile/eventOrganizer-cover-image-upload",
           coverImageFormData
         );
 
@@ -146,58 +149,28 @@ const EOProfile = () => {
       message.error("Error uploading cover image");
     }
 
-    try {
-      console.log(medicalReportFileList);
-
-      if (medicalReportFileList.length > 0) {
-        const medicalReportfile = medicalReportFileList[1].originFileObj;
-
-        let medicalReportFormData = new FormData();
-        medicalReportFormData.append("medicalReport", medicalReportfile);
-        medicalReportFormData.append("playerId", playerId);
-
-        // Log FormData for debugging (optional)
-        console.log([...medicalReportFormData]);
-
-        // Upload Medical report
-        const coverImageResponse = await axios.post(
-          "http://localhost:8080/api/v1/profile/player-medical-report-upload",
-          medicalReportFormData
-        );
-
-        // Handle coverImageResponse if needed
-        console.log(coverImageResponse.data);
-
-        if (coverImageResponse.data.success) {
-          message.success(coverImageResponse.data.message);
-        }
-      } else {
-        message.error("No cover image selected");
-      }
-    } catch (error) {
-      message.error("Error uploading medical report");
-    }
 
     try {
-      // Now, make a second API call to save player profile data with the image URL
-      const playerProfileResponse = await axios.post(
-        "http://localhost:8080/api/v1/profile/player-profile",
+      // Now, make a second API call to save eventOrganizer profile data with the image URL
+      const eventOrganizerProfileResponse = await axios.post(
+        "http://localhost:8080/api/v1/profile/eventOrganizer-profile",
         {
-          playerId: playerId,
-          playerName: playerName,
-          playerEmail: playerEmail,
-          playerDateOfBirth: playerDateOfBirth,
-          playerAge: playerAge,
-          // PlayerprofileImageLink: imageUrl,
+          eventOrganizerId: eventOrganizerId,
+          eventOrganizerName: eventOrganizerName,
+          eventOrganizerEmail: eventOrganizerEmail,
+          eventOrganizerDateOfBirth: eventOrganizerDateOfBirth,
+          eventOrganizerAge: eventOrganizerAge,
+          // eventOrganizerprofileImageLink: imageUrl,
         }
       );
 
       // Handle response if needed
-      console.log(playerProfileResponse.data);
-      if (playerProfileResponse.data.success) {
-        message.success(playerProfileResponse.data.message);
+      console.log(eventOrganizerProfileResponse.data);
+      if (eventOrganizerProfileResponse.data.success) {
+        message.success(eventOrganizerProfileResponse.data.message);
         window.location.reload();
       }
+
     } catch (error) {
       message.error("Error occurred inside the handleFormSubmit function");
     }
@@ -251,34 +224,34 @@ const EOProfile = () => {
   };
   /*----------------------Cover Image upload-End--------------------*/
 
-  /*----------------------Medical Image upload-Start--------------------*/
-  const [fileList, setFileList] = useState([
-    {
-      uid: "1",
-      name: "image.png",
-      status: "done",
-      url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-    },
-  ]);
-  const onChange = ({ fileList: newFileList }) => {
-    setMedicalReportFileList(newFileList);
-  };
+  // /*----------------------Medical Image upload-Start--------------------*/
+  // const [fileList, setFileList] = useState([
+  //   {
+  //     uid: "1",
+  //     name: "image.png",
+  //     status: "done",
+  //     url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
+  //   },
+  // ]);
+  // const onChange = ({ fileList: newFileList }) => {
+  //   setMedicalReportFileList(newFileList);
+  // };
 
-  const onPreview = async (file) => {
-    let src = file.url;
-    if (!src) {
-      src = await new Promise((resolve) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file.originFileObj);
-        reader.onload = () => resolve(reader.result);
-      });
-    }
-    const image = new Image();
-    image.src = src;
-    const imgWindow = window.open(src);
-    imgWindow?.document.write(image.outerHTML);
-  };
-  /*----------------------Medical Image upload-End--------------------*/
+  // const onPreview = async (file) => {
+  //   let src = file.url;
+  //   if (!src) {
+  //     src = await new Promise((resolve) => {
+  //       const reader = new FileReader();
+  //       reader.readAsDataURL(file.originFileObj);
+  //       reader.onload = () => resolve(reader.result);
+  //     });
+  //   }
+  //   const image = new Image();
+  //   image.src = src;
+  //   const imgWindow = window.open(src);
+  //   imgWindow?.document.write(image.outerHTML);
+  // };
+  // /*----------------------Medical Image upload-End--------------------*/
 
   return (
     <div>
@@ -297,7 +270,7 @@ const EOProfile = () => {
                   type="text"
                   name="name"
                   className="inputBox"
-                  onChange={(e) => setPlayerName(e.target.value)}
+                  onChange={(e) => seteventOrganizerName(e.target.value)}
                 />
               </label>
               <label className="formLabel">
@@ -306,7 +279,7 @@ const EOProfile = () => {
                   type="email"
                   name="email"
                   className="inputBox"
-                  onChange={(e) => setPlayerEmail(e.target.value)}
+                  onChange={(e) => seteventOrganizerEmail(e.target.value)}
                 />
               </label>
 
@@ -318,7 +291,7 @@ const EOProfile = () => {
                       width: "350%",
                     }}
                     onChange={(date, dateString) =>
-                      setPlayerDateOfBirth(dateString)
+                      seteventOrganizerDateOfBirth(dateString)
                     }
                   />
                 </div>
@@ -326,7 +299,7 @@ const EOProfile = () => {
                   <label className="formLabel">Age:</label>
                   <input
                     type="number"
-                    onChange={(e) => setPlayerAge(e.target.value)}
+                    onChange={(e) => seteventOrganizerAge(e.target.value)}
                   />
                 </div>
               </div>
@@ -385,7 +358,7 @@ const EOProfile = () => {
                     </Upload>
                   </ImgCrop>
                 </div>
-                <div>
+                {/* <div>
                   <label className="formLabel">Upload Medical Reports:</label>
                   <Upload
                     action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
@@ -396,7 +369,7 @@ const EOProfile = () => {
                   >
                     {fileList.length < 5 && "+ Upload"}
                   </Upload>
-                </div>
+                </div> */}
               </div>
               <br />
               <Button
