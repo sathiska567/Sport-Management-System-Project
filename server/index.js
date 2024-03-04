@@ -22,6 +22,7 @@ const getPlayerDetailsRoute = require('./routes/GetAllPlayerDetails/getPlayerDet
 
 const PlayerProfileRoute = require('./routes/PlayerProfileRoute/PlayerProfileRoute')
 const coachProfileRoute = require('./routes/CoachProfileRoute/CoachProfileRoute')
+const eventOrganizerProfileRoute = require('./routes/EventOrganizerProfileRoute/EventOrganizerProfileRoute')
 
 const coachAvailabilityRoute = require("./routes/CoachAvailabilityRoute/CoachAvailabilityRoute")
 const PlayerAvailabilityRoute = require("./routes/PlayerAvailabilityRoute/PlayerAvailabilityRoute")
@@ -71,6 +72,9 @@ app.use("/api/v1/profile",PlayerProfileRoute);
 
 // COACH ROUTE
 app.use("/api/v1/profile",coachProfileRoute);
+
+// EVENT ORGANIZER ROUTE
+app.use("/api/v1/profile",eventOrganizerProfileRoute);
 
 
 // COACH AVAILABILITY
