@@ -49,7 +49,7 @@ import TeamManagerAssignMembersTable from "./Components/TeamManager/TeamManagerA
 import TeamManagerAssignMembersCoach from "./Components/TeamManager/TeamManagerAssignMembers/TeamManagerAssignMembersCoach.jsx";
 import TeamManagerAssignMembersPlayer from "./Components/TeamManager/TeamManagerAssignMembers/TeamManagerAssignMembersPlayer.jsx";
 import TeamManagerProfile from "./Components/TeamManager/TeamManagerProfile/TeamManagerProfile.jsx";
-
+import TeamManagerAssign from "./Components/TeamManager/TeamManagerAssign/TeamManagerAssign.jsx";
 function App() {
   const isLoggedIn = window.localStorage.getItem("isLoggedIn");
   console.log(isLoggedIn, "login");
@@ -530,6 +530,21 @@ function App() {
             </ProtectedRoute>
           }
         ></Route>
+      </Routes>
+
+
+      <Routes>
+        <Route
+        path="/TeamManagerAssign"
+       element={
+        <ProtectedRoute>
+          <TeamManagerAssign/>
+        </ProtectedRoute>
+       }
+        >
+         
+        </Route>
+
       </Routes>
     </BrowserRouter>
 
