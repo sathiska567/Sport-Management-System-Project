@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./PlayerAvailability.css";
 import PlayerSideBar from "../PlayerSideBar/PlayerSideBar";
-import { Layout, Checkbox, Input, Table, message, DatePicker } from "antd";
+import { Layout, Checkbox, Input, Table, message, DatePicker, Button } from "antd";
 import axios from "axios";
 
 const { Content } = Layout;
@@ -35,6 +35,7 @@ const PlayerAvailability = () => {
   const [userLocation, setUserLocation] = useState("");
   const [createdEvent, setCreateEvent] = useState([]);
   const [playerId, setPlayerId] = useState([]);
+  const [available, setAvailable] = useState(false);
 
   const currentUserData = async () => {
     try {
@@ -52,7 +53,7 @@ const PlayerAvailability = () => {
     }
   };
 
-  const handleCheckboxChange = async (id, key, isChecked) => {
+  const handleCheckboxChange = async (id, isChecked) => {
     // Update your state or data here based on the checkbox state
     console.log("Event Id", id);
     console.log("Coach Id", playerId);
@@ -66,6 +67,8 @@ const PlayerAvailability = () => {
       console.log(availabilityResponse.data);
 
       if (availabilityResponse.data.success) {
+        setAvailable(availabilityResponse.data.setAvailability.availability)
+
         message.success(availabilityResponse.data.message);
       } else {
         message.error(availabilityResponse.data.message);
@@ -175,22 +178,49 @@ const PlayerAvailability = () => {
                       style={{
                         display: "flex",
                         flexDirection: "row",
-                        gap: "10px",
-                        justifyContent: "center",
+                        gap: "20px",
                       }}
                     >
-                      <Checkbox
-                        onChange={(e) =>
-                          handleCheckboxChange(
-                            record._id,
-                            record.key,
-                            e.target.checked
-                          )
-                        }
-                      />
+                      {available ? (
+                        <Button
+                          type="primary"
+                          style={{
+                            backgroundColor: "#05AD1B",
+                            color: "#fff",
+                            fontSize: "14px",
+                            marginRight: "10px",
+                            borderRadius: "5px",
+                            marginTop: "auto",
+                            marginBottom: "auto",
+                            width: "70px",
+                          }}
+                          onClick={() => handleCheckboxChange(record, false, setAvailable)}
+                        >
+                          Remove
+                        </Button>
+                      ) : (
+                        <Button
+                          type="primary"
+                          style={{
+                            backgroundColor: "#05AD1B",
+                            color: "#fff",
+                            fontSize: "14px",
+                            marginRight: "10px",
+                            borderRadius: "5px",
+                            marginTop: "auto",
+                            marginBottom: "auto",
+                            width: "70px",
+                          }}
+                          onClick={() => handleCheckboxChange(record, true, setAvailable)}
+                        >
+                          Add
+                        </Button>
+                      )}
                     </span>
                   ),
                 },
+                
+
               ]}
               dataSource={createdEvent}
             />
