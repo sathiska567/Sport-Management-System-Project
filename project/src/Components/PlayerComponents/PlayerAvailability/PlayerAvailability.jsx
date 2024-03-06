@@ -6,36 +6,37 @@ import axios from "axios";
 
 const { Content } = Layout;
 
-const dataSource = [
-  {
-    key: "1",
-    eventLocation: "Galle",
-    eventName: "Event 1",
-    eventDate: "2022-01-01",
-    Actions: "Action 1",
-  },
-  {
-    key: "2",
-    eventLocation: "Galle",
-    eventName: "Event 2",
-    eventDate: "2022-02-01",
-    Actions: "Action 2",
-  },
-  {
-    key: "3",
-    eventLocation: "Galle",
-    eventName: "Event 3",
-    eventDate: "2022-03-01",
-    Actions: "Action 3",
-  },
-];
+// const dataSource = [
+//   {
+//     key: "1",
+//     eventLocation: "Galle",
+//     eventName: "Event 1",
+//     eventDate: "2022-01-01",
+//     Actions: "Action 1",
+//   },
+//   {
+//     key: "2",
+//     eventLocation: "Galle",
+//     eventName: "Event 2",
+//     eventDate: "2022-02-01",
+//     Actions: "Action 2",
+//   },
+//   {
+//     key: "3",
+//     eventLocation: "Galle",
+//     eventName: "Event 3",
+//     eventDate: "2022-03-01",
+//     Actions: "Action 3",
+//   },
+// ];
 
 const PlayerAvailability = () => {
   const [eventLocation, setEventLocation] = useState("");
   const [userLocation, setUserLocation] = useState("");
   const [createdEvent, setCreateEvent] = useState([]);
   const [playerId, setPlayerId] = useState([]);
-  const [available, setAvailable] = useState(false);
+  // const [available, setAvailable] = useState();
+  var available;
 
   const currentUserData = async () => {
     try {
@@ -53,11 +54,11 @@ const PlayerAvailability = () => {
     }
   };
 
-  const handleCheckboxChange = async (id, isChecked) => {
+  const hanldeAvailability = async (id, isChecked) => {
     // Update your state or data here based on the checkbox state
-    console.log("Event Id", id);
-    console.log("Coach Id", playerId);
-    console.log(isChecked);
+    console.log("Event Id : ", id);
+    console.log("Player Id : ", playerId);
+    console.log("isChecked : ", isChecked);
 
     try {
       const availabilityResponse = await axios.post(
@@ -67,9 +68,8 @@ const PlayerAvailability = () => {
       console.log(availabilityResponse.data);
 
       if (availabilityResponse.data.success) {
-        setAvailable(availabilityResponse.data.setAvailability.availability)
-
         message.success(availabilityResponse.data.message);
+
       } else {
         message.error(availabilityResponse.data.message);
       }
@@ -77,6 +77,31 @@ const PlayerAvailability = () => {
       message.error("Error adding availability");
     }
   };
+
+
+  const removeAvailability = async(id, isChecked)=>{
+     console.log(id,isChecked);
+     console.log("Player Id : ", playerId);
+
+     try {
+      const removeResponse = await axios.post(
+        "http://localhost:8080/api/v1/player-availability/save-player-availability",
+        { eventId: id, playerId: playerId, availability: isChecked }
+      );
+      console.log(removeResponse.data);
+
+      if (removeResponse.data.success) {
+        available = removeResponse.data.setAvailability.availability;
+        console.log("current available" , available);
+        message.success("Availability Remove Successfull !");
+        
+      } else {
+        message.error(removeResponse.data.message);
+      }
+     } catch (error) {
+      message.error("Error removing availability");
+     }
+  }
 
   // GET ALL CREATE EVENT
   const getAllCreateEvent = async () => {
@@ -171,7 +196,7 @@ const PlayerAvailability = () => {
                 {
                   title: "Actions",
                   dataIndex: "Actions",
-                  width: "40%",
+                  width: "20%",
                   align: "center",
                   render: (text, record) => (
                     <span
@@ -179,9 +204,9 @@ const PlayerAvailability = () => {
                         display: "flex",
                         flexDirection: "row",
                         gap: "20px",
+                        paddingLeft:"50px"
                       }}
                     >
-                      {available ? (
                         <Button
                           type="primary"
                           style={{
@@ -194,32 +219,32 @@ const PlayerAvailability = () => {
                             marginBottom: "auto",
                             width: "70px",
                           }}
-                          onClick={() => handleCheckboxChange(record, false, setAvailable)}
-                        >
-                          Remove
-                        </Button>
-                      ) : (
-                        <Button
-                          type="primary"
-                          style={{
-                            backgroundColor: "#05AD1B",
-                            color: "#fff",
-                            fontSize: "14px",
-                            marginRight: "10px",
-                            borderRadius: "5px",
-                            marginTop: "auto",
-                            marginBottom: "auto",
-                            width: "70px",
-                          }}
-                          onClick={() => handleCheckboxChange(record, true, setAvailable)}
+                          onClick={() => hanldeAvailability(record._id, true)}
                         >
                           Add
                         </Button>
-                      )}
+                    
+
+                      <Button
+                        type="primary"
+                        style={{
+                          backgroundColor: "#05AD1B",
+                          color: "#fff",
+                          fontSize: "14px",
+                          marginRight: "10px",
+                          borderRadius: "5px",
+                          marginTop: "auto",
+                          marginBottom: "auto",
+                          width: "90px",
+                        }}
+                        onClick={() => removeAvailability(record._id, false)}
+                      >
+                        Remove
+                      </Button>
                     </span>
                   ),
                 },
-                
+
 
               ]}
               dataSource={createdEvent}
