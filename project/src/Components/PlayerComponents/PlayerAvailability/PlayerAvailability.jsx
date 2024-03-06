@@ -79,11 +79,11 @@ const PlayerAvailability = () => {
   };
 
 
-  const removeAvailability = async(id, isChecked)=>{
-     console.log(id,isChecked);
-     console.log("Player Id : ", playerId);
+  const removeAvailability = async (id, isChecked) => {
+    console.log(id, isChecked);
+    console.log("Player Id : ", playerId);
 
-     try {
+    try {
       const removeResponse = await axios.post(
         "http://localhost:8080/api/v1/player-availability/save-player-availability",
         { eventId: id, playerId: playerId, availability: isChecked }
@@ -92,15 +92,15 @@ const PlayerAvailability = () => {
 
       if (removeResponse.data.success) {
         available = removeResponse.data.setAvailability.availability;
-        console.log("current available" , available);
+        console.log("current available", available);
         message.success("Availability Remove Successfull !");
-        
+
       } else {
         message.error(removeResponse.data.message);
       }
-     } catch (error) {
+    } catch (error) {
       message.error("Error removing availability");
-     }
+    }
   }
 
   // GET ALL CREATE EVENT
@@ -125,8 +125,18 @@ const PlayerAvailability = () => {
   }, []);
 
   // Filter userApplicationData based on userRole and Userlocation
-  const handleEventLocationSearch = (value) => {
+  const handleEventLocationSearch = async (value) => {
     console.log("Event Location Searched: ", value);
+    try {
+      const searchResponse = await axios.post("http://localhost:8080/api/v1/search/search-location", { value })
+      console.log(searchResponse.data.data);
+      setCreateEvent(searchResponse.data.data)
+
+    } catch (error) {
+      message.error("Error searching event location");
+    }
+
+
     setEventLocation(value);
   };
 
@@ -204,26 +214,26 @@ const PlayerAvailability = () => {
                         display: "flex",
                         flexDirection: "row",
                         gap: "20px",
-                        paddingLeft:"50px"
+                        paddingLeft: "50px"
                       }}
                     >
-                        <Button
-                          type="primary"
-                          style={{
-                            backgroundColor: "#05AD1B",
-                            color: "#fff",
-                            fontSize: "14px",
-                            marginRight: "10px",
-                            borderRadius: "5px",
-                            marginTop: "auto",
-                            marginBottom: "auto",
-                            width: "70px",
-                          }}
-                          onClick={() => hanldeAvailability(record._id, true)}
-                        >
-                          Add
-                        </Button>
-                    
+                      <Button
+                        type="primary"
+                        style={{
+                          backgroundColor: "#05AD1B",
+                          color: "#fff",
+                          fontSize: "14px",
+                          marginRight: "10px",
+                          borderRadius: "5px",
+                          marginTop: "auto",
+                          marginBottom: "auto",
+                          width: "70px",
+                        }}
+                        onClick={() => hanldeAvailability(record._id, true)}
+                      >
+                        Add
+                      </Button>
+
 
                       <Button
                         type="primary"

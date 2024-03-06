@@ -77,6 +77,9 @@ const handleDelete = async (record) => {
     );
   });
 
+
+  
+
   // End
 
   // JSX structure for the Navbar component
