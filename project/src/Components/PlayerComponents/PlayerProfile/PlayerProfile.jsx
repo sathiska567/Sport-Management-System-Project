@@ -252,11 +252,12 @@ const handleFormSubmit = async (index) => {
       url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
     },
   ]);
-  const onChange = ({ fileList: newFileList }) => {
+
+const onChange = ({ fileList: newFileList }) => {
     setMedicalReportFileList(newFileList);    
   };
 
-  const onPreview = async (file) => {
+const onPreview = async (file) => {
     let src = file.url;
     if (!src) {
       src = await new Promise((resolve) => {
@@ -337,47 +338,51 @@ const handleFormSubmit = async (index) => {
                       style={{
                         width: "100%",
                       }}
-                      src={previewImageProfile}
+                      // src={previewImageProfile}
                     />
                   </Modal>
                   <ImgCrop rotationSlider>
                     <Upload
-                      style={{}}
-                      action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
+                      // style={{}}
+                      // action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
                       listType="picture-card"
                       fileList={fileListProfile}
                       onChange={onChangeProfile}
-                      onPreview={onPreviewProfile}
+                      // onPreview={onPreviewProfile}
                     >
                       {fileListProfile.length < 1 && "+ Upload"}
                     </Upload>
                   </ImgCrop>
                 </div>
+
                 <div>
                   <label className="formLabel">Cover Image:</label>
                   <Modal
-                    visible={previewVisibleCover}
+                    // visible={previewVisibleCover}
                     footer={null}
-                    onCancel={() => setPreviewVisibleCover(false)}
+                    onCancel={() => setPreviewVisibleCover(true)}
                   >
                     <img
                       alt="example"
                       style={{ width: "100%" }}
-                      src={previewImageCover}
+                      // src={previewImageCover}
                     />
                   </Modal>
                   <ImgCrop rotationSlider>
-                    <Upload
-                      action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
+                  <Upload
+                      // style={{}}
+                      // action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
                       listType="picture-card"
                       fileList={fileListCover}
                       onChange={onChangeCover}
-                      onPreview={onPreviewCover}
+                      // onPreview={onPreviewCover}
                     >
                       {fileListCover.length < 1 && "+ Upload"}
                     </Upload>
                   </ImgCrop>
                 </div>
+
+
                 <div>
                   <label className="formLabel">Upload Medical Reports:</label>
                   <Upload
@@ -385,7 +390,7 @@ const handleFormSubmit = async (index) => {
                     listType="picture-card"
                     fileList={fileList}
                     onChange={onChange}
-                    onPreview={onPreview}
+                    // onPreview={onPreview}
                   >
                     {fileList.length < 5 && "+ Upload"}
                   </Upload>
