@@ -211,7 +211,7 @@ const PlayerSideBar = ({ children }) => {
             key="/player-matches"
             icon={<FontAwesomeIcon icon={faTrophy} />}
           >
-            <NavLink to="/player-matches">Matches</NavLink>
+            <NavLink to="#">Matches</NavLink>
           </Menu.Item>
           <Menu.Item
             key="/player-reviews"
@@ -223,7 +223,7 @@ const PlayerSideBar = ({ children }) => {
             key="/player-search"
             icon={<FontAwesomeIcon icon={faUsers} />}
           >
-            <NavLink to="/player-search">Search Players</NavLink>
+            <NavLink to="#">Search Players</NavLink>
           </Menu.Item>
           <Menu.Item key="/player-profile" icon={<Profile />}>
             <NavLink to="/player-profile">My Profile</NavLink>
