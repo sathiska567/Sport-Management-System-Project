@@ -20,10 +20,10 @@ const TournamentBracket = () => {
   //const winnersArray = ['team1', 'team2'];
 
   useEffect(() => {
-    axios.get(`http://localhost:8080/matches`)
+    axios.get("http://localhost:8080/api/v1/eventOrganizerBracket/getTeams")
       .then(res => {
         console.log(res.data)
-        setMatches(res.data)
+        setMatches(res.data[0].shuffleTeam)
       })
       .catch(err => {
         console.log(err)
