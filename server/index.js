@@ -29,6 +29,7 @@ const PlayerAvailabilityRoute = require("./routes/PlayerAvailabilityRoute/Player
 const getPlayerReviewRoute = require("./routes/CoachReviewRoute/getCurrentPlayerReviewRoute")
 
 const searchLocationRoute = require("./routes/PlayerAvailabilityRoute/SerachLocationRoute")
+const eventOrganizerBracketRoute = require("./routes/EventOrganizerBracketRoute/EventOrganizerBracketRoute")
 
 require("./db/mongoDb"); 
 
@@ -87,6 +88,10 @@ app.use("/api/v1/player-availability",PlayerAvailabilityRoute);
 
 // Search Location
 app.use("/api/v1/search",searchLocationRoute);
+
+
+// Event Organizer Bracekt
+app.use("/api/v1/eventOrganizerBracket",eventOrganizerBracketRoute)
 
 
 // //jwt
