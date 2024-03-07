@@ -56,7 +56,7 @@ import SelectPlayers from "./Pages/Coach/SelectPlayers.jsx"
 import EditTeam from "./Pages/Coach/EditTeam.jsx"
 import UpdateTeam from "./Pages/Coach/UpdateTeam.jsx"
 
-
+import ShuffleAlgo from "./Components/EventOrganizer/EOShuffleFixture/ShuffleAlgo/ShuffleAlgo.jsx"
 
 function App() {
   const isLoggedIn = window.localStorage.getItem("isLoggedIn");
@@ -538,6 +538,10 @@ function App() {
             </ProtectedRoute>
           }
         ></Route>
+      </Routes>
+
+      <Routes>
+         <Route path="/shuffle-algo" element={<ShuffleAlgo />} />
       </Routes>
 
       <Routes>
