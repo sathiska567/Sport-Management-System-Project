@@ -1,78 +1,58 @@
 import React from 'react';
-import { Button, Checkbox, Form, Input } from 'antd';
-import SideBar from '../EOSideBar/EOSideBar';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 
-const AddTeam = () => {
-  const navigate = useNavigate();
+const teams = [
+  "Team A",
+  "Team B",
+  "Team C",
+  "Team D",
+  "Team E",
+  "Team F",
+  "Team G",
+];
 
-        const onFinishFailed = (errorInfo) => {
-                console.log('Failed:', errorInfo);
-              };
-  
-const onFinish = async(values) => {
-         console.log('Success:', values);
-         const teamName = values.teamName;      
-         console.log(teamName);
-         const respose = await axios.post("http://localhost:8080/api/v1/fixture/team",{teamName:teamName})
+function generateSingleEliminationBracket(teams) {
+  const bracket = [];
+  const numberOfRounds = Math.ceil(Math.log2(teams.length));
 
-         console.log(respose);
-         navigate("/fixture")
+  for (let i = 0; i < numberOfRounds; i++) {
+    bracket.push(new Array(2 ** (numberOfRounds - i)).fill(null));
+  }
 
+  for (let i = 0; i < teams.length; i++) {
+    bracket[0][i] = teams[i];
+  }
+
+  for (let round = 1; round < numberOfRounds; round++) {
+    for (let match = 0; match < bracket[round].length; match += 2) {
+      const teamA = bracket[round - 1][match];
+      const teamB = bracket[round - 1][match + 1];
+      bracket[round][match / 2] = [teamA, teamB];
+    }
+  }
+
+  return bracket;
+}
+
+const SingleEliminationBracket = () => {
+  const singleEliminationBracket = generateSingleEliminationBracket(teams);
+
+  return (
+    <div>
+      <h2>Single Elimination Bracket</h2>
+      {singleEliminationBracket.map((round, roundIndex) => (
+        <div key={roundIndex}>
+          <h3>Round {roundIndex + 1}</h3>
+          {round.map((matchup) => (
+            <div>
+              <p>
+                Match {roundIndex + 1} {matchup ? matchup + "vs" : "TBD"}
+              </p>
+            </div>
+          ))}
+        </div>
+      ))}
+    </div>
+  );
 };
 
-
-    return(
-        <>
-        <SideBar>
-        <Form
-         name="basic"
-         labelCol={{
-           span: 8,
-         }}
-         wrapperCol={{
-           span: 16,
-         }}
-         style={{
-           maxWidth: 600,
-         }}
-         initialValues={{
-           remember: true,
-         }}
-         onFinish={onFinish}
-         onFinishFailed={onFinishFailed}
-         autoComplete="off"
-       >
-         <Form.Item
-           label="TeamName"
-           name="teamName"
-           rules={[
-             {
-               required: true,
-               message: 'Please input your TeamName!',
-             },
-           ]}
-         >
-           <Input />
-         </Form.Item>
-     
-         <Form.Item
-           wrapperCol={{
-             offset: 8,
-             span: 16,
-           }}
-         >
-           <Button type="primary" htmlType="submit">
-             Submit
-           </Button>
-         </Form.Item>
-       </Form>
-        </SideBar>
-       
-       </>
-    )
-}
-export default AddTeam;
-
-
+export default SingleEliminationBracket;

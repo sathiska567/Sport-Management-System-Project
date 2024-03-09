@@ -48,6 +48,7 @@ const PlayerAvailability = () => {
           },
         }
       );
+      // console.log(res);
       setPlayerId(res.data.user._id);
     } catch (error) {
       message.error("Error have inside the Get currentUserData function");
@@ -65,7 +66,8 @@ const PlayerAvailability = () => {
         "http://localhost:8080/api/v1/player-availability/save-player-availability",
         { eventId: id, playerId: playerId, availability: isChecked }
       );
-      console.log(availabilityResponse.data);
+
+      console.log(availabilityResponse.data.setAvailability.availability);
 
       if (availabilityResponse.data.success) {
         message.success(availabilityResponse.data.message);
@@ -83,7 +85,7 @@ const PlayerAvailability = () => {
     console.log(id, isChecked);
     console.log("Player Id : ", playerId);
 
-    try {
+  try {
       const removeResponse = await axios.post(
         "http://localhost:8080/api/v1/player-availability/save-player-availability",
         { eventId: id, playerId: playerId, availability: isChecked }
