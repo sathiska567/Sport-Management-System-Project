@@ -1,25 +1,25 @@
 const createModel = require("../../models/EditEvent/EditEvent");
 
-const createevent = async (req, res) => {
-    try {
+// const createevent = async (req, res) => {
+//     try {
 
-        const data = new createModel(req.body)
-        await data.save()
+//         const data = new createModel(req.body)
+//         await data.save()
 
-        res.send({
-            success: true,
-            message: "data save successfully",
-            data: data
-        })
+//         res.send({
+//             success: true,
+//             message: "data save successfully",
+//             data: data
+//         })
 
-    } catch (error) {
-        res.status(400).send({
-            success: false,
-            message: 'Error While Getting Review',
-            error
-        })
-    }
-}
+//     } catch (error) {
+//         res.status(400).send({
+//             success: false,
+//             message: 'Error While Getting Review',
+//             error
+//         })
+//     }
+// }
 
 
 const getevent = async (req, res) => {
@@ -75,4 +75,4 @@ const deletevent = async (req, res) => {
         })
     }
 }
-module.exports = {createevent,getevent,updateevent,deletevent};
+module.exports = {getevent,updateevent,deletevent};

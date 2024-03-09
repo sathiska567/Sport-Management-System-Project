@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const {createevent,getevent,updateevent,deletevent} = require("../../controllers/EditEvent/EditEvent");
+const {getevent,updateevent,deletevent} = require("../../controllers/EditEvent/EditEvent");
 //create data
-router.post("/do-create",createevent)
+//router.post("/do-create",createevent)
 
 //get data
 router.get("/get-create/:id",getevent)
