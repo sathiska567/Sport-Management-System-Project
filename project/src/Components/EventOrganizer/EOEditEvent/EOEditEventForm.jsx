@@ -1,24 +1,86 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect} from "react";
 import EOSidebar from "../EOSideBar/EOSideBar";
 import "./EOEditEventForm.css";
-import { Form, Input, DatePicker, TimePicker, message } from "antd";
+import { Form, Input, DatePicker, TimePicker } from "antd";
 import {
   CloseSquareOutlined,
   EditOutlined,
   DeleteOutlined,
 } from "@ant-design/icons";
-import axios from "axios";
+
+import moment from 'moment'
 
 const EOEditEventForm = () => {
+
+  const getOneEvent = async (id) => {
+    try{
+      const urls = "http://localhost:8080/api/v1/Edit/get-create/" + id
+      console.log(urls);
+      const response = await fetch(urls)
+
+      const resData = await response.json()
+
+      const event = resData.data
+
+      console.log("EVENT", event);
+
+      setEventName(event.name)
+      setLocation(event.location)
+      setTeams(event.teams)
+      setEventDate(event.date)
+      setTime(event.time)
+    } catch (error) {
+      console.log(error)
+
+    }
+  } 
+
+  const updateEvent = async (id) => {
+    try{
+      const resposne  = await fetch("http://localhost:8080/api/v1/Edit/update-event/", {
+        method: "PUT",
+        body: JSON.stringify({
+          _id: id,
+          name: nameOfTheEvent,
+          location: location,
+          teams:teams,
+          date: eventDate,
+          time:  time,
+        }),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8"
+        }
+      });
+
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    getOneEvent("65e6fccc2608695dfd6f4fde")
+  }, [])
+
   const [nameOfTheEvent, setEventName] = useState("");
-  const [nameOfTheTeam, setTeamName] = useState([]);
-  const [location, setLocation] = useState("");
+   const [location, setLocation] = useState("");
+   const[teams,setTeams] = useState("");
   const [eventDate, setEventDate] = useState("");
-  const [startingTime, setStartingTime] = useState("");
+  const [ time, setTime] = useState("");
+
+  useEffect(() => {
+    console.log("Time",  time)
+    console.log("Date", eventDate)
+  }, [eventDate,  time])
+ 
 
   const handleCreate = async () => {
+
+
     
   };
+
+  
+  
 
   return (
     <div>
@@ -73,6 +135,7 @@ const EOEditEventForm = () => {
                     required
                     name="eventName"
                     onChange={(e) => setEventName(e.target.value)}
+                    value = {nameOfTheEvent}
                   />
                 </div>
 
@@ -84,6 +147,7 @@ const EOEditEventForm = () => {
                     required
                     name="location"
                     onChange={(e) => setLocation(e.target.value)}
+                    value = {location}
                   />
                 </div>
 
@@ -94,6 +158,8 @@ const EOEditEventForm = () => {
                     id="numberOfTeams"
                     name="numberOfTeams"
                     required
+                    onChange={(e) => setTeams(e.target.value)}
+                    value = {teams}
                   />
                 </div>
                 <div className="DataIem">
@@ -102,6 +168,7 @@ const EOEditEventForm = () => {
                     id="EventDate"
                     name="EventDate"
                     onChange={(date) => setEventDate(date)}
+                    value = {moment(eventDate)}
                   />
                 </div>
 
@@ -110,7 +177,8 @@ const EOEditEventForm = () => {
                   <TimePicker
                     id="startingTime"
                     name="startingTime"
-                    onChange={(time) => setStartingTime(time)}
+                    onChange={(time) => setTime(time )}
+                    value ={moment( time)}
                   />
                 </div>
 
@@ -119,19 +187,12 @@ const EOEditEventForm = () => {
                     <button
                       class="approve CreateEventBTn"
                       style={{ backgroundColor: "#05AD1B", width: "80pxx" }}
-                      onClick={handleCreate}
+                      onClick={() => {updateEvent("65e6fccc2608695dfd6f4fde")}}
                     >
                       <EditOutlined className="UserApplicationIcon" />
                       Edit Event
                     </button>
-                    <button
-                      class="approve CreateEventBTn"
-                      style={{ backgroundColor: "#D94D34", width: "80px" }}
-                      onClick={handleCreate}
-                    >
-                      <DeleteOutlined className="UserApplicationIcon" />
-                      Delete Event
-                    </button>
+                   
                   </div>
                 </div>
               </div>
