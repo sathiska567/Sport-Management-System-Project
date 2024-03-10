@@ -5,13 +5,13 @@ const {geteventTab,updateeventTab,deleteventTab} = require("../../controllers/ed
 //router.post("/do-create",createevent)
 
 //get data
-router.get("/get-create/:id",geteventTab)
+router.get("/get-createTab/:id",geteventTab)
 
 //update data
-router.put("/update-event",updateeventTab)
+router.put("/update-eventTab",updateeventTab)
 
 //delete data
-router.delete("/delete-event",deleteventTab)
+router.delete("/delete-eventTab",deleteventTab)
 
 
 

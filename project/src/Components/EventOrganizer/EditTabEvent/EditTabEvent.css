@@ -5,7 +5,7 @@ body {
   }
   
   
-  .CreateEventForm {
+  .CreateEventTab {
     width: 80%;
     margin: auto;
     max-width: 800px;
@@ -20,7 +20,7 @@ body {
       margin-left: 100px;
   }
   
-  .CreateEventFormHeader {
+  .CreateEventTabHeader {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -29,14 +29,14 @@ body {
     padding: 10px;
   }
   
-  .CreateEventFormHeader h3 {
+  .CreateEventTabHeader h3 {
     color: #e0f7ff;
     margin: 0;
     flex: 1; /* Take up remaining space, centering the h3 */
     text-align: center;
   }
   
-  .CreateEventFormApplication {
+  .CreateEventTabApplication {
     max-height: 500px; 
     overflow-y: auto; 
     border: 1px solid #e0f7ff;
@@ -96,17 +96,17 @@ body {
     gap: 15px;
   }
   
-  .DataIem {
+  .DataItem{
       display: flex;
       flex-direction: row;
       gap: 15px;
   }
   
-  .DataIem > label {
+  .DataItem > label {
       flex: 1;
   }
   
-  .DataIem > input {
+  .DataItem > input {
       flex: 2.5;
   }
   
@@ -119,6 +119,6 @@ body {
       flex: 2.5;
   }
   
-  .DataIem > .ant-picker{
+  .DataItem > .ant-picker{
     flex: 2.5;
   }
