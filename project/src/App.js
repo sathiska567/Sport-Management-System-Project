@@ -55,8 +55,8 @@ import CreateTeam from "./Pages/Coach/CreateTeam.jsx"
 import SelectPlayers from "./Pages/Coach/SelectPlayers.jsx"
 import EditTeam from "./Pages/Coach/EditTeam.jsx"
 import UpdateTeam from "./Pages/Coach/UpdateTeam.jsx"
-import EditTabEvent from "./Components/EventOrganizer/EditTabEvent/EditTabEvent.jsx"
-import TeamManagerAssign from "./Components/TeamManager/TeamManagerAssign/TeamManagerAssign.jsx";
+
+
 
 function App() {
   const isLoggedIn = window.localStorage.getItem("isLoggedIn");
@@ -549,31 +549,7 @@ function App() {
         <Route path="/update-team" element={<UpdateTeam />} />
       </Routes>
 
-      <Routes>
-        <Route
-        path="/EditTabEvent"
-        element={
-          <EditTabEvent/>
-        }
-        
-        >
 
-        </Route>
-      </Routes>
-
-      <Routes>
-        <Route
-        path="/TeamManagerAssign"
-       element={
-        <ProtectedRoute>
-          <TeamManagerAssign/>
-        </ProtectedRoute>
-       }
-        >
-         
-        </Route>
-
-      </Routes>
     </BrowserRouter>
 
     // <div className="App">
