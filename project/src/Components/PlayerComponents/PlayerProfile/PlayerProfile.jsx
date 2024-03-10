@@ -33,6 +33,7 @@ const PlayerProfile = () => {
   const [medicalReportFileList, setMedicalReportFileList] = useState([]);
 
   const [loadings, setLoadings] = useState([]);
+  const [time,setTime] = useState(true)
 
   // GET CURRENT USER DETAILS
   const currentUserData = async () => {
@@ -58,20 +59,21 @@ const PlayerProfile = () => {
 const handleFormSubmit = async (index) => {
     console.log(playerId, playerName, playerEmail, playerDateOfBirth, playerAge, NewfileList, index);
 
-    setLoadings((prevLoadings) => {
-      const newLoadings = [...prevLoadings];
-      newLoadings[index] = true;
-      return newLoadings;
-    });
-
-
-    setTimeout(() => {
       setLoadings((prevLoadings) => {
+        // console.log(prevLoadings);
         const newLoadings = [...prevLoadings];
-        newLoadings[index] = false;
+        newLoadings[index] = true;
         return newLoadings;
       });
-    }, 20000);
+  
+      setTimeout(() => {
+        setLoadings((prevLoadings) => {
+          const newLoadings = [...prevLoadings];
+          newLoadings[index] = false;
+          return newLoadings;
+        });
+      }, 25000);
+   
 
     if (NewfileList.length > 0) {
       const file = NewfileList[0].originFileObj;
@@ -181,7 +183,8 @@ const handleFormSubmit = async (index) => {
       console.log(playerProfileResponse.data);
       if (playerProfileResponse.data.success) {
         message.success(playerProfileResponse.data.message)
-        window.location.reload();
+        // setTime(false)
+        window.location.reload()
       }
 
     } catch (error) {
