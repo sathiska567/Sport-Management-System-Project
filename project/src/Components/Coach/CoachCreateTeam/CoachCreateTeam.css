@@ -1,0 +1,46 @@
+.tableContainer {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+  
+  .Table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .Table thead tr th,
+  .Table td {
+    padding: 8px;
+    border: 1px solid #ddd;
+  }
+  
+  .Table th {
+    background-color: #f2f2f2;
+    text-align: left;
+  }
+  
+
+  .actionButtons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+  }
+  
+  .primaryButton {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  
+  .viewButton {
+    background-color: #52c41a;
+    color: #fff;
+  }
+  
+  .deleteButton {
+    background-color: #f5222d;
+    color: #fff;
+  }
+  

@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import CoachSidebar from '../CoachSidebar/CoachSidebar';
 
 const SelectPlayers = () => {
     const navigate = useNavigate()
@@ -73,45 +74,47 @@ const SelectPlayers = () => {
     };
 
     return (
-        <div>
-            <div style={{ margin: 20, padding: 20, textAlign: 'center' }}>CreateTeam <br />
-                <form>
-                    Team Name : <input type="text" name='teamName' value={teamData.teamName} onChange={handleChange} />
-                    Team No : <input type="text" name='teamNo' value={teamData.teamNo} onChange={handleChange} />
-                </form>
-            </div>
-
-            <div style={{ margin: 10, padding: 10 }}>
-                <table style={{ border: 'solid 1px grey', width: '100%' }}>
-                    <thead>
-                        <tr style={{ backgroundColor: 'darkblue', color: 'white' }}>
-                            <th>Player No</th><th>Player Name</th><th>Location</th><th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {players.map((player, index) => (
-                            player.Status === 'available' && (!player.matches.includes(matchId))&&(<tr key={index}>
-                                <td style={{ textAlign: 'center' }} >{player.PlayerNo}</td>
-                                <td style={{ textAlign: 'center' }}>{player.FirstName} {player.LastName}</td>
-                                <td style={{ textAlign: 'center' }}>{player.District}</td>
-                                <td style={{ textAlign: 'center' }}>
-                                    <button onClick={() => handleAdd(player._id)}>
-                                        {teamData.selectedPlayers.includes(player._id) ? 'Remove' : 'Add'}
-                                    </button>
-                                </td>
-                            </tr>)
-                        ))}
-                    </tbody>
-                </table>
-            </div>
-
-            {/* Display submit button only if there are selected players */}
-            { (
-                <div style={{ textAlign: 'center', marginTop: '20px' }}>
-                    <button onClick={handleSubmit}>Submit</button>
+        <CoachSidebar>
+            <div>
+                <div style={{ margin: 20, padding: 20, textAlign: 'center' }}>CreateTeam <br />
+                    <form>
+                        Team Name : <input type="text" name='teamName' value={teamData.teamName} onChange={handleChange} />
+                        Team No : <input type="text" name='teamNo' value={teamData.teamNo} onChange={handleChange} />
+                    </form>
                 </div>
-            )}
-        </div>
+
+                <div style={{ margin: 10, padding: 10 }}>
+                    <table style={{ border: 'solid 1px grey', width: '100%' }}>
+                        <thead>
+                            <tr style={{ backgroundColor: 'darkblue', color: 'white', textAlign:'center' }}>
+                                <th>Player No</th><th>Player Name</th><th>Location</th><th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {players.map((player, index) => (
+                                player.Status === 'available' && (!player.matches.includes(matchId)) && (<tr key={index}>
+                                    <td style={{ textAlign: 'center' }} >{player.PlayerNo}</td>
+                                    <td style={{ textAlign: 'center' }}>{player.playerName}</td>
+                                    <td style={{ textAlign: 'center' }}>{player.District}</td>
+                                    <td style={{ textAlign: 'center' }}>
+                                        <button className='btn btn-success'  onClick={() => handleAdd(player._id)}>
+                                            {teamData.selectedPlayers.includes(player._id) ? 'Remove' : 'Add'}
+                                        </button>
+                                    </td>
+                                </tr>)
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+
+                {/* Display submit button only if there are selected players */}
+                {(
+                    <div style={{ textAlign: 'center', marginTop: '20px' }}>
+                        <button className='btn btn-success' onClick={handleSubmit}>Submit</button>
+                    </div>
+                )}
+            </div>
+        </CoachSidebar>
     );
 };
 

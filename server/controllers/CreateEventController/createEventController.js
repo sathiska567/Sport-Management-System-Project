@@ -7,9 +7,12 @@ const createEventController = async(req,res)=>{
       console.log(nameOfTheEvent,location,numberOfTeams);
 
       const data = new createEventModel({
-         nameOfTheEvent:nameOfTheEvent,
+         name:nameOfTheEvent,
          location:location,
-         numberOfTeams:numberOfTeams
+         numberOfTeams:numberOfTeams,
+         coaches: [],
+         teams: [],
+         rounds:[]
       })
 
       await data.save();

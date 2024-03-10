@@ -33,6 +33,10 @@ const playerProfileSchema = new mongoose.Schema({
       type: Number,
       required: ["Player age is Required", true]
    },
+   Distric: {
+      type: String,
+      require: [true, "Distric is required"]
+},
 
 
 })

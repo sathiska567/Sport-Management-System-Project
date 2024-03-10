@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 
 const createEventSchema = new mongoose.Schema({
-      nameOfTheEvent: {
+      name: {
             type: String,
             required: ["Please enter name of the event", true]
       },
@@ -14,7 +14,7 @@ const createEventSchema = new mongoose.Schema({
 
       numberOfTeams: {
             type: Number,
-            required: ["Please enter number of team of the event", true]
+            //required: ["Please enter number of team of the event", true]
       },
 
       //   eventDate:{
@@ -27,11 +27,7 @@ const createEventSchema = new mongoose.Schema({
       //         required:["Please enter Starting time of the event",false]
       //   },
 
-      name: String,
-
       matchNo: { type: String, unique: true },
-
-      location: String,
 
       teams: [{
             type: mongoose.Schema.Types.ObjectId,
