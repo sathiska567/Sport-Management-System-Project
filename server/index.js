@@ -1,7 +1,7 @@
 require("dotenv").config(); // Load environment variables
 
 const express = require("express");
-const cors = require("cors");
+const cors = require ("cors");
 
 const userRoutes = require("./routes/userRoutes");
 const adminRoutes = require("./routes/adminRoutes");
@@ -27,9 +27,10 @@ const eventOrganizerProfileRoute = require('./routes/EventOrganizerProfileRoute/
 const coachAvailabilityRoute = require("./routes/CoachAvailabilityRoute/CoachAvailabilityRoute")
 const PlayerAvailabilityRoute = require("./routes/PlayerAvailabilityRoute/PlayerAvailabilityRoute")
 const getPlayerReviewRoute = require("./routes/CoachReviewRoute/getCurrentPlayerReviewRoute")
-
 const searchLocationRoute = require("./routes/PlayerAvailabilityRoute/SerachLocationRoute")
 const eventOrganizerBracketRoute = require("./routes/EventOrganizerBracketRoute/EventOrganizerBracketRoute")
+const editEventTab = require("./routes/editEventTab/EditEventTab")
+const TeamMemberAssign = require("./routes/TeamMemberAssign/TeamMemberAssign")
 
 require("./db/mongoDb"); 
 
@@ -93,6 +94,14 @@ app.use("/api/v1/search",searchLocationRoute);
 // Event Organizer Bracekt
 app.use("/api/v1/eventOrganizerBracket",eventOrganizerBracketRoute)
 
+//Edit event
+app.use("/api/v1/editEventTab",editEventTab)
+
+
+
+
+//AssignMember
+app.use("/api/v1/assign",TeamMemberAssign)
 
 // //jwt
 // app.post('/user/login', async (req, res) => {
