@@ -23,6 +23,7 @@ const ApplyPosition = () => {
 
   // handle position registration
   const handleSubmit = async (values) => {
+    console.log(newAge);
     try {
       const res = await axios.post(
         "http://localhost:8080/api/v1/user/apply-position",
@@ -40,6 +41,7 @@ const ApplyPosition = () => {
 
       message.success("Position Applying successfull");
       navigate("/dashboad");
+      
     } catch (error) {
       message.error(error);
     }

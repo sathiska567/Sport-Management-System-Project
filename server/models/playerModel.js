@@ -4,45 +4,44 @@ const palyerSchema = new mongoose.Schema({
 
 FirstName : {
      type : String,
-     require : [true,"First name is required"]
+//      require : [true,"First name is required"]
 
   },
 
 LastName : {
      type : String,
-     require : [true,"Last name is required"]
+//      require : [true,"Last name is required"]
 
   },
 
   Email:{
         type :String,
-        require : [true,"Email is required"]
+      //   require : [true,"Email is required"]
   },
 
   Age:{
         type :Number,
-        require : [true,"Age is required"]
+      //   require : [true,"Age is required"]
   },
 
   Experience:{
         type :String,
-        require : [true,"Experience is required"]
+      //   require : [true,"Experience is required"]
   },
 
   Distric:{
         type :String,
-        require : [true,"Distric is required"]
+      //   require : [true,"Distric is required"]
   },
 
   UserRole:{
         type :String,
-        require : [true,"UserRole is required"]
+      //   require : [true,"UserRole is required"]
   },
 
   status : {
       type:String,
-      default :'pending'
-   
+      default :'pending'   
      },
 
 })
