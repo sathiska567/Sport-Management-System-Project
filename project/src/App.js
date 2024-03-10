@@ -55,6 +55,7 @@ import CreateTeam from "./Pages/Coach/CreateTeam.jsx"
 import SelectPlayers from "./Pages/Coach/SelectPlayers.jsx"
 import EditTeam from "./Pages/Coach/EditTeam.jsx"
 import UpdateTeam from "./Pages/Coach/UpdateTeam.jsx"
+import EditTabEvent from "./Components/EventOrganizer/EditTabEvent/EditTabEvent.jsx"
 
 
 
@@ -547,6 +548,18 @@ function App() {
         {/* <Route path="/create-match" element={<CreateMatch />} /> */}
         <Route path="/edit-team" element={<EditTeam />} />
         <Route path="/update-team" element={<UpdateTeam />} />
+      </Routes>
+
+      <Routes>
+        <Route
+        path="/EditTabEvent"
+        element={
+          <EditTabEvent/>
+        }
+        
+        >
+
+        </Route>
       </Routes>
 
 
