@@ -49,12 +49,12 @@ const EditTeam = () => {
 
     return (
         <CoachSidebar>
-            <div>
+            <div style={{ height: '100%', overflow: 'auto' }}>
                 <div style={{ margin: 20, padding: 20, textAlign: 'center', fontWeight: 'bolder' }}>EditTeam</div>
                 <div style={{ margin: 10, padding: 10 }}>
                     <table style={{ border: 'solid 1px grey', width: '100%' }}>
                         <thead>
-                            <tr style={{ backgroundColor: 'darkblue', color: 'white' }}>
+                            <tr style={{ backgroundColor: 'darkblue', color: 'white', textAlign:'center' }}>
                                 <th>Team No</th>
                                 <th>Team Name</th>
                                 <th>Action</th>
@@ -63,10 +63,10 @@ const EditTeam = () => {
 
                         <tbody>
                             {teams.map((team, index) => (
-                                <tr key={index}>
+                                <tr style={{fontWeight:'bold'}} key={index}>
                                     <td style={{ textAlign: 'center' }} >{team.teamNo}</td>
                                     <td style={{ textAlign: 'center' }} >{team.teamName}</td>
-                                    <td style={{ textAlign: 'center' }} ><button onClick={() => handleEdit(team._id, team.match_id, team.teamName, team.teamNo, team.players)}>Edit</button> | <button onClick={() => handleDelete(team._id, team.coach_id, team.match_id)}>Delete</button></td>
+                                    <td style={{ textAlign: 'center' }} ><button className='btn btn-success' onClick={() => handleEdit(team._id, team.match_id, team.teamName, team.teamNo, team.players)}>Edit</button> | <button className='btn btn-danger' onClick={() => handleDelete(team._id, team.coach_id, team.match_id)}>Delete</button></td>
                                 </tr>
                             ))}
                         </tbody>

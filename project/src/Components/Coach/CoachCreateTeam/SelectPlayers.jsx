@@ -75,7 +75,7 @@ const SelectPlayers = () => {
 
     return (
         <CoachSidebar>
-            <div>
+            <div style={{ height: '100%', overflow: 'auto' }}>
                 <div style={{ margin: 20, padding: 20, textAlign: 'center' }}>CreateTeam <br />
                     <form>
                         Team Name : <input type="text" name='teamName' value={teamData.teamName} onChange={handleChange} />
@@ -92,7 +92,7 @@ const SelectPlayers = () => {
                         </thead>
                         <tbody>
                             {players.map((player, index) => (
-                                player.Status === 'available' && (!player.matches.includes(matchId)) && (<tr key={index}>
+                                player.Status === 'available' && (!player.matches.includes(matchId)) && (<tr style={{fontWeight:'bold'}} key={index}>
                                     <td style={{ textAlign: 'center' }} >{player.PlayerNo}</td>
                                     <td style={{ textAlign: 'center' }}>{player.playerName}</td>
                                     <td style={{ textAlign: 'center' }}>{player.District}</td>

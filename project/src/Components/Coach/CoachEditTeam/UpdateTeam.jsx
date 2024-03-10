@@ -81,7 +81,7 @@ const UpdateTeam = () => {
 
     return (
         <CoachSidebar>
-            <div>
+            <div style={{ height: '100%', overflow: 'auto' }}>
                 <div style={{ margin: 20, padding: 20, textAlign: 'center' }}>Update Team <br />
                     <form>
                         Team Name : <input type="text" name='teamName' value={teamData.teamName} onChange={handleChange} />
@@ -92,18 +92,18 @@ const UpdateTeam = () => {
                 <div style={{ margin: 10, padding: 10 }}>
                     <table style={{ border: 'solid 1px grey', width: '100%' }}>
                         <thead>
-                            <tr style={{ backgroundColor: 'darkblue', color: 'white' }}>
+                            <tr style={{ backgroundColor: 'darkblue', color: 'white', textAlign:'center' }}>
                                 <th>Player No</th><th>Player Name</th><th>Location</th><th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             {allplayers.map((player, index) => (
-                                (player.Status === 'available' || player.matches.includes(match_id)) && (<tr key={index}>
+                                (player.Status === 'available' || player.matches.includes(match_id)) && (<tr  style={{fontWeight:'bold'}} key={index}>
                                     <td style={{ textAlign: 'center' }} >{player.PlayerNo}</td>
-                                    <td style={{ textAlign: 'center' }}>{player.FirstName}</td>
+                                    <td style={{ textAlign: 'center' }}>{player.playerName}</td>
                                     <td style={{ textAlign: 'center' }}>{player.District}</td>
                                     <td style={{ textAlign: 'center' }}>
-                                        <button onClick={() => handleAdd(player._id)}>
+                                        <button className='btn btn-success' onClick={() => handleAdd(player._id)}>
                                             {teamData.players.includes(player._id) ? 'Remove' : 'Add'}
                                         </button>
                                     </td>
@@ -116,7 +116,7 @@ const UpdateTeam = () => {
                 {/* Display submit button only if there are selected players */}
                 {(
                     <div style={{ textAlign: 'center', marginTop: '20px' }}>
-                        <button onClick={handleSubmit}>Submit</button>
+                        <button className='btn btn-success' onClick={handleSubmit}>Submit</button>
                     </div>
                 )}
             </div>

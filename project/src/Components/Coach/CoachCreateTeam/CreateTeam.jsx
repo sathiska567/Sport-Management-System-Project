@@ -27,7 +27,7 @@ const CreateTeam = () => {
 
     return (
         <CoachSidebar>
-            <div>
+            <div style={{ margin: 10, padding: 10, height: '100%', overflow: 'scroll' }}>
                 <div style={{ margin: 20, padding: 20, textAlign: 'center', fontWeight: 'bolder'}}>Create Team</div>
                 <div style={{ margin: 10, padding: 10, }}>
                     <table style={{ border: 'solid 1px grey', width: '100%', borderCollapse:'collapse' }}>
@@ -38,7 +38,7 @@ const CreateTeam = () => {
                         </thead>
                         <tbody>
                             {matches.map((match, index) => (
-                                <tr key={index}>
+                                <tr style={{fontWeight:'bold'}} key={index}>
                                     <td style={{ textAlign: 'center' }} >{match.matchNo}</td>
                                     <td style={{ textAlign: 'center' }}>{match.name}</td>
                                     <td style={{ textAlign: 'center' }}>{match.location}</td>
