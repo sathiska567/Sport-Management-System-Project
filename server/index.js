@@ -31,6 +31,9 @@ const getPlayerReviewRoute = require("./routes/CoachReviewRoute/getCurrentPlayer
 const searchLocationRoute = require("./routes/PlayerAvailabilityRoute/SerachLocationRoute")
 const eventOrganizerBracketRoute = require("./routes/EventOrganizerBracketRoute/EventOrganizerBracketRoute")
 
+const organizerRoutes = require("./routes/organizerRoutes")
+const coachRoutes = require("./routes/coachRoutes")
+
 require("./db/mongoDb"); 
 
 const app = express();
@@ -92,6 +95,10 @@ app.use("/api/v1/search",searchLocationRoute);
 
 // Event Organizer Bracekt
 app.use("/api/v1/eventOrganizerBracket",eventOrganizerBracketRoute)
+
+
+app.use("/api/v1/organizer", organizerRoutes)
+app.use("/api/v1/coach", coachRoutes)
 
 
 // //jwt

@@ -26,7 +26,7 @@ const UpdateTeam = () => {
     const [allplayers, setAllplayers] = useState([]);
 
     useEffect(() => {
-        axios.get(`http://localhost:8080/coach/players?match_id=${match_id}&coach_id=${coach_id}`)
+        axios.get(`http://localhost:8080/api/v1/coach/players?match_id=${match_id}&coach_id=${coach_id}`)
             .then(res => {
                 console.log(res.data);
                 setAllplayers(res.data);
@@ -59,7 +59,7 @@ const UpdateTeam = () => {
     const handleSubmit = async () => {
         try {
             console.log('edited team data to be sent : ', teamData)
-            const res = await axios.post(`http://localhost:8080/coach/update-team?team_id=${team_id}`, {teamData: teamData});
+            const res = await axios.post(`http://localhost:8080/api/v1/coach/update-team?team_id=${team_id}`, {teamData: teamData});
             if (res.data.success) {
                 console.log('Team data updated successfully: ', res.data.team);
             } else {

@@ -20,10 +20,10 @@ const TournamentBracket = () => {
   //const winnersArray = ['team1', 'team2'];
 
   useEffect(() => {
-    axios.get("http://localhost:8080/api/v1/eventOrganizerBracket/getTeams")
+    axios.get(`http://localhost:8080/api/v1/organizer/matches`)
       .then(res => {
         console.log(res.data)
-        setMatches(res.data[0].shuffleTeam)
+        setMatches(res.data)
       })
       .catch(err => {
         console.log(err)
@@ -35,7 +35,7 @@ const TournamentBracket = () => {
     try {
       console.log(roundNo, ' : roundNo')
       console.log(selectedMatchId, ' : matchId')
-      const response = await axios.get(`http://localhost:8080/create-round/${selectedMatchId}/${roundNo}`);
+      const response = await axios.get(`http://localhost:8080/api/v1/organizer/create-round/${selectedMatchId}/${roundNo}`);
       console.log('data received : ', response.data)
       setPairs(response.data);
 
@@ -52,7 +52,7 @@ const TournamentBracket = () => {
 
 
   const handleNextRound = () => {
-    axios.post(`http://localhost:8080/setWinners/${selectedMatchId}/${roundNo}`, { winnersArray })
+    axios.post(`http://localhost:8080/api/v1/organizer/setWinners/${selectedMatchId}/${roundNo}`, { winnersArray })
       .then(res => {
         console.log(winnersArray)
         console.log(`Round ${roundNo} winners sent successfully:`, res.data);
@@ -85,7 +85,7 @@ const TournamentBracket = () => {
 
   const handleViewWinners = async () => {
     try {
-      const res = await axios.get(`http://localhost:8080/getWinners/${selectedMatchId}`);
+      const res = await axios.get(`http://localhost:8080/api/v1/organizer/getWinners/${selectedMatchId}`);
       console.log("winn", res.data)
       setRounds(res.data.match.rounds)
       setTeams(res.data.match.teams)

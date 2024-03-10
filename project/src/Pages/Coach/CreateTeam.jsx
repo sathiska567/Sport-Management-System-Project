@@ -6,10 +6,10 @@ const CreateTeam = () => {
     const navigate = useNavigate()
     const [matches, setMatches] = useState([])
 
-    const coach_id = '65e2ce0e786bfbf7502c4d73';
+    const coach_id = '65eca8d3b5639798e6c81bec';
 
     useEffect(()=>{
-        axios.get(`http://localhost:8080/coach/matches?coach_id=${coach_id}`)
+        axios.get(`http://localhost:8080/api/v1/coach/matches?coach_id=${coach_id}`)
         .then(res => {
             console.log(res.data);
             setMatches(res.data)

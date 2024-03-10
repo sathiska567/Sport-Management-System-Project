@@ -20,7 +20,7 @@ const SelectPlayers = () => {
     const [players, setPlayers] = useState([]);
 
     useEffect(() => {
-        axios.get(`http://localhost:8080/coach/players?matchId=${matchId}&coachId=${coachId}`)
+        axios.get(`http://localhost:8080/api/v1/coach/players?matchId=${matchId}&coachId=${coachId}`)
             .then(res => {
                 console.log(res.data);
                 setPlayers(res.data);
@@ -52,7 +52,7 @@ const SelectPlayers = () => {
 
     const handleSubmit = async () => {
         try {
-            const res = await axios.post('http://localhost:8080/coach/create-team', teamData);
+            const res = await axios.post('http://localhost:8080/api/v1/coach/create-team', teamData);
             if (res.data.success) {
                 console.log('Team data saved successfully: ', res.data.team);
                 navigate('/create-team')
