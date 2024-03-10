@@ -1,10 +1,7 @@
 
-//const { Coach } = require('../models/coachModel');
-const Coach = require('../models/CoachProfileModel/CoachProfileModel')
-//const { Match } = require('../models/matchModel')
-const Match = require('../models/CreateEventModel/createEventModel')
-//const Player  = require('../models/playerModel')
-const Player = require('../models/PlayerProfileModel/PlayerProfileModel')
+const { Coach } = require('../models/coachModel');
+const { Match } = require('../models/matchModel')
+const { Player } = require('../models/playerModel')
 const { Team } = require('../models/teamModel')
 
 

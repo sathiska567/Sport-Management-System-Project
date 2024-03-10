@@ -21,8 +21,7 @@ const coachProfileController = async (req, res) => {
                         coachEmail: coachEmail,
                         coachDateOfBirth: coachDateOfBirth,
                         coachAge: coachAge,
-                        coachNo: coachId,
-                        teams:[]
+                        coachId: coachId,
                 })
 
                 await response.save();
