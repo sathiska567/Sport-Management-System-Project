@@ -170,6 +170,22 @@ const applyPositionController = async (req, res) => {
     
             await player.save();
             console.log(player);
+
+
+                // handle notification
+            const adminUser = await User.findOne({ isAdmin: true });
+            const notification = adminUser.notification;
+    
+            notification.push({
+                type: "apply-position-request",
+                message: "Notification section updated",
+                data: {
+                    RequestedId: player._id,
+                    name: player.FirstName + " " + player.LastName,
+                    //  onClickPath: "/admin/docotrs",
+                },
+            });
+            adminUser.save();
     
             res.status(200).send({
                 message: "Player position apply successful",
