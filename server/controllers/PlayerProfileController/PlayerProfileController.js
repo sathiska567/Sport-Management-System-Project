@@ -21,7 +21,10 @@ const playerProfileController = async (req, res) => {
                         playerEmail: playerEmail,
                         playerDateOfBirth: playerDateOfBirth,
                         playerAge: playerAge,
-                        playerId: playerId,
+                        PlayerNo: playerId,
+                        teams:[],
+                        matches: [],
+                        Status
                 })
 
                 await response.save();

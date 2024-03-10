@@ -51,6 +51,13 @@ const Bracket = () => {
 
   return (
     <EOSizeBar>
+
+
+
+
+
+
+      {/*
       <div className="outer-container">
         <div className="inputContainer">
           <label>
@@ -105,6 +112,8 @@ const Bracket = () => {
           </div>
         )}
       </div>
+
+                      */}
     </EOSizeBar>
   );
 };

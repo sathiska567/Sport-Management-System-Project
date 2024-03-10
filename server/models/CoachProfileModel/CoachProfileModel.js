@@ -2,25 +2,26 @@ const mongoose = require('mongoose');
 
 const coachProfileSchema = new mongoose.Schema({
 
-     coachId:{
-       type:String,
-//        required:["coach name is Required",true]
-     },
+   coachNo: String,
+   teams: [{
+     type: mongoose.Schema.Types.ObjectId,
+     ref: 'Team'
+   }],
      coachName:{
         type:String,
-        required:["coach name is Required",true]
+        //required:["coach name is Required",true]
      },
      coachEmail:{
         type:String,
-        required:["coach email is Required",true]
+        //required:["coach email is Required",true]
      },
      coachDateOfBirth:{
         type:Object,
-        required:["coach Date Of Birth is Required",true]
+        //required:["coach Date Of Birth is Required",true]
      },
      coachAge:{
         type:Number,
-        required:["coach age is Required",true]
+        //required:["coach age is Required",true]
      },
 
 })
