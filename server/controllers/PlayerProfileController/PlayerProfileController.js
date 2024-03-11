@@ -69,7 +69,7 @@ const playerProfileUploadController = async (req, res) => {
                 // we might want to send a response to the client indicating success
                 return res.status(200).send({
                         success: true,
-                        message: 'Image uploaded successfully',
+                        message: 'Profile Image uploaded successfully',
                         data
 
                 });
@@ -110,7 +110,7 @@ const playerCoverImageUploadController = async(req,res)=>{
                 // we might want to send a response to the client indicating success
                 return res.status(200).send({
                         success: true,
-                        message: 'Image uploaded successfully',
+                        message: 'Cover Image uploaded successfully',
                         CoverImageData
 
                 });

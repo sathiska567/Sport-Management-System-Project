@@ -59,138 +59,143 @@ const PlayerProfile = () => {
 const handleFormSubmit = async (index) => {
     console.log(playerId, playerName, playerEmail, playerDateOfBirth, playerAge, NewfileList, index);
 
-      setLoadings((prevLoadings) => {
-        // console.log(prevLoadings);
-        const newLoadings = [...prevLoadings];
-        newLoadings[index] = true;
-        return newLoadings;
-      });
-  
-      setTimeout(() => {
+    if (!playerName || !playerEmail || !playerDateOfBirth || !playerAge) {
+      alert("Please Fill Required Fields!");
+    }
+    else{
         setLoadings((prevLoadings) => {
+          // console.log(prevLoadings);
           const newLoadings = [...prevLoadings];
-          newLoadings[index] = false;
+          newLoadings[index] = true;
           return newLoadings;
         });
-      }, 25000);
-   
-
-    if (NewfileList.length > 0) {
-      const file = NewfileList[0].originFileObj;
-
-      let formData = new FormData();
-      formData.append("image", file);
-      formData.append("playerId", playerId);
-
-      try {
-        // Upload profile image and get the response
-        const imageUploadResponse = await axios.post("http://localhost:8080/api/v1/profile/player-profile-image-upload", formData);
-        console.log(imageUploadResponse.data.success);
-        // Extract image URL from the response
-        const imageUrl = imageUploadResponse.data.data.PlayerprofileImageLink;
-
-        if (imageUploadResponse.data.success) {
-          message.success(imageUploadResponse.data.message)
-          // window.location.reload();
+    
+        setTimeout(() => {
+          setLoadings((prevLoadings) => {
+            const newLoadings = [...prevLoadings];
+            newLoadings[index] = false;
+            return newLoadings;
+          });
+        }, 25000);
+     
+  
+      if (NewfileList.length > 0) {
+        const file = NewfileList[0].originFileObj;
+  
+        let formData = new FormData();
+        formData.append("image", file);
+        formData.append("playerId", playerId);
+  
+        try {
+          // Upload profile image and get the response
+          const imageUploadResponse = await axios.post("http://localhost:8080/api/v1/profile/player-profile-image-upload", formData);
+          console.log(imageUploadResponse.data.success);
+          // Extract image URL from the response
+          const imageUrl = imageUploadResponse.data.data.PlayerprofileImageLink;
+  
+          if (imageUploadResponse.data.success) {
+            message.success(imageUploadResponse.data.message)
+            // window.location.reload();
+          }
+        } catch (error) {
+          message.error("Error occurred inside the handleFormSubmit function");
         }
+      }
+  
+  
+    try {
+        // Check if coverImageFileList is not empty
+        if (coverImageFileList.length > 0) {
+          const coverImagefile = coverImageFileList[0].originFileObj;
+          let coverImageFormData = new FormData();
+          coverImageFormData.append("coverImage", coverImagefile);
+          coverImageFormData.append("playerId", playerId);
+  
+          // // Log FormData for debugging (optional)
+          // console.log([...coverImageFormData]);
+  
+          // Upload cover image
+          const coverImageResponse = await axios.post("http://localhost:8080/api/v1/profile/player-cover-image-upload", coverImageFormData);
+  
+          // Handle coverImageResponse if needed
+          console.log(coverImageResponse.data);
+  
+          if (coverImageResponse.data.success) {
+            message.success(coverImageResponse.data.message)
+            // window.location.reload();
+          }
+  
+        } else {
+          message.error("No cover image selected");
+        }
+  
+      } catch (error) {
+        // Log the error details (optional)
+        console.error("Error uploading cover image:", error);
+  
+        message.error("Error uploading cover image");
+      }
+  
+     
+  
+      try {
+        console.log(medicalReportFileList);
+  
+        if (medicalReportFileList.length > 0) {
+          const medicalReportfile = medicalReportFileList[1].originFileObj;
+  
+          let medicalReportFormData = new FormData();
+          medicalReportFormData.append("medicalReport", medicalReportfile);
+          medicalReportFormData.append("playerId", playerId);
+  
+          // Log FormData for debugging (optional)
+          console.log([...medicalReportFormData]);
+  
+          // Upload Medical report
+          const coverImageResponse = await axios.post("http://localhost:8080/api/v1/profile/player-medical-report-upload", medicalReportFormData);
+  
+          // Handle coverImageResponse if needed
+          console.log(coverImageResponse.data);
+  
+          if(coverImageResponse.data.success){
+            message.success(coverImageResponse.data.message)
+          }
+  
+        } else {
+          message.error("No cover image selected");
+        }
+      } catch (error) {
+        message.error("Error uploading medical report");
+      }
+  
+  
+  
+      try {
+        // Now, make a second API call to save player profile data with the image URL
+        const playerProfileResponse = await axios.post("http://localhost:8080/api/v1/profile/player-profile",
+          {
+            playerId: playerId,
+            playerName: playerName,
+            playerEmail: playerEmail,
+            playerDateOfBirth: playerDateOfBirth,
+            playerAge: playerAge,
+            // PlayerprofileImageLink: imageUrl,
+          }
+        );
+  
+        // Handle response if needed
+        console.log(playerProfileResponse.data);
+        if (playerProfileResponse.data.success) {
+          message.success(playerProfileResponse.data.message)
+          // setTime(false)
+          window.location.reload()
+        }
+  
       } catch (error) {
         message.error("Error occurred inside the handleFormSubmit function");
       }
-    }
-
-
-  try {
-      // Check if coverImageFileList is not empty
-      if (coverImageFileList.length > 0) {
-        const coverImagefile = coverImageFileList[0].originFileObj;
-        let coverImageFormData = new FormData();
-        coverImageFormData.append("coverImage", coverImagefile);
-        coverImageFormData.append("playerId", playerId);
-
-        // // Log FormData for debugging (optional)
-        // console.log([...coverImageFormData]);
-
-        // Upload cover image
-        const coverImageResponse = await axios.post("http://localhost:8080/api/v1/profile/player-cover-image-upload", coverImageFormData);
-
-        // Handle coverImageResponse if needed
-        console.log(coverImageResponse.data);
-
-        if (coverImageResponse.data.success) {
-          message.success(coverImageResponse.data.message)
-          // window.location.reload();
-        }
-
-      } else {
-        message.error("No cover image selected");
+  
       }
-
-    } catch (error) {
-      // Log the error details (optional)
-      console.error("Error uploading cover image:", error);
-
-      message.error("Error uploading cover image");
-    }
-
-   
-
-    try {
-      console.log(medicalReportFileList);
-
-      if (medicalReportFileList.length > 0) {
-        const medicalReportfile = medicalReportFileList[1].originFileObj;
-
-        let medicalReportFormData = new FormData();
-        medicalReportFormData.append("medicalReport", medicalReportfile);
-        medicalReportFormData.append("playerId", playerId);
-
-        // Log FormData for debugging (optional)
-        console.log([...medicalReportFormData]);
-
-        // Upload Medical report
-        const coverImageResponse = await axios.post("http://localhost:8080/api/v1/profile/player-medical-report-upload", medicalReportFormData);
-
-        // Handle coverImageResponse if needed
-        console.log(coverImageResponse.data);
-
-        if(coverImageResponse.data.success){
-          message.success(coverImageResponse.data.message)
-        }
-
-      } else {
-        message.error("No cover image selected");
-      }
-    } catch (error) {
-      message.error("Error uploading medical report");
-    }
-
-
-
-    try {
-      // Now, make a second API call to save player profile data with the image URL
-      const playerProfileResponse = await axios.post("http://localhost:8080/api/v1/profile/player-profile",
-        {
-          playerId: playerId,
-          playerName: playerName,
-          playerEmail: playerEmail,
-          playerDateOfBirth: playerDateOfBirth,
-          playerAge: playerAge,
-          // PlayerprofileImageLink: imageUrl,
-        }
-      );
-
-      // Handle response if needed
-      console.log(playerProfileResponse.data);
-      if (playerProfileResponse.data.success) {
-        message.success(playerProfileResponse.data.message)
-        // setTime(false)
-        window.location.reload()
-      }
-
-    } catch (error) {
-      message.error("Error occurred inside the handleFormSubmit function");
-    }
-
 
   };
 
@@ -296,6 +301,8 @@ const onPreview = async (file) => {
                   className="inputBox"
                   onChange={(e) => setPlayerName(e.target.value)}
                 />
+               <p style={{color:"red",fontSize:"12px"}}>{playerName ? " " : "Please Enter Player Name ! "}</p>
+
               </label>
               <label className="formLabel">
                 Email:
@@ -305,6 +312,7 @@ const onPreview = async (file) => {
                   className="inputBox"
                   onChange={(e) => setPlayerEmail(e.target.value)}
                 />
+                <p style={{color:"red",fontSize:"12px"}}>{playerEmail ? " " : "Please Enter Player Email ! "}</p>
               </label>
 
               <div className="AgeSection">
@@ -312,12 +320,14 @@ const onPreview = async (file) => {
                   <label className="formLabel">Date of Birth:</label>
                   <DatePicker
                     style={{
-                      width: "350%",
+                      width: "400%",
                     }}
                     onChange={(date, dateString) =>
                       setPlayerDateOfBirth(dateString)
                     }
                   />
+               <p style={{color:"red",fontSize:"12px",width:"150%"}}>{playerDateOfBirth ? " " : "Please Enter Your Birthday ! "}</p>
+
                 </div>
                 <div>
                   <label className="formLabel">Age:</label>
@@ -325,6 +335,8 @@ const onPreview = async (file) => {
                     type="number"
                     onChange={(e) => setPlayerAge(e.target.value)}
                   />
+             <p style={{color:"red",fontSize:"12px"}}>{playerAge ? " " : "Please Enter Your Age ! "}</p>
+
                 </div>
               </div>
               <div className="ImageUploading">
