@@ -65,7 +65,10 @@ function EditTabEvent(props) {
         
       }, [])
     
-      const [nameOfEvent, setEventName] = useState("");
+      const [nameOfEvent, setEventName] = useState("")
+
+
+      
        const [locationEvent, setLocation] = useState("");
        const[Eventteams,setTeams] = useState("");
       const [eventofDate, setEventDate] = useState("");

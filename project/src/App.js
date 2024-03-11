@@ -61,7 +61,6 @@ import { useState } from "react";
 
 function App() {
   const [ eventId, setEventId]=useState("");
-
   const isLoggedIn = window.localStorage.getItem("isLoggedIn");
   console.log(isLoggedIn, "login");
 
