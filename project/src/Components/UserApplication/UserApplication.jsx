@@ -43,7 +43,6 @@ const UserApplication = () => {
   // const location = useLocation();
 
 const handleStatus = async (id, status) => {
-
     try {
       // console.log(id,status);
       const res = await axios.post(
@@ -71,9 +70,6 @@ const handleStatus = async (id, status) => {
       console.log("error found in gettign aproveResponse");
       
     }
-
-
-
   };
 
   const handleUpdatedDetails = async (updatedId) => {
