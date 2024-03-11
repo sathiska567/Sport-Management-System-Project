@@ -1,6 +1,5 @@
 import React, {useState,useEffect} from 'react'
 import EOSidebar from "../EOSideBar/EOSideBar"
-import "./EditTabEvent.css"
 import { Form, Input, DatePicker, TimePicker } from "antd";
 
 import {
@@ -14,7 +13,7 @@ import {
 function EditTabEvent(props) {
 
 
-    const getOneEvent = async (id) => {
+const getOneEvent = async (id) => {
         try{
           console.log(props.itemId)
           const urls = `http://localhost:8080/api/v1/editEventTab/get-createTab/${id}` 
@@ -32,13 +31,14 @@ function EditTabEvent(props) {
           setTeams(event.teams)
           setEventDate(event.date)
           setTime(event.time)
+
         } catch (error) {
           console.log(error)
     
         }
       } 
     
-      const updateEvent = async (id) => {
+const updateEvent = async (id) => {
         try{
           const resposne  = await fetch("http://localhost:8080/api/v1/editEventTab/update-eventTab", {
             method: "PUT",
