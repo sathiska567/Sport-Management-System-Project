@@ -25,7 +25,8 @@ const eventTabModel = require("../../models/editEventTabModel/EditEventTab");
 const geteventTab = async (req, res) => {
     try {
 
-        const data = await eventTabModel.findOne(req.param.id)
+        const { id } = req.params;
+        const data = await eventTabModel.findById(id)
         res.json({
             success: true,
             data: data

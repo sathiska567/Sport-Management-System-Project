@@ -57,8 +57,11 @@ import EditTeam from "./Pages/Coach/EditTeam.jsx"
 import UpdateTeam from "./Pages/Coach/UpdateTeam.jsx"
 import EditTabEvent from "./Components/EventOrganizer/EditTabEvent/EditTabEvent.jsx"
 import TeamManagerAssign from "./Components/TeamManager/TeamManagerAssign/TeamManagerAssign.jsx";
+import { useState } from "react";
 
 function App() {
+  const [ eventId, setEventId]=useState("");
+
   const isLoggedIn = window.localStorage.getItem("isLoggedIn");
   console.log(isLoggedIn, "login");
 
@@ -262,7 +265,7 @@ function App() {
           path="/eo-edit-event"
           element={
             <ProtectedRoute>
-              <EditEvent />
+              <EditEvent setId={ setEventId } />
             </ProtectedRoute>
           }
         />
@@ -553,7 +556,7 @@ function App() {
         <Route
         path="/EditTabEvent"
         element={
-          <EditTabEvent/>
+          <EditTabEvent itemId={eventId}/>
         }
         
         >
@@ -566,7 +569,7 @@ function App() {
         path="/TeamManagerAssign"
        element={
         <ProtectedRoute>
-          <TeamManagerAssign/>
+          <TeamManagerAssign />
         </ProtectedRoute>
        }
         >

@@ -11,12 +11,13 @@ import {
   import moment from 'moment'
 
 
-function EditTabEvent() {
+function EditTabEvent(props) {
 
 
     const getOneEvent = async (id) => {
         try{
-          const urls = "http://localhost:8080/api/v1/editEventTab/get-createTab/:id" + id
+          console.log(props.itemId)
+          const urls = `http://localhost:8080/api/v1/editEventTab/get-createTab/${id}` 
           console.log(urls);
           const response = await fetch(urls)
     
@@ -60,7 +61,8 @@ function EditTabEvent() {
       }
     
       useEffect(() => {
-        getOneEvent("65e6fccc2608695dfd6f4fde")
+        getOneEvent(props.itemId)
+        
       }, [])
     
       const [nameOfEvent, setEventName] = useState("");
@@ -190,7 +192,7 @@ function EditTabEvent() {
                     <button
                       class="approve CreateEventBTn"
                       style={{ backgroundColor: "#05AD1B", width: "80pxx" }}
-                      onClick={() => {updateEvent("65e6fccc2608695dfd6f4fde")}}
+                      onClick={() => {updateEvent(props.itmeId)}}
                     >
                       <EditOutlined className="UserApplicationIcon" />
                       Edit Event
