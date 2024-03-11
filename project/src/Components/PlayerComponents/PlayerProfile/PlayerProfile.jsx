@@ -76,7 +76,7 @@ const handleFormSubmit = async (index) => {
             newLoadings[index] = false;
             return newLoadings;
           });
-        }, 25000);
+        }, 30000);
      
   
       if (NewfileList.length > 0) {

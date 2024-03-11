@@ -81,7 +81,6 @@ const updateDetailsController = async(req,res)=>{
 
 const deleteDetailsController = async(req,res)=>{
 
-
 try {
         
         //  handle delete notification
@@ -148,4 +147,61 @@ try {
 
 }
 
-module.exports = {getAllDetailsController,handleStatusController,updateDetailsController,deleteDetailsController}
+const removeDetailsController = async(req,res)=>{
+
+try {
+
+        const {deletedUserId,email} = req.body;
+         console.log(deletedUserId,email);
+
+         const deletedUser = await PlayerModel.findByIdAndDelete(deletedUserId)
+
+         const findUser = await User.findOne({email:email})
+
+         if(findUser.isEventOrganizer){
+             findUser.isEventOrganizer = false;
+             findUser.messages = []
+         }
+          if(findUser.isCoach){
+                findUser.isCoach = false;
+                findUser.messages = []
+         }
+          if(findUser.isPlayer){
+                findUser.isPlayer = false;
+                findUser.messages = []
+
+         }
+         if(findUser.isReferee){
+                findUser.isReferee = false;
+                findUser.messages = []
+         }
+         if(findUser.isTeamManager){
+                findUser.isTeamManager = false;
+                findUser.messages = []
+         }
+
+
+         await findUser.save();
+
+         console.log(findUser);
+
+         res.status(200).send({
+                message:"Deleted successfull",
+                success : true
+         })
+                
+        } catch (error) {
+
+        res.status(200).send({
+                message:"Deleted Controller have error",
+                success : false
+          })
+                
+        }
+
+
+}
+
+
+
+module.exports = {getAllDetailsController,handleStatusController,updateDetailsController,deleteDetailsController,removeDetailsController}
