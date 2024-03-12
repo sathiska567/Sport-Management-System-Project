@@ -44,28 +44,53 @@ const CoachProfile = () => {
   const [isTyping, setIsTyping] = useState(false);
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   const [ageError, setAgeError] = useState(false);
+  const [nameError, setNameError] = useState(false);
+  const [dateError, setDateError] = useState(false);
+  const [uploadError, setUploadError] = useState(false);
+
+  // Name validation
+  const handleNameChange = (e) => {
+    const name = e.target.value;
+    setcoachName(name);
+    setNameError(name.trim() === "");
+  };
 
   // Email validation
   const handleEmailChange = (e) => {
-    setIsTyping(true);
     const email = e.target.value;
-    if (emailRegex.test(email)) {
-      setcoachEmailRef(email);
-      setEmailError(false);
+
+    if (email.trim() === "") {
+      setEmailError("Email cannot be empty");
+    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
+      setEmailError("Invalid email format");
     } else {
-      setEmailError(true);
+      setEmailError("");
     }
   };
 
+  // Birthdate validation
+  const handleDateChange = (date, dateString) => {
+    setcoachDateOfBirth(dateString);
+    setDateError(dateString === "");
+  };
+
   // Age validation
-  const handleAgeChange = (e) => {
-    const age = e.target.value;
-    if (age >= 16 && age <= 70) {
-      setcoachAge(age);
-      setAgeError(false);
+  const handleAgeChange = (value) => {
+    const age = value;
+
+    if (!age) {
+      setAgeError("Age cannot be empty");
+    } else if (age < 16 || age > 70) {
+      setAgeError("Invalid age. Age should be between 16 and 70");
     } else {
-      setAgeError(true);
+      setAgeError("");
     }
+  };
+
+  // Medical Report validation
+  const onUploadChange = ({ fileList: newFileList }) => {
+    setFileList(newFileList);
+    setUploadError(newFileList.length === 0);
   };
 
   // GET CURRENT USER DETAILS
@@ -320,53 +345,86 @@ const CoachProfile = () => {
             <form className="coachProfileForm">
               <label className="formLabel">
                 Name:
-                <Input
-                  type="text"
-                  name="name"
-                  className="inputBox"
-                  onChange={(e) => setcoachName(e.target.value)}
-                />
+                <div>
+                  <Input
+                    type="text"
+                    name="name"
+                    className="inputBox"
+                    onChange={handleNameChange}
+                  />
+                  {nameError && (
+                    <div
+                      className="error"
+                      style={{ fontSize: "13px", color: "red" }}
+                    >
+                      Name cannot be empty
+                    </div>
+                  )}
+                </div>
               </label>
               <label className="formLabel">
                 Email:
-                <input
-                  type="email"
-                  name="email"
-                  className={`inputBox ${emailError ? "error" : ""}`}
-                  onChange={handleEmailChange}
-                />
-                {isTyping && emailError && (
-                  <div className="errorText">Invalid email format</div>
-                )}
+                <div>
+                  <Input
+                    type="email"
+                    name="email"
+                    className={`inputBox ${emailError ? "error" : ""}`}
+                    onChange={handleEmailChange}
+                  />
+                  {emailError && (
+                    <div
+                      className="errorText"
+                      style={{ fontSize: "13px", color: "red" }}
+                    >
+                      {emailError}
+                    </div>
+                  )}
+                </div>
               </label>
 
               <div className="AgeSection">
                 <div>
                   <label className="formLabel">Date of Birth:</label>
-                  <DatePicker
-                    style={{
-                      width: "300%",
-                    }}
-                    onChange={(date, dateString) =>
-                      setcoachDateOfBirth(dateString)
-                    }
-                    disabledDate={(current) => {
-                      // Can not select days before today and today
-                      return (
-                        current &&
-                        (current <
-                          moment().endOf("day").subtract(70, "years") ||
-                          current > moment().endOf("day").subtract(16, "years"))
-                      );
-                    }}
-                  />
+                  <div>
+                    <DatePicker
+                      style={{
+                        width: "300%",
+                      }}
+                      onChange={handleDateChange}
+                      disabledDate={(current) => {
+                        // Can not select days before today and today
+                        return (
+                          current &&
+                          (current <
+                            moment().endOf("day").subtract(70, "years") ||
+                            current >
+                              moment().endOf("day").subtract(16, "years"))
+                        );
+                      }}
+                    />
+                    {dateError && (
+                      <div
+                        className="error"
+                        style={{ fontSize: "13px", color: "red" }}
+                      >
+                        Date cannot be empty
+                      </div>
+                    )}
+                  </div>
                 </div>
                 <div>
                   <label className="formLabel">Age:</label>
-                  <input type="number" onChange={handleAgeChange} />
+                  <InputNumber
+                    type="number"
+                    onChange={handleAgeChange}
+                    style={{ width: "100%" }}
+                  />
                   {ageError && (
-                    <div className="errorText">
-                      Invalid age. Age should be between 16 and 70.
+                    <div
+                      className="errorText"
+                      style={{ fontSize: "13px", color: "red" }}
+                    >
+                      {ageError}
                     </div>
                   )}
                 </div>
@@ -428,15 +486,25 @@ const CoachProfile = () => {
                 </div>
                 <div>
                   <label className="formLabel">Upload Medical Reports:</label>
-                  <Upload
-                    action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
-                    listType="picture-card"
-                    fileList={fileList}
-                    onChange={onChange}
-                    onPreview={onPreview}
-                  >
-                    {fileList.length < 5 && "+ Upload"}
-                  </Upload>
+                  <div>
+                    <Upload
+                      action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
+                      listType="picture-card"
+                      fileList={fileList}
+                      onChange={onUploadChange}
+                      onPreview={onPreview}
+                    >
+                      {fileList.length < 5 && "+ Upload"}
+                    </Upload>
+                    {uploadError && (
+                      <div
+                        className="error"
+                        style={{ fontSize: "13px", color: "red" }}
+                      >
+                        At least one image must be uploaded
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
               <br />
