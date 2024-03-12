@@ -9,7 +9,7 @@ import {
   DeleteOutlined,
 } from "@ant-design/icons";
 import moment from 'moment'
-import { useNavigate, useParams } from 'react-router-dom';
+import {useParams } from 'react-router-dom';
 
 
 function EditTabEvent(props) {
