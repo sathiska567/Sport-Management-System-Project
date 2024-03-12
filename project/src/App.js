@@ -554,7 +554,7 @@ function App() {
 
       <Routes>
         <Route
-        path="/EditTabEvent"
+        path="/EditTabEvent/:id"
         element={
           <EditTabEvent itemId={eventId}/>
         }

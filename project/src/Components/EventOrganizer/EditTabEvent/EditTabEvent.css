@@ -10,6 +10,8 @@ body {
     margin: auto;
     max-width: 800px;
   }
+
+
   
   .ant-form-item-control {
       width: calc(100% - 120px); /* Adjust the width as needed */
@@ -118,6 +120,7 @@ body {
   .DataItemTeamsInput {
       flex: 2.5;
   }
+  
   
   .DataItem > .ant-picker{
     flex: 2.5;

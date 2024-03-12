@@ -41,6 +41,25 @@ const geteventTab = async (req, res) => {
     }
 }
 
+const geteventTabs = async (req, res) => {
+    try {
+
+        const { id } = req.params;
+        const data = await eventTabModel.find()
+        res.json({
+            success: true,
+            data: data
+        })
+
+    } catch (error) {
+        res.status(400).send({
+            success: false,
+            message: 'Error While Getting Review',
+            error
+        })
+    }
+}
+
 const updateeventTab = async(req,res)=>{
    try{
     const{ _id,...rest} = req.body
@@ -76,4 +95,4 @@ const deleteventTab = async (req, res) => {
         })
     }
 }
-module.exports = {geteventTab,updateeventTab,deleteventTab};
+module.exports = {geteventTab,geteventTabs,updateeventTab,deleteventTab}; 

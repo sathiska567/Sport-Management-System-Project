@@ -9,14 +9,16 @@ import {
     DeleteOutlined,
   } from "@ant-design/icons";
   import moment from 'moment'
+import { useParams } from 'react-router-dom';
 
 
 function EditTabEvent(props) {
 
+    const { id } = useParams();
 
     const getOneEvent = async (id) => {
         try{
-          console.log(props.itemId)
+          // console.log(props.itemId)
           const urls = `http://localhost:8080/api/v1/editEventTab/get-createTab/${id}` 
           console.log(urls);
           const response = await fetch(urls)
@@ -61,7 +63,7 @@ function EditTabEvent(props) {
       }
     
       useEffect(() => {
-        getOneEvent(props.itemId)
+        getOneEvent(id)
         
       }, [])
     
@@ -192,7 +194,7 @@ function EditTabEvent(props) {
                     <button
                       class="approve CreateEventBTn"
                       style={{ backgroundColor: "#05AD1B", width: "80pxx" }}
-                      onClick={() => {updateEvent(props.itmeId)}}
+                      onClick={() => {updateEvent(id)}}
                     >
                       <EditOutlined className="UserApplicationIcon" />
                       Edit Event
