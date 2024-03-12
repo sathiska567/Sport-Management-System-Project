@@ -201,7 +201,7 @@ const handleDateChange = (date, dateString) => {
                       >
                         Shuffle
                       </Button>
-                      <Button
+                      {/* <Button
                         type="primary"
                         style={{
                           backgroundColor: "#faad14",
@@ -215,7 +215,7 @@ const handleDateChange = (date, dateString) => {
                         }}
                       >
                         Edit
-                      </Button>
+                      </Button> */}
 
                       <Button
                         type="primary"

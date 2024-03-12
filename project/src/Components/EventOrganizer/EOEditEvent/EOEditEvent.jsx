@@ -54,7 +54,7 @@ const EOEditEvent = () => {
   const getAllCreatedEventData = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:8080/api/v1/event/get-all-events"
+        "http://localhost:8080/api/v1/editEventTab/get-createTab/"
       );
       console.log(response);
 
@@ -91,7 +91,7 @@ const handleDateChange = (date, dateString) => {
   return (
     <SideBar>
       <Layout className="ant-layout-sider-children">
-        {/* Main content layout */}
+         {/* Main content layout */}
         <Layout>
           {/* Content section with statistics */}
           <Content
@@ -145,7 +145,7 @@ const handleDateChange = (date, dateString) => {
                     dataIndex: "eventName",
                     key: "eventName",
                     render: (text, record) => (
-                      <span>{record.nameOfTheEvent}</span>
+                      <span>{record.name}</span>
                     ),
                   },
 
@@ -153,12 +153,18 @@ const handleDateChange = (date, dateString) => {
                     title: "Event Date",
                     dataIndex: "eventDate",
                     key: "eventDate",
+                    render: (text, record) => (
+                      <span>{record.date}</span>
+                    ),
                   },
 
                   {
                     title: "Location",
                     dataIndex: "location",
                     key: "location",
+                    render: (text, record) => (
+                      <span>{record.location}</span>
+                    ),
                   },
 
                   {
@@ -176,7 +182,7 @@ const handleDateChange = (date, dateString) => {
                       >
                         <Button
                           type="primary"
-                          href="/eo-edit-event-form"
+                          href={"/editTabEvent/"+record._id}
                           style={{
                             backgroundColor: "#52c41a",
                             color: "#fff",
