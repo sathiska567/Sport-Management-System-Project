@@ -194,7 +194,7 @@ const TeamManagerSideBar = ({ children }) => {
           style={{
             backgroundColor: "#15295E",
             width: "100%",
-            height: "100vh",
+            height: "82vh",
             fontSize: "16px",
           }}
         >
