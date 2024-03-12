@@ -1,89 +1,91 @@
-import React, {useState,useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import EOSidebar from "../EOSideBar/EOSideBar"
 import "./EditTabEvent.css"
 import { Form, Input, DatePicker, TimePicker } from "antd";
 
 import {
-    CloseSquareOutlined,
-    EditOutlined,
-    DeleteOutlined,
-  } from "@ant-design/icons";
-  import moment from 'moment'
-import { useParams } from 'react-router-dom';
+  CloseSquareOutlined,
+  EditOutlined,
+  DeleteOutlined,
+} from "@ant-design/icons";
+import moment from 'moment'
+import { useNavigate, useParams } from 'react-router-dom';
 
 
 function EditTabEvent(props) {
 
-    const { id } = useParams();
+  const { id } = useParams();
+  const navigate = useNavigate();
 
-    const getOneEvent = async (id) => {
-        try{
-          // console.log(props.itemId)
-          const urls = `http://localhost:8080/api/v1/editEventTab/get-createTab/${id}` 
-          console.log(urls);
-          const response = await fetch(urls)
-    
-          const resData = await response.json()
-    
-          const event = resData.data
-    
-          console.log("EVENT", event);
-    
-          setEventName(event.name)
-          setLocation(event.location)
-          setTeams(event.teams)
-          setEventDate(event.date)
-          setTime(event.time)
-        } catch (error) {
-          console.log(error)
-    
+  const getOneEvent = async (id) => {
+    try {
+      // console.log(props.itemId)
+      const urls = `http://localhost:8080/api/v1/editEventTab/get-createTab/${id}`
+      console.log(urls);
+      const response = await fetch(urls)
+
+      const resData = await response.json()
+
+      const event = resData.data
+
+      console.log("EVENT", event);
+
+      setEventName(event.name)
+      setLocation(event.location)
+      setTeams(event.teams)
+      setEventDate(event.date)
+      setTime(event.time)
+    } catch (error) {
+      console.log(error)
+
+    }
+  }
+
+  const updateEvent = async (id) => {
+    try {
+      const resposne = await fetch("http://localhost:8080/api/v1/editEventTab/update-eventTab", {
+        method: "PUT",
+        body: JSON.stringify({
+          _id: id,
+          name: nameOfEvent,
+          location: locationEvent,
+          teams: Eventteams,
+          date: eventofDate,
+          time: time,
+        }),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8"
         }
-      } 
-    
-      const updateEvent = async (id) => {
-        try{
-          const resposne  = await fetch("http://localhost:8080/api/v1/editEventTab/update-eventTab", {
-            method: "PUT",
-            body: JSON.stringify({
-              _id: id,
-              name: nameOfEvent,
-              location: locationEvent,
-              teams:Eventteams,
-              date: eventofDate,
-              time:  time,
-            }),
-            headers: {
-              "Content-type": "application/json; charset=UTF-8"
-            }
-          });
-    
-        } catch (error) {
-          console.log(error);
-        }
-      }
-    
-      useEffect(() => {
-        getOneEvent(id)
-        
-      }, [])
-    
-      const [nameOfEvent, setEventName] = useState("");
-       const [locationEvent, setLocation] = useState("");
-       const[Eventteams,setTeams] = useState("");
-      const [eventofDate, setEventDate] = useState("");
-      const [ time, setTime] = useState("");
-    
-      useEffect(() => {
-        console.log("Time",  time)
-        console.log("Date", eventofDate)
-      }, [eventofDate,  time])
-     
-    
-      const handleCreate = async () => {
-    
-    
-        
-      };
+      });
+      navigate("/eo-edit-form")
+
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    getOneEvent(id)
+
+  }, [])
+
+  const [nameOfEvent, setEventName] = useState("");
+  const [locationEvent, setLocation] = useState("");
+  const [Eventteams, setTeams] = useState("");
+  const [eventofDate, setEventDate] = useState("");
+  const [time, setTime] = useState("");
+
+  useEffect(() => {
+    console.log("Time", time)
+    console.log("Date", eventofDate)
+  }, [eventofDate, time])
+
+
+  const handleCreate = async () => {
+
+
+
+  };
 
 
 
@@ -91,7 +93,7 @@ function EditTabEvent(props) {
 
   return (
     <div>
- <EOSidebar>
+      <EOSidebar>
         <Form
           style={{
             margin: "auto",
@@ -142,7 +144,7 @@ function EditTabEvent(props) {
                     required
                     name="eventName"
                     onChange={(e) => setEventName(e.target.value)}
-                    value = {nameOfEvent}
+                    value={nameOfEvent}
                   />
                 </div>
 
@@ -154,7 +156,7 @@ function EditTabEvent(props) {
                     required
                     name="location"
                     onChange={(e) => setLocation(e.target.value)}
-                    value = {locationEvent}
+                    value={locationEvent}
                   />
                 </div>
 
@@ -166,7 +168,7 @@ function EditTabEvent(props) {
                     name="numberOfTeams"
                     required
                     onChange={(e) => setTeams(e.target.value)}
-                    value = {Eventteams}
+                    value={Eventteams}
                   />
                 </div>
                 <div className="DataItem">
@@ -175,7 +177,7 @@ function EditTabEvent(props) {
                     id="EventDate"
                     name="EventDate"
                     onChange={(date) => setEventDate(date)}
-                    value = {moment(eventofDate)}
+                    value={moment(eventofDate)}
                   />
                 </div>
 
@@ -184,8 +186,8 @@ function EditTabEvent(props) {
                   <TimePicker
                     id="startingTime"
                     name="startingTime"
-                    onChange={(time) => setTime(time )}
-                    value ={moment( time)}
+                    onChange={(time) => setTime(time)}
+                    value={moment(time)}
                   />
                 </div>
 
@@ -194,12 +196,12 @@ function EditTabEvent(props) {
                     <button
                       class="approve CreateEventBTn"
                       style={{ backgroundColor: "#05AD1B", width: "80pxx" }}
-                      onClick={() => {updateEvent(id)}}
+                      onClick={() => { updateEvent(id) }}
                     >
                       <EditOutlined className="UserApplicationIcon" />
                       Edit Event
                     </button>
-                   
+
                   </div>
                 </div>
               </div>

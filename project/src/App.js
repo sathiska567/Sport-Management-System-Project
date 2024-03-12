@@ -58,6 +58,7 @@ import UpdateTeam from "./Pages/Coach/UpdateTeam.jsx"
 import EditTabEvent from "./Components/EventOrganizer/EditTabEvent/EditTabEvent.jsx"
 import TeamManagerAssign from "./Components/TeamManager/TeamManagerAssign/TeamManagerAssign.jsx";
 import { useState } from "react";
+import EOEditEvent from "./Components/EventOrganizer/EOEditEvent/EOEditEvent.jsx";
 
 function App() {
   const [ eventId, setEventId]=useState("");
@@ -270,6 +271,18 @@ function App() {
           }
         />
       </Routes>
+
+      <Routes>
+        <Route
+          path="/eo-edit-form"
+          element={
+            <ProtectedRoute>
+              <EOEditEvent />
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
+
       <Routes>
         <Route
           path="/eo-edit-event-form"
