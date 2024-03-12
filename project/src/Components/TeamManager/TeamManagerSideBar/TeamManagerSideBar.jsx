@@ -5,6 +5,7 @@ import { NavLink } from "react-router-dom";
 import { faPeopleGroup } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon, } from "@fortawesome/react-fontawesome";
 import { ReactComponent as Profile } from "../../icons/Profile.svg";
+import { useLocation } from "react-router-dom";
 
 import {
   MenuFoldOutlined,
@@ -16,7 +17,6 @@ import {
   MailOutlined,
 } from "@ant-design/icons";
 
-import { useLocation } from "react-router-dom";
 import { Layout, Menu, Button, Avatar, Space, Badge, message } from "antd";
 import axios from "axios";
 // Destructuring components from Ant Design's Layout
@@ -30,7 +30,6 @@ const TeamManagerSideBar = ({ children }) => {
   const [isHoveredButton2, setIsHoveredButton2] = useState(false);
   const [selectedMenuItem, setSelectedMenuItem] = useState("1");
   const location = useLocation();
-  // set name
   const [currentUserName, setCurrentUsername] = useState();
   const [isAdmin, setIsAdmin] = useState(false);
   const [positionNotification, setPositionNotification] = useState();
@@ -180,17 +179,13 @@ const TeamManagerSideBar = ({ children }) => {
           Welcome
         </div>
         <div className="demo-logo-vertical" />
+
         <Menu
           onSelect={handleMenuItemClick}
           theme="dark"
           mode="inline"
           defaultSelectedKeys={["/TeamManager-stats"]}
-          selectedKeys={[
-            location.pathname === "/TeamManager-assign-team-form" ||
-              location.pathname === "/TeamManager-assign-members"
-              ? "/TeamManager-assign-members"
-              : location.pathname,
-          ]}
+          selectedKeys={[location.pathname]}
           style={{
             backgroundColor: "#15295E",
             width: "100%",
@@ -199,11 +194,14 @@ const TeamManagerSideBar = ({ children }) => {
           }}
         >
           {isTeamManager ? (
-            <div  style={{
-              paddingLeft: "21px"
-            }}>
-              <Menu.Item key="/TeamManager-stats" icon={<DashboardOutlined />}>
-                <NavLink to="/TeamManager-stats">Dashboard</NavLink>
+            <>
+              <Menu.Item
+                key="/TeamManager-stats"
+                icon={<DashboardOutlined />}
+              >
+                <NavLink to="/TeamManager-stats" activeClassName="active-link">
+                  Dashboard
+                </NavLink>
               </Menu.Item>
               <Menu.Item
                 key="/TeamManager-create-team"
@@ -220,15 +218,13 @@ const TeamManagerSideBar = ({ children }) => {
               <Menu.Item key="/TeamManager-profile" icon={<Profile />}>
                 <NavLink to="/TeamManager-profile">My Profile</NavLink>
               </Menu.Item>
-            </div>
+            </>
           ) : (
             <>
               <Menu.Item key="/apply-position" icon={<Profile />}>
                 <NavLink to="/apply-position">Apply Position</NavLink>
               </Menu.Item>
-
             </>
-
           )}
           <Menu.Item
             key="logoff"
