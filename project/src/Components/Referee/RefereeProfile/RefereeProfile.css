@@ -2,7 +2,7 @@
     position: relative;
     margin: 0 auto; 
     margin-top: 0px;
-    width: 95%;
+    width: 80% !important;
     height: 600px;
     margin-top: 5vh !important;
 }
