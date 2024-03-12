@@ -15,7 +15,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 function EditTabEvent(props) {
 
   const { id } = useParams();
-  const navigate = useNavigate();
 
   const getOneEvent = async (id) => {
     try {
@@ -57,7 +56,6 @@ function EditTabEvent(props) {
           "Content-type": "application/json; charset=UTF-8"
         }
       });
-      navigate("/eo-edit-form")
 
     } catch (error) {
       console.log(error);

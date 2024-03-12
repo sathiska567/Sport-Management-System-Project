@@ -274,17 +274,6 @@ function App() {
 
       <Routes>
         <Route
-          path="/eo-edit-form"
-          element={
-            <ProtectedRoute>
-              <EOEditEvent />
-            </ProtectedRoute>
-          }
-        />
-      </Routes>
-
-      <Routes>
-        <Route
           path="/eo-edit-event-form"
           element={
             <ProtectedRoute>
