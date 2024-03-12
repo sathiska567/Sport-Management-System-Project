@@ -138,7 +138,7 @@ const ApplyPosition = () => {
 
   // handle position registration
   const handleSubmit = async (values) => {
-    console.log(newAge);
+    console.log(FirstName,LastName,newEmail,userRoles[0].value,experience,districts[0].value,newAge);
     try {
       const res = await axios.post(
         "http://localhost:8080/api/v1/user/apply-position",
@@ -148,9 +148,9 @@ const ApplyPosition = () => {
           LastName: LastName,
           Email: newEmail,
           Age: newAge,
-          UserRole: userRole,
+          UserRole: userRoles[0].value,
           Experience: experience,
-          Distric: distric,
+          Distric: districts[0].value,
         }
       );
 
