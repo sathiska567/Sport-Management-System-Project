@@ -1,7 +1,7 @@
 [
-  { "value": "eventOrganizer", "label": "Event Organizer" },
+  { "value": "event organizer", "label": "Event Organizer" },
   { "value": "coach", "label": "Coach" },
-  { "value": "player", "label": "Player" },
-  { "value": "teamManager", "label": "Team Manager" },
+  { "value": "player", "label": "player" },
+  { "value": "Team Manager", "label": "Team Manager" },
   { "value": "referee", "label": "Referee" }
 ]
