@@ -15,6 +15,9 @@ import { useNavigate } from "react-router-dom";
 import "./ApplyPosition.css";
 import { UserAddOutlined } from "@ant-design/icons";
 
+
+
+
 // For Text Area
 const { TextArea } = Input;
 
@@ -68,7 +71,7 @@ const ApplyPosition = () => {
   const onUserRoleChange = (value, selectedOptions) => {
     setUserRoleError(!value || value.length === 0);
     setUserRole(value)
-    setDistrictError(false); 
+    setDistrictError(false);
     console.log(value, selectedOptions[0].value);
     // setUserRole(selectedOptions[0].value)
   };
@@ -76,7 +79,7 @@ const ApplyPosition = () => {
   const onDistrictChange = (value, selectedOptions) => {
     setUserRoleError(false);
     setDistrict(value);
-    setDistrictError(!value || value.length === 0); 
+    setDistrictError(!value || value.length === 0);
     console.log(value, selectedOptions);
     setDistric(selectedOptions[0].value)
   };
@@ -141,7 +144,7 @@ const ApplyPosition = () => {
 
   // handle position registration
   const handleSubmit = async (values) => {
-    console.log(FirstName,LastName,newEmail,userRole[0],experience,district[0],newAge);
+    console.log(FirstName, LastName, newEmail, userRole[0], experience, district[0], newAge);
     try {
       const res = await axios.post(
         "http://localhost:8080/api/v1/user/apply-position",
@@ -167,6 +170,12 @@ const ApplyPosition = () => {
   useEffect(() => {
     currentUserData();
   }, []);
+
+
+  // const handleRealTime = async () => {
+  //   // socket.emit("send_message", { message: "Hello" })
+  //   console.log(socket);
+  // }
 
   return (
     <div>
@@ -327,7 +336,12 @@ const ApplyPosition = () => {
                   Submit
                 </button>
               </div>
+
+
             </Form>
+            {/* <button onClick={handleRealTime}>
+              click
+            </button> */}
           </div>
         </div>
       </SideBar>
