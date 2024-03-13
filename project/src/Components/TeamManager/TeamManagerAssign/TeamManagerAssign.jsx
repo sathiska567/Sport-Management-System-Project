@@ -15,8 +15,6 @@ import axios from "axios";
 // Destructuring components from Ant Design's Layout
 const { Content } = Layout;
 
-
-axios.defaults.baseURL = "http://localhost:8080/api/v1/assign"
 // Navbar component
 const TeamManagerAssignMembersCoach = () => {
 
@@ -43,16 +41,17 @@ const TeamManagerAssignMembersCoach = () => {
 
   // table
   const getFetchData = async () => {
-
-    const data = await axios.get("/get-assignee")
+    let data = await fetch("http://localhost:8080/api/v1/assign/get-assignee")
+    data = await data.json()
     console.log(data)
 
-    if (data.data.success) {
-      setDataSource(data.data.data)
+    if (data.success) {
+      setDataSource(data.data)
     }
 
   }
   useEffect(() => {
+    axios.defaults.baseURL = "http://localhost:8080/api/v1/assign"
     getFetchData()
    
   }, [])
@@ -113,6 +112,7 @@ const TeamManagerAssignMembersCoach = () => {
           if(res.data.success){
             // setIsAssigned(true)
           message.success("Status assigned successfully");
+          window.location.reload();
           // window.location.reload();
           }else{
             message.success("error");
@@ -182,7 +182,8 @@ const TeamManagerAssignMembersCoach = () => {
                     title: "ID",
                     dataIndex: "sid",
                     key: "ID",
-                   
+                    render: (text, record) => 
+                    (<span>{record._id}</span>)
                   },
                   {
                     title: "Coach Name",
@@ -203,7 +204,7 @@ const TeamManagerAssignMembersCoach = () => {
                     render: (text, record) => {
                 
                       return <>
-                        <button className="assignBtn"  onClick={() => handleAssign(record._id, record.status)} disabled={assignedIds.includes(record._id)}  >{assignedIds.includes(record._id)?"Assigned":"Assign"}</button>
+                        <button className="assignBtn"  onClick={() => handleAssign(record._id, record.status)} disabled={assignedIds.includes(record._id)}>{record.status?"Assigned":"Assign"}</button>
                         <button className="assignBtnDelete" onClick={() => handleDelete(record._id)}>Delete</button>
                       </>
                       // console.log(record);

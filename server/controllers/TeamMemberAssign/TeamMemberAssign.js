@@ -48,7 +48,7 @@ const  changeStatus = async (req, res) => {
         console.log(id);
         // const id = req.params.id
         // const status = req.params.status
-
+        
         const data = await assignModel.findByIdAndUpdate(
             { _id: id },
             { status: true },

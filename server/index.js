@@ -27,6 +27,7 @@ const coachAvailabilityRoute = require("./routes/CoachAvailabilityRoute/CoachAva
 const PlayerAvailabilityRoute = require("./routes/PlayerAvailabilityRoute/PlayerAvailabilityRoute")
 const getPlayerReviewRoute = require("./routes/CoachReviewRoute/getCurrentPlayerReviewRoute")
 const TeamMemberAssign = require("./routes/TeamMemberAssign/TeamMemberAssign")
+const AssignEventCoaches = require("./routes/AssignEventCoaches/AssignEventCoaches")
 require("./db/mongoDb"); 
 
 const app = express();
@@ -85,6 +86,9 @@ app.use("/api/v1/player-availability",PlayerAvailabilityRoute);
 //AssignMember
 app.use("/api/v1/assign",TeamMemberAssign)
 
+
+//AssignCrud
+app.use("/api/v1/assign-event-coaches",AssignEventCoaches)
 // //jwt
 // app.post('/user/login', async (req, res) => {
 //     const { username, password } = req.body;

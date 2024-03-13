@@ -12,6 +12,5 @@ const AssignMemberSchema = mongoose.Schema({
 }, {
     timestamps: true
 })
-
 const assignModel = mongoose.model("assign", AssignMemberSchema)
 module.exports = assignModel;

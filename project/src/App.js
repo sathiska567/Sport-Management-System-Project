@@ -50,6 +50,7 @@ import TeamManagerAssignMembersCoach from "./Components/TeamManager/TeamManagerA
 import TeamManagerAssignMembersPlayer from "./Components/TeamManager/TeamManagerAssignMembers/TeamManagerAssignMembersPlayer.jsx";
 import TeamManagerProfile from "./Components/TeamManager/TeamManagerProfile/TeamManagerProfile.jsx";
 import TeamManagerAssign from "./Components/TeamManager/TeamManagerAssign/TeamManagerAssign.jsx";
+import AssignTab from "./Components/assignTab/AssignTab.jsx";
 function App() {
   const isLoggedIn = window.localStorage.getItem("isLoggedIn");
   console.log(isLoggedIn, "login");
@@ -545,6 +546,18 @@ function App() {
          
         </Route>
 
+      </Routes>
+
+      <Routes>
+        <Route
+        path="/AssignTab"
+        element={
+          <AssignTab/>
+        }
+        
+        >
+
+        </Route>
       </Routes>
     </BrowserRouter>
 
