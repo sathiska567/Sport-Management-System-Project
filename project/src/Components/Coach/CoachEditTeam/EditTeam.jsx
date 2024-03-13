@@ -27,15 +27,15 @@ const EditTeam = () => {
 
 
 
-    const handleEdit = (team_id, match_id, teamName, teamNo, players) => {
-        navigate(`/update-team?team_id=${team_id}&match_id=${match_id}&coach_id=${coach_id}&teamName=${teamName}&teamNo=${teamNo}&players=${players}`)
+    const handleEdit = (team) => {
+        navigate(`/update-team`, { state: { team } });
     }
 
 
 
-    const handleDelete = async (team_id, coach_id, match_id) => {
+    const handleDelete = async (team_id) => {
         try {
-            const res = await axios.delete(`http://localhost:8080/api/v1/coach/delete-team?team_id=${team_id}&coach_id=${coach_id}&match_id=${match_id}`)
+            const res = await axios.delete(`http://localhost:8080/api/v1/coach/delete-team?team_id=${team_id}`)
             if (res.data.success) {
                 console.log('Team removed : ', team_id);
                 setTeams(teams.filter(team => team._id !== team_id));
@@ -66,7 +66,7 @@ const EditTeam = () => {
                                 <tr style={{fontWeight:'bold'}} key={index}>
                                     <td style={{ textAlign: 'center' }} >{team.teamNo}</td>
                                     <td style={{ textAlign: 'center' }} >{team.teamName}</td>
-                                    <td style={{ textAlign: 'center' }} ><button className='btn btn-success' onClick={() => handleEdit(team._id, team.match_id, team.teamName, team.teamNo, team.players)}>Edit</button> | <button className='btn btn-danger' onClick={() => handleDelete(team._id, team.coach_id, team.match_id)}>Delete</button></td>
+                                    <td style={{ textAlign: 'center' }} ><button className='btn btn-success' onClick={() => handleEdit(team)}>Edit</button> | <button className='btn btn-danger' onClick={() => handleDelete(team._id)}>Delete</button></td>
                                 </tr>
                             ))}
                         </tbody>

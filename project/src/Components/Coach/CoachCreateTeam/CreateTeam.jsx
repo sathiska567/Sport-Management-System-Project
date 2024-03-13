@@ -40,7 +40,7 @@ const CreateTeam = () => {
                             {matches.map((match, index) => (
                                 <tr style={{fontWeight:'bold'}} key={index}>
                                     <td style={{ textAlign: 'center' }} >{match.matchNo}</td>
-                                    <td style={{ textAlign: 'center' }}>{match.name}</td>
+                                    <td style={{ textAlign: 'center' }}>{match.nameOfTheEvent}</td>
                                     <td style={{ textAlign: 'center' }}>{match.location}</td>
                                     {/* Render other properties of the match object */}
                                     <td style={{ textAlign: 'center' }}><button className='btn btn-success' onClick={() => handleCreate(match._id)}>Create</button></td>
