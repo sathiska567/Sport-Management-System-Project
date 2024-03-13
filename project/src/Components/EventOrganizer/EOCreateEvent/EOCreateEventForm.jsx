@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import EOSidebar from "../EOSideBar/EOSideBar";
 import "./EOCreateEventForm.css";
-import { Form, Input, DatePicker, TimePicker, message } from "antd";
+import { Form, Input, DatePicker, TimePicker, message, Cascader } from "antd";
 import { CloseSquareOutlined, EditOutlined } from "@ant-design/icons";
+import moment from "moment";
 import axios from "axios";
 
 const EOCreateEventForm = () => {
@@ -12,6 +13,101 @@ const EOCreateEventForm = () => {
   const [eventDate, setEventDate] = useState("");
   const [startingTime, setStartingTime] = useState("");
   const [numberOfTeams, setNumberOfTeams] = useState(0);
+  const [error, setError] = useState(false);
+  const [locationError, setLocationError] = useState(false);
+  const [districts, setDistricts] = useState([]);
+  const [teamsError, setTeamsError] = useState(false);
+  const [teamsErrorMessage, setTeamsErrorMessage] = useState("");
+  const [eventDateError, setEventDateError] = useState(false);
+  const [startingTimeError, setStartingTimeError] = useState(false);
+  // Event Name Validation
+  const handleInputChange = (e) => {
+    if (e.target.value.trim() === "") {
+      setError(true);
+    } else {
+      setError(false);
+    }
+    setEventName(e.target.value);
+  };
+
+  // Location Validation
+  const handleLocationChange = (value) => {
+    setLocation(value);
+    if (value === undefined || value.length === 0) {
+      setLocationError(true);
+    } else {
+      setLocationError(false);
+    }
+  };
+
+  // Fetch the districts from the json file
+  useEffect(() => {
+    const fetchDistricts = async () => {
+      try {
+        const response = await fetch("/District.json");
+        const data = await response.json();
+
+        // Filter function
+        const filteredData = data.filter((item) => {
+          // Add your filter condition here
+          return item.name !== "Unwanted District";
+        });
+
+        setDistricts(filteredData);
+      } catch (error) {
+        console.error("Error fetching districts:", error);
+      }
+    };
+
+    fetchDistricts();
+  }, []);
+
+  // Cascader filter function
+  const districtFilter = (inputValue, path) => {
+    return path.some(
+      (option) =>
+        option.label.toLowerCase().indexOf(inputValue.toLowerCase()) > -1
+    );
+  };
+
+  // Validate Number of Teams
+  const validateNumberOfTeams = (value) => {
+    if (value === "") {
+      setTeamsError(true);
+      setTeamsErrorMessage("Number of teams cannot be empty!");
+    } else if (value < 2 || value > 25) {
+      setTeamsError(true);
+      setTeamsErrorMessage("Number of teams must be between 2 and 25!");
+    } else {
+      setTeamsError(false);
+    }
+  };
+
+  const handleTeamsChange = (e) => {
+    const value = e.target.value;
+    setNumberOfTeams(value);
+    validateNumberOfTeams(value);
+  };
+
+  // Validate Event Date
+  const handleDateChange = (date) => {
+    setEventDate(date);
+    if (!date) {
+      setEventDateError(true);
+    } else {
+      setEventDateError(false);
+    }
+  };
+
+  // Validate Starting Time
+  const handleTimeChange = (time) => {
+    setStartingTime(time);
+    if (!time) {
+      setStartingTimeError(true);
+    } else {
+      setStartingTimeError(false);
+    }
+  };
 
   const handleCreate = async () => {
     console.log(
@@ -23,24 +119,23 @@ const EOCreateEventForm = () => {
       numberOfTeams
     );
 
-   try {
-    const response = await axios.post("http://localhost:8080/api/v1/event/create-event",{nameOfTheEvent,location,numberOfTeams})
-    console.log(response);
+    try {
+      const response = await axios.post(
+        "http://localhost:8080/api/v1/event/create-event",
+        { nameOfTheEvent, location, numberOfTeams }
+      );
+      console.log(response);
 
-    if(response.data.success){
-        message.success(response.data.message)
+      if (response.data.success) {
+        message.success(response.data.message);
         window.location.reload();
-    }
-
-    else{
-      message.success(response.data.message)
-      // window.location.reload();
-    }
-    
-   } catch (error) {
+      } else {
+        message.success(response.data.message);
+        // window.location.reload();
+      }
+    } catch (error) {
       message.error("Error creating event");
-   }     
-
+    }
   };
 
   return (
@@ -90,52 +185,105 @@ const EOCreateEventForm = () => {
               <div className="InputData">
                 <div className="DataIem">
                   <label htmlFor="eventName">Name of the Event:</label>
-                  <Input
-                    type="text"
-                    id="eventName"
-                    required
-                    name="eventName"
-                    onChange={(e) => setEventName(e.target.value)}
-                  />
+                  <div style={{ flex: 2.6 }}>
+                    <Input
+                      type="text"
+                      id="eventName"
+                      required
+                      name="eventName"
+                      onChange={handleInputChange}
+                    />
+                    {error && (
+                      <p style={{ fontSize: "12px", color: "red" }}>
+                        Team Name Required!
+                      </p>
+                    )}
+                  </div>
                 </div>
 
                 <div className="DataIem">
                   <label htmlFor="location">Location:</label>
-                  <Input
-                    type="text"
-                    id="location"
-                    required
-                    name="location"
-                    onChange={(e) => setLocation(e.target.value)}
-                  />
+                  <div style={{ flex: 2.6 }}>
+                    <Cascader
+                      id="location"
+                      options={districts}
+                      onChange={handleLocationChange}
+                      placeholder="Select location"
+                      showSearch={{ filter: districtFilter }}
+                      className={locationError ? "ant-cascader-error" : ""}
+                      required
+                      style={{ width: "100%" }}
+                    />
+                    {locationError && (
+                      <span style={{ color: "red", fontSize: "13px" }}>
+                        Location cannot be empty!
+                      </span>
+                    )}
+                  </div>
                 </div>
 
                 <div className="DataIem">
                   <label htmlFor="numberOfTeams">Number of Teams:</label>
-                  <Input
-                    type="number"
-                    id="numberOfTeams"
-                    name="numberOfTeams"
-                    required
-                    onChange={(e) => setNumberOfTeams(e.target.value)}
-                  />
+                  <div style={{ flex: 2.6 }}>
+                    <Input
+                      type="number"
+                      id="numberOfTeams"
+                      name="numberOfTeams"
+                      required
+                      onChange={handleTeamsChange}
+                    />
+                    {teamsError && (
+                      <span style={{ color: "red", fontSize: "13px" }}>
+                        {teamsErrorMessage}
+                      </span>
+                    )}
+                  </div>
                 </div>
                 <div className="DataIem">
                   <label htmlFor="EventDate">Event Date:</label>
-                  <DatePicker
-                    id="EventDate"
-                    name="EventDate"
-                    onChange={(date) => setEventDate(date)}
-                  />
+                  <div style={{ flex: 2.6 }}>
+                    <div style={{ width: "100%" }}>
+                      <DatePicker
+                        id="EventDate"
+                        name="EventDate"
+                        onChange={handleDateChange}
+                        style={{ width: "100%" }}
+                        disabledDate={(current) =>
+                          current && current < moment().endOf("day")
+                        }
+                      />
+                    </div>
+                    {eventDateError && (
+                      <div>
+                        <span style={{ color: "red", fontSize: "13px" }}>
+                          Event date cannot be empty!
+                        </span>
+                      </div>
+                    )}
+                  </div>
                 </div>
 
                 <div className="DataIem">
                   <label htmlFor="startingTime">Starting Time:</label>
-                  <TimePicker
-                    id="startingTime"
-                    name="startingTime"
-                    onChange={(time) => setStartingTime(time)}
-                  />
+                  <div style={{ flex: 2.6 }}>
+                    <TimePicker
+                      id="startingTime"
+                      name="startingTime"
+                      onChange={handleTimeChange}
+                      style={{ width: "100%" }}
+                      disabledHours={() => [
+                        ...Array.from({ length: 8 }, (_, i) => i),
+                        ...Array.from({ length: 12 }, (_, i) => i + 12),
+                      ]}
+                    />
+                    {startingTimeError && (
+                      <div>
+                        <span style={{ color: "red", fontSize: "13px" }}>
+                          Starting time cannot be empty!
+                        </span>
+                      </div>
+                    )}{" "}
+                  </div>
                 </div>
 
                 <div class="buttonSet">

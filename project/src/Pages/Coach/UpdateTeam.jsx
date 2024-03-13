@@ -3,7 +3,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import CoachSidebar from '../CoachSidebar/CoachSidebar';
 
 const UpdateTeam = () => {
     const navigate = useNavigate()
@@ -109,6 +108,37 @@ const UpdateTeam = () => {
                     </div>
                 )}
             </div>
+
+            <div style={{ margin: 10, padding: 10 }}>
+                <table style={{ border: 'solid 1px grey', width: '100%' }}>
+                    <thead>
+                        <tr style={{ backgroundColor: 'darkblue', color: 'white' }}>
+                            <th>Player No</th><th>Player Name</th><th>Location</th><th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {allplayers.map((player, index) => (
+                            (player.Status === 'available' || player.matches.includes(match_id))&&(<tr key={index}>
+                                <td style={{ textAlign: 'center' }} >{player.PlayerNo}</td>
+                                <td style={{ textAlign: 'center' }}>{player.FirstName}</td>
+                                <td style={{ textAlign: 'center' }}>{player.District}</td>
+                                <td style={{ textAlign: 'center' }}>
+                                    <button onClick={() => handleAdd(player._id)}>
+                                        {teamData.players.includes(player._id) ? 'Remove' : 'Add'}
+                                    </button>
+                                </td>
+                            </tr>)
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+
+            {/* Display submit button only if there are selected players */}
+            {(
+                <div style={{ textAlign: 'center', marginTop: '20px' }}>
+                    <button onClick={handleSubmit}>Submit</button>
+                </div>
+            )}
         </CoachSidebar>
     );
 };

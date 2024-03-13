@@ -12,6 +12,21 @@ const EOCreateFixture = () => {
   const [location, setLocation] = useState("");
   const [eventDate, setEventDate] = useState("");
   const [startingTime, setStartingTime] = useState("");
+const [teamNameError, setTeamNameError] = useState({});
+
+  // Team name Validation
+  const handleTeamNameChange = (e, index) => {
+    const teamName = e.target.value;
+    setTeamName(() => {
+      nameOfTheTeam[index] = teamName;
+      return nameOfTheTeam;
+    });
+
+    setTeamNameError((prevErrors) => ({
+      ...prevErrors,
+      [index]: teamName.trim() === "",
+    }));
+  };
 
   const handleNumberOfTeamsChange = (event) => {
     setNumberOfTeams(event.target.value);
@@ -134,20 +149,25 @@ const EOCreateFixture = () => {
                     >
                       Team Name {index + 1}:
                     </label>
-                    <Input
-                      type="text"
-                      id={`teamName${index}`}
-                      name={`teamName${index}`}
-                      className="DataItemTeamsInput"
-                      allowClear
-                      required
-                      onChange={(e) =>
-                        setTeamName(() => {
-                          nameOfTheTeam[index] = e.target.value;
-                          return nameOfTheTeam;
-                        })
-                      }
-                    />
+                    <div style={{flex: 2.6}}>
+                      <Input
+                        type="text"
+                        id={`teamName${index}`}
+                        name={`teamName${index}`}
+                        className="DataItemTeamsInput"
+                        allowClear
+                        required
+                        onChange={(e) => handleTeamNameChange(e, index)}
+                      />
+                      {teamNameError[index] && (
+                        <div
+                          className="error"
+                          style={{ fontSize: "13px", color: "red" }}
+                        >
+                          Team name cannot be empty
+                        </div>
+                      )}
+                    </div>
                   </div>
                 ))}
 

@@ -26,7 +26,8 @@ import EditEventForm from "./Components/EventOrganizer/EOEditEvent/EOEditEventFo
 import EOProfile from "./Components/EventOrganizer/EOProfile/EOProfile.jsx";
 import CoachAvailability from "./Components/Coach/CoachAvailability/CoachAvailability.jsx";
 import CoachStats from "./Components/Coach/CoachStats/CoachStats.jsx";
-
+import CoachCreateTeam from "./Components/Coach/CoachCreateTeam/CoachCreateTeam.jsx";
+import CoachEditTeam from "./Components/Coach/CoachEditTeam/CoachEditTeam.jsx";
 import CoachReviewPlayers from "./Components/Coach/CoachReviewPlayers/CoachReviewPlayers.jsx";
 import CoachProfile from "./Components/Coach/CoachProfile/CoachProfile.jsx";
 import EOViewFixture from "./Components/EventOrganizer/EOViewFixture/EOViewFixture.jsx";
@@ -49,16 +50,20 @@ import TeamManagerAssignMembersCoach from "./Components/TeamManager/TeamManagerA
 import TeamManagerAssignMembersPlayer from "./Components/TeamManager/TeamManagerAssignMembers/TeamManagerAssignMembersPlayer.jsx";
 import TeamManagerProfile from "./Components/TeamManager/TeamManagerProfile/TeamManagerProfile.jsx";
 
-import TournamentBracket from "./Components/EventOrganizer/EOBracket/Bracket.jsx";
-import CoachCreateTeam from "./Components/Coach/CoachCreateTeam/CreateTeam.jsx";
-import SelectPlayers from "./Components/Coach/CoachCreateTeam/SelectPlayers.jsx"
-import CoachEditTeam from "./Components/Coach/CoachEditTeam/EditTeam.jsx";
-import UpdateTeam from "./Components/Coach/CoachEditTeam/UpdateTeam.jsx"
-
-
+import TournamentBracket from "./Pages/Organizer/Bracket.jsx";
+import CreateTeam from "./Pages/Coach/CreateTeam.jsx"
+import SelectPlayers from "./Pages/Coach/SelectPlayers.jsx"
+import EditTeam from "./Pages/Coach/EditTeam.jsx"
+import UpdateTeam from "./Pages/Coach/UpdateTeam.jsx"
+import EditTabEvent from "./Components/EventOrganizer/EditTabEvent/EditTabEvent.jsx"
+// import TeamManagerAssign from "./Components/TeamManager/TeamManagerAssign/TeamManagerAssign.jsx";
+import { useState } from "react";
 
 function App() {
+  const [ eventId, setEventId]=useState("");
+
   const isLoggedIn = window.localStorage.getItem("isLoggedIn");
+
   console.log(isLoggedIn, "login");
 
   return (
@@ -261,7 +266,7 @@ function App() {
           path="/eo-edit-event"
           element={
             <ProtectedRoute>
-              <EditEvent />
+              <EditEvent setId={ setEventId } />
             </ProtectedRoute>
           }
         />
@@ -540,14 +545,36 @@ function App() {
       </Routes>
 
       <Routes>
-        <Route path="/brackets" element={<ProtectedRoute><TournamentBracket /></ProtectedRoute>} />
-        <Route path="/create-team" element={<ProtectedRoute><CoachCreateTeam /></ProtectedRoute>} />
-        <Route path="/select-players" element={<ProtectedRoute><SelectPlayers /></ProtectedRoute>} />
+        <Route path="/brackets" element={<TournamentBracket />} />
+        <Route path="/create-team" element={<CreateTeam />} />
+        <Route path="/select-players" element={<SelectPlayers />} />
         {/* <Route path="/create-match" element={<CreateMatch />} /> */}
-        <Route path="/edit-team" element={<ProtectedRoute><CoachEditTeam /></ProtectedRoute>} />
-        <Route path="/update-team" element={<ProtectedRoute><UpdateTeam /></ProtectedRoute>} />
+        <Route path="/edit-team" element={<EditTeam />} />
+        <Route path="/update-team" element={<UpdateTeam />} />
       </Routes>
 
+      <Routes>
+        <Route
+        path="/EditTabEvent"
+        element={
+          <EditTabEvent itemId={eventId}/>
+        }
+        
+        >
+        </Route>
+      </Routes>
+
+      {/* <Routes>
+        <Route
+        path="/TeamManagerAssign"
+       element={
+        <ProtectedRoute>
+          <TeamManagerAssign />
+        </ProtectedRoute>
+       }
+        >         
+        </Route>
+      </Routes> */}
 
     </BrowserRouter>
 

@@ -12,6 +12,7 @@ import {
   Flex,
 } from "antd";
 import { PoweroffOutlined } from "@ant-design/icons";
+import moment from "moment";
 import ImgCrop from "antd-img-crop";
 import axios from "axios";
 
@@ -28,7 +29,6 @@ const RefereeProfile = () => {
   const [previewVisibleProfile, setPreviewVisibleProfile] = useState(false);
   const [previewImageProfile, setPreviewImageProfile] = useState("");
   const [fileListProfile, setFileListProfile] = useState([]);
-
   const [playerName, setPlayerName] = useState("");
   const [playerEmail, setPlayerEmail] = useState("");
   const [playerDateOfBirth, setPlayerDateOfBirth] = useState("");
@@ -36,8 +36,79 @@ const RefereeProfile = () => {
   const [playerId, setPlayerId] = useState("");
   const [formData, setFormData] = useState([]);
   const [NewfileList, setNewFileList] = useState([]);
-
   const [loadings, setLoadings] = useState([]);
+  const [nameError, setNameError] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [dateError, setDateError] = useState("");
+  const [ageError, setAgeError] = useState("");
+  const [uploadError, setUploadError] = useState(false);
+
+  // Name validation
+  const handleNameChange = (e) => {
+    const name = e.target.value;
+    setPlayerName(name);
+
+    if (!name) {
+      setNameError("Name cannot be empty");
+    } else {
+      setNameError("");
+    }
+  };
+
+  // Email validation
+  const handleEmailChange = (e) => {
+    const email = e.target.value;
+    setPlayerEmail(email);
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!email) {
+      setEmailError("Email cannot be empty");
+    } else if (!emailRegex.test(email)) {
+      setEmailError("Invalid email format");
+    } else {
+      setEmailError("");
+    }
+  };
+
+  // Date of birth validation
+  const handleDateChange = (date, dateString) => {
+    setPlayerDateOfBirth(dateString);
+
+    if (!date) {
+      setDateError("Date cannot be empty");
+    } else {
+      setDateError("");
+    }
+  };
+
+  const disabledDate = (current) => {
+    // Can not select days before today and more than 60 years ago and less than 18 years ago
+    return (
+      current > moment().endOf("day") ||
+      current < moment().endOf("day").subtract(60, "years") ||
+      current > moment().endOf("day").subtract(18, "years")
+    );
+  };
+
+  // Age validation
+  const handleAgeChange = (value) => {
+    const age = value;
+
+    if (!age) {
+      setAgeError("Age cannot be empty");
+    } else if (age < 8 || age > 60) {
+      setAgeError("Invalid age. Age should be between 18 and 60");
+    } else {
+      setAgeError("");
+    }
+  };
+
+  // Medical Upload  reports validation
+  const onUploadChange = ({ fileList: newFileList }) => {
+    setFileList(newFileList);
+    setUploadError(newFileList.length === 0);
+  };
 
   // GET CURRENT USER DETAILS
   const currentUserData = async () => {
@@ -217,47 +288,85 @@ const RefereeProfile = () => {
           <div className="ProfileHeader">
             <h3>My Profile</h3>
           </div>
-          <div
-            style={{ overflowX: "auto", height: "65vh" }}
-          >
+          <div style={{ overflowX: "auto", height: "65vh" }}>
             <form className="refereeProfileForm">
               <label className="formLabel">
                 Name:
-                <Input
-                  type="text"
-                  name="name"
-                  className="inputBox"
-                  onChange={(e) => setPlayerName(e.target.value)}
-                />
+                <div>
+                  <Input
+                    type="text"
+                    name="name"
+                    className="inputBox"
+                    onChange={handleNameChange}
+                    allowClear
+                  />
+                  {nameError && (
+                    <div
+                      className="errorText"
+                      style={{ fontSize: "13px", color: "red" }}
+                    >
+                      {nameError}
+                    </div>
+                  )}
+                </div>
               </label>
               <label className="formLabel">
                 Email:
-                <Input
-                  type="email"
-                  name="email"
-                  className="inputBox"
-                  onChange={(e) => setPlayerEmail(e.target.value)}
-                />
+                <div>
+                  <Input
+                    type="email"
+                    name="email"
+                    className="inputBox"
+                    onChange={handleEmailChange}
+                    allowClear
+                  />
+                  {emailError && (
+                    <div
+                      className="errorText"
+                      style={{ fontSize: "13px", color: "red" }}
+                    >
+                      {emailError}
+                    </div>
+                  )}
+                </div>
               </label>
 
               <div className="AgeSection">
                 <div>
                   <label className="formLabel">Date of Birth:</label>
-                  <DatePicker
-                    style={{
-                      width: "350%",
-                    }}
-                    onChange={(date, dateString) =>
-                      setPlayerDateOfBirth(dateString)
-                    }
-                  />
+                  <div>
+                    <DatePicker
+                      style={{
+                        width: "350%",
+                      }}
+                      onChange={handleDateChange}
+                      disabledDate={disabledDate}
+                    />
+                    {dateError && (
+                      <div
+                        className="errorText"
+                        style={{ fontSize: "13px", color: "red" }}
+                      >
+                        {dateError}
+                      </div>
+                    )}
+                  </div>
                 </div>
                 <div>
                   <label className="formLabel">Age:</label>
-                  <input
+                  <InputNumber
                     type="number"
-                    onChange={(e) => setPlayerAge(e.target.value)}
+                    onChange={handleAgeChange}
+                    style={{ width: "100%" }}
                   />
+                  {ageError && (
+                    <div
+                      className="errorText"
+                      style={{ fontSize: "13px", color: "red" }}
+                    >
+                      {ageError}
+                    </div>
+                  )}
                 </div>
               </div>
               <div className="ImageUploading">
@@ -317,15 +426,25 @@ const RefereeProfile = () => {
                 </div>
                 <div>
                   <label className="formLabel">Upload Medical Reports:</label>
-                  <Upload
-                    action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
-                    listType="picture-card"
-                    fileList={fileList}
-                    onChange={onChange}
-                    onPreview={onPreview}
-                  >
-                    {fileList.length < 5 && "+ Upload"}
-                  </Upload>
+                  <div>
+                    <Upload
+                      action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
+                      listType="picture-card"
+                      fileList={fileList}
+                      onChange={onUploadChange}
+                      onPreview={onPreview}
+                    >
+                      {fileList.length < 5 && "+ Upload"}
+                    </Upload>
+                    {uploadError && (
+                      <div
+                        className="error"
+                        style={{ fontSize: "13px", color: "red" }}
+                      >
+                        At least one image must be uploaded
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
               <br />

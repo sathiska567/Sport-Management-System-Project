@@ -1,0 +1,7 @@
+[
+  { "value": "event organizer", "label": "Event Organizer" },
+  { "value": "coach", "label": "Coach" },
+  { "value": "player", "label": "player" },
+  { "value": "Team Manager", "label": "Team Manager" },
+  { "value": "referee", "label": "Referee" }
+]
