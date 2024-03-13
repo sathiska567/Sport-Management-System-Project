@@ -12,6 +12,7 @@ import {
   Flex,
 } from "antd";
 import { PoweroffOutlined } from "@ant-design/icons";
+import moment from "moment";
 import ImgCrop from "antd-img-crop";
 import axios from "axios";
 
@@ -28,19 +29,85 @@ const TeamManagerProfile = () => {
   const [previewVisibleProfile, setPreviewVisibleProfile] = useState(false);
   const [previewImageProfile, setPreviewImageProfile] = useState("");
   const [fileListProfile, setFileListProfile] = useState([]);
-
   const [playerName, setPlayerName] = useState("");
   const [playerEmail, setPlayerEmail] = useState("");
   const [playerDateOfBirth, setPlayerDateOfBirth] = useState("");
   const [playerAge, setPlayerAge] = useState(0);
   const [playerId, setPlayerId] = useState("");
   const [formData, setFormData] = useState([]);
-
   const [NewfileList, setNewFileList] = useState([]);
   const [coverImageFileList, setCoverImageFileList] = useState([]);
   const [medicalReportFileList, setMedicalReportFileList] = useState([]);
-
   const [loadings, setLoadings] = useState([]);
+  const [error, setError] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [dateError, setDateError] = useState("");
+  const [ageError, setAgeError] = useState("");
+  const [uploadError, setUploadError] = useState(false);
+
+  // Name Validation
+  const validatePlayerName = (name) => {
+    // Check if the input is empty
+    if (name.trim() === "") {
+      setError("Player name cannot be empty");
+      return false;
+    }
+
+    setError("");
+    return true;
+  };
+
+  const handleInputChange = (e) => {
+    const name = e.target.value;
+    setPlayerName(name);
+
+    // Validate the name immediately when it changes
+    if (name.trim() === "") {
+      setError("Player name cannot be empty");
+    } else {
+      setError("");
+    }
+  };
+
+  // Email validation
+  const handleEmailChange = (e) => {
+    const email = e.target.value;
+    setPlayerEmail(email);
+
+    if (email.trim() === "") {
+      setEmailError("Email cannot be empty");
+    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
+      setEmailError("Invalid email format");
+    } else {
+      setEmailError("");
+    }
+  };
+
+  // Birthday validation
+  const handleDateChange = (date, dateString) => {
+    setPlayerDateOfBirth(dateString);
+    setDateError(dateString === "" ? "Date cannot be empty" : "");
+  };
+
+  // Age validation
+  const handleAgeChange = (e) => {
+    const age = e.target.value;
+    setPlayerAge(age);
+
+    if (!age) {
+      setAgeError("Age cannot be empty");
+    } else if (age < 16 || age > 70) {
+      setAgeError("Invalid age. Age should be between 16 and 70");
+    } else {
+      setAgeError("");
+    }
+  };
+
+  // Medical Report Upload validation
+  const onUploadChange = ({ fileList: newFileList }) => {
+    setFileList(newFileList);
+    setUploadError(newFileList.length === 0);
+  };
 
   // GET CURRENT USER DETAILS
   const currentUserData = async () => {
@@ -287,9 +354,7 @@ const TeamManagerProfile = () => {
           <div className="ProfileHeader">
             <h3>My Profile</h3>
           </div>
-          <div
-            style={{ overflowX: "auto", height: "65vh" }}
-          >
+          <div style={{ overflowX: "auto", height: "65vh" }}>
             <form className="teamManagerProfileForm">
               <label className="formLabel">
                 Name:
@@ -297,37 +362,85 @@ const TeamManagerProfile = () => {
                   type="text"
                   name="name"
                   className="inputBox"
-                  onChange={(e) => setPlayerName(e.target.value)}
+                  value={playerName}
+                  onChange={handleInputChange}
+                  allowClear
                 />
+                {error && (
+                  <div
+                    className="error"
+                    style={{ fontSize: "13px", color: "red" }}
+                  >
+                    {error}
+                  </div>
+                )}
               </label>
-              <label className="formLabel">
-                Email:
+              <label className="formLabel">Email:</label>
+              <div>
                 <Input
                   type="email"
                   name="email"
-                  className="inputBox"
-                  onChange={(e) => setPlayerEmail(e.target.value)}
+                  className={`inputBox ${emailError ? "error" : ""}`}
+                  onChange={handleEmailChange}
+                  allowClear
                 />
-              </label>
+                {emailError && (
+                  <div
+                    className="errorText"
+                    style={{ fontSize: "13px", color: "red" }}
+                  >
+                    {emailError}
+                  </div>
+                )}
+              </div>
 
               <div className="AgeSection">
                 <div>
                   <label className="formLabel">Date of Birth:</label>
-                  <DatePicker
-                    style={{
-                      width: "350%",
-                    }}
-                    onChange={(date, dateString) =>
-                      setPlayerDateOfBirth(dateString)
-                    }
-                  />
+                  <div>
+                    <DatePicker
+                      style={{
+                        width: "350%",
+                      }}
+                      onChange={handleDateChange}
+                      disabledDate={(current) => {
+                        // Can not select days before today and today
+                        return (
+                          current &&
+                          (current <
+                            moment().endOf("day").subtract(70, "years") ||
+                            current >
+                              moment().endOf("day").subtract(16, "years"))
+                        );
+                      }}
+                    />
+                    {dateError && (
+                      <div
+                        className="error"
+                        style={{ fontSize: "13px", color: "red" }}
+                      >
+                        {dateError}
+                      </div>
+                    )}
+                  </div>
                 </div>
                 <div>
-                  <label className="formLabel">Age:</label>
-                  <input
-                    type="number"
-                    onChange={(e) => setPlayerAge(e.target.value)}
-                  />
+                  <div>
+                    <label className="formLabel">Age:</label>
+                    <input
+                      type="number"
+                      onChange={handleAgeChange}
+                      style={{ width: "100%" }}
+                    />
+                    {ageError && (
+                      <div
+                        className="errorText"
+                        style={{ fontSize: "13px", color: "red" }}
+                      >
+                        {ageError}
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
               <div className="ImageUploading">
@@ -387,15 +500,25 @@ const TeamManagerProfile = () => {
                 </div>
                 <div>
                   <label className="formLabel">Upload Medical Reports:</label>
-                  <Upload
-                    action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
-                    listType="picture-card"
-                    fileList={fileList}
-                    onChange={onChange}
-                    onPreview={onPreview}
-                  >
-                    {fileList.length < 5 && "+ Upload"}
-                  </Upload>
+                  <div>
+                    <Upload
+                      action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
+                      listType="picture-card"
+                      fileList={fileList}
+                      onChange={onUploadChange}
+                      onPreview={onPreview}
+                    >
+                      {fileList.length < 5 && "+ Upload"}
+                    </Upload>
+                    {uploadError && (
+                      <div
+                        className="error"
+                        style={{ fontSize: "13px", color: "red" }}
+                      >
+                        At least one image must be uploaded
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
               <br />
