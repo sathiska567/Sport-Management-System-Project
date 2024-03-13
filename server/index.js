@@ -31,6 +31,8 @@ const getPlayerReviewRoute = require("./routes/CoachReviewRoute/getCurrentPlayer
 const searchLocationRoute = require("./routes/PlayerAvailabilityRoute/SerachLocationRoute")
 const eventOrganizerBracketRoute = require("./routes/EventOrganizerBracketRoute/EventOrganizerBracketRoute")
 
+const TeamMemberAssign = require("./routes/TeamMemberAssign/TeamMemberAssign")
+const AssignEventCoaches = require("./routes/AssignEventCoaches/AssignEventCoaches")
 require("./db/mongoDb"); 
 
 const app = express();
@@ -94,6 +96,9 @@ app.use("/api/v1/search",searchLocationRoute);
 app.use("/api/v1/eventOrganizerBracket",eventOrganizerBracketRoute)
 
 
+
+//AssignCrud
+app.use("/api/v1/assign-event-coaches",AssignEventCoaches)
 // //jwt
 // app.post('/user/login', async (req, res) => {
 //     const { username, password } = req.body;

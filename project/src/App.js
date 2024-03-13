@@ -49,21 +49,10 @@ import TeamManagerAssignMembersTable from "./Components/TeamManager/TeamManagerA
 import TeamManagerAssignMembersCoach from "./Components/TeamManager/TeamManagerAssignMembers/TeamManagerAssignMembersCoach.jsx";
 import TeamManagerAssignMembersPlayer from "./Components/TeamManager/TeamManagerAssignMembers/TeamManagerAssignMembersPlayer.jsx";
 import TeamManagerProfile from "./Components/TeamManager/TeamManagerProfile/TeamManagerProfile.jsx";
-
-import TournamentBracket from "./Pages/Organizer/Bracket.jsx";
-import CreateTeam from "./Pages/Coach/CreateTeam.jsx"
-import SelectPlayers from "./Pages/Coach/SelectPlayers.jsx"
-import EditTeam from "./Pages/Coach/EditTeam.jsx"
-import UpdateTeam from "./Pages/Coach/UpdateTeam.jsx"
-import EditTabEvent from "./Components/EventOrganizer/EditTabEvent/EditTabEvent.jsx"
-// import TeamManagerAssign from "./Components/TeamManager/TeamManagerAssign/TeamManagerAssign.jsx";
-import { useState } from "react";
-
+import TeamManagerAssign from "./Components/TeamManager/TeamManagerAssign/TeamManagerAssign.jsx";
+import AssignTab from "./Components/assignTab/AssignTab.jsx";
 function App() {
-  const [ eventId, setEventId]=useState("");
-
   const isLoggedIn = window.localStorage.getItem("isLoggedIn");
-
   console.log(isLoggedIn, "login");
 
   return (
@@ -266,7 +255,7 @@ function App() {
           path="/eo-edit-event"
           element={
             <ProtectedRoute>
-              <EditEvent setId={ setEventId } />
+              <EditEvent />
             </ProtectedRoute>
           }
         />
@@ -544,38 +533,32 @@ function App() {
         ></Route>
       </Routes>
 
-      <Routes>
-        <Route path="/brackets" element={<TournamentBracket />} />
-        <Route path="/create-team" element={<CreateTeam />} />
-        <Route path="/select-players" element={<SelectPlayers />} />
-        {/* <Route path="/create-match" element={<CreateMatch />} /> */}
-        <Route path="/edit-team" element={<EditTeam />} />
-        <Route path="/update-team" element={<UpdateTeam />} />
-      </Routes>
 
       <Routes>
-        <Route
-        path="/EditTabEvent"
-        element={
-          <EditTabEvent itemId={eventId}/>
-        }
-        
-        >
-        </Route>
-      </Routes>
-
-      {/* <Routes>
         <Route
         path="/TeamManagerAssign"
        element={
         <ProtectedRoute>
-          <TeamManagerAssign />
+          <TeamManagerAssign/>
         </ProtectedRoute>
        }
-        >         
+        >
+         
         </Route>
-      </Routes> */}
 
+      </Routes>
+
+      <Routes>
+        <Route
+        path="/AssignTab"
+        element={
+          <AssignTab/>
+        }
+        
+        >
+
+        </Route>
+      </Routes>
     </BrowserRouter>
 
     // <div className="App">
