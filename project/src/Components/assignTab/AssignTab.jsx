@@ -96,6 +96,7 @@ export default function AssignTab() {
               <Table
                 className="Tab"
                 columns={[
+
                   {
                     title: "Event Name",
                     dataIndex: "eventName",
