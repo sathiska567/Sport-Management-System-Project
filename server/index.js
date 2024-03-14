@@ -99,6 +99,8 @@ app.use("/api/v1/eventOrganizerBracket",eventOrganizerBracketRoute)
 
 //AssignCrud
 app.use("/api/v1/assign-event-coaches",AssignEventCoaches)
+
+app.use("/api/v1/assign", TeamMemberAssign)
 // //jwt
 // app.post('/user/login', async (req, res) => {
 //     const { username, password } = req.body;
