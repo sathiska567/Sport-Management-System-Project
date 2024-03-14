@@ -14,8 +14,9 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./ApplyPosition.css";
 import { UserAddOutlined } from "@ant-design/icons";
+import io from "socket.io-client";  
 
-
+const socket = io.connect("http://localhost:8080");
 
 
 // For Text Area
@@ -167,15 +168,17 @@ const ApplyPosition = () => {
     }
   };
 
+
+  const handleRealTime = async () => {
+    // socket.emit("send_message", { message: "Hello" })
+    console.log(socket);
+  }
+
   useEffect(() => {
     currentUserData();
+    handleRealTime();
   }, []);
 
-
-  // const handleRealTime = async () => {
-  //   // socket.emit("send_message", { message: "Hello" })
-  //   console.log(socket);
-  // }
 
   return (
     <div>
