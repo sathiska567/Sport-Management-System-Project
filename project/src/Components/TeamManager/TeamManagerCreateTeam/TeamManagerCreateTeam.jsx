@@ -1,12 +1,18 @@
 import React, { useState } from "react";
 import "./TeamManagerCreateTeam.css";
 import TeamManagerSideBar from "../TeamManagerSideBar/TeamManagerSideBar";
-import { Form, Input, Cascader, message } from "antd";
+import { Form, Input, InputNumber, Cascader, message } from "antd";
 import { CloseSquareOutlined, EditOutlined } from "@ant-design/icons";
 
 const TeamManagerCreateTeam = () => {
   const [nameOfTheEvent, setEventName] = useState("");
   const [nameOfTheTeam, setTeamName] = useState([]);
+  const [selectedOption, setSelectedOption] = useState([]);
+  const [cascaderError, setCascaderError] = useState("");
+  const [eventNameError, setEventNameError] = useState("");
+  const [numberOfTeams, setNumberOfTeams] = useState("");
+  const [teamsError, setTeamsError] = useState("");
+
 
   const options = [
     {
@@ -31,6 +37,40 @@ const TeamManagerCreateTeam = () => {
       setEventName("");
     }
   };
+
+  // Select Event validation
+  const handleCascaderChange = (value) => {
+    setSelectedOption(value);
+    setCascaderError(
+      value === undefined || value.length === 0
+        ? "Event Name cannot be empty"
+        : ""
+    );
+  };
+
+  // Validate Team Name
+  const handleEventNameChange = (e) => {
+    const name = e.target.value;
+    setEventName(name);
+    setEventNameError(name === "" ? "Event name cannot be empty" : "");
+  };
+
+  // Validate Number of members in Teams
+  const handleTeamsChange = (value) => {
+    if (isNaN(value)) {
+      setTeamsError("Input must be a number");
+    } else {
+      setNumberOfTeams(value);
+      if (!value) {
+        setTeamsError("Number of teams cannot be empty");
+      } else if (value < 13 || value > 20) {
+        setTeamsError("Number of teams should be between 13 and 20");
+      } else {
+        setTeamsError("");
+      }
+    }
+  };
+
 
   return (
     <div>
@@ -81,33 +121,66 @@ const TeamManagerCreateTeam = () => {
               <div className="InputData">
                 <div className="DataIem">
                   <label htmlFor="eventName">Select the Event :</label>
-                  <Cascader
-                    className="myCascader"
-                    options={options}
-                    onChange={onChange}
-                    placeholder="Please Select the Name of Event"
-                  />
+                  <div style={{ flex: "2.6" }}>
+                    <Cascader
+                      className="myCascader"
+                      options={options}
+                      onChange={handleCascaderChange}
+                      placeholder="Please Select the Name of Event"
+                      style={{ width: "100%" }}
+                    />
+                    {cascaderError && (
+                      <div
+                        className="error"
+                        style={{ fontSize: "13px", color: "red" }}
+                      >
+                        {cascaderError}
+                      </div>
+                    )}
+                  </div>
                 </div>
                 <div className="DataIem">
                   <label htmlFor="eventName">Name of the Team:</label>
-                  <Input
-                    type="text"
-                    id="eventName"
-                    required
-                    name="eventName"
-                    placeholder="Enter the Name of the Team"
-                    onChange={(e) => setEventName(e.target.value)}
-                  />
+                  <div style={{ flex: "2.6" }}>
+                    <Input
+                      type="text"
+                      id="eventName"
+                      required
+                      name="eventName"
+                      placeholder="Enter the Name of the Team"
+                      onChange={handleEventNameChange}
+                      allowClear
+                    />
+                    {eventNameError && (
+                      <div
+                        className="error"
+                        style={{ fontSize: "13px", color: "red" }}
+                      >
+                        {eventNameError}
+                      </div>
+                    )}
+                  </div>
                 </div>
                 <div className="DataIem">
                   <label htmlFor="numberOfTeams">Number of Members:</label>
-                  <Input
-                    type="number"
-                    id="numberOfTeams"
-                    name="numberOfTeams"
-                    required
-                    placeholder="Enter the Number of Teams"
-                  />
+                  <div style={{flex : "2.6"}}>
+                    <InputNumber
+                      id="numberOfTeams"
+                      name="numberOfTeams"
+                      required
+                      placeholder="Enter the Number of Teams"
+                      onChange={handleTeamsChange}
+                      style={{width : "100%"}}
+                    />
+                    {teamsError && (
+                      <div
+                        className="error"
+                        style={{ fontSize: "13px", color: "red" }}
+                      >
+                        {teamsError}
+                      </div>
+                    )}
+                  </div>
                 </div>
                 <div class="buttonSet">
                   <div>

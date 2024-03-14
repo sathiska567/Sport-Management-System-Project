@@ -28,22 +28,62 @@ const EOProfile = () => {
   const [previewVisibleProfile, setPreviewVisibleProfile] = useState(false);
   const [previewImageProfile, setPreviewImageProfile] = useState("");
   const [fileListProfile, setFileListProfile] = useState([]);
-
-  // eventOrganizerId, eventOrganizerName, eventOrganizerEmail, eventOrganizerDateOfBirth, eventOrganizerAge
-
-
   const [eventOrganizerName, seteventOrganizerName] = useState("");
   const [eventOrganizerEmail, seteventOrganizerEmail] = useState("");
-  const [eventOrganizerDateOfBirth, seteventOrganizerDateOfBirth] = useState("");
+  const [eventOrganizerDateOfBirth, seteventOrganizerDateOfBirth] =
+    useState("");
   const [eventOrganizerAge, seteventOrganizerAge] = useState(0);
   const [eventOrganizerId, seteventOrganizerId] = useState("");
   const [formData, setFormData] = useState([]);
-
   const [NewfileList, setNewFileList] = useState([]);
   const [coverImageFileList, setCoverImageFileList] = useState([]);
   const [medicalReportFileList, setMedicalReportFileList] = useState([]);
-
   const [loadings, setLoadings] = useState([]);
+  const [nameError, setNameError] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [dateError, setDateError] = useState(false);
+  const [ageError, setAgeError] = useState("");
+
+  // Name Validation
+  const handleNameChange = (e) => {
+    const name = e.target.value;
+    seteventOrganizerName(name);
+    setNameError(name.trim() === "");
+  };
+
+  // Email Validation
+  const handleEmailChange = (e) => {
+    const email = e.target.value;
+    seteventOrganizerEmail(email);
+
+    if (email.trim() === "") {
+      setEmailError("Email cannot be empty");
+    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
+      setEmailError("Invalid email format");
+    } else {
+      setEmailError("");
+    }
+  };
+
+  // Birth Day validation
+  const handleDateChange = (date, dateString) => {
+    seteventOrganizerDateOfBirth(dateString);
+    setDateError(dateString === "");
+  };
+
+  // Age Validation
+  const handleAgeChange = (e) => {
+    const age = e.target.value;
+    seteventOrganizerAge(age);
+
+    if (age.trim() === "") {
+      setAgeError("Age cannot be empty");
+    } else if (age < 18 || age > 40) {
+      setAgeError("Age must be between 18 and 40");
+    } else {
+      setAgeError("");
+    }
+  };
 
   // GET CURRENT USER DETAILS
   const currentUserData = async () => {
@@ -104,7 +144,8 @@ const EOProfile = () => {
         );
         console.log(imageUploadResponse.data.success);
         // Extract image URL from the response
-        const imageUrl = imageUploadResponse.data.data.eventOrganizerprofileImageLink;
+        const imageUrl =
+          imageUploadResponse.data.data.eventOrganizerprofileImageLink;
 
         if (imageUploadResponse.data.success) {
           message.success(imageUploadResponse.data.message);
@@ -149,7 +190,6 @@ const EOProfile = () => {
       message.error("Error uploading cover image");
     }
 
-
     try {
       // Now, make a second API call to save eventOrganizer profile data with the image URL
       const eventOrganizerProfileResponse = await axios.post(
@@ -170,7 +210,6 @@ const EOProfile = () => {
         message.success(eventOrganizerProfileResponse.data.message);
         window.location.reload();
       }
-
     } catch (error) {
       message.error("Error occurred inside the handleFormSubmit function");
     }
@@ -260,47 +299,82 @@ const EOProfile = () => {
           <div className="ProfileHeader">
             <h3>My Profile</h3>
           </div>
-          <div
-            style={{ overflowX: "auto", height: "65vh" }}
-          >
+          <div style={{ overflowX: "auto", height: "65vh" }}>
             <form className="EOProfileForm">
               <label className="formLabel">
                 Name:
-                <Input
-                  type="text"
-                  name="name"
-                  className="inputBox"
-                  onChange={(e) => seteventOrganizerName(e.target.value)}
-                />
+                <div>
+                  <Input
+                    type="text"
+                    name="name"
+                    className="inputBox"
+                    onChange={handleNameChange}
+                    allowClear
+                  />
+                  {nameError && (
+                    <div
+                      className="error"
+                      style={{ fontSize: "13px", color: "red" }}
+                    >
+                      Name cannot be empty!
+                    </div>
+                  )}
+                </div>
               </label>
               <label className="formLabel">
                 Email:
-                <Input
-                  type="email"
-                  name="email"
-                  className="inputBox"
-                  onChange={(e) => seteventOrganizerEmail(e.target.value)}
-                />
+                <div>
+                  <Input
+                    type="email"
+                    name="email"
+                    className="inputBox"
+                    onChange={handleEmailChange}
+                    allowClear
+                  />
+                  {emailError && (
+                    <div
+                      className="error"
+                      style={{ fontSize: "13px", color: "red" }}
+                    >
+                      {emailError}
+                    </div>
+                  )}
+                </div>
               </label>
 
               <div className="AgeSection">
                 <div>
                   <label className="formLabel">Date of Birth:</label>
-                  <DatePicker
-                    style={{
-                      width: "350%",
-                    }}
-                    onChange={(date, dateString) =>
-                      seteventOrganizerDateOfBirth(dateString)
-                    }
-                  />
+                  <div>
+                    <DatePicker
+                      style={{
+                        width: "350%",
+                      }}
+                      onChange={handleDateChange}
+                    />
+                    {dateError && (
+                      <div
+                        className="error"
+                        style={{ fontSize: "13px", color: "red" }}
+                      >
+                        Birth Day cannot be empty
+                      </div>
+                    )}
+                  </div>
                 </div>
                 <div>
                   <label className="formLabel">Age:</label>
-                  <input
-                    type="number"
-                    onChange={(e) => seteventOrganizerAge(e.target.value)}
-                  />
+                  <div>
+                    <Input type="number" onChange={handleAgeChange} />
+                    {ageError && (
+                      <div
+                        className="error"
+                        style={{ fontSize: "13px", color: "red" }}
+                      >
+                        {ageError}
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
               <div className="ImageUploading">

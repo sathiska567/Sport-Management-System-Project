@@ -1,6 +1,6 @@
 .coach-profile {
     position: relative;
-    width: 95%;
+    width: 80% !important;
     overflowX: auto !important;
     margin: auto;
     margin-top: 6vh;

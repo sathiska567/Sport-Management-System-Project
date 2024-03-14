@@ -67,8 +67,10 @@ const ApplyPosition = () => {
 
   const onUserRoleChange = (value, selectedOptions) => {
     setUserRoleError(!value || value.length === 0);
+    setUserRole(value)
     setDistrictError(false); 
-    console.log(value, selectedOptions);
+    console.log(value, selectedOptions[0].value);
+    // setUserRole(selectedOptions[0].value)
   };
 
   const onDistrictChange = (value, selectedOptions) => {
@@ -76,6 +78,7 @@ const ApplyPosition = () => {
     setDistrict(value);
     setDistrictError(!value || value.length === 0); 
     console.log(value, selectedOptions);
+    setDistric(selectedOptions[0].value)
   };
 
   const userRoleFilter = (inputValue, path) =>
@@ -138,7 +141,7 @@ const ApplyPosition = () => {
 
   // handle position registration
   const handleSubmit = async (values) => {
-    console.log(newAge);
+    console.log(FirstName,LastName,newEmail,userRole[0],experience,district[0],newAge);
     try {
       const res = await axios.post(
         "http://localhost:8080/api/v1/user/apply-position",
@@ -148,9 +151,9 @@ const ApplyPosition = () => {
           LastName: LastName,
           Email: newEmail,
           Age: newAge,
-          UserRole: userRole,
+          UserRole: userRole[0],
           Experience: experience,
-          Distric: distric,
+          Distric: district[0],
         }
       );
 
