@@ -57,6 +57,8 @@ import EditTeam from "./Pages/Coach/EditTeam.jsx"
 import UpdateTeam from "./Pages/Coach/UpdateTeam.jsx"
 import EditTabEvent from "./Components/EventOrganizer/EditTabEvent/EditTabEvent.jsx"
 // import TeamManagerAssign from "./Components/TeamManager/TeamManagerAssign/TeamManagerAssign.jsx";
+import TeamManagerAssignCoaches from "./Components/TeamManager/TeamManagerAssignCoaches/TeamManagerAssignCoaches.jsx"
+import EventList from "./Components/TeamManager/EventList/EventList.jsx"
 import { useState } from "react";
 
 function App() {
@@ -562,7 +564,36 @@ function App() {
         
         >
         </Route>
+
+     
       </Routes>
+
+
+      <Routes>
+          <Route
+          path="/AssignCoaches"
+          element={
+            <ProtectedRoute>
+               <TeamManagerAssignCoaches/>
+            </ProtectedRoute>
+          }
+          >
+
+          </Route>
+        </Routes>
+
+        <Routes>
+          <Route
+          path="/EventView"
+          element={
+            <ProtectedRoute>
+              <EventList/>
+            </ProtectedRoute>
+          }
+          >
+
+          </Route>
+        </Routes>
 
       {/* <Routes>
         <Route

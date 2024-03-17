@@ -30,7 +30,8 @@ const getPlayerReviewRoute = require("./routes/CoachReviewRoute/getCurrentPlayer
 
 const searchLocationRoute = require("./routes/PlayerAvailabilityRoute/SerachLocationRoute")
 const eventOrganizerBracketRoute = require("./routes/EventOrganizerBracketRoute/EventOrganizerBracketRoute")
-
+const CoachesAssignDeleteRoute = require('./routes/CoachesAssignDeleteRoute/CoachesAssignDeleteRoute')
+const eventViewRoute = require("./routes/EventViewRoute/EventView")
 require("./db/mongoDb"); 
 
 const app = express();
@@ -93,7 +94,9 @@ app.use("/api/v1/search",searchLocationRoute);
 // Event Organizer Bracekt
 app.use("/api/v1/eventOrganizerBracket",eventOrganizerBracketRoute)
 
-
+//coaches assign and delete
+app.use("/api/v1/coaches-assign-delete",CoachesAssignDeleteRoute)
+app.use("/api/v1/eventView",eventViewRoute)
 // //jwt
 // app.post('/user/login', async (req, res) => {
 //     const { username, password } = req.body;
