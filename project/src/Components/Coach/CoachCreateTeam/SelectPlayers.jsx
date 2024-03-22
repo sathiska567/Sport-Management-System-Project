@@ -93,7 +93,7 @@ const SelectPlayers = () => {
                         <tbody>
                             {players.map((player, index) => (
                                 !(player.Status === 'available') && (<tr style={{fontWeight:'bold'}} key={index}>
-                                    <td style={{ textAlign: 'center' }} >{player.PlayerNo}</td>
+                                    <td style={{ textAlign: 'center' }} >{player.playerId}</td>
                                     <td style={{ textAlign: 'center' }}>{player.playerName}</td>
                                     <td style={{ textAlign: 'center' }}>{player.District}</td>
                                     <td style={{ textAlign: 'center' }}>

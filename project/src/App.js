@@ -26,8 +26,8 @@ import EditEventForm from "./Components/EventOrganizer/EOEditEvent/EOEditEventFo
 import EOProfile from "./Components/EventOrganizer/EOProfile/EOProfile.jsx";
 import CoachAvailability from "./Components/Coach/CoachAvailability/CoachAvailability.jsx";
 import CoachStats from "./Components/Coach/CoachStats/CoachStats.jsx";
-import CoachCreateTeam from "./Components/Coach/CoachCreateTeam/CreateTeam.jsx";
-import CoachEditTeam from "./Components/Coach/CoachEditTeam/EditTeam.jsx";
+//import CoachCreateTeam from "./Components/Coach/CoachCreateTeam/CreateTeam.jsx";
+//import CoachEditTeam from "./Components/Coach/CoachEditTeam/EditTeam.jsx";
 import CoachReviewPlayers from "./Components/Coach/CoachReviewPlayers/CoachReviewPlayers.jsx";
 import CoachProfile from "./Components/Coach/CoachProfile/CoachProfile.jsx";
 import EOViewFixture from "./Components/EventOrganizer/EOViewFixture/EOViewFixture.jsx";
@@ -51,6 +51,14 @@ import TeamManagerAssignMembersPlayer from "./Components/TeamManager/TeamManager
 import TeamManagerProfile from "./Components/TeamManager/TeamManagerProfile/TeamManagerProfile.jsx";
 import TeamManagerAssign from "./Components/TeamManager/TeamManagerAssign/TeamManagerAssign.jsx";
 import AssignTab from "./Components/assignTab/AssignTab.jsx";
+
+import TournamentBracket from "./Components/EventOrganizer/EOBracket/Bracket.jsx";
+import CoachCreateTeam from "./Components/Coach/CoachCreateTeam/CreateTeam.jsx";
+import SelectPlayers from "./Components/Coach/CoachCreateTeam/SelectPlayers.jsx"
+import CoachEditTeam from "./Components/Coach/CoachEditTeam/EditTeam.jsx";
+import UpdateTeam from "./Components/Coach/CoachEditTeam/UpdateTeam.jsx"
+
+
 function App() {
   const isLoggedIn = window.localStorage.getItem("isLoggedIn");
   console.log(isLoggedIn, "login");
@@ -302,26 +310,7 @@ function App() {
         />
       </Routes>
 
-      <Routes>
-        <Route
-          path="/create-team"
-          element={
-            <ProtectedRoute>
-              <CoachCreateTeam />
-            </ProtectedRoute>
-          }
-        />
-      </Routes>
-      <Routes>
-        <Route
-          path="/edit-team"
-          element={
-            <ProtectedRoute>
-              <CoachEditTeam />
-            </ProtectedRoute>
-          }
-        />
-      </Routes>
+   
       <Routes>
         <Route
           path="/coach-review-players"
@@ -559,6 +548,17 @@ function App() {
 
         </Route>
       </Routes>
+
+
+      <Routes>
+        <Route path="/brackets" element={<ProtectedRoute><TournamentBracket /></ProtectedRoute>} />
+        <Route path="/create-team" element={<ProtectedRoute><CoachCreateTeam /></ProtectedRoute>} />
+        <Route path="/select-players" element={<ProtectedRoute><SelectPlayers /></ProtectedRoute>} />
+        {/* <Route path="/create-match" element={<CreateMatch />} /> */}
+        <Route path="/edit-team" element={<ProtectedRoute><CoachEditTeam /></ProtectedRoute>} />
+        <Route path="/update-team" element={<ProtectedRoute><UpdateTeam /></ProtectedRoute>} />
+      </Routes>
+
     </BrowserRouter>
 
     // <div className="App">
