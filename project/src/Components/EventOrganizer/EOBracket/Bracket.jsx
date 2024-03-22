@@ -102,10 +102,10 @@ const TournamentBracket = () => {
 
   return (
     <EOSizeBar>
-      <div style={{ margin: 10, padding: 10, height: '100%', overflow: 'scroll' }}>
-        <div style={{ backgroundColor: 'yellow', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
-          <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <select onChange={handleSelectMatch} value={selectedMatchId}>
+      <div style={{ margin: 10, padding: 10, height: 'auto', overflow: 'scroll' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }} className='card bg-light'>
+          <div style={{ display: 'flex', flexDirection: 'column' }} className='card-body'>
+            <select className='form-select form-select-lg mb-3 ' onChange={handleSelectMatch} value={selectedMatchId}>
               <option value="default">Select a match</option> {/* Default option */}
               {matches.map(match => (
                 <option key={match.matchNo} value={match.matchNo}>
@@ -113,24 +113,24 @@ const TournamentBracket = () => {
                 </option>
               ))}
             </select>
-            <p>Selected Match No: {selectedMatchId}</p>
+            {/*<p className='card-title'>Selected Match : {selectedMatchId}</p>*/}
           </div>
 
           {(!finalWinner) && (
             <div style={{ display: 'flex', flexDirection: 'column' }}>
 
 
-              <button onClick={pairsGet}>get pairs</button>
+              <button onClick={pairsGet}  className='btn btn-success '>get pairs</button>
               {/* Section for selecting winners */}
               {pairs && (
-                <div>
+                <div style={{display:'flex' }} className='gap-2'>
                   {pairs.map((pair, pairIndex) => (
-                    <div key={pairIndex}>
-                      <ul>
+                    <div key={pairIndex} className='card p-3 m-2' >
+                      <ul style={{margin:0, padding:0}}>
                         {pair.map((team, teamIndex) => (
-                          <li key={teamIndex}>
-                            {team.teamName}
-                            <input
+                          <li key={teamIndex} className='form-check'>
+                            <label className='form-check-label'>{team.teamName}</label>
+                            <input  className='form-check-input'
                               type='radio'
                               style={{ width: 20 }}
                               name={`pair${pairIndex}`}
@@ -145,7 +145,7 @@ const TournamentBracket = () => {
               )}
 
               {/* Button to move to the next round */}
-              {pairs && (<button onClick={handleNextRound}>Next Round</button>)}
+              {pairs && (<button onClick={handleNextRound} className='btn btn-dark my-3'>Next Round</button>)}
             </div>
           )}
 
@@ -156,20 +156,20 @@ const TournamentBracket = () => {
 
         {/*view winners*/}
 
-        <div style={{ backgroundColor: 'greenyellow', marginTop: 30, width: '100%', height: '100%', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ marginTop: 30, width: 'auto', height: 'auto', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }} className='card'>
 
 
-          <button style={{}} onClick={handleViewWinners} >View winners</button>
+          <button className='btn btn-dark my-3' onClick={handleViewWinners} >View winners</button>
           {(
             <div style={{ display: 'flex' }}>
               {rounds.map(round => round.winners && (
-                <div key={round.roundNumber} style={{ border: '1px solid black', margin: 5, padding: 5 }}>
-                  Round No : {round.roundNumber} {/* &nbsp; =&gt; Winners : {round.winners.join(', ')} */}
+                <div className='card bg-info' key={round.roundNumber} style={{ border: '1px solid black', margin: 5, padding: 5 }}>
+                  <h5>Round No : {round.roundNumber}</h5>{/* &nbsp; =&gt; Winners : {round.winners.join(', ')} */}
 
                   <div>
                     {round.pairs.map((pair, pairIndex) => (
                       <div key={pairIndex}>
-                        <ul style={{ backgroundColor: 'red', listStyleType: 'none', marginLeft: 0, paddingLeft: 0 }}>
+                        <ul className='card bg-dark text-light' style={{ backgroundColor: 'red', listStyleType: 'none', marginLeft: 0, paddingLeft: 0 }}>
                           {pair.map((team, teamIndex) => {
                             const tName = teams.find(t => t._id === team).teamName
                             return (
@@ -177,7 +177,7 @@ const TournamentBracket = () => {
                                 {tName}
                                 <input
                                   type='radio'
-                                  style={{ width: 20, }}
+                                  style={{ width: 20, }}  className='form-check-input'
 
                                   checked={round.winners.some(winner => winner._id === team)}
                                 />

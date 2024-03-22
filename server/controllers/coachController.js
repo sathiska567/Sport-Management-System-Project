@@ -2,10 +2,10 @@ const mongoose = require('mongoose');
 
 //const { Coach } = require('../models/coachModel');
 const Coach = require('../models/CoachProfileModel/CoachProfileModel')
-//const { Match } = require('../models/matchModel')
-const Match = require('../models/CreateEventModel/createEventModel')
-//const Player  = require('../models/playerModel')
-const Player = require('../models/PlayerProfileModel/PlayerProfileModel')
+const { Match } = require('../models/matchModel')
+//const Match = require('../models/CreateEventModel/createEventModel')
+const Player  = require('../models/playerAatheek')
+//const Player = require('../models/PlayerProfileModel/PlayerProfileModel')
 const { Team } = require('../models/teamModel')
 
 
@@ -109,19 +109,20 @@ const createTeam = async (req, res) => {
             console.log('\n\nUpdated player: \n', updatedPlayer)
         }
 
-        //Match update
-        const match = await Match.findById(savedTeam.match_id)
-        match.teams.push(savedTeam._id)
-        match.coaches.push(savedTeam.coach_id)
-        const updatedMatch = await match.save();
-        console.log('\n\nUpdated match :\n', updatedMatch)
-
         //Coach update
         const coach = await Coach.findById(savedTeam.coach_id)
         coach.teams.push(savedTeam._id)
         const updatedCoach = await coach.save();
         console.log('\n\nUpdated coach :\n', updatedCoach)
         */
+
+        //Match update
+        const match = await Match.findById(savedTeam.match_id)
+        match.teams.push(savedTeam._id)
+        match.coaches.push(savedTeam.coach_id)
+        const updatedMatch = await match.save();
+        console.log('\n\nUpdated match :\n', updatedMatch)
+        
 
         res.status(200).json({ success: true, team: savedTeam })
 

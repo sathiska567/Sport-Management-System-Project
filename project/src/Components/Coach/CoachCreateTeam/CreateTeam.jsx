@@ -27,8 +27,8 @@ const CreateTeam = () => {
 
     return (
         <CoachSidebar>
-            <div style={{ margin: 10, padding: 10, height: '100%', overflow: 'scroll' }}>
-                <div style={{ margin: 20, padding: 20, textAlign: 'center', fontWeight: 'bolder'}}>Create Team</div>
+            <div style={{ margin: 10, padding: 10, height: 'auto', overflow: 'scroll' }}>
+                <div className='m-2' style={{ textAlign: 'center', fontWeight: 'bolder'}}>Create Team</div>
                 <div style={{ margin: 10, padding: 10, }}>
                     <table style={{ border: 'solid 1px grey', width: '100%', borderCollapse:'collapse' }}>
                         <thead>
@@ -40,7 +40,7 @@ const CreateTeam = () => {
                             {matches.map((match, index) => (
                                 <tr style={{fontWeight:'bold'}} key={index}>
                                     <td style={{ textAlign: 'center' }} >{match.matchNo}</td>
-                                    <td style={{ textAlign: 'center' }}>{match.nameOfTheEvent}</td>
+                                    <td style={{ textAlign: 'center' }}>{match.name } {/*nameOfTheEvent*/}</td> 
                                     <td style={{ textAlign: 'center' }}>{match.location}</td>
                                     {/* Render other properties of the match object */}
                                     <td style={{ textAlign: 'center' }}><button className='btn btn-success' onClick={() => handleCreate(match._id)}>Create</button></td>
