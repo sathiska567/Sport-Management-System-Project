@@ -91,7 +91,7 @@ const handleDateChange = (date, dateString) => {
   return (
     <SideBar>
       <Layout className="ant-layout-sider-children">
-        {/* Main content layout */}
+         {/* Main content layout */}
         <Layout>
           {/* Content section with statistics */}
           <Content
@@ -187,6 +187,7 @@ const handleDateChange = (date, dateString) => {
                             marginBottom: "auto",
                             width: "80px",
                           }}
+                          
                         >
                           View
                         </Button>

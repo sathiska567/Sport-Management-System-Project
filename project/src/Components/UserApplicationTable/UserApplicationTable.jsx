@@ -63,6 +63,27 @@ const handleDelete = async (record) => {
     }
   };
 
+const handleRemove = async (record) => {
+    console.log(record.Email);
+
+    try {
+      const deletedUser = await axios.delete(
+        "http://localhost:8080/api/v1/admin/remove-details",
+        {
+          data: { deletedUserId: record._id , email:record.Email},
+        }
+      );
+
+      if (deletedUser.data.success) {
+        message.success(deletedUser.data.message);
+        window.location.reload();
+        navigate("/UserValidation");
+      }
+    } catch (error) {
+      message.error("Error while occuring handle delete section");
+    }
+  };
+
   useEffect(() => {
     ApplyingUser();
   }, []);
@@ -206,7 +227,24 @@ const handleDelete = async (record) => {
                             Update
                           </Button>
                         )}
-
+                      
+                      {record.status == "pending" ? (
+                        <Button
+                        type="primary"
+                        style={{
+                          backgroundColor: "#D94D34",
+                          color: "#fff",
+                          fontSize: "14px",
+                          borderRadius: "5px",
+                          marginTop: "auto",
+                          marginBottom: "auto",
+                          width: "80px",
+                        }}
+                        onClick={() => handleDelete(record)}
+                      >
+                        Delete
+                      </Button>
+                      ):(
                         <Button
                           type="primary"
                           style={{
@@ -216,12 +254,14 @@ const handleDelete = async (record) => {
                             borderRadius: "5px",
                             marginTop: "auto",
                             marginBottom: "auto",
-                            width: "70px",
+                            width: "80px",
                           }}
-                          onClick={() => handleDelete(record)}
+                          onClick={() => handleRemove(record)}
                         >
-                          Delete
+                          Remove
                         </Button>
+                      )}
+                        
                       </span>
                     ),
                   },
