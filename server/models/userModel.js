@@ -3,77 +3,75 @@
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
-  username: { 
-    type: String, 
-    required: true 
+  username: {
+    type: String,
+    required: true
   },
-  email: { 
-    type: String, 
-    required: true, 
-    unique: true 
-  },
-
-  password: { 
-    type: String, 
-    required: true 
+  email: {
+    type: String,
+    required: true,
+    unique: true
   },
 
-  isAdmin : {
-    type : Boolean,
-    default : false
- }, 
- 
- isEventOrganizer:{
-  type:Boolean,
-  default:false
-},
+  password: {
+    type: String,
+    required: true
+  },
 
-isCoach:{
-  type:Boolean,
-  default:false
-},
+  isAdmin: {
+    type: Boolean,
+    default: false
+  },
 
-isPlayer:{
-  type:Boolean,
-  default:false
-},
+  isEventOrganizer: {
+    type: Boolean,
+    default: false
+  },
 
-isReferee:{
-  type:Boolean,
-  default:false
-},
+  isCoach: {
+    type: Boolean,
+    default: false
+  },
 
-isTeamManager:{
-  type:Boolean,
-  default:false
-},
- 
-notification : {
-  type : Array,
-  default : []
-},
+  isPlayer: {
+    type: Boolean,
+    default: false
+  },
 
-seennotification : {
-  type : Array,
-  default : []
-},
+  isReferee: {
+    type: Boolean,
+    default: false
+  },
 
-messages : {
-  type : Array,
-  default : []
-},
+  isTeamManager: {
+    type: Boolean,
+    default: false
+  },
 
-otp: { 
-  type: Number, 
-  required: false
+  notification: {
+    type: Array,
+    default: []
+  },
 
-},
+  seennotification: {
+    type: Array,
+    default: []
+  },
 
-availability:{
-  type:Boolean
-}
+  messages: {
+    type: Array,
+    default: []
+  },
 
+  otp: {
+    type: Number,
+    required: false
 
+  },
+
+  availability: {
+    type: Boolean
+  }
 
 });
 
