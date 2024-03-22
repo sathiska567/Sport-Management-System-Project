@@ -33,6 +33,12 @@ const eventOrganizerBracketRoute = require("./routes/EventOrganizerBracketRoute/
 
 const TeamMemberAssign = require("./routes/TeamMemberAssign/TeamMemberAssign")
 const AssignEventCoaches = require("./routes/AssignEventCoaches/AssignEventCoaches")
+
+
+const organizerRoutes = require("./routes/organizerRoutes")
+const coachRoutes = require("./routes/coachRoutes")
+
+
 require("./db/mongoDb"); 
 
 const app = express();
@@ -101,6 +107,15 @@ app.use("/api/v1/eventOrganizerBracket",eventOrganizerBracketRoute)
 app.use("/api/v1/assign-event-coaches",AssignEventCoaches)
 
 app.use("/api/v1/assign", TeamMemberAssign)
+
+
+
+
+
+app.use("/api/v1/organizer", organizerRoutes)
+app.use("/api/v1/coach", coachRoutes)
+
+
 // //jwt
 // app.post('/user/login', async (req, res) => {
 //     const { username, password } = req.body;

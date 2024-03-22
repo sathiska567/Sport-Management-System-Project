@@ -211,16 +211,16 @@ const currentUserData = async () => {
                   <span className="nav-text">My Availability</span>
                 </NavLink>
               </Menu.Item>
-              {/* <Menu.Item key="/coach-create-team" icon={<EditOutlined />}>
-                <NavLink to="/coach-create-team">
+               <Menu.Item key="/create-team" icon={<EditOutlined />}>
+                <NavLink to="/create-team">
                   <span className="nav-text">Create Team</span>
                 </NavLink>
               </Menu.Item>
-              <Menu.Item key="/coach-edit-team" icon={<FormOutlined />}>
-                <NavLink to="/coach-edit-team">
+              <Menu.Item key="/edit-team" icon={<FormOutlined />}>
+                <NavLink to="/edit-team">
                   <span className="nav-text">Edit Team</span>
                 </NavLink>
-              </Menu.Item> */}
+              </Menu.Item>
               <Menu.Item
                 key="/coach-review-players"
                 icon={<CalendarOutlined />}

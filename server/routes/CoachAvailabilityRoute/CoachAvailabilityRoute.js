@@ -1,5 +1,5 @@
 const express = require("express")
-const { coachAvailabilityController } = require("../../controllers/coachAvailabilityController/coachAvailabilityController")
+const { coachAvailabilityController } = require("../../controllers/CoachAvailabilityController/coachAvailabilityController")
 
 const router = express.Router()
 
