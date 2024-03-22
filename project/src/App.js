@@ -26,8 +26,8 @@ import EditEventForm from "./Components/EventOrganizer/EOEditEvent/EOEditEventFo
 import EOProfile from "./Components/EventOrganizer/EOProfile/EOProfile.jsx";
 import CoachAvailability from "./Components/Coach/CoachAvailability/CoachAvailability.jsx";
 import CoachStats from "./Components/Coach/CoachStats/CoachStats.jsx";
-import CoachCreateTeam from "./Components/Coach/CoachCreateTeam/CoachCreateTeam.jsx";
-import CoachEditTeam from "./Components/Coach/CoachEditTeam/CoachEditTeam.jsx";
+import CoachCreateTeam from "./Components/Coach/CoachCreateTeam/CreateTeam.jsx";
+import CoachEditTeam from "./Components/Coach/CoachEditTeam/EditTeam.jsx";
 import CoachReviewPlayers from "./Components/Coach/CoachReviewPlayers/CoachReviewPlayers.jsx";
 import CoachProfile from "./Components/Coach/CoachProfile/CoachProfile.jsx";
 import EOViewFixture from "./Components/EventOrganizer/EOViewFixture/EOViewFixture.jsx";
@@ -304,7 +304,7 @@ function App() {
 
       <Routes>
         <Route
-          path="/coach-create-team"
+          path="/create-team"
           element={
             <ProtectedRoute>
               <CoachCreateTeam />
@@ -314,7 +314,7 @@ function App() {
       </Routes>
       <Routes>
         <Route
-          path="/coach-edit-team"
+          path="/edit-team"
           element={
             <ProtectedRoute>
               <CoachEditTeam />
