@@ -21,9 +21,13 @@ import ManageUser from "../icons/ManageUser.jsx";
 import PendingActions from "../icons/PendingActions.jsx";
 import axios from "axios";
 import { adminMenu, userMenu } from "../../Data/Data.js";
+import io from "socket.io-client";
+
 
 // Destructuring components from Ant Design's Layout
 const { Header, Sider } = Layout;
+
+const socket = io.connect("http://localhost:8080");
 
 // Navbar component
 const SideBar = ({ children }) => {
@@ -42,7 +46,25 @@ const SideBar = ({ children }) => {
   const [isPlayer, setIsPlayer] = useState("")
   const [isReferee, setIsReferee] = useState("")
   const [isTeamManager, setIsTeamManager] = useState("")
+
+  const [messages, setMessages] = useState([]);
+
+
   const navigate = useNavigate()
+
+
+    useEffect(() => {
+    socket.on("receive_message", (data) => {
+      console.log("Received message: ", data);
+      // Update the messages state with the received message
+      setMessages((prevMessages) => [...prevMessages, data]);
+    });
+
+    return () => {
+      // Clean up event listeners when component unmounts
+      socket.off("receive_message");
+    };
+  }, []);
 
   // Event handlers for mouse hover events
   const handleHoverButton1 = () => {
@@ -160,6 +182,8 @@ const SideBar = ({ children }) => {
     }
   }
 
+
+
   // get admin or not status
   const sideBarMenu = isAdmin ? adminMenu : userMenu;
 
@@ -272,7 +296,7 @@ const SideBar = ({ children }) => {
                   <a href="/UserValidation">
                     <Space size={24}>
                       {/* Notification badge */}
-                      <Badge count={positionNotification}>
+                      <Badge count={messages.length || positionNotification}>
                         <Avatar
                           shape="square"
                           icon={
