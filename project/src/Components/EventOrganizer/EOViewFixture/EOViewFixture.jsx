@@ -90,13 +90,25 @@ const EOViewFixture = () => {
   }, []);
 
   // Filter userApplicationData based on userRole and Userlocation
-const handleEventLocationSearch = (value) => {
-  console.log("Event Location Searched: ", value);
-};
+  const handleEventLocationSearch = (value) => {
+    console.log("Event Location Searched: ", value);
+  };
 
-const handleDateChange = (date, dateString) => {
-  console.log("Date Selected: ", dateString);
-};
+  const handleDateChange = (date, dateString) => {
+    console.log("Date Selected: ", dateString);
+  };
+
+  const handleCreateBracket = async(id)=>{
+     console.log(id);
+
+     try {
+      navigate("/eo-bracket", {
+        state: { bracketDataId: id },
+      });
+     } catch (error) {
+       message.success("Error deleting fixture data");
+     }
+  }
 
 
 
@@ -220,6 +232,21 @@ const handleDateChange = (date, dateString) => {
                       <Button
                         type="primary"
                         style={{
+                          color: "#fff",
+                          fontSize: "14px",
+                          borderRadius: "5px",
+                          marginTop: "auto",
+                          marginBottom: "auto",
+                          width: "80px",
+                        }}
+                        onClick={() => handleCreateBracket(record._id)}
+                      >
+                        Bracket
+                      </Button>
+
+                      <Button
+                        type="primary"
+                        style={{
                           backgroundColor: "#f5222d",
                           color: "#fff",
                           fontSize: "14px",
@@ -232,6 +259,8 @@ const handleDateChange = (date, dateString) => {
                       >
                         Delete
                       </Button>
+
+
                     </span>
                   ),
                 },

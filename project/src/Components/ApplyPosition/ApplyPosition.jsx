@@ -14,6 +14,11 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./ApplyPosition.css";
 import { UserAddOutlined } from "@ant-design/icons";
+import io from "socket.io-client";
+
+const socket = io.connect("http://localhost:8080");
+
+console.log(socket);
 
 // For Text Area
 const { TextArea } = Input;
@@ -141,7 +146,17 @@ const ApplyPosition = () => {
 
   // handle position registration
   const handleSubmit = async (values) => {
+
+    const messageData = {
+      message: "Apply Position", // Assuming the message is the username entered in the form
+    };
+
+    console.log(messageData);
+
+    socket.emit("send_message", messageData);
+
     console.log(FirstName,LastName,newEmail,userRole[0],experience,district[0],newAge);
+
     try {
       const res = await axios.post(
         "http://localhost:8080/api/v1/user/apply-position",

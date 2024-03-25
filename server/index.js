@@ -3,6 +3,10 @@ require("dotenv").config(); // Load environment variables
 const express = require("express");
 const cors = require("cors");
 
+const http = require("http");
+const { Server } = require("socket.io");
+
+
 const userRoutes = require("./routes/userRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 const forgottenPasswordRoute = require("./routes/ForgottenPasswordRoute");
@@ -32,12 +36,41 @@ const searchLocationRoute = require("./routes/PlayerAvailabilityRoute/SerachLoca
 const eventOrganizerBracketRoute = require("./routes/EventOrganizerBracketRoute/EventOrganizerBracketRoute")
 const CoachesAssignDeleteRoute = require('./routes/CoachesAssignDeleteRoute/CoachesAssignDeleteRoute')
 const eventViewRoute = require("./routes/EventViewRoute/EventView")
+
 require("./db/mongoDb"); 
 
 const app = express();
 
 app.use(express.json()); // middlewares
 app.use(cors());
+
+
+const server = http.createServer(app);
+
+const io = new Server(server, {
+  cors: {
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST"],
+  },
+});
+
+io.on("connection", (socket) => {
+    console.log("User connected ", socket.id);
+
+   socket.on("send_message",(data)=>{
+       console.log("Message Received ",data);
+
+       io.emit("receive_message",data);
+   })
+
+
+   socket.on("disconnect", () => {
+       console.log("User disconnected ", socket.id);
+   })
+
+
+});
+
 
 // COMMON ROUTE HANDLE
 app.use("/api/v1/user", userRoutes);
@@ -165,6 +198,6 @@ app.use("/api/v1/eventView",eventViewRoute)
 
 const PORT = process.env.PORT || 3000; // Define a default port if PORT is not set in .env
 
-app.listen(PORT, () => {
-    console.log("Server is running on port " + PORT);
+server.listen(PORT, () => {
+  console.log("Server is running on port " + PORT);
 });
