@@ -16,6 +16,7 @@ import "./ApplyPosition.css";
 import { UserAddOutlined } from "@ant-design/icons";
 import io from "socket.io-client";
 
+// backend port
 const socket = io.connect("http://localhost:8080");
 
 console.log(socket);
@@ -46,6 +47,9 @@ const ApplyPosition = () => {
     const fetchUserRoles = async () => {
       try {
         const response = await fetch("/userRoles.json");
+        // const response = await axios.get("/userRoles.json")
+        
+        console.log(response);
         const data = await response.json();
         setUserRoles(data);
       } catch (error) {
@@ -86,6 +90,7 @@ const ApplyPosition = () => {
     setDistric(selectedOptions[0].value)
   };
 
+// The some() method is used to check if at least one element in the array satisfies the provided testing function. Here, it iterates over each element in the path array.
   const userRoleFilter = (inputValue, path) =>
     path.some(
       (option) =>
