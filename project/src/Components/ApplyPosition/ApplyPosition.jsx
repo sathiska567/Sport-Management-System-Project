@@ -70,21 +70,48 @@ const ApplyPosition = () => {
     fetchDistricts();
   }, []);
 
+  // User Role Validation
   const onUserRoleChange = (value, selectedOptions) => {
     setUserRoleError(!value || value.length === 0);
-    setUserRole(value)
-    setDistrictError(false); 
-    console.log(value, selectedOptions[0].value);
-    // setUserRole(selectedOptions[0].value)
+    setUserRole(value);
+    setDistrictError(false);
+    if (selectedOptions && selectedOptions[0]) {
+      console.log(value, selectedOptions[0].value);
+    } else {
+      console.log(value, "No options selected");
+    }
   };
 
+  // District Validation
   const onDistrictChange = (value, selectedOptions) => {
     setUserRoleError(false);
     setDistrict(value);
-    setDistrictError(!value || value.length === 0); 
+    setDistrictError(!value || value.length === 0);
     console.log(value, selectedOptions);
-    setDistric(selectedOptions[0].value)
+    if (selectedOptions && selectedOptions[0]) {
+      setDistric(selectedOptions[0].value);
+    } else {
+      setDistric(null);
+      console.log(value, "No options selected");
+    }
   };
+
+  // Age Validation
+  const handleAgeChange = (value) => {
+    setNewAge(value);
+    if (value === undefined || value === null) {
+      setAgeError(true);
+    } else {
+      setAgeError(false);
+    }
+  };
+
+  //Experience Validation
+const handleExperienceChange = (e) => {
+  const value = e.target.value;
+  setExperience(value);
+  setExperienceError(value ? value.trim() === "" : true);
+};
 
   const userRoleFilter = (inputValue, path) =>
     path.some(
@@ -98,25 +125,8 @@ const ApplyPosition = () => {
         option.label.toLowerCase().indexOf(inputValue.toLowerCase()) > -1
     );
 
-  // Age Validation
-  const handleAgeChange = (value) => {
-    setNewAge(value);
-    if (value === undefined || value === null) {
-      setAgeError(true); // Show error if the age is empty
-    } else {
-      setAgeError(false); // Hide error if age is not empty
-    }
-  };
-
   const onFormLayoutChange = ({ size }) => {
     setComponentSize(size);
-  };
-
-  //Experience Validation
-  const handleExperienceChange = (e) => {
-    const value = e.target.value;
-    setExperience(value);
-    setExperienceError(value.trim() === ""); // Check if value is empty after trimming whitespace
   };
 
   //   // GET CURRENT USER DATA
@@ -147,15 +157,34 @@ const ApplyPosition = () => {
   // handle position registration
   const handleSubmit = async (values) => {
 
+    if (
+      FirstName === "" ||
+      LastName === "" ||
+      !newEmail ||
+      !newAge ||
+      userRoleError ||
+      districtError ||
+      experience.trim() === ""
+    ) {
+      alert("Please fill all the fields correctly!");
+    } else {
+
     const messageData = {
-      message: "Apply Position", // Assuming the message is the username entered in the form
+      message: "Apply Position",
     };
 
     console.log(messageData);
-
     socket.emit("send_message", messageData);
 
-    console.log(FirstName,LastName,newEmail,userRole[0],experience,district[0],newAge);
+    console.log(
+      FirstName,
+      LastName,
+      newEmail,
+      userRole ? userRole[0] : null,
+      experience,
+      district ? district[0] : null,
+      newAge
+    );
 
     try {
       const res = await axios.post(
@@ -166,9 +195,9 @@ const ApplyPosition = () => {
           LastName: LastName,
           Email: newEmail,
           Age: newAge,
-          UserRole: userRole[0],
+          UserRole: userRole ? userRole[0] : null,
           Experience: experience,
-          Distric: district[0],
+          Distric: district ? district[0] : null,
         }
       );
 
@@ -176,6 +205,7 @@ const ApplyPosition = () => {
       navigate("/dashboad");
     } catch (error) {
       message.error(error);
+    }
     }
   };
 
@@ -219,7 +249,7 @@ const ApplyPosition = () => {
                 name="FirstName"
                 className="formInput"
                 onChange={(e) => setFirstName(e.target.value)}
-                required // Add required attribute
+                required 
               />
               {FirstName === "" && (
                 <span style={{ color: "red", fontSize: "13px" }}>
@@ -233,7 +263,7 @@ const ApplyPosition = () => {
                 name="LastName"
                 className="formInput"
                 onChange={(e) => setLastName(e.target.value)}
-                required // Add required attribute
+                required 
               />
               {LastName === "" && (
                 <span style={{ color: "red", fontSize: "13px" }}>
