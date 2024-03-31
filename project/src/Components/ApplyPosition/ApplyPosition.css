@@ -211,7 +211,7 @@ body {
       }
       
       
-      .UserApplicationFormHeader {
+      /* .UserApplicationFormHeader {
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -219,13 +219,13 @@ body {
         margin: 0;
         padding: 10px;
       }
-      
-      .UserApplicationFormHeader h3 {
+       */
+      /* .UserApplicationFormHeader h3 {
         color: #e0f7ff;
         margin: 0;
-        flex: 1; /* Take up remaining space, centering the h3 */
+        flex: 1;      // Take up remaining space, centering the h3
         text-align: center;
-      }
+      } */
       
       .UserApplicationFormApplication {
         max-height: 500px; 
@@ -238,11 +238,11 @@ body {
       }
       
       /* Style for Submit button */
-      
+/*       
       .UserApplicationCloseBtn {
       position : relative;
         font-size: 22px;
         color: #e0f7ff;
         cursor: pointer;
-      }
+      } */
       

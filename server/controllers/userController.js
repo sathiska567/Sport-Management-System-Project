@@ -174,6 +174,7 @@ const applyPositionController = async (req, res) => {
 
                 // handle notification
             const adminUser = await User.findOne({ isAdmin: true });
+
             const notification = adminUser.notification;
     
             notification.push({
@@ -185,7 +186,7 @@ const applyPositionController = async (req, res) => {
                     //  onClickPath: "/admin/docotrs",
                 },
             });
-            adminUser.save();
+           await adminUser.save();
     
             res.status(200).send({
                 message: "Player position apply successful",

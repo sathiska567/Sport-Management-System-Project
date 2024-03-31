@@ -42,6 +42,8 @@ const ShuffleData = () => {
     // window.location.reload();
 
     while (i < teamDetails.length) {
+
+      // math.random() generate [0,1] range. not equal to 1
       const randomIndex = Math.floor(Math.random() * teamDetails.length)
       // console.log(randomIndex);
 
@@ -55,8 +57,6 @@ const ShuffleData = () => {
 
   console.log("shuffle array is : " , shuffledArray);
   setShuffledNewArray(shuffledArray)
-
-
   }
 
   const shuffleDataStore = async () => {

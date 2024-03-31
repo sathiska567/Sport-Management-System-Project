@@ -77,13 +77,13 @@ const ApplyPosition = () => {
   const onUserRoleChange = (value, selectedOptions) => {
     setUserRoleError(!value || value.length === 0);
     setUserRole(value)
-    setDistrictError(false); 
+    // setDistrictError(false); 
     console.log(value, selectedOptions[0].value);
     // setUserRole(selectedOptions[0].value)
   };
 
   const onDistrictChange = (value, selectedOptions) => {
-    setUserRoleError(false);
+    // setUserRoleError(false);
     setDistrict(value);
     setDistrictError(!value || value.length === 0); 
     console.log(value, selectedOptions);
@@ -91,17 +91,17 @@ const ApplyPosition = () => {
   };
 
 // The some() method is used to check if at least one element in the array satisfies the provided testing function. Here, it iterates over each element in the path array.
-  const userRoleFilter = (inputValue, path) =>
-    path.some(
-      (option) =>
-        option.label.toLowerCase().indexOf(inputValue.toLowerCase()) > -1
-    );
+  // const userRoleFilter = (inputValue, path) =>
+  //   path.some(
+  //     (option) =>
+  //       option.label.toLowerCase().indexOf(inputValue.toLowerCase()) > -1
+  // //   );
 
-  const districtFilter = (inputValue, path) =>
-    path.some(
-      (option) =>
-        option.label.toLowerCase().indexOf(inputValue.toLowerCase()) > -1
-    );
+  // const districtFilter = (inputValue, path) =>
+  //   path.some(
+  //     (option) =>
+  //       option.label.toLowerCase().indexOf(inputValue.toLowerCase()) > -1
+  //   );
 
   // Age Validation
   const handleAgeChange = (value) => {
@@ -158,8 +158,10 @@ const ApplyPosition = () => {
 
     console.log(messageData);
 
+    // this socket.emit use to the communicate with backend
     socket.emit("send_message", messageData);
 
+   
     console.log(FirstName,LastName,newEmail,userRole[0],experience,district[0],newAge);
 
     try {
@@ -179,6 +181,7 @@ const ApplyPosition = () => {
 
       message.success("Position Applying successfull");
       navigate("/dashboad");
+      
     } catch (error) {
       message.error(error);
     }
@@ -201,6 +204,7 @@ const ApplyPosition = () => {
             <h3
               style={{
                 color: "white",
+                textAlign:"center"
               }}
             >
               Application
@@ -225,6 +229,7 @@ const ApplyPosition = () => {
                 className="formInput"
                 onChange={(e) => setFirstName(e.target.value)}
                 required // Add required attribute
+                // style={{width:"50%"}}
               />
               {FirstName === "" && (
                 <span style={{ color: "red", fontSize: "13px" }}>
@@ -287,7 +292,7 @@ const ApplyPosition = () => {
                     options={userRoles}
                     onChange={onUserRoleChange}
                     placeholder="Select user role"
-                    showSearch={{ filter: userRoleFilter }}
+                    // showSearch={{ filter: userRoleFilter }}
                     onSearch={(value) => console.log(value)}
                     className={userRoleError ? "ant-cascader-error" : ""}
                     required
@@ -308,7 +313,7 @@ const ApplyPosition = () => {
                   options={districts}
                   onChange={onDistrictChange}
                   placeholder="Select district"
-                  showSearch={{ filter: districtFilter }}
+                  // showSearch={{ filter: districtFilter }}
                   onSearch={(value) => console.log(value)}
                   className={districtError ? "ant-cascader-error" : ""}
                   required
