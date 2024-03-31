@@ -61,12 +61,10 @@ import TeamManagerAssignCoaches from "./Components/TeamManager/TeamManagerAssign
 import EventList from "./Components/TeamManager/EventList/EventList.jsx"
 import PlayerMatchDetails from "./Components/PlayerComponents/PlayerMatchDetails/PlayerMatchDetails.jsx"
 import { useState } from "react";
-
+import TeamManagerAssign from "./Components/TeamManager/TeamManagerAssign/TeamManagerAssign.jsx";
+import AssignTab from "./Components/assignTab/AssignTab.jsx";
 function App() {
-  const [ eventId, setEventId]=useState("");
-
   const isLoggedIn = window.localStorage.getItem("isLoggedIn");
-
   console.log(isLoggedIn, "login");
 
   return (
@@ -269,7 +267,7 @@ function App() {
           path="/eo-edit-event"
           element={
             <ProtectedRoute>
-              <EditEvent setId={ setEventId } />
+              <EditEvent />
             </ProtectedRoute>
           }
         />
@@ -547,20 +545,26 @@ function App() {
         ></Route>
       </Routes>
 
+
       <Routes>
-        <Route path="/brackets" element={<TournamentBracket />} />
-        <Route path="/create-team" element={<CreateTeam />} />
-        <Route path="/select-players" element={<SelectPlayers />} />
-        {/* <Route path="/create-match" element={<CreateMatch />} /> */}
-        <Route path="/edit-team" element={<EditTeam />} />
-        <Route path="/update-team" element={<UpdateTeam />} />
+        <Route
+        path="/TeamManagerAssign"
+       element={
+        <ProtectedRoute>
+          <TeamManagerAssign/>
+        </ProtectedRoute>
+       }
+        >
+         
+        </Route>
+
       </Routes>
 
       <Routes>
         <Route
-        path="/EditTabEvent"
+        path="/AssignTab"
         element={
-          <EditTabEvent itemId={eventId}/>
+          <AssignTab/>
         }
         
         >
@@ -618,8 +622,7 @@ function App() {
        }
         >         
         </Route>
-      </Routes> */}
-
+      </Routes>
     </BrowserRouter>
 
     // <div className="App">

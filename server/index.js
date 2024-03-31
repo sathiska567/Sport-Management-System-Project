@@ -34,6 +34,8 @@ const CoachesAssignDeleteRoute = require('./routes/CoachesAssignDeleteRoute/Coac
 const eventViewRoute = require("./routes/EventViewRoute/EventView")
 
 const matchDetailsRoute = require("./routes/MatchDetailsRoute/MatchDetailsRoute")
+const TeamMemberAssign = require("./routes/TeamMemberAssign/TeamMemberAssign")
+const AssignEventCoaches = require("./routes/AssignEventCoaches/AssignEventCoaches")
 require("./db/mongoDb"); 
 
 const app = express();
@@ -102,6 +104,12 @@ app.use("/api/v1/eventView",eventViewRoute)
 
 //view match details
 app.use("/api/v1/matchDetails",matchDetailsRoute)
+
+//AssignCrud
+app.use("/api/v1/assign-event-coaches",AssignEventCoaches)
+
+app.use("/api/v1/assign", TeamMemberAssign)
+
 // //jwt
 // app.post('/user/login', async (req, res) => {
 //     const { username, password } = req.body;
