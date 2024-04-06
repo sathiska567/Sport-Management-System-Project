@@ -1,0 +1,32 @@
+.Stats {
+  margin: auto;
+}
+
+.flex-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1.5fr 1fr 1fr;
+  gap: 25px;
+  height: 100vh;
+  width: 95%;
+  margin-top: 40px;
+}
+
+.dataCard {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  height: 250px;
+}
+
+
+@media (min-width: 768px) {
+  .flex-container {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .revenueCard {
+    grid-column: 1 / span 2;
+  }
+}

@@ -154,7 +154,7 @@ const AdminSideBar = ({ children }) => {
         trigger={null}
         collapsible
         collapsed={collapsed}
-        collapsedWidth={100} // Adjusted collapsed width
+        collapsedWidth={100}
       >
         {/* Profile section */}
         <div style={{ backgroundColor: "#15295E" }} className="profile">
