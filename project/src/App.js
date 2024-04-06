@@ -67,7 +67,6 @@ function App() {
   const [eventId, setEventId] = useState("");
 
   const isLoggedIn = window.localStorage.getItem("isLoggedIn");
-
   console.log(isLoggedIn, "login");
 
   return (
@@ -593,12 +592,13 @@ function App() {
         path="/TeamManagerAssign"
        element={
         <ProtectedRoute>
-          <TeamManagerAssign />
+          <TeamManagerAssign/>
         </ProtectedRoute>
        }
-        >         
+        >
+         
         </Route>
-      </Routes> */}
+         </Routes> */}
 
 
       <Routes>
