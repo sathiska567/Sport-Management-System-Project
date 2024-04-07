@@ -42,8 +42,8 @@ const CoachReviewPlayers = () => {
   const [playerDetails, setPlayerDetails] = useState([]);
   const [playerReview, setPlayerReview] = useState([]);
 
-  console.log(location);
-  const overall = location.state.overallRating
+  // console.log(location);
+  const overall = location.state && location.state.overallRating ? location.state.overallRating : 0;
   // get all palyer details
   const handleGetAllPlayerDetails = async () => {
     try {
