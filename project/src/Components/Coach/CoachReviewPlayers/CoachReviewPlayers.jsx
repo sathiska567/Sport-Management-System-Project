@@ -41,9 +41,10 @@ const CoachReviewPlayers = () => {
   const location = useLocation();
   const [playerDetails, setPlayerDetails] = useState([]);
   const [playerReview, setPlayerReview] = useState([]);
+  const [overallRating, setOverallRating] = useState(0);
 
   // console.log(location);
-  const overall = location.state && location.state.overallRating ? location.state.overallRating : 0;
+  // const overall = location.state && location.state.overallRating ? location.state.overallRating : 0;
   // get all palyer details
   const handleGetAllPlayerDetails = async () => {
     try {
@@ -82,9 +83,27 @@ const CoachReviewPlayers = () => {
     }
   };
 
+  // const individualRatings = async () => {
+  //   try {
+  //     playerReview.map((review) => {
+  //       return console.log(review._id); // Corrected syntax using curly braces for multiline code
+  //     });
+
+
+
+
+  //   } catch (error) {
+  //     message.error("Something went wrong inside the get Review section");
+  //   }
+  // };
+
+
+
+
   useEffect(() => {
     handleGetAllPlayerDetails();
     getReview();
+    // individualRatings()
   }, []);
 
 
@@ -162,8 +181,19 @@ const CoachReviewPlayers = () => {
                   dataIndex: "review",
                   width: "25%",
                   align: "center",
-                  render: () => <Rate disabled defaultValue={overall} />,
+                  render: (text, record) => (
+                    <div>
+                      {playerReview.map((review) => {
+                         if (review.playerId === record._id) {
+                           console.log(review.overallReview);
+                           return <Rate disabled defaultValue={review.overallReview} />
+                         }
+                      })}
+                      
+                    </div>
+                  ),
                 },
+                
 
                 {
                   title: "Actions",
