@@ -41,11 +41,8 @@ const CoachReviewPlayers = () => {
   const location = useLocation();
   const [playerDetails, setPlayerDetails] = useState([]);
   const [playerReview, setPlayerReview] = useState([]);
-  const [overallRating, setOverallRating] = useState(0);
+  let sum = 0 ;
 
-  // console.log(location);
-  // const overall = location.state && location.state.overallRating ? location.state.overallRating : 0;
-  // get all palyer details
   const handleGetAllPlayerDetails = async () => {
     try {
       const response = await axios.get(
@@ -62,10 +59,12 @@ const CoachReviewPlayers = () => {
     }
   };
 
+
   const handleNavigate = async (id) => {
     console.log(id);
     navigate("/coach-review-form", { state: { id: id } });
   };
+
 
   const getReview = async () => {
     try {
@@ -83,19 +82,9 @@ const CoachReviewPlayers = () => {
     }
   };
 
-  // const individualRatings = async () => {
-  //   try {
-  //     playerReview.map((review) => {
-  //       return console.log(review._id); // Corrected syntax using curly braces for multiline code
-  //     });
 
+  // create sorting algorithm to 
 
-
-
-  //   } catch (error) {
-  //     message.error("Something went wrong inside the get Review section");
-  //   }
-  // };
 
 
 
@@ -179,22 +168,30 @@ const CoachReviewPlayers = () => {
                 {
                   title: "Overall Review",
                   dataIndex: "review",
-                  width: "25%",
+                  width: "15%",
                   align: "center",
-                  render: (text, record) => (
-                    <div>
-                      {playerReview.map((review) => {
-                         if (review.playerId === record._id) {
-                           console.log(review.overallReview);
-                           return <Rate disabled defaultValue={review.overallReview} />
-                         }
-                      })}
-                      
-                    </div>
-                  ),
+                  render: (text, record) => {
+                    let sum = 0;
+                    // filter the using id
+                    const relevantReviews = playerReview.filter((review) => review.playerId === record._id);
+
+                    // get relevant record overall review value
+                    relevantReviews.forEach((review) => {
+                      sum = sum + review.overallReview;
+                    });
+
+                    // calculate the overall review average
+                    const averageRating = relevantReviews.length > 0 ? sum / relevantReviews.length : 0;
+
+                    // print data
+                    console.log("Overall Review for", record.username, "is", averageRating);
+
+                    // return the average review
+                    return <Rate disabled defaultValue={averageRating} />;
+                  },
                 },
                 
-
+              
                 {
                   title: "Actions",
                   dataIndex: "Actions",
