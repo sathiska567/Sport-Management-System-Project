@@ -59,7 +59,10 @@ import EditTabEvent from "./Components/EventOrganizer/EditTabEvent/EditTabEvent.
 // import TeamManagerAssign from "./Components/TeamManager/TeamManagerAssign/TeamManagerAssign.jsx";
 import TeamManagerAssignCoaches from "./Components/TeamManager/TeamManagerAssignCoaches/TeamManagerAssignCoaches.jsx"
 import EventList from "./Components/TeamManager/EventList/EventList.jsx"
-import AdminCharts from "./Components/Admin/DashboardCharts/DashboardCharts.jsx";
+
+import SearchPlayerProfile from "./Components/PlayerComponents/SearchPlayerProfile/SearchPlayerProfile.jsx"
+
+import AdminCharts from "./Components/Admin/DashboardCharts/DashboardCharts.jsx"
 import { useState } from "react";
 
 function App() {
@@ -568,9 +571,8 @@ function App() {
 
      
       </Routes>
-
-
-      <Routes>
+      
+       <Routes>
           <Route
           path="/AssignCoaches"
           element={
@@ -601,6 +603,19 @@ function App() {
           element={
             <ProtectedRoute>
               <AdminCharts/>
+            </ProtectedRoute>
+          }
+          >
+
+          </Route>
+        </Routes>
+
+        <Routes>
+          <Route
+          path="/SearchPlayerProfile"
+          element={
+            <ProtectedRoute>
+              <SearchPlayerProfile/>
             </ProtectedRoute>
           }
           >
