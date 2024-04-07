@@ -43,6 +43,7 @@ const CoachReviewPlayers = () => {
   const [playerReview, setPlayerReview] = useState([]);
 
   console.log(location);
+  const overall = location.state.overallRating
   // get all palyer details
   const handleGetAllPlayerDetails = async () => {
     try {
@@ -161,7 +162,7 @@ const CoachReviewPlayers = () => {
                   dataIndex: "review",
                   width: "25%",
                   align: "center",
-                  render: () => <Rate disabled defaultValue={3} />,
+                  render: () => <Rate disabled defaultValue={overall} />,
                 },
 
                 {

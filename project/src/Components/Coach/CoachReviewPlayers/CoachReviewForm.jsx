@@ -75,7 +75,7 @@ const handleReviewSection = async()=>{
 
       if(response.data.success){
         message.success(response.data.message);
-        navigate("/coach-review-players")        
+        navigate("/coach-review-players",{state:{overallRating:overallRating}})        
       }
      
      } catch (error) {
