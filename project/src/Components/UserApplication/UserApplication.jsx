@@ -42,6 +42,7 @@ const UserApplication = () => {
   const [applyingUserEmail,setApplyingUserEmail] = useState("");
   // const location = useLocation();
 
+
 const handleStatus = async (id, status) => {
     try {
       // console.log(id,status);
@@ -50,9 +51,8 @@ const handleStatus = async (id, status) => {
         { id: id, status: status}
       );
 
-      message.success("Your Approval is Successfull");
+      message.success("Your Approval is Successful");
       navigate("/UserValidation", { state: { status: status } });
-
       setGetApproval(res.data.UpdatedUser.status);
 
     } catch (error) {
@@ -68,7 +68,6 @@ const handleStatus = async (id, status) => {
 
     } catch (error) {
       console.log("error found in gettign aproveResponse");
-      
     }
   };
 
