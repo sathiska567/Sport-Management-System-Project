@@ -8,11 +8,18 @@ import { Line, Bar, Doughnut } from "react-chartjs-2";
 import axios from "axios";
 import { Clock } from "@sujitsimon/react-flipclock";
 import Calendar from "react-calendar";
+import { message } from 'antd';
 // Destructuring components from Ant Design's Layout
 const { Content } = Layout;
 
 // Navbar component
 const StatCards = () => {
+  const [allApplyingForm , setAllApplyingForm] = useState([])
+  let count = 0
+  const [pendingArray, setPendingArray] = useState([]);
+  const [ApproveArray, setApprove] = useState([]);
+  // const pendingArray = []
+
   // Formatter function for CountUp component
   const formatter = (value) => <CountUp end={value} separator="," />;
   useEffect(() => {
@@ -27,6 +34,34 @@ const StatCards = () => {
         console.error("Error fetching user data:", error);
       });
   }, []);
+
+
+  const getAllApplyingUser = async () => {
+    try {
+      const response = await axios.get("http://localhost:8080/api/v1/admin/get-all-details");
+      console.log(response.data.allApplyingDetails.length);
+      setAllApplyingForm(response.data.allApplyingDetails);
+    
+      const pendingRequests = response.data.allApplyingDetails.filter((item) => item.status === "pending");
+      setPendingArray(pendingRequests);
+
+      const ApproveRequests = response.data.allApplyingDetails.filter((item) => item.status === "Approve");
+      setApprove(ApproveRequests);
+  
+
+
+      console.log(pendingArray);
+
+    } catch (error) {
+      console.error('Error fetching user data:', error); 
+    }
+  };
+  
+  useEffect(() => {
+    getAllApplyingUser();
+  }, []);
+
+
 
   // JSX structure for the Navbar component
   return (
@@ -55,11 +90,11 @@ const StatCards = () => {
             <div className="dataCard PositionCard">
               <Bar
                 data={{
-                  labels: ["Requested", "Approved", "Pending", "Deleted"],
+                  labels: ["All Requests", "Pending Request", "Approve Request", "Deleted"],
                   datasets: [
                     {
-                      label: "Number of Positions",
-                      data: [150, 100, 75, 50],
+                      label: "All Form Submition",
+                      data: [allApplyingForm.length,pendingArray.length, ApproveArray.length, 50],
                       backgroundColor: ["red", "blue", "green", "orange"],
                     },
                   ],
