@@ -3,7 +3,7 @@ import "./CoachSidebar.css";
 import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCalendar } from "@fortawesome/free-solid-svg-icons";
+import { faCalendar, } from "@fortawesome/free-solid-svg-icons";
 import { ReactComponent as Profile } from "../../icons/Profile.svg";
 import {
   MenuFoldOutlined,
@@ -13,6 +13,7 @@ import {
   FormOutlined,
   BellOutlined,
   UserOutlined,
+  MessageOutlined,
   EditOutlined,
   CalendarOutlined,
   MailOutlined,
@@ -75,6 +76,7 @@ const CoachSidebar = ({ children }) => {
       "/coach-stats": "Dashboard",
       "/coach-availability": "My Availability",
       "/coach-review-players": "Review Players",
+      "/CoachCommunicationTable":"Sent Message",
       "/coach-profile": "My Profile",
     };
 
@@ -227,6 +229,14 @@ const currentUserData = async () => {
               >
                 <NavLink to="/coach-review-players">
                   <span className="nav-text">Review Players</span>
+                </NavLink>
+              </Menu.Item>
+              <Menu.Item
+                key="/CoachCommunicationTable"
+                icon={<MessageOutlined />}
+              >
+                <NavLink to="/CoachCommunicationTable">
+                  <span className="nav-text">Sent Message</span>
                 </NavLink>
               </Menu.Item>
               <Menu.Item key="/coach-profile" icon={<Profile />}>

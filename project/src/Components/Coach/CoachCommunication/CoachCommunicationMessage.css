@@ -1,0 +1,22 @@
+
+.UserApplicationFormApplication {
+    background-color: white;
+    padding-right: 2rem;
+    overflow-y: hidden;
+}
+
+.FormBody {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.ant-col.ant-form-item-label {
+    margin-left: 0 !important;
+    margin-right: 50px !important;
+    text-align: left !important;
+}
+
+.ant-col.ant-form-item-control {
+    margin-left: 0 !important;
+}

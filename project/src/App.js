@@ -49,7 +49,6 @@ import TeamManagerAssignMembersTable from "./Components/TeamManager/TeamManagerA
 import TeamManagerAssignMembersCoach from "./Components/TeamManager/TeamManagerAssignMembers/TeamManagerAssignMembersCoach.jsx";
 import TeamManagerAssignMembersPlayer from "./Components/TeamManager/TeamManagerAssignMembers/TeamManagerAssignMembersPlayer.jsx";
 import TeamManagerProfile from "./Components/TeamManager/TeamManagerProfile/TeamManagerProfile.jsx";
-
 import TournamentBracket from "./Pages/Organizer/Bracket.jsx";
 import CreateTeam from "./Pages/Coach/CreateTeam.jsx"
 import SelectPlayers from "./Pages/Coach/SelectPlayers.jsx"
@@ -60,6 +59,9 @@ import EditTabEvent from "./Components/EventOrganizer/EditTabEvent/EditTabEvent.
 import TeamManagerAssignCoaches from "./Components/TeamManager/TeamManagerAssignCoaches/TeamManagerAssignCoaches.jsx"
 import EventList from "./Components/TeamManager/EventList/EventList.jsx"
 import AdminCharts from "./Components/Admin/DashboardCharts/DashboardCharts.jsx";
+import CoachCommunicationRecipientTable from "./Components/Coach/CoachCommunication/CoachCommunicationRecipientTable.jsx";
+import CoachCommunicationMessage from "./Components/Coach/CoachCommunication/CoachCommunicationMessage.jsx";
+
 import { useState } from "react";
 
 function App() {
@@ -604,7 +606,28 @@ function App() {
             </ProtectedRoute>
           }
           >
-
+          </Route>
+        </Routes>
+        <Routes>
+          <Route
+          path="/CoachCommunicationTable"
+          element={
+            <ProtectedRoute>
+              <CoachCommunicationRecipientTable/>
+            </ProtectedRoute>
+          }
+          >
+          </Route>
+        </Routes>
+        <Routes>
+          <Route
+          path="/CoachCommunicationMessage"
+          element={
+            <ProtectedRoute>
+              <CoachCommunicationMessage/>
+            </ProtectedRoute>
+          }
+          >
           </Route>
         </Routes>
 
