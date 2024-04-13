@@ -21,6 +21,7 @@ const UserApplicationTable = () => {
   const navigate = useNavigate();
   const location = useLocation([]);
 
+// get current applying user data
 const ApplyingUser = async () => {
     try {
       const res = await axios.get(
@@ -42,6 +43,7 @@ const ApplyingUser = async () => {
     navigate("/Applying-Details", { state: { record: record } });
   };
 
+// handle delete
 const handleDelete = async (record) => {
     console.log(record.Email);
 
@@ -63,6 +65,8 @@ const handleDelete = async (record) => {
     }
   };
 
+
+// handle remove
 const handleRemove = async (record) => {
     console.log(record.Email);
 

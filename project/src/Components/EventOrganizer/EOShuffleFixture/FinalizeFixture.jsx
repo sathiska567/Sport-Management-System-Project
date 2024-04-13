@@ -65,7 +65,7 @@ const getFinalizeShuffle = async () => {
     getFinalizeShuffle()
   }, [])
 
-
+// handle download
 const handleDownload = async () => {
 
     const input = pdfRef.current;
@@ -87,7 +87,7 @@ const handleDownload = async () => {
 
   }
 
-
+// handle single eliminate 
   const handleSingleEliminate = async () => {
     navigate("/test-fixture", { state: { teamsCount: newArrayLength.length } });
   }
