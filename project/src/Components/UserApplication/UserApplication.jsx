@@ -42,7 +42,7 @@ const UserApplication = () => {
   const [applyingUserEmail,setApplyingUserEmail] = useState("");
   // const location = useLocation();
 
-
+// handle user status
 const handleStatus = async (id, status) => {
     try {
       // console.log(id,status);
@@ -71,6 +71,8 @@ const handleStatus = async (id, status) => {
     }
   };
 
+// handle updated function
+
   const handleUpdatedDetails = async (updatedId) => {
     try {
       const UpdatedUser = await axios.patch(
@@ -94,6 +96,7 @@ const handleStatus = async (id, status) => {
     }
   };
 
+  // handle pending function
   const handlePending = async () => {
     try {
       message.success("Pending added successfull");
@@ -103,6 +106,7 @@ const handleStatus = async (id, status) => {
     }
   };
 
+// handle reject function
   const handleReject = async (deletedUserId,email) => {
     try {
       console.log(deletedUserId,email);

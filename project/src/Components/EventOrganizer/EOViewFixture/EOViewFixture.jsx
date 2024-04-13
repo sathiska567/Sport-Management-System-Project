@@ -52,11 +52,13 @@ const EOViewFixture = () => {
     }
   };
 
+// hanlde fixture shuffle
   const handleShuffle = async (id) => {
     console.log(id);
     navigate("/shuffle-fixture", { state: { id: id } });
   };
 
+// hanlde fixture view
   const handleView = async (record) => {
     console.log(record.createdFixtureId);
     navigate("/final-fixture", {
@@ -64,6 +66,7 @@ const EOViewFixture = () => {
     });
   };
 
+// handle fixture delete function
   const handleDelete = async (id) => {
     console.log(id);
 
@@ -97,6 +100,7 @@ const EOViewFixture = () => {
   const handleDateChange = (date, dateString) => {
     console.log("Date Selected: ", dateString);
   };
+
 
   const handleCreateBracket = async(id)=>{
      console.log(id);
