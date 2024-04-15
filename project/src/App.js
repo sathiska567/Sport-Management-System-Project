@@ -59,6 +59,7 @@ import EditTabEvent from "./Components/EventOrganizer/EditTabEvent/EditTabEvent.
 // import TeamManagerAssign from "./Components/TeamManager/TeamManagerAssign/TeamManagerAssign.jsx";
 import TeamManagerAssignCoaches from "./Components/TeamManager/TeamManagerAssignCoaches/TeamManagerAssignCoaches.jsx"
 import EventList from "./Components/TeamManager/EventList/EventList.jsx"
+import EventListNew from "./Components/TeamManager/EventListNew/EventListNew.jsx"
 import { useState } from "react";
 
 function App() {
@@ -589,6 +590,19 @@ function App() {
             <ProtectedRoute>
               <EventList/>
             </ProtectedRoute>
+          }
+          >
+
+          </Route>
+        </Routes>
+
+        <Routes>
+          <Route
+          path="/EventViewNew"
+          element={
+                <ProtectedRoute>
+                  <EventListNew/>
+                </ProtectedRoute>
           }
           >
 
