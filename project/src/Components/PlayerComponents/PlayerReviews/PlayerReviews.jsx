@@ -79,9 +79,7 @@ const PlayerReviews = () => {
       const coachId = [];
 
       for (let i = 0; i < playerReviewResponse.data.review.length; i++) {
-        if (
-          playerReviewResponse.data.review[i].playerId === res.data.user._id
-        ) {
+        if (playerReviewResponse.data.review[i].playerId === res.data.user._id) {
           newReview.push(playerReviewResponse.data.review[i]);
           coachId.push(playerReviewResponse.data.review[i].reviewGivenCoachId);
         }

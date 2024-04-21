@@ -53,7 +53,7 @@ const SideBar = ({ children }) => {
   const navigate = useNavigate()
 
 
-    useEffect(() => {
+  useEffect(() => {
     socket.on("receive_message", (data) => {
       console.log("Received message: ", data);
       // Update the messages state with the received message
