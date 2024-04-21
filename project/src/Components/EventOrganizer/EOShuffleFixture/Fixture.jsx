@@ -44,7 +44,7 @@ const ShuffleData = () => {
     // window.location.reload();
 
     while (i < teamDetails.length) {
-      const randomIndex = Math.floor(Math.random() * teamDetails.length)
+      const randomIndex = Math.floor(Math.random() * teamDetails.length)   // give nearest integer value
       // console.log(randomIndex);
 
       if(!usedIndexes.includes(randomIndex)){
@@ -123,7 +123,7 @@ const ShuffleData = () => {
             columns={[
               {
                 title: "Team Number",
-                width: "20%",
+                width: "30%",
                 dataIndex: "teamNumber",
                 render: (text, record, index) => (
                   <span key={index} style={{color:"black",fontFamily:"sans-serif",fontWeight:"bold"}}>{"Team Number "+(index + 1)}</span>
@@ -137,11 +137,11 @@ const ShuffleData = () => {
                 )
               },
 
-              {
-                title: "Event Time",
-                dataIndex: "time",
-                render: (text, record) => <span style={{color:"blue",fontFamily:"sans-serif",fontWeight:"bold"}}>8.30am</span>,
-              },
+              // {
+              //   title: "Event Time",
+              //   dataIndex: "time",
+              //   render: (text, record) => <span style={{color:"blue",fontFamily:"sans-serif",fontWeight:"bold"}}>8.30am</span>,
+              // },
 
               {
                 title: "Action",

@@ -19,8 +19,8 @@ export default function SetFixtureRound() {
 
 // handle single eliminate npm function
   const singleEliminate = async () => {
-    const elimBracket = SingleElimination(players, 1, false);
-    setFixture(elimBracket);
+    const elimBracket = SingleElimination(players, 1, false);  //number of rounds or matches per round.
+    setFixture(elimBracket); 
     console.log(elimBracket);
   };
 
