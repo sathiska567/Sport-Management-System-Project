@@ -146,6 +146,7 @@ const PlayerProfile = () => {
       if (NewfileList.length > 0) {
         const file = NewfileList[0].originFileObj;
 
+      // adds a new key/value pair to the formData object
         let formData = new FormData();
         formData.append("image", file);
         formData.append("playerId", playerId);
@@ -173,6 +174,8 @@ const PlayerProfile = () => {
         // Check if coverImageFileList is not empty
         if (coverImageFileList.length > 0) {
           const coverImagefile = coverImageFileList[0].originFileObj;
+
+          //adds a new key/value pair to the coverImageFormData object
           let coverImageFormData = new FormData();
           coverImageFormData.append("coverImage", coverImagefile);
           coverImageFormData.append("playerId", playerId);
@@ -209,6 +212,7 @@ const PlayerProfile = () => {
         if (medicalReportFileList.length > 0) {
           const medicalReportfile = medicalReportFileList[1].originFileObj;
 
+          //adds a new key/value pair to the coverImageFormData object
           let medicalReportFormData = new FormData();
           medicalReportFormData.append("medicalReport", medicalReportfile);
           medicalReportFormData.append("playerId", playerId);

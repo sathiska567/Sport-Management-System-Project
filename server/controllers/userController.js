@@ -194,6 +194,8 @@ const applyPositionController = async (req, res) => {
             });
     
         } catch (error) {
+            
+            // This line checks if the error object has a property named code and if its value is equal to 11000
             if (error.code === 11000) {
                 // Duplicate key error (PlayerNo already exists)
                 res.status(400).send({

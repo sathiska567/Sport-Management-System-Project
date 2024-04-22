@@ -44,7 +44,8 @@ const app = express();
 app.use(express.json()); // middlewares
 app.use(cors());
 
-
+// real time notification
+// creates an HTTP server using the Express.js 
 const server = http.createServer(app);
 
 const io = new Server(server, {

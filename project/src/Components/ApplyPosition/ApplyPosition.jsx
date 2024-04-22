@@ -159,15 +159,7 @@ const handleExperienceChange = (e) => {
   // handle position registration
   const handleSubmit = async (values) => {
 
-    if (
-      FirstName === "" ||
-      LastName === "" ||
-      !newEmail ||
-      !newAge ||
-      userRoleError ||
-      districtError ||
-      experience.trim() === ""
-    ) {
+    if (FirstName === "" ||LastName === "" ||!newEmail ||!newAge ||userRoleError ||districtError ||experience.trim() === "") {
       alert("Please fill all the fields correctly!");
     } else {
 
