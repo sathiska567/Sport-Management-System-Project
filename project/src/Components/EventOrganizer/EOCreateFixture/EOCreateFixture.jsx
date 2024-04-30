@@ -4,6 +4,9 @@ import EOSidebar from "../EOSideBar/EOSideBar";
 import { Form, Input, DatePicker, TimePicker, message } from "antd";
 import { CloseSquareOutlined, EditOutlined } from "@ant-design/icons";
 import axios from "axios";
+import moment from "moment";
+
+const date = moment();
 
 const EOCreateFixture = () => {
   const [numberOfTeams, setNumberOfTeams] = useState(0);
@@ -12,7 +15,31 @@ const EOCreateFixture = () => {
   const [location, setLocation] = useState("");
   const [eventDate, setEventDate] = useState("");
   const [startingTime, setStartingTime] = useState("");
-const [teamNameError, setTeamNameError] = useState({});
+  const [teamNameError, setTeamNameError] = useState({});
+  const [eventNameError, setEventNameError] = useState("");
+  const [locationError, setLocationError] = useState("");
+  const [numberOfTeamsError, setNumberOfTeamsError] = useState("");
+  const [eventDateError, setEventDateError] = useState("");
+  const [startingTimeError, setStartingTimeError] = useState("");
+  // Event Name First Input Validation
+  const handleEventNameChange = (e) => {
+    setEventName(e.target.value);
+    if (e.target.value === "") {
+      setEventNameError("This field cannot be empty");
+    } else {
+      setEventNameError("");
+    }
+  };
+
+  // Location Validation
+  const handleLocationChange = (e) => {
+    setLocation(e.target.value);
+    if (e.target.value === "") {
+      setLocationError("Location cannot be empty");
+    } else {
+      setLocationError("");
+    }
+  };
 
   // Team name Validation
   const handleTeamNameChange = (e, index) => {
@@ -32,7 +59,82 @@ const [teamNameError, setTeamNameError] = useState({});
     setNumberOfTeams(event.target.value);
   };
 
+  // Number of Teams Validation
+  const handleNumberOfTeamsChangeFirst = (e) => {
+    setNumberOfTeams(e.target.value);
+    if (e.target.value === "") {
+      setNumberOfTeamsError("Number of teams cannot be empty");
+    } else if (e.target.value < 4) {
+      setNumberOfTeamsError("Minimum number of teams is 4");
+    } else if (e.target.value > 25) {
+      setNumberOfTeamsError("Maximum number of teams is 25");
+    } else {
+      setNumberOfTeamsError("");
+    }
+  };
+
+  // Event Date Validation
+  const handleDateChange = (date) => {
+    setEventDate(date);
+    if (!date) {
+      setEventDateError("Event date cannot be empty");
+    } else {
+      setEventDateError("");
+    }
+  };
+
+  const disabledDate = (current) => {
+    // Can not select days before today and more than three years in the future
+    return (
+      current &&
+      (current < moment().endOf("day") ||
+        current > moment().endOf("day").add(3, "years"))
+    );
+  };
+
+  // Start Time Validation
+  const handleTimeChange = (time) => {
+    if (!time) {
+      setStartingTimeError("Starting time cannot be empty");
+    } else if (
+      time.isBefore(moment().hour(7).minute(30)) ||
+      time.isAfter(moment().hour(14))
+    ) {
+      setStartingTimeError("Starting time must be between 7:30 AM and 2:00 PM");
+    } else {
+      setStartingTimeError("");
+      setStartingTime(time);
+    }
+  };
+
+  const disabledHours = () => {
+    const hours = [];
+    for (let i = 0; i < 7; i++) hours.push(i);
+    for (let i = 15; i < 24; i++) hours.push(i);
+    return hours;
+  };
+
+  const disabledMinutes = (selectedHour) => {
+    if (selectedHour === 7) {
+      const minutes = [];
+      for (let i = 0; i < 30; i++) minutes.push(i);
+      return minutes;
+    }
+  };
   const handleCreate = async () => {
+    // Check if any required fields are empty
+    const isAnyFieldEmpty =
+      !nameOfTheEvent ||
+      !location ||
+      !eventDate ||
+      !startingTime ||
+      nameOfTheTeam.some((teamName) => !teamName);
+
+    if (isAnyFieldEmpty) {
+      message.error("Please fill in all required fields");
+      return;
+    }
+
     console.log(
       nameOfTheEvent,
       nameOfTheTeam,
@@ -110,91 +212,172 @@ const [teamNameError, setTeamNameError] = useState({});
               <div className="InputData">
                 <div className="DataIem">
                   <label htmlFor="eventName">Name of the Event:</label>
-                  <Input
-                    type="text"
-                    id="eventName"
-                    required
-                    name="eventName"
-                    onChange={(e) => setEventName(e.target.value)}
-                  />
+                  <div style={{ flex: 2.6 }}>
+                    <Input
+                      type="text"
+                      id="eventName"
+                      required
+                      name="eventName"
+                      onChange={handleEventNameChange}
+                      allowClear
+                    />
+                    {eventNameError && (
+                      <div
+                        className="error"
+                        style={{ fontSize: "13px", color: "red" }}
+                      >
+                        Team name cannot be empty
+                      </div>
+                    )}
+                  </div>
                 </div>
 
                 <div className="DataIem">
                   <label htmlFor="location">Location:</label>
-                  <Input
-                    type="text"
-                    id="location"
-                    required
-                    name="location"
-                    onChange={(e) => setLocation(e.target.value)}
-                  />
+                  <div style={{ flex: 2.6 }}>
+                    <Input
+                      type="text"
+                      id="location"
+                      required
+                      name="location"
+                      onChange={handleLocationChange}
+                      allowClear
+                    />
+                    {locationError && (
+                      <div
+                        className="error"
+                        style={{ fontSize: "13px", color: "red" }}
+                      >
+                        Location cannot be empty
+                      </div>
+                    )}
+                  </div>
                 </div>
 
                 <div className="DataIem">
                   <label htmlFor="numberOfTeams">Number of Teams:</label>
-                  <Input
-                    type="number"
-                    id="numberOfTeams"
-                    name="numberOfTeams"
-                    onChange={handleNumberOfTeamsChange}
-                    required
-                  />
+                  <div style={{ flex: 2.6 }}>
+                    <Input
+                      type="number"
+                      id="numberOfTeams"
+                      required
+                      name="numberOfTeams"
+                      onChange={handleNumberOfTeamsChangeFirst}
+                    />
+                    {numberOfTeamsError && (
+                      <div
+                        className="error"
+                        style={{ fontSize: "13px", color: "red" }}
+                      >
+                        {numberOfTeamsError}
+                      </div>
+                    )}
+                  </div>
                 </div>
 
-                {Array.from({ length: numberOfTeams }, (_, index) => (
-                  <div className="DataIem" key={index}>
-                    <label
-                      className="DataItemTeamsLabel"
-                      htmlFor={`teamName${index}`}
-                    >
-                      Team Name {index + 1}:
-                    </label>
-                    <div style={{flex: 2.6}}>
-                      <Input
-                        type="text"
-                        id={`teamName${index}`}
-                        name={`teamName${index}`}
-                        className="DataItemTeamsInput"
-                        allowClear
-                        required
-                        onChange={(e) => handleTeamNameChange(e, index)}
-                      />
-                      {teamNameError[index] && (
-                        <div
-                          className="error"
-                          style={{ fontSize: "13px", color: "red" }}
+                {numberOfTeams >= 4 &&
+                  Array.from(
+                    { length: Math.min(numberOfTeams, 25) },
+                    (_, index) => (
+                      <div className="DataIem" key={index}>
+                        <label
+                          className="DataItemTeamsLabel"
+                          htmlFor={`teamName${index}`}
                         >
-                          Team name cannot be empty
+                          Team Name {index + 1}:
+                        </label>
+                        <div style={{ flex: 2.6 }}>
+                          <Input
+                            type="text"
+                            id={`teamName${index}`}
+                            name={`teamName${index}`}
+                            className="DataItemTeamsInput"
+                            allowClear
+                            required
+                            onChange={(e) => handleTeamNameChange(e, index)}
+                          />
+                          {teamNameError[index] && (
+                            <div
+                              className="error"
+                              style={{ fontSize: "13px", color: "red" }}
+                            >
+                              Team name cannot be empty
+                            </div>
+                          )}
                         </div>
-                      )}
-                    </div>
-                  </div>
-                ))}
+                      </div>
+                    )
+                  )}
 
                 <div className="DataIem">
                   <label htmlFor="EventDate">Event Date:</label>
-                  <DatePicker
-                    id="EventDate"
-                    name="EventDate"
-                    onChange={(date) => setEventDate(date)}
-                  />
+                  <div
+                    style={{
+                      flex: 2.6,
+                      display: "flex",
+                      flexDirection: "column",
+                    }}
+                  >
+                    <DatePicker
+                      id="EventDate"
+                      name="EventDate"
+                      required
+                      onChange={handleDateChange}
+                      disabledDate={disabledDate}
+                      style={{ width: "100%" }}
+                    />
+                    {eventDateError && (
+                      <div
+                        className="error"
+                        style={{ fontSize: "13px", color: "red" }}
+                      >
+                        {eventDateError}
+                      </div>
+                    )}
+                  </div>
                 </div>
 
                 <div className="DataIem">
                   <label htmlFor="startingTime">Starting Time:</label>
-                  <TimePicker
-                    id="startingTime"
-                    name="startingTime"
-                    onChange={(time) => setStartingTime(time)}
-                  />
+                  <div
+                    style={{
+                      flex: 2.6,
+                      display: "flex",
+                      flexDirection: "column",
+                    }}
+                  >
+                    <TimePicker
+                      id="startingTime"
+                      name="startingTime"
+                      onChange={handleTimeChange}
+                      disabledHours={disabledHours}
+                      disabledMinutes={disabledMinutes}
+                    />
+                    {startingTimeError && (
+                      <div
+                        className="error"
+                        style={{ fontSize: "13px", color: "red" }}
+                      >
+                        {startingTimeError}
+                      </div>
+                    )}
+                  </div>
                 </div>
 
-                <div class="buttonSet">
+                <div className="buttonSet">
                   <div>
                     <button
-                      class="CreateFixtureBTn"
+                      className="CreateFixtureBTn"
                       style={{ backgroundColor: "#52c41a", width: "200px" }}
                       onClick={handleCreate}
+                      disabled={
+                        eventNameError ||
+                        locationError ||
+                        numberOfTeamsError ||
+                        eventDateError ||
+                        startingTimeError ||
+                        Object.values(teamNameError).some(Boolean)
+                      }
                     >
                       <EditOutlined className="UserApplicationIcon" />
                       Create Fixture

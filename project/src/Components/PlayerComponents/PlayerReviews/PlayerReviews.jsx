@@ -21,35 +21,7 @@ const PlayerReviews = () => {
   const [reviewGivenCoachName, setReviewGivenCoachName] = useState([]);
   const [reviewGivenCoachEmail, setReviewGivenCoachEmail] = useState([]);
 
-  const sampleData = [
-    {
-      key: "1",
-      profile:
-        "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png?x-oss-process=image",
-      coachName: "John Doe",
-      reviewDate: "2022-01-01",
-      rating: 4.5,
-      comment: "Well done keep it up!",
-    },
-    {
-      key: "2",
-      profile:
-        "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png?x-oss-process=image",
-      coachName: "Jane Smith",
-      reviewDate: "2022-02-01",
-      rating: 3,
-      comment: "Need to improve bowling side.",
-    },
-    {
-      key: "3",
-      profile:
-        "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png?x-oss-process=image",
-      coachName: "Bob Johnson",
-      reviewDate: "2022-03-01",
-      rating: 3.5,
-      comment: "Excellent Bowling!",
-    },
-  ];
+  
 
   //GET CURRENT USER DATA
   const currentUserData = async () => {
@@ -105,15 +77,16 @@ const PlayerReviews = () => {
   }, []);
 
   // Filter sampleData based on userRole and Userlocation
-  const handleCoachNameSearch = (value) => {
-    console.log("Coach Name Searched: ", value);
-    setUserRole(value);
-  };
+const handleCoachNameSearch = (value) => {
+  console.log("Coach Name Searched: ", value);
+  const filteredReviews = currentPlayerReviews.filter((review) =>
+    review.reviewGivenCoachName.toLowerCase().includes(value.toLowerCase())
+  );
+  setReviews(filteredReviews);
+};
 
-  const handleDateChange = (date, dateString) => {
-    console.log("Date Selected: ", dateString);
-    setUserLocation(dateString);
-  };
+
+  
 
   // JSX structure for the Navbar component
   return (
@@ -150,11 +123,7 @@ const PlayerReviews = () => {
                 className="searchSub"
                 style={{ display: "flex", width: "100%" }}
               >
-                <DatePicker
-                  className="searchInputDate"
-                  style={{ flex: 1 }}
-                  onChange={handleDateChange}
-                />
+                
               </div>
             </div>
             {/* Table section */}
@@ -225,7 +194,7 @@ const PlayerReviews = () => {
                   pageSize: 5,
                 }}
                 // Displaying data from the frontend
-                dataSource={currentPlayerReviews} // Use filteredData instead of sampleData
+                dataSource={currentPlayerReviews}
               ></Table>
             </div>
           </Content>
