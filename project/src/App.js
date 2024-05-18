@@ -63,6 +63,7 @@ import EventList from "./Components/TeamManager/EventList/EventList.jsx"
 import SearchPlayerProfile from "./Components/PlayerComponents/SearchPlayerProfile/SearchPlayerProfile.jsx"
 
 import AdminCharts from "./Components/Admin/DashboardCharts/DashboardCharts.jsx"
+import EoProfileNew from "./Components/EventOrganizer/EoProfileNew/EoProfileNew.jsx"
 import { useState } from "react";
 
 function App() {
@@ -616,6 +617,19 @@ function App() {
           element={
             <ProtectedRoute>
               <SearchPlayerProfile/>
+            </ProtectedRoute>
+          }
+          >
+
+          </Route>
+        </Routes>
+
+        <Routes>
+          <Route
+          path="/EventOrganizerNewProfile"
+          element={
+            <ProtectedRoute>
+              <EoProfileNew/>
             </ProtectedRoute>
           }
           >
