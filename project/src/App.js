@@ -61,6 +61,7 @@ import TeamManagerAssignCoaches from "./Components/TeamManager/TeamManagerAssign
 import EventList from "./Components/TeamManager/EventList/EventList.jsx"
 
 import SearchPlayerProfile from "./Components/PlayerComponents/SearchPlayerProfile/SearchPlayerProfile.jsx"
+import SearchPlayerTable from "./Components/PlayerComponents/SearchPlayerTable/SearchPlayerTable.jsx"
 
 import AdminCharts from "./Components/Admin/DashboardCharts/DashboardCharts.jsx"
 import { useState } from "react";
@@ -616,6 +617,19 @@ function App() {
           element={
             <ProtectedRoute>
               <SearchPlayerProfile/>
+            </ProtectedRoute>
+          }
+          >
+
+          </Route>
+        </Routes>
+
+        <Routes>
+          <Route
+          path="/SearchPlayerTable"
+          element={
+            <ProtectedRoute>
+              <SearchPlayerTable/>
             </ProtectedRoute>
           }
           >
