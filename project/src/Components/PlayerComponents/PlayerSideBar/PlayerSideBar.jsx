@@ -223,7 +223,7 @@ const PlayerSideBar = ({ children }) => {
             key="/player-search"
             icon={<FontAwesomeIcon icon={faUsers} />}
           >
-            <NavLink to="/SearchPlayerProfile">Search Players</NavLink>
+            <NavLink to="/SearchPlayerTable">Search Players</NavLink>
           </Menu.Item>
           <Menu.Item key="/player-profile" icon={<Profile />}>
             <NavLink to="/player-profile">My Profile</NavLink>
