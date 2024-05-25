@@ -64,6 +64,8 @@ import SearchPlayerProfile from "./Components/PlayerComponents/SearchPlayerProfi
 import SearchPlayerTable from "./Components/PlayerComponents/SearchPlayerTable/SearchPlayerTable.jsx"
 
 import AdminCharts from "./Components/Admin/DashboardCharts/DashboardCharts.jsx"
+import EditEventTable from "./Components/EventOrganizer/EditEventTable/EditEventTable.jsx"
+import EOEditEventFormNew from "./Components/EventOrganizer/EditEventTable/EditEventFormNew.jsx"
 import { useState } from "react";
 
 function App() {
@@ -630,6 +632,45 @@ function App() {
           element={
             <ProtectedRoute>
               <SearchPlayerTable/>
+            </ProtectedRoute>
+          }
+          >
+
+          </Route>
+        </Routes>
+
+        <Routes>
+          <Route
+          path="/SearchPlayerTable"
+          element={
+            <ProtectedRoute>
+              <SearchPlayerTable/>
+            </ProtectedRoute>
+          }
+          >
+
+          </Route>
+        </Routes>
+        
+        <Routes>
+          <Route
+          path="/EditEventTable"
+          element={
+            <ProtectedRoute>
+              <EditEventTable setId={setEventId}/>
+            </ProtectedRoute>
+          }
+          >
+
+          </Route>
+        </Routes>
+
+        <Routes>
+          <Route 
+          path="/EditEventFormNew/:id"
+          element={
+            <ProtectedRoute>
+              <EOEditEventFormNew/>
             </ProtectedRoute>
           }
           >
