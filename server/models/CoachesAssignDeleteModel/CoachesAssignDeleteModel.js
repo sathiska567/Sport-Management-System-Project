@@ -8,7 +8,8 @@ const AssignMemberSchema = mongoose.Schema({
     status: {
         type: Boolean,
         default: false
-    }
+    },
+    assignedEvents: [String]
 }, {
     timestamps: true
 })

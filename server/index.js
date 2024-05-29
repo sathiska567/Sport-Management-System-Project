@@ -131,8 +131,10 @@ app.use("/api/v1/eventOrganizerBracket",eventOrganizerBracketRoute)
 //coaches assign and delete
 app.use("/api/v1/coaches-assign-delete",CoachesAssignDeleteRoute)
 app.use("/api/v1/eventView",eventViewRoute)
+
 // player search profile
 app.use("/api/v1/playerSearchProfile",playerSearchProfile )
+
 // player search Table
 app.use("/api/v1/playerSearchTable",playerSearchTable)
 

@@ -3,13 +3,7 @@ import React, { useEffect, useState } from "react";
 import "./TeamManagerAssignCoaches.css";
 import TeamManagerSideBar from "../TeamManagerSideBar/TeamManagerSideBar";
 
-import {
-  Layout,
-  Input,
-  Table,
-  Modal,
-  message,
-} from "antd";
+import { Layout, Input, Table, Modal, message } from "antd";
 import axios from "axios";
 
 // Destructuring components from Ant Design's Layout
@@ -17,64 +11,58 @@ const { Content } = Layout;
 
 // Navbar component
 const TeamManagerAssignCoaches = () => {
+  const [searchedText, setSearchedText] = useState("");
 
-  const [assignedIds, setAssignedIds] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
 
-  const [searchedText, setSearchedText] = useState("")
-
-  const [filteredData,setFilteredData] = useState([])
-
-  const [dataSource, setDataSource] = useState([
-    {
-
-    }
-  ]);
+  const [dataSource, setDataSource] = useState([{}]);
 
   const handleSearch = (e) => {
     const searchText = e.target.value.toLowerCase();
     setSearchedText(searchText);
-    
+
     // Use the functional form of setDataSource to ensure proper state update
-    const filteredData = dataSource.filter(item => item.name.toLowerCase().includes(searchedText));
+    const filteredData = dataSource.filter((item) =>
+      item.name.toLowerCase().includes(searchedText)
+    );
     setDataSource(filteredData);
-};
+  };
 
   // table
   const getFetchData = async () => {
-    let data = await fetch("http://localhost:8080/api/v1/coaches-assign-delete/get-coachesassignee")
-    data = await data.json()
-    console.log(data)
+    let data = await fetch(
+      "http://localhost:8080/api/v1/coaches-assign-delete/get-coachesassignee"
+    );
+    data = await data.json();
+    console.log(data);
 
     if (data.success) {
-      setDataSource(data.data)
+      setDataSource(data.data);
     }
-
-  }
+  };
   useEffect(() => {
-    axios.defaults.baseURL = "http://localhost:8080/api/v1/coaches-assign-delete"
-    getFetchData()
-   
-  }, [])
+    axios.defaults.baseURL =
+      "http://localhost:8080/api/v1/coaches-assign-delete";
+    getFetchData();
+  }, []);
 
-
-   // delete button
-   const handleDelete = async (id) => {
+  // delete button
+  const handleDelete = async (id) => {
     try {
       const confirmed = await new Promise((resolve, reject) => {
         Modal.confirm({
-          title: 'Are you sure you want to delete this member record?',
-          okText: 'Yes',
-          okType: 'danger',
+          title: "Are you sure you want to delete this member record?",
+          okText: "Yes",
+          okType: "danger",
           onOk: () => resolve(true),
-          onCancel: () => resolve(false) 
+          onCancel: () => resolve(false),
         });
       });
-   
+
       if (confirmed) {
         console.log(id);
         const response = await axios.post("/delete-coachesstatus", { id: id });
-  
-  
+
         if (response.data.success) {
           message.success("Deletion is successful");
           window.location.reload();
@@ -82,59 +70,75 @@ const TeamManagerAssignCoaches = () => {
       }
     } catch (error) {
       console.error("Error deleting member:", error);
-      
+
       message.error("An error occurred while deleting the member");
     }
   };
 
-
-   //Assign button
-   const handleAssign = async (id, status) => {
-    
+  //Assign button
+  const handleAssign = async (eventId, coachId, status) => {
     try {
       const confirmed = await new Promise((resolve, reject) => {
         Modal.confirm({
-         // title: Are you sure you want to assign "${status}" to this member?,
-          okText: 'Yes',
-          okType: 'primary',
+          // title: Are you sure you want to assign "${status}" to this member?,
+          okText: "Yes",
+          okType: "primary",
           onOk: () => resolve(true),
-          onCancel: () => resolve(false)
+          onCancel: () => resolve(false),
         });
       });
-  
+
       if (confirmed) {
-        setAssignedIds([...assignedIds, id]);
-    
-     
-        await axios
-        .post("/change-coachesstatus", { id: id }) // Adjust the endpoint URL accordingly
-        .then((res) => {
-          if(res.data.success){
-            // setIsAssigned(true)
-          message.success("Status assigned successfully");
-          window.location.reload();
-          // window.location.reload();
-          }else{
-            message.success("error");
-          }
-        }).catch((err)=>{
-          message.success("error");
-        })
+        if (!status) {
+          await axios
+            .post("/change-coachesstatus", { coachId, eventId, task: "assign" }) // Adjust the endpoint URL accordingly
+            .then((res) => {
+              if (res.data.success) {
+                // setIsAssigned(true)
+                message.success("Status assigned successfully");
+                // window.location.reload();
+                // window.location.reload();
+              } else {
+                message.success("error");
+              }
+            })
+            .catch((err) => {
+              message.success("error");
+            });
+        } else {
+          await axios
+            .post("/change-coachesstatus", {
+              coachId,
+              eventId,
+              task: "unassign",
+            }) // Adjust the endpoint URL accordingly
+            .then((res) => {
+              if (res.data.success) {
+                // setIsAssigned(true)
+                message.success("Unassigned successfully");
+                // window.location.reload();
+                // window.location.reload();
+              } else {
+                message.success("error");
+              }
+            })
+            .catch((err) => {
+              message.success("error");
+            });
+        }
+
+        getFetchData();
+        
         // if (response.data.success) {
         //   setIsAssigned(true)
         //   message.success("Status assigned successfully");
         //   window.location.reload();
         // }
-     
-     
-     
       }
     } catch (error) {
       console.error("Error assigning status:", error);
     }
-
   };
-  
 
   // JSX structure for the Navbar component
   return (
@@ -162,10 +166,10 @@ const TeamManagerAssignCoaches = () => {
                 <Input.Search
                   placeholder="Search Coach Name..."
                   style={{ marginBottom: 8 }}
-          //  onSearch={(value) => {
-          //   setSearchedText(value)
-          //  }}
-            onChange={handleSearch}
+                  //  onSearch={(value) => {
+                  //   setSearchedText(value)
+                  //  }}
+                  onChange={handleSearch}
                 />
               </div>
               <div
@@ -180,36 +184,52 @@ const TeamManagerAssignCoaches = () => {
                 columns={[
                   {
                     title: "ID",
-                    dataIndex: "sid",
-                    key: "ID",
-                    render: (text, record) => 
-                    (<span>{record._id}</span>)
+                    dataIndex: "coachId",
+                    key: "coachId",
+                    render: (text, record) => <span>{record.coachId}</span>,
                   },
                   {
                     title: "Coach Name",
-                    dataIndex: "name",
+                    dataIndex: "coachName",
                     key: "coachName",
                     filterValue: ["s"], // Set filterValue directly to searchText
-      onFilter: (value, record) => {
-        return record.name.includes(value);
-      },
+                    onFilter: (value, record) => {
+                      return record.name.includes(value);
+                    },
                   },
                   {
-                    title: "Location",
-                    dataIndex: "location",
-                    key: "location",
+                    title: "Event Name",
+                    dataIndex: "eventName",
+                    key: "eventName",
                   },
                   {
-                    title: 'Actions',
+                    title: "Actions",
                     render: (text, record) => {
-                
-                      return <>
-                        <button className="assignBtn"  onClick={() => handleAssign(record._id, record.status)} disabled={assignedIds.includes(record._id)}>{record.status?"Assigned":"Assign"}</button>
-                        <button className="assignBtnDelete" onClick={() => handleDelete(record._id)}>Delete</button>
-                      </>
+                      return (
+                        <>
+                          <button
+                            className="assignBtn"
+                            onClick={() =>
+                              handleAssign(
+                                record.eventId,
+                                record.coachId,
+                                record.status
+                              )
+                            }
+                            // disabled={!record.status && true}
+                          >
+                            {record.status ? "Assigned" : "Assign"}
+                          </button>
+                          <button
+                            className="assignBtnDelete"
+                            onClick={() => handleDelete(record.coachId)}
+                          >
+                            Delete
+                          </button>
+                        </>
+                      );
                       // console.log(record);
-                  
-                    }
+                    },
                   },
                 ]}
                 pagination={{
