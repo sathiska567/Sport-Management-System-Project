@@ -3,8 +3,10 @@ import React, { useState, useEffect } from "react";
 import "./RefereeStats.css";
 import CountUp from "react-countup";
 import RefereeSideBar from "../RefereeSideBar/RefereeSideBar";
-
 import { Layout, Col, Statistic } from "antd";
+import { Line, Bar, Doughnut } from "react-chartjs-2";
+import { Clock } from "@sujitsimon/react-flipclock";
+import Calendar from "react-calendar";
 import axios from "axios";
 
 // Destructuring components from Ant Design's Layout
@@ -34,109 +36,91 @@ const RefereeStats = () => {
         {/* Main content layout */}
         <Layout>
           {/* Content section with statistics */}
-          <Content
-            className="ant-layout-content"
-            style={{
-              margin: "16px",
-              padding: 24,
-              minHeight: 280,
-              height: "100%",
-              background: "white",
-            }}
-          >
-            {/* Stats section */}
-            <div className="stats">
-              {/* ... (individual Statistic components) */}
-              <div className=" sRow">
-                <div className="sItem">
-                  <Col span={12}>
-                    <Statistic
-                      className="statistic"
-                      title="Finished Events"
-                      value={456}
-                      formatter={formatter}
-                    />
-                  </Col>
-                </div>
-                <div className="sItem">
-                  <Col span={12}>
-                    <Statistic
-                      title="Scheduled Events"
-                      value={456}
-                      formatter={formatter}
-                    />
-                  </Col>
-                </div>
-                <div className="sItem">
-                  <Col span={12}>
-                    <Statistic
-                      title="Cancelled Events"
-                      value={456}
-                      formatter={formatter}
-                    />
-                  </Col>
-                </div>
+          <div className="Stats flex-container">
+            <div className="dataCard flex-container1st ">
+              <div className="flex-item1st">
+                <h3>Date</h3>
+                <Calendar className="my-calendar" />
               </div>
-              <div className=" sRow">
-                <div className="sItem">
-                  <Col span={12}>
-                    <Statistic
-                      title="Delayed Events"
-                      value={456}
-                      formatter={formatter}
-                    />
-                  </Col>
-                </div>
-                <div className="sItem">
-                  <Col span={12}>
-                    <Statistic
-                      title="Event Organizers"
-                      value={456}
-                      formatter={formatter}
-                    />
-                  </Col>
-                </div>
-                <div className="sItem">
-                  <Col span={12}>
-                    <Statistic
-                      title="Coaches"
-                      value={456}
-                      formatter={formatter}
-                    />
-                  </Col>
-                </div>
-              </div>
-              <div className=" sRow">
-                <div className="sItem">
-                  <Col span={12}>
-                    <Statistic
-                      title="Finished Events"
-                      value={456}
-                      formatter={formatter}
-                    />
-                  </Col>
-                </div>
-                <div className="sItem">
-                  <Col span={12}>
-                    <Statistic
-                      title="Players"
-                      value={456}
-                      formatter={formatter}
-                    />
-                  </Col>
-                </div>
-                <div className="sItem">
-                  <Col span={12}>
-                    <Statistic
-                      title="Teams"
-                      value={456}
-                      formatter={formatter}
-                    />
-                  </Col>
-                </div>
+              <div className="flex-item1st">
+                <h3>Time</h3>
+                <Clock
+                  config={{
+                    height: "48px",
+                    backgroundColor: "#241623",
+                    textColor: "#fff",
+                  }}
+                />
               </div>
             </div>
-          </Content>
+            <div className="dataCard PositionCard">
+              <Bar
+                data={{
+                  labels: ["Requested", "Approved", "Pending", "Deleted"],
+                  datasets: [
+                    {
+                      label: "Number of Positions",
+                      data: [150, 100, 75, 50],
+                      backgroundColor: ["red", "blue", "green", "orange"],
+                    },
+                  ],
+                }}
+              />
+            </div>
+            <div className="dataCard categoryCard">
+              <Doughnut
+                data={{
+                  labels: [
+                    "Event Organizers",
+                    "Players",
+                    "Team Managers",
+                    "Coaches",
+                    "Referees",
+                  ],
+                  datasets: [
+                    {
+                      data: [10, 20, 30, 25, 15],
+                      backgroundColor: [
+                        "red",
+                        "blue",
+                        "green",
+                        "yellow",
+                        "purple",
+                      ],
+                    },
+                  ],
+                }}
+              />
+            </div>
+            <div className="dataCard categoryCard">
+              <Line
+                className="chart"
+                data={{
+                  labels: ["January", "February", "March", "April"],
+                  datasets: [
+                    {
+                      label: "Created Events",
+                      data: [10, 20, 15, 35],
+                      borderColor: "green",
+                      fill: false,
+                    },
+                    {
+                      label: "Cancelled Events",
+                      data: [5, 10, 5, 26],
+                      borderColor: "red",
+                      fill: false,
+                    },
+                    {
+                      label: "Delayed Events",
+                      data: [7, 14, 21, 28],
+                      borderColor: "blue",
+                      fill: false,
+                    },
+                  ],
+                }}
+              />
+            </div>
+          </div>
         </Layout>
       </Layout>
     </RefereeSideBar>
