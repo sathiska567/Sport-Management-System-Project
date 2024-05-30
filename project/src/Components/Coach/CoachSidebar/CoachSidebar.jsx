@@ -60,6 +60,8 @@ const CoachSidebar = ({ children }) => {
         return location.pathname === "/coach-review-players";
       case "/coach-profile":
         return location.pathname === "/coach-profile";
+      case "/coach-to-eo-communication":
+        return location.pathname === "/coach-to-eo-communication";
       case "/apply-position":
         return location.pathname === "/apply-position";
       case "logoff":
@@ -98,6 +100,7 @@ const CoachSidebar = ({ children }) => {
       "/coach-availability": "My Availability",
       "/coach-review-players": "Review Players",
       "/coach-profile": "My Profile",
+      "/coach-to-eo-communication": "Mail To Organizer",
     };
 
     return <p>{text[selectedMenuItem]}</p>;
@@ -266,6 +269,19 @@ const CoachSidebar = ({ children }) => {
               >
                 <NavLink to="/coach-profile">
                   <span className="nav-text">My Profile</span>
+                </NavLink>
+              </Menu.Item>
+              <Menu.Item
+                key="/coach-to-eo-communication"
+                icon={<MailOutlined />}
+                className={
+                  isPathActive("/coach-to-eo-communication")
+                    ? "ant-menu-item-selected"
+                    : ""
+                }
+              >
+                <NavLink to="/coach-to-eo-communication">
+                  <span className="nav-text">Mail To Organizer</span>
                 </NavLink>
               </Menu.Item>
             </>

@@ -67,6 +67,10 @@ import EOCommunicationToCoach from "./Components/EventOrganizer/EOCommunication/
 import EOCommunicationToTM from "./Components/EventOrganizer/EOCommunication/EOCommunicationToTM.jsx";
 import EOCommunicationToCoachForm from "./Components/EventOrganizer/EOCommunication/EOCommunicationToCoachForm.jsx";
 import EOCommunicationToTMForm from "./Components/EventOrganizer/EOCommunication/EOCommunicationToTMForm.jsx";
+import CoachToEOCommunication from "./Components/Coach/CoachCommunication/CoachToEOCommunication.jsx";
+import CoachToEOCommunicationForm from "./Components/Coach/CoachCommunication/CoachToEOCommunicationForm.jsx";
+import TeamManagerToEOCommunication from "./Components/TeamManager/TeamManagerCommunication/TeamManagerToEOCommunication.jsx";
+import TeamManagerToEOCommunicationForm from "./Components/TeamManager/TeamManagerCommunication/TeamManagerToEOCommunicationForm.jsx";
 
 import { useState } from "react";
 
@@ -694,6 +698,46 @@ function App() {
           element={
             <ProtectedRoute>
               <EOCommunicationToTMForm />
+            </ProtectedRoute>
+          }
+        ></Route>
+      </Routes>
+      <Routes>
+        <Route
+          path="/coach-to-eo-communication"
+          element={
+            <ProtectedRoute>
+              <CoachToEOCommunication />
+            </ProtectedRoute>
+          }
+        ></Route>
+      </Routes>
+      <Routes>
+        <Route
+          path="/coach-to-eo-communication-form"
+          element={
+            <ProtectedRoute>
+              <CoachToEOCommunicationForm />
+            </ProtectedRoute>
+          }
+        ></Route>
+      </Routes>
+      <Routes>
+        <Route
+          path="/team-manager-to-eo-communication"
+          element={
+            <ProtectedRoute>
+              <TeamManagerToEOCommunication />
+            </ProtectedRoute>
+          }
+        ></Route>
+      </Routes>
+      <Routes>
+        <Route
+          path="/team-manager-to-eo-communication-form"
+          element={
+            <ProtectedRoute>
+              <TeamManagerToEOCommunicationForm />
             </ProtectedRoute>
           }
         ></Route>

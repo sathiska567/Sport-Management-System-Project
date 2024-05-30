@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import EOSideBar from "../EOSideBar/EOSideBar";
+import TeamManagerSideBar from "../TeamManagerSideBar/TeamManagerSideBar";
 import { Form, Input, message } from "antd"; // Import message from Ant Design
 import { CloseSquareOutlined, EditOutlined } from "@ant-design/icons";
 import axios from "axios";
@@ -7,8 +7,7 @@ import emailjs from "@emailjs/browser";
 
 const { TextArea } = Input;
 
-const EOCommunicationToTMForm = () => {
-  
+const TeamManagerToEOCommunicationForm = () => {
   const [form] = Form.useForm();
   const [isLoading, setIsLoading] = useState(false);
   const [to_name, setTo_name] = useState("");
@@ -33,10 +32,10 @@ const EOCommunicationToTMForm = () => {
           templateId,
           {
             to_name: to_name,
-            to_email: to_email, 
-            from_name: "Team Manager", 
-            subject: subject, 
-            message: userMessage, 
+            to_email: to_email,
+            from_name: "Team Manager",
+            subject: subject,
+            message: userMessage,
           },
           userId
         )
@@ -76,7 +75,7 @@ const EOCommunicationToTMForm = () => {
   };
 
   return (
-    <EOSideBar>
+    <TeamManagerSideBar>
       <Form
         form={form}
         style={{ margin: "auto", width: "75%" }}
@@ -97,7 +96,7 @@ const EOCommunicationToTMForm = () => {
             >
               New Message
             </h3>
-            <a href="/eo-communication-to-tm">
+            <a href="/team-manager-to-eo-communication">
               <CloseSquareOutlined
                 style={{
                   color: "white",
@@ -188,8 +187,8 @@ const EOCommunicationToTMForm = () => {
           </div>
         </div>
       </Form>
-    </EOSideBar>
+    </TeamManagerSideBar>
   );
 };
 
-export default EOCommunicationToTMForm;
+export default TeamManagerToEOCommunicationForm;

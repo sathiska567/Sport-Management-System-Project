@@ -64,6 +64,7 @@ const TeamManagerSideBar = ({ children }) => {
       "/TeamManager-create-team": "Create Team",
       "/TeamManager-assign-team-form": "Assign Members",
       "/TeamManager-profile": "My Profile",
+      "/team-manager-to-eo-communication": "Mail to Organizer",
     };
 
     return <p>{text[selectedMenuItem]}</p>;
@@ -195,10 +196,7 @@ const TeamManagerSideBar = ({ children }) => {
         >
           {isTeamManager ? (
             <>
-              <Menu.Item
-                key="/TeamManager-stats"
-                icon={<DashboardOutlined />}
-              >
+              <Menu.Item key="/TeamManager-stats" icon={<DashboardOutlined />}>
                 <NavLink to="/TeamManager-stats" activeClassName="active-link">
                   Dashboard
                 </NavLink>
@@ -217,6 +215,14 @@ const TeamManagerSideBar = ({ children }) => {
               </Menu.Item>
               <Menu.Item key="/TeamManager-profile" icon={<Profile />}>
                 <NavLink to="/TeamManager-profile">My Profile</NavLink>
+              </Menu.Item>
+              <Menu.Item
+                key="/team-manager-to-eo-communication"
+                icon={<MailOutlined />}
+              >
+                <NavLink to="/team-manager-to-eo-communication">
+                  Mail to Organizer
+                </NavLink>
               </Menu.Item>
             </>
           ) : (

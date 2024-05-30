@@ -31,11 +31,11 @@ const EOCommunicationToCoachForm = () => {
           serviceId,
           templateId,
           {
-            to_name: to_name, // Use to_name state variable
-            to_email: to_email, // Use to_email state variable
+            to_name: to_name, 
+            to_email: to_email, 
             from_name: "Event Organizer",
-            subject: subject, // Use subject state variable
-            message: userMessage, // Use userMessage state variable
+            subject: subject, 
+            message: userMessage, 
           },
           userId
         )
