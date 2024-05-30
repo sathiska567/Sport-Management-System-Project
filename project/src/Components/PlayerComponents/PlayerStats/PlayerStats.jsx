@@ -46,7 +46,7 @@ const PlayerStats = () => {
                 <h3>Time</h3>
                 <Clock
                   config={{
-                    height: "48px",
+                    height: "47px",
                     backgroundColor: "#241623",
                     textColor: "#fff",
                   }}

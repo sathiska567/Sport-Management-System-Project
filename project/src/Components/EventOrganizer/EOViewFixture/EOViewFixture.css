@@ -38,6 +38,7 @@ body {
 .tableContainer tbody {
   display: block;
   height: 400px;
+  width: 100%;
   overflow: auto;
 }
 

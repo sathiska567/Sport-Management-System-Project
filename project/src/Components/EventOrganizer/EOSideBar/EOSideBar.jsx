@@ -82,6 +82,8 @@ const EOSizeBar = ({ children }) => {
       "/update-fixture": "Update Fixture",
       "/eo-assign-staff": "Assign Staff",
       "#": "Bracket",
+      "/eo-communication-to-coach": "Mail to Coaches",
+      "/eo-communication-to-tm": "Mail to Team Manager",
       "/eo-profile": "My Profile",
       "/logoff": "Log Off",
     };
@@ -248,6 +250,19 @@ const EOSizeBar = ({ children }) => {
               </Menu.Item> */}
               <Menu.Item key="/eo-profile" icon={<Profile />}>
                 <NavLink to="/eo-profile">My Profile</NavLink>
+              </Menu.Item>
+              <Menu.Item
+                key="/eo-communication-to-coach"
+                icon={<MailOutlined />}
+              >
+                <NavLink to="/eo-communication-to-coach">
+                  Mail to Coaches
+                </NavLink>
+              </Menu.Item>
+              <Menu.Item key="/eo-communication-to-tm" icon={<MailOutlined />}>
+                <NavLink to="/eo-communication-to-tm">
+                  Mail to Team Manager
+                </NavLink>
               </Menu.Item>
             </>
           ) : (
