@@ -39,6 +39,7 @@ const eventViewRoute = require("./routes/EventViewRoute/EventView")
 const playerSearchProfile = require("./routes/PlayerSearchProfileRoute/PlayerSearchProfileRoute")
 const playerSearchTable = require("./routes/PlayerSearchTableRoute/PlayerSearchTableRoute")
 const EditEventTable = require("./routes/EditEventTableRoute/EditEventTableRoute")
+
 const refreeProfile = require("./routes/RefreeProfileRoute/RefreeProfileRoute")
 require("./db/mongoDb"); 
 
@@ -139,6 +140,7 @@ app.use("/api/v1/playerSearchProfile",playerSearchProfile )
 app.use("/api/v1/playerSearchTable",playerSearchTable)
 // edit event table and from
 app.use("/api/v1/EditEventTable",EditEventTable)
+
 //refree profile
 app.use("/api/v1/refreeProfile",refreeProfile)
 
