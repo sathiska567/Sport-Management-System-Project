@@ -52,13 +52,13 @@ const EOViewFixture = () => {
     }
   };
 
-// hanlde fixture shuffle
+  // hanlde fixture shuffle
   const handleShuffle = async (id) => {
     console.log(id);
     navigate("/shuffle-fixture", { state: { id: id } });
   };
 
-// hanlde fixture view
+  // hanlde fixture view
   const handleView = async (record) => {
     console.log(record.createdFixtureId);
     navigate("/final-fixture", {
@@ -66,7 +66,7 @@ const EOViewFixture = () => {
     });
   };
 
-// handle fixture delete function
+  // handle fixture delete function
   const handleDelete = async (id) => {
     console.log(id);
 
@@ -101,20 +101,17 @@ const EOViewFixture = () => {
     console.log("Date Selected: ", dateString);
   };
 
+  const handleCreateBracket = async (id) => {
+    console.log(id);
 
-  const handleCreateBracket = async(id)=>{
-     console.log(id);
-
-     try {
+    try {
       navigate("/eo-bracket", {
         state: { bracketDataId: id },
       });
-     } catch (error) {
-       message.success("Error deleting fixture data");
-     }
-  }
-
-
+    } catch (error) {
+      message.success("Error deleting fixture data");
+    }
+  };
 
   return (
     <EOSiderBar>
@@ -130,7 +127,7 @@ const EOViewFixture = () => {
               minHeight: 180,
               height: "100%",
               background: "whitesmoke",
-            }}
+            }} // Remove overflowY: "auto"
           >
             <div className="search">
               <Input.Search
@@ -263,13 +260,12 @@ const EOViewFixture = () => {
                       >
                         Delete
                       </Button>
-
-
                     </span>
                   ),
                 },
               ]}
               dataSource={createdFixture}
+              pagination={{ pageSize: 5 }}
             />
           </Content>
         </Layout>

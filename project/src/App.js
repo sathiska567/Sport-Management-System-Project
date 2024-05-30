@@ -49,7 +49,6 @@ import TeamManagerAssignMembersTable from "./Components/TeamManager/TeamManagerA
 import TeamManagerAssignMembersCoach from "./Components/TeamManager/TeamManagerAssignMembers/TeamManagerAssignMembersCoach.jsx";
 import TeamManagerAssignMembersPlayer from "./Components/TeamManager/TeamManagerAssignMembers/TeamManagerAssignMembersPlayer.jsx";
 import TeamManagerProfile from "./Components/TeamManager/TeamManagerProfile/TeamManagerProfile.jsx";
-
 import TournamentBracket from "./Pages/Organizer/Bracket.jsx";
 import CreateTeam from "./Pages/Coach/CreateTeam.jsx"
 import SelectPlayers from "./Pages/Coach/SelectPlayers.jsx"
@@ -59,13 +58,16 @@ import EditTabEvent from "./Components/EventOrganizer/EditTabEvent/EditTabEvent.
 // import TeamManagerAssign from "./Components/TeamManager/TeamManagerAssign/TeamManagerAssign.jsx";
 import TeamManagerAssignCoaches from "./Components/TeamManager/TeamManagerAssignCoaches/TeamManagerAssignCoaches.jsx"
 import EventList from "./Components/TeamManager/EventList/EventList.jsx"
-
 import SearchPlayerProfile from "./Components/PlayerComponents/SearchPlayerProfile/SearchPlayerProfile.jsx"
 import SearchPlayerTable from "./Components/PlayerComponents/SearchPlayerTable/SearchPlayerTable.jsx"
-
 import AdminCharts from "./Components/Admin/DashboardCharts/DashboardCharts.jsx"
 import EditEventTable from "./Components/EventOrganizer/EditEventTable/EditEventTable.jsx"
 import EOEditEventFormNew from "./Components/EventOrganizer/EditEventTable/EditEventFormNew.jsx"
+import EOCommunicationToCoach from "./Components/EventOrganizer/EOCommunication/EOCommunicationToCoach.jsx";
+import EOCommunicationToTM from "./Components/EventOrganizer/EOCommunication/EOCommunicationToTM.jsx";
+import EOCommunicationToCoachForm from "./Components/EventOrganizer/EOCommunication/EOCommunicationToCoachForm.jsx";
+import EOCommunicationToTMForm from "./Components/EventOrganizer/EOCommunication/EOCommunicationToTMForm.jsx";
+
 import { useState } from "react";
 
 function App() {
@@ -275,7 +277,7 @@ function App() {
           path="/eo-edit-event"
           element={
             <ProtectedRoute>
-              <EditEvent setId={ setEventId } />
+              <EditEvent setId={setEventId} />
             </ProtectedRoute>
           }
         />
@@ -564,119 +566,138 @@ function App() {
 
       <Routes>
         <Route
-        path="/EditTabEvent"
-        element={
-          <EditTabEvent itemId={eventId}/>
-        }
-        
-        >
-        </Route>
-
-     
+          path="/EditTabEvent"
+          element={<EditTabEvent itemId={eventId} />}
+        ></Route>
       </Routes>
-      
-       <Routes>
-          <Route
+
+      <Routes>
+        <Route
           path="/AssignCoaches"
           element={
             <ProtectedRoute>
-               <TeamManagerAssignCoaches/>
+              <TeamManagerAssignCoaches />
             </ProtectedRoute>
           }
-          >
+        ></Route>
+      </Routes>
 
-          </Route>
-        </Routes>
-
-        <Routes>
-          <Route
+      <Routes>
+        <Route
           path="/EventView"
           element={
             <ProtectedRoute>
-              <EventList/>
+              <EventList />
             </ProtectedRoute>
           }
-          >
-
-          </Route>
-        </Routes>
-        <Routes>
-          <Route
+        ></Route>
+      </Routes>
+      <Routes>
+        <Route
           path="/AdminCharts"
           element={
             <ProtectedRoute>
-              <AdminCharts/>
+              <AdminCharts />
             </ProtectedRoute>
           }
-          >
+        ></Route>
+      </Routes>
 
-          </Route>
-        </Routes>
-
-        <Routes>
-          <Route
+      <Routes>
+        <Route
           path="/SearchPlayerProfile"
           element={
             <ProtectedRoute>
-              <SearchPlayerProfile/>
+              <SearchPlayerProfile />
             </ProtectedRoute>
           }
-          >
+        ></Route>
+      </Routes>
 
-          </Route>
-        </Routes>
-
-        <Routes>
-          <Route
+      <Routes>
+        <Route
           path="/SearchPlayerTable"
           element={
             <ProtectedRoute>
-              <SearchPlayerTable/>
+              <SearchPlayerTable />
             </ProtectedRoute>
           }
-          >
+        ></Route>
+      </Routes>
 
-          </Route>
-        </Routes>
-
-        <Routes>
-          <Route
+      <Routes>
+        <Route
           path="/SearchPlayerTable"
           element={
             <ProtectedRoute>
-              <SearchPlayerTable/>
+              <SearchPlayerTable />
             </ProtectedRoute>
           }
-          >
+        ></Route>
+      </Routes>
 
-          </Route>
-        </Routes>
-        
-        <Routes>
-          <Route
+      <Routes>
+        <Route
           path="/EditEventTable"
           element={
             <ProtectedRoute>
-              <EditEventTable setId={setEventId}/>
+              <EditEventTable setId={setEventId} />
             </ProtectedRoute>
           }
-          >
+        ></Route>
+      </Routes>
 
-          </Route>
-        </Routes>
-
-        <Routes>
-          <Route 
+      <Routes>
+        <Route
           path="/EditEventFormNew/:id"
           element={
             <ProtectedRoute>
-              <EOEditEventFormNew/>
+              <EOEditEventFormNew />
             </ProtectedRoute>
           }
-          >
+        ></Route>
+      </Routes>
 
-          </Route>
-        </Routes>
+      <Routes>
+        <Route
+          path="/eo-communication-to-coach"
+          element={
+            <ProtectedRoute>
+              <EOCommunicationToCoach />
+            </ProtectedRoute>
+          }
+        ></Route>
+      </Routes>
+      <Routes>
+        <Route
+          path="/eo-communication-to-tm"
+          element={
+            <ProtectedRoute>
+              <EOCommunicationToTM />
+            </ProtectedRoute>
+          }
+        ></Route>
+      </Routes>
+      <Routes>
+        <Route
+          path="/eo-communication-to-coach-form"
+          element={
+            <ProtectedRoute>
+              <EOCommunicationToCoachForm />
+            </ProtectedRoute>
+          }
+        ></Route>
+      </Routes>
+      <Routes>
+        <Route
+          path="/eo-communication-to-tm-form"
+          element={
+            <ProtectedRoute>
+              <EOCommunicationToTMForm />
+            </ProtectedRoute>
+          }
+        ></Route>
+      </Routes>
 
       {/* <Routes>
         <Route
@@ -689,7 +710,6 @@ function App() {
         >         
         </Route>
       </Routes> */}
-
     </BrowserRouter>
 
     // <div className="App">
