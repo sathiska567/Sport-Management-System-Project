@@ -26,8 +26,8 @@ import EditEventForm from "./Components/EventOrganizer/EOEditEvent/EOEditEventFo
 import EOProfile from "./Components/EventOrganizer/EOProfile/EOProfile.jsx";
 import CoachAvailability from "./Components/Coach/CoachAvailability/CoachAvailability.jsx";
 import CoachStats from "./Components/Coach/CoachStats/CoachStats.jsx";
-import CoachCreateTeam from "./Components/Coach/CoachCreateTeam/CoachCreateTeam.jsx";
-import CoachEditTeam from "./Components/Coach/CoachEditTeam/CoachEditTeam.jsx";
+//import CoachCreateTeam from "./Components/Coach/CoachCreateTeam/CoachCreateTeam.jsx";
+//import CoachEditTeam from "./Components/Coach/CoachEditTeam/CoachEditTeam.jsx";
 import CoachReviewPlayers from "./Components/Coach/CoachReviewPlayers/CoachReviewPlayers.jsx";
 import CoachProfile from "./Components/Coach/CoachProfile/CoachProfile.jsx";
 import EOViewFixture from "./Components/EventOrganizer/EOViewFixture/EOViewFixture.jsx";
@@ -50,11 +50,13 @@ import TeamManagerAssignMembersCoach from "./Components/TeamManager/TeamManagerA
 import TeamManagerAssignMembersPlayer from "./Components/TeamManager/TeamManagerAssignMembers/TeamManagerAssignMembersPlayer.jsx";
 import TeamManagerProfile from "./Components/TeamManager/TeamManagerProfile/TeamManagerProfile.jsx";
 
-import TournamentBracket from "./Pages/Organizer/Bracket.jsx";
-import CreateTeam from "./Pages/Coach/CreateTeam.jsx"
-import SelectPlayers from "./Pages/Coach/SelectPlayers.jsx"
-import EditTeam from "./Pages/Coach/EditTeam.jsx"
-import UpdateTeam from "./Pages/Coach/UpdateTeam.jsx"
+import TournamentBracket from "./Components/EventOrganizer/EOBracket/Bracket.jsx";
+import CoachCreateTeam from "./Components/Coach/CoachCreateTeam/CreateTeam.jsx";
+import SelectPlayers from "./Components/Coach/CoachCreateTeam/SelectPlayers.jsx"
+import CoachEditTeam from "./Components/Coach/CoachEditTeam/EditTeam.jsx";
+import UpdateTeam from "./Components/Coach/CoachEditTeam/UpdateTeam.jsx"
+
+
 import EditTabEvent from "./Components/EventOrganizer/EditTabEvent/EditTabEvent.jsx"
 // import TeamManagerAssign from "./Components/TeamManager/TeamManagerAssign/TeamManagerAssign.jsx";
 import TeamManagerAssignCoaches from "./Components/TeamManager/TeamManagerAssignCoaches/TeamManagerAssignCoaches.jsx"
@@ -69,10 +71,9 @@ import EOEditEventFormNew from "./Components/EventOrganizer/EditEventTable/EditE
 import { useState } from "react";
 
 function App() {
-  const [ eventId, setEventId]=useState("");
+  const [eventId, setEventId] = useState("");
 
   const isLoggedIn = window.localStorage.getItem("isLoggedIn");
-
   console.log(isLoggedIn, "login");
 
   return (
@@ -275,7 +276,7 @@ function App() {
           path="/eo-edit-event"
           element={
             <ProtectedRoute>
-              <EditEvent setId={ setEventId } />
+              <EditEvent setId={setEventId} />
             </ProtectedRoute>
           }
         />
@@ -554,141 +555,144 @@ function App() {
       </Routes>
 
       <Routes>
-        <Route path="/brackets" element={<TournamentBracket />} />
-        <Route path="/create-team" element={<CreateTeam />} />
-        <Route path="/select-players" element={<SelectPlayers />} />
-        {/* <Route path="/create-match" element={<CreateMatch />} /> */}
-        <Route path="/edit-team" element={<EditTeam />} />
-        <Route path="/update-team" element={<UpdateTeam />} />
+        <Route
+          path="/EditTabEvent"
+          element={
+            <EditTabEvent itemId={eventId} />
+          }
+
+        >
+        </Route>
+
+
       </Routes>
 
       <Routes>
         <Route
-        path="/EditTabEvent"
-        element={
-          <EditTabEvent itemId={eventId}/>
-        }
-        
-        >
-        </Route>
-
-     
-      </Routes>
-      
-       <Routes>
-          <Route
           path="/AssignCoaches"
           element={
             <ProtectedRoute>
-               <TeamManagerAssignCoaches/>
+              <TeamManagerAssignCoaches />
             </ProtectedRoute>
           }
-          >
+        >
 
-          </Route>
-        </Routes>
+        </Route>
+      </Routes>
 
-        <Routes>
-          <Route
+      <Routes>
+        <Route
           path="/EventView"
           element={
             <ProtectedRoute>
-              <EventList/>
+              <EventList />
             </ProtectedRoute>
           }
-          >
+        >
+        </Route>
+      </Routes>
 
-          </Route>
-        </Routes>
-        <Routes>
-          <Route
+
+      <Routes>
+        <Route
           path="/AdminCharts"
           element={
             <ProtectedRoute>
-              <AdminCharts/>
+              <AdminCharts />
             </ProtectedRoute>
           }
-          >
+        >
 
-          </Route>
-        </Routes>
+        </Route>
+      </Routes>
 
-        <Routes>
-          <Route
+      <Routes>
+        <Route
           path="/SearchPlayerProfile"
           element={
             <ProtectedRoute>
-              <SearchPlayerProfile/>
+              <SearchPlayerProfile />
             </ProtectedRoute>
           }
-          >
+        >
 
-          </Route>
-        </Routes>
+        </Route>
+      </Routes>
 
-        <Routes>
-          <Route
+      <Routes>
+        <Route
           path="/SearchPlayerTable"
           element={
             <ProtectedRoute>
-              <SearchPlayerTable/>
+              <SearchPlayerTable />
             </ProtectedRoute>
           }
-          >
+        >
 
-          </Route>
-        </Routes>
+        </Route>
+      </Routes>
 
-        <Routes>
-          <Route
+      <Routes>
+        <Route
           path="/SearchPlayerTable"
           element={
             <ProtectedRoute>
-              <SearchPlayerTable/>
+              <SearchPlayerTable />
             </ProtectedRoute>
           }
-          >
+        >
 
-          </Route>
-        </Routes>
-        
-        <Routes>
-          <Route
+        </Route>
+      </Routes>
+
+      <Routes>
+        <Route
           path="/EditEventTable"
           element={
             <ProtectedRoute>
-              <EditEventTable setId={setEventId}/>
+              <EditEventTable setId={setEventId} />
             </ProtectedRoute>
           }
-          >
+        >
 
-          </Route>
-        </Routes>
+        </Route>
+      </Routes>
 
-        <Routes>
-          <Route 
+      <Routes>
+        <Route
           path="/EditEventFormNew/:id"
           element={
             <ProtectedRoute>
-              <EOEditEventFormNew/>
+              <EOEditEventFormNew />
             </ProtectedRoute>
           }
-          >
+        >
 
-          </Route>
-        </Routes>
+        </Route>
+      </Routes>
 
       {/* <Routes>
         <Route
         path="/TeamManagerAssign"
        element={
         <ProtectedRoute>
-          <TeamManagerAssign />
+          <TeamManagerAssign/>
         </ProtectedRoute>
        }
-        >         
+        >
+         
         </Route>
-      </Routes> */}
+         </Routes> */}
+
+
+      <Routes>
+        <Route path="/brackets" element={<ProtectedRoute><TournamentBracket /></ProtectedRoute>} />
+        <Route path="/create-team" element={<ProtectedRoute><CoachCreateTeam /></ProtectedRoute>} />
+        <Route path="/select-players" element={<ProtectedRoute><SelectPlayers /></ProtectedRoute>} />
+        {/* <Route path="/create-match" element={<CreateMatch />} /> */}
+        <Route path="/edit-team" element={<ProtectedRoute><CoachEditTeam /></ProtectedRoute>} />
+        <Route path="/update-team" element={<ProtectedRoute><UpdateTeam /></ProtectedRoute>} />
+      </Routes>
 
     </BrowserRouter>
 

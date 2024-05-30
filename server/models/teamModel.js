@@ -7,11 +7,11 @@ const teamSchema = new mongoose.Schema({
 
   coach_id: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Coach'
+    ref: 'coachProfile'
   },
   players: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Player'
+    ref: 'Player(Aatheek)'
   }],
   match_id: {
     type: mongoose.Schema.Types.ObjectId,

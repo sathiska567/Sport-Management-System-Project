@@ -1,0 +1,30 @@
+
+.table{
+  margin: 50px;
+  margin-top: 100px;
+}
+
+.container{
+  display: flex;
+  flex-direction: column;
+}
+
+.buttonContainer{
+  margin-top: 0;
+  margin-right: 20px;
+}
+
+
+
+.ant-table-wrapper .ant-table-thead > tr > th,
+.ant-table-wrapper .ant-table-thead > tr > td {
+  background-color: #15295E;
+  color: #fff;
+  font-weight: bolder;
+}
+
+
+.ant-table-cell {
+  padding: 4px; 
+}
+

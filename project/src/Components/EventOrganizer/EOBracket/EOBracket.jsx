@@ -1,44 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./EOBracket.css";
 import EOSizeBar from "../EOSideBar/EOSideBar";
-import { useLocation } from "react-router-dom";
-import { message } from "antd";
-import axios from "axios";
 
 const Bracket = () => {
   const [teams, setTeams] = useState([]);
   const [bracket, setBracket] = useState([]);
-  const [TeamBracket,setTeamBracket] = useState([]);
-  const location = useLocation();
-
-  console.log(location);
-
-  // const getTeamData = async()=>{
-  //     try {
-  //       const response = await axios.get(`http://localhost:8080/api/v1/event/${location.state.bracketDataId}`);
-        
-  //     } catch (error) {
-  //        message.error("Error fetching team data");
-  //     }
-  // }
-
-
-    //  GET ALL CREATED FIXTURE
-    const getFixtureData = async () => {
-      try {
-        const response = await axios.get(
-          "http://localhost:8080/api/v1/get/get-fixture"
-        );
-        console.log(response.data.data[0].nameOfTheTeam);
-        setTeamBracket(response.data.data)
-      } catch (error) {
-        message.error("Error fetching fixture data");
-      }
-    };
-
-  useEffect(()=>{
-    getFixtureData();
-  },[])
 
   const handleTeamNumberChange = (e) => {
     const num = e.target.value;
@@ -85,6 +51,13 @@ const Bracket = () => {
 
   return (
     <EOSizeBar>
+
+
+
+
+
+
+      {/*
       <div className="outer-container">
         <div className="inputContainer">
           <label>
@@ -139,6 +112,8 @@ const Bracket = () => {
           </div>
         )}
       </div>
+
+                      */}
     </EOSizeBar>
   );
 };

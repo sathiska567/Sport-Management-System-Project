@@ -44,6 +44,8 @@ const CoachSidebar = ({ children }) => {
   const location = useLocation();
   // set name
   const [currentUserName, setCurrentUsername] = useState();
+  const [currentCoachId, setCurrentCoachId] = useState();
+
   const [isAdmin, setIsAdmin] = useState(false);
   const [positionNotification, setPositionNotification] = useState();
   const [isCoach, setIsCoach] = useState(false);
@@ -98,6 +100,10 @@ const CoachSidebar = ({ children }) => {
       "/coach-availability": "My Availability",
       "/coach-review-players": "Review Players",
       "/coach-profile": "My Profile",
+      "/create-team": "Create Team",
+      "/edit-team": "Edit Team",
+      "/select-players": "Select players for the team",
+      "/update-team": "Update the team details and players"
     };
 
     return <p>{text[selectedMenuItem]}</p>;
@@ -115,8 +121,10 @@ const CoachSidebar = ({ children }) => {
         }
       );
 
-      setIsCoach(res.data.user.isCoach);
-      setCurrentUsername(res.data.user.username);
+      setIsCoach(res.data.user.isCoach)
+      setCurrentUsername(res.data.user.username)
+      setCurrentCoachId(res.data.user._id)
+
     } catch (error) {
       message.error("Error have inside the Get currentUserData function");
     }
@@ -173,7 +181,7 @@ const CoachSidebar = ({ children }) => {
 
   // JSX structure for the Navbar component
   return (
-    <Layout className="ant-layout-sider-children">
+    <Layout className="ant-layout-sider-children" style={{height:'100vh'}}>
       {/* Sidebar component */}
       <Sider
         trigger={null}
@@ -244,6 +252,18 @@ const CoachSidebar = ({ children }) => {
                   <span className="nav-text">My Availability</span>
                 </NavLink>
               </Menu.Item>
+
+              <Menu.Item key="/coach-create-team" icon={<EditOutlined />}>
+                <NavLink to={`/create-team?coach_id=${currentCoachId}`}>
+                  <span className="nav-text">Create Team</span>
+                </NavLink>
+              </Menu.Item>
+              <Menu.Item key="/coach-edit-team" icon={<FormOutlined />}>
+                <NavLink to={`/edit-team?coach_id=${currentCoachId}`}>
+                  <span className="nav-text">Edit Team</span>
+                </NavLink>
+              </Menu.Item>
+
               <Menu.Item
                 key="/coach-review-players"
                 icon={<CalendarOutlined />}
