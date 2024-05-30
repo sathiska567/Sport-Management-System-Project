@@ -64,6 +64,8 @@ import SearchPlayerProfile from "./Components/PlayerComponents/SearchPlayerProfi
 import SearchPlayerTable from "./Components/PlayerComponents/SearchPlayerTable/SearchPlayerTable.jsx"
 
 import AdminCharts from "./Components/Admin/DashboardCharts/DashboardCharts.jsx"
+
+import RefreeProfileNew from "./Components/Referee/RefreeProfileNew/RefreeProfileNew.jsx";
 import { useState } from "react";
 
 function App() {
@@ -636,6 +638,20 @@ function App() {
 
           </Route>
         </Routes>
+
+        <Routes>
+        <Route
+        path="/RefreeProfileNew"
+        element={
+          <ProtectedRoute>
+            <RefreeProfileNew/>
+          </ProtectedRoute>
+        }
+        
+        >
+
+        </Route>
+      </Routes>
 
       {/* <Routes>
         <Route
