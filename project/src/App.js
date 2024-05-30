@@ -567,8 +567,8 @@ function App() {
 
       </Routes>
 
-       <Routes>
-          <Route
+      <Routes>
+        <Route
           path="/AssignCoaches"
           element={
             <ProtectedRoute>
@@ -592,85 +592,84 @@ function App() {
         </Route>
       </Routes>
 
-          </Route>
-        </Routes>
-        <Routes>
-          <Route
+
+      <Routes>
+        <Route
           path="/AdminCharts"
           element={
             <ProtectedRoute>
-              <AdminCharts/>
+              <AdminCharts />
             </ProtectedRoute>
           }
-          >
+        >
 
-          </Route>
-        </Routes>
+        </Route>
+      </Routes>
 
-        <Routes>
-          <Route
+      <Routes>
+        <Route
           path="/SearchPlayerProfile"
           element={
             <ProtectedRoute>
-              <SearchPlayerProfile/>
+              <SearchPlayerProfile />
             </ProtectedRoute>
           }
-          >
+        >
 
-          </Route>
-        </Routes>
+        </Route>
+      </Routes>
 
-        <Routes>
-          <Route
+      <Routes>
+        <Route
           path="/SearchPlayerTable"
           element={
             <ProtectedRoute>
-              <SearchPlayerTable/>
+              <SearchPlayerTable />
             </ProtectedRoute>
           }
-          >
+        >
 
-          </Route>
-        </Routes>
+        </Route>
+      </Routes>
 
-        <Routes>
-          <Route
+      <Routes>
+        <Route
           path="/SearchPlayerTable"
           element={
             <ProtectedRoute>
-              <SearchPlayerTable/>
+              <SearchPlayerTable />
             </ProtectedRoute>
           }
-          >
+        >
 
-          </Route>
-        </Routes>
-        
-        <Routes>
-          <Route
+        </Route>
+      </Routes>
+
+      <Routes>
+        <Route
           path="/EditEventTable"
           element={
             <ProtectedRoute>
-              <EditEventTable setId={setEventId}/>
+              <EditEventTable setId={setEventId} />
             </ProtectedRoute>
           }
-          >
+        >
 
-          </Route>
-        </Routes>
+        </Route>
+      </Routes>
 
-        <Routes>
-          <Route 
+      <Routes>
+        <Route
           path="/EditEventFormNew/:id"
           element={
             <ProtectedRoute>
-              <EOEditEventFormNew/>
+              <EOEditEventFormNew />
             </ProtectedRoute>
           }
-          >
+        >
 
-          </Route>
-        </Routes>
+        </Route>
+      </Routes>
 
       {/* <Routes>
         <Route
