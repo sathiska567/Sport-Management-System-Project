@@ -36,6 +36,8 @@ const PlayerAvailability = () => {
   const [createdEvent, setCreateEvent] = useState([]);
   const [playerId, setPlayerId] = useState([]);
   // const [available, setAvailable] = useState();
+  const [addedEvents, setAddedEvents] = useState(new Set());
+
   var available;
 
   const currentUserData = async () => {
@@ -54,7 +56,7 @@ const PlayerAvailability = () => {
     }
   };
 
-  const hanldeAvailability = async (id, isChecked) => {
+  const handleAvailability = async (id, isChecked) => {
     // Update your state or data here based on the checkbox state
     console.log("Event Id : ", id);
     console.log("Player Id : ", playerId);
@@ -69,6 +71,7 @@ const PlayerAvailability = () => {
 
       if (availabilityResponse.data.success) {
         message.success(availabilityResponse.data.message);
+        setAddedEvents(prev => new Set(prev).add(id));
 
       } else {
         message.error(availabilityResponse.data.message);
@@ -93,7 +96,12 @@ const PlayerAvailability = () => {
       if (removeResponse.data.success) {
         available = removeResponse.data.setAvailability.availability;
         console.log("current available", available);
-        message.success("Availability Remove Successfull !");
+        message.success("Availability Remove Successful !");
+        setAddedEvents(prev => {
+          const newSet = new Set(prev);
+          newSet.delete(id);
+          return newSet;
+        });
 
       } else {
         message.error(removeResponse.data.message);
@@ -229,9 +237,10 @@ const PlayerAvailability = () => {
                           marginBottom: "auto",
                           width: "70px",
                         }}
-                        onClick={() => hanldeAvailability(record._id, true)}
+                        onClick={() => handleAvailability(record._id, true)}
+                        disabled={addedEvents.has(record._id)}
                       >
-                        Add
+                        {addedEvents.has(record._id) ? "Added" : "Add"}
                       </Button>
 
 
