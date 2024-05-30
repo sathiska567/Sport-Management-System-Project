@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 //schema
-const AssignMemberSchema = mongoose.Schema({
+const AssignMemberSchema = new mongoose.Schema({
     sid: String,
     name: String,
     location: String,
@@ -11,6 +11,8 @@ const AssignMemberSchema = mongoose.Schema({
     }
 }, {
     timestamps: true
-})
-const assignModel = mongoose.model("assign", AssignMemberSchema)
-module.exports = assignModel;
+});
+
+const AssignModel = mongoose.model("Assign", AssignMemberSchema);
+
+module.exports = AssignModel;

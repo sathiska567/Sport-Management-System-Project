@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 //schema
-const AssignMemberSchema = mongoose.Schema({
+const AssignEventCoachesSchema = new mongoose.Schema({
    
     evename: String,
     teamname: String,
@@ -10,5 +10,5 @@ const AssignMemberSchema = mongoose.Schema({
     timestamps: true
 })
 
-const assignEventModel = mongoose.model("assignEvent", AssignMemberSchema)
-module.exports = assignEventModel;
+const assignEventCoachesModel = mongoose.model("assignEventCoaches", AssignEventCoachesSchema)
+module.exports = assignEventCoachesModel;

@@ -1,4 +1,4 @@
-const assignModel = require('../../models/TeamMemberAssignModel/TeamMemberAssign');
+const assignModel = require('../../models/TeamMemberAssignModel/TeamMemberAssignModel');
 
 const assignMember = async (req, res) => {
     try {

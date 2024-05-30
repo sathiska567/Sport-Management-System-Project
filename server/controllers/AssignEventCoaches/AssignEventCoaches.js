@@ -1,4 +1,4 @@
-const assignEventModel = require('../../models/AssignEventCoaches/AssignEventCoaches');
+const assignEvenCoachestModel = require('../../models/AssignEventCoaches/AssignEventCoaches');
 
 const assignEventCoaches = async (req, res) => {
     try {
