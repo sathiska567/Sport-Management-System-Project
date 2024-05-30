@@ -4,11 +4,11 @@ const createEventController = async(req,res)=>{
    try {
 
       const {nameOfTheEvent,location,numberOfTeams} = req.body;
-      console.log(nameOfTheEvent,location,numberOfTeams);
+      console.log(nameOfTheEvent,location[0],numberOfTeams);
 
       const data = new createEventModel({
          nameOfTheEvent:nameOfTheEvent,
-         location:location,
+         location:location[0],
          numberOfTeams:numberOfTeams
       })
 
