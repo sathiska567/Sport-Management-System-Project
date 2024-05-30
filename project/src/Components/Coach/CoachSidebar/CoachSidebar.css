@@ -1,7 +1,7 @@
 body {
   height: 100vh !important;
   width: 100vw;
-  overflow-y: auto;
+  overflow-y: hidden;
 }
 
 .ant-layout-sider-children {

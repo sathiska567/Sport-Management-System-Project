@@ -36,18 +36,9 @@ const searchLocationRoute = require("./routes/PlayerAvailabilityRoute/SerachLoca
 const eventOrganizerBracketRoute = require("./routes/EventOrganizerBracketRoute/EventOrganizerBracketRoute")
 const CoachesAssignDeleteRoute = require('./routes/CoachesAssignDeleteRoute/CoachesAssignDeleteRoute')
 const eventViewRoute = require("./routes/EventViewRoute/EventView")
-
-
-const organizerRoutes = require("./routes/organizerRoutes")
-const coachRoutes = require("./routes/coachRoutes")
-
-const TeamMemberAssign = require("./routes/TeamMemberAssign/TeamMemberAssign")
-const AssignEventCoaches = require("./routes/AssignEventCoaches/AssignEventCoaches")
-
 const playerSearchProfile = require("./routes/PlayerSearchProfileRoute/PlayerSearchProfileRoute")
 const playerSearchTable = require("./routes/PlayerSearchTableRoute/PlayerSearchTableRoute")
 const EditEventTable = require("./routes/EditEventTableRoute/EditEventTableRoute")
-
 require("./db/mongoDb"); 
 
 const app = express();
@@ -141,24 +132,12 @@ app.use("/api/v1/eventOrganizerBracket",eventOrganizerBracketRoute)
 //coaches assign and delete
 app.use("/api/v1/coaches-assign-delete",CoachesAssignDeleteRoute)
 app.use("/api/v1/eventView",eventViewRoute)
-
-
-app.use("/api/v1/organizer", organizerRoutes)
-app.use("/api/v1/coach", coachRoutes)
-
-
-//AssignCrud
-app.use("/api/v1/assign-event-coaches",AssignEventCoaches)
-
-app.use("/api/v1/assign", TeamMemberAssign)
-
 // player search profile
 app.use("/api/v1/playerSearchProfile",playerSearchProfile )
 // player search Table
 app.use("/api/v1/playerSearchTable",playerSearchTable)
 // edit event table and from
 app.use("/api/v1/EditEventTable",EditEventTable)
-
 
 // //jwt
 // app.post('/user/login', async (req, res) => {
