@@ -20,6 +20,7 @@ export default function Fixture() {
 
   // console.log(location);
 
+// get created fixture
 const getOneCreatedFixture = async () => {
     try {
       const id = location.state.id
@@ -36,6 +37,7 @@ const getOneCreatedFixture = async () => {
     }
   }
 
+// Random shuffle data
 const ShuffleData = () => {
     let i = 0;
     console.log(teamDetails.length);
@@ -59,6 +61,7 @@ const ShuffleData = () => {
 
   }
 
+// shuffle data store
   const shuffleDataStore = async () => {
     try {
       const id = location.state.id

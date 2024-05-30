@@ -38,7 +38,7 @@ body {
         text-align: center;
       }
       
-      .UserApplicationFormApplication {
+      /* .UserApplicationFormApplication {
         max-height: 500px; 
         overflow-y: auto; 
         border: 1px solid #e0f7ff;
@@ -46,7 +46,7 @@ body {
         background-color: #D6F5FF;
         color: #022C3B;
         font-weight: 500;
-      }
+      } */
       
       /* Style for Submit button */
       
@@ -77,6 +77,7 @@ body {
       label {
         margin-bottom: 8px;
         display: block;
+        /* background-color: red; */
       }
       
       input,
@@ -211,21 +212,21 @@ body {
       }
       
       
-      .UserApplicationFormHeader {
+      /* .UserApplicationFormHeader {
         display: flex;
         justify-content: space-between;
         align-items: center;
         background-color: #022C3B;
         margin: 0;
         padding: 10px;
-      }
+      } */
       
-      .UserApplicationFormHeader h3 {
+      /* .UserApplicationFormHeader h3 {
         color: #e0f7ff;
-        margin: 0;
-        flex: 1; /* Take up remaining space, centering the h3 */
-        text-align: center;
-      }
+        margin: 0; */
+        /* flex: 1; Take up remaining space, centering the h3 */
+        /* text-align: center;
+      } */
       
       .UserApplicationFormApplication {
         max-height: 500px; 
@@ -239,10 +240,10 @@ body {
       
       /* Style for Submit button */
       
-      .UserApplicationCloseBtn {
+      /* .UserApplicationCloseBtn {
       position : relative;
         font-size: 22px;
         color: #e0f7ff;
         cursor: pointer;
-      }
+      } */
       

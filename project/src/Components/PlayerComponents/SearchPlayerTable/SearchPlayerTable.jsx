@@ -1,44 +1,44 @@
 import React, { useState, useEffect } from 'react'
-import "./EventList.css";
+import './SearchPlayerTab.css'
 import axios from "axios";
 import { Layout, Button, Input, Table } from 'antd';
 import { useLocation, useNavigate } from 'react-router-dom';
-import TeamManagerSideBar from '../TeamManagerSideBar/TeamManagerSideBar';
+import PlayerSideBar from '../PlayerSideBar/PlayerSideBar';
 const { Content } = Layout;
 
-export default function ViewMatch() {
+
+axios.defaults.baseURL = "http://localhost:8080/api/v1/playerSearchTable"
+
+export default function SearchPlayerProfile() { 
     const [userRole, setUserRole] = useState("");
     const [Userlocation, setUserLocation] = useState("");
     const [userApplicationData, setUserApplicationData] = useState([]);
     const navigate = useNavigate();
     const location = useLocation([]);
-    const [teamname, setTeamName] = useState("");
-    const [evedate, setEventDate] = useState("");
+    const [email, setEmail] = useState("");
+   
 
 
     const [dataSource, setDataSource] = useState([]);
 
 
 
+
+
     // Filter userApplicationData based on userRole and Userlocation
-    const handleDateSearch = (value) => {
-        console.log("Event Date Searched: ", value);
-        setEventDate(value);
-    };
+    
 
     const handleTeamNameSearch = (value) => {
         console.log("Team Name Searched: ", value);
-        setTeamName(value);
+        setEmail(value);
     };
 
 
 
     // getdata  and search players
-    const getFetchData = async (teamname, evedate) => {
-        axios.defaults.baseURL = "http://localhost:8080/api/v1/eventView"
-        
+    const getFetchData = async (email) => {
         try {
-            const response = await axios.get(`/get-assignee-Event-Member?q=${teamname}&date=${evedate}`);
+            const response = await axios.get(`/get-search-player-profile?q=${email}&role=player`);
             console.log(response.data);
     
             if (response.data.success) {
@@ -51,14 +51,14 @@ export default function ViewMatch() {
     
 
     useEffect(() => {
-        getFetchData(teamname, evedate);
-    }, [teamname,evedate])
+        getFetchData(email);
+    }, [email])
 
     // End
 
     // JSX structure for the Navbar component
     return (
-        <TeamManagerSideBar>
+        <PlayerSideBar>
             <Layout className="ant-layout-sider-children">
                 {/* Main content layout */}
                 <Layout>
@@ -74,9 +74,9 @@ export default function ViewMatch() {
                         }}
                     >
                         {/* Search section */}
-                        <div className="search">
+                        <div className="searched">
                             <Input.Search
-                                placeholder="Search by Team Name"
+                                placeholder="Search by Email"
                                 styles={{
                                     marginBottom: "9",
                                 }}
@@ -84,15 +84,7 @@ export default function ViewMatch() {
                                 // onChange={(e) => handleEventNameSearch(e.target.value)}
                                 allowClear
                             />
-                            <Input.Search
-                                type='date'
-                                styles={{
-                                    marginBottom: "9",
-                                }}
-                                onSearch={handleDateSearch}
-                                // onChange={(e) => handleTeamNameSearch(e.target.value)}
-                                allowClear
-                            />
+                            
                         </div>
                         {/* Table section */}
                         <div className="tabContainer">
@@ -101,33 +93,32 @@ export default function ViewMatch() {
                                 columns={[
 
                                     {
-                                        title: "Event Name",
-                                        dataIndex: "EventName",
-                                        key: "EventName",
+                                        title: "PID",
+                                        dataIndex: "PID",
+                                        key: "PID",
                                         render: (text, record) => (
-                                            <span>{record. evename}</span>
+                                            <span>{record._id}</span>
                                         )
                                     },
 
                                     {
-                                        title: " Team Name",
-                                        dataIndex: "TeamName",
-                                        key: "TeamName",
+                                        title: " Name",
+                                        dataIndex: "Name",
+                                        key: "Name",
                                         render: (text, record) => (
-                                            <span>{record.teamname}</span>
+                                            <span>{record.username}</span>
                                         )
                                     },
 
                                     
                                     {
-                                        title: "Event Date",
-                                        dataIndex: "EventDate",
-                                        key: "EventDate",
+                                        title: "Email",
+                                        dataIndex: "Email",
+                                        key: "Email",
                                         render: (text, record) => (
-                                            <span>{record. evedate}</span>
+                                            <span>{record.email}</span>
                                         )
                                     },
-                                   
                                     {
                                         title: "Actions",
                                         dataIndex: "Actions",
@@ -143,23 +134,7 @@ export default function ViewMatch() {
                                                 <Button
                                                     type="ghost"
                                                     ghost
-                                                    href="/TeamManagerAssign"
-                                                    style={{
-                                                        backgroundColor: "blue",
-                                                        color: "#fff",
-                                                        fontSize: "14px",
-                                                        marginRight: "10px",
-                                                        borderRadius: "8px",
-                                                        marginTop: "auto",
-                                                        marginBottom: "auto",
-                                                    }}
-                                                >
-                                                    Assign Coaches
-                                                </Button>
-                                                <Button
-                                                    type="ghost"
-                                                    ghost
-                                                    href="/TeamManagerAssign"
+                                                    href="/PlayerGetProfile"
                                                     style={{
                                                         backgroundColor: "green",
                                                         color: "#fff",
@@ -170,7 +145,7 @@ export default function ViewMatch() {
                                                         marginBottom: "auto",
                                                     }}
                                                 >
-                                                    Assign Players
+                                                    VIEW
                                                 </Button>
                                             </span>
                                         ),
@@ -190,6 +165,6 @@ export default function ViewMatch() {
                     </Content>
                 </Layout>
             </Layout>
-            </TeamManagerSideBar>
+        </PlayerSideBar>
     );
 }

@@ -42,6 +42,7 @@ const ApplyPosition = () => {
   const [districtError, setDistrictError] = useState(false);
   const [experienceError, setExperienceError] = useState(false);
 
+// fetch role values
   useEffect(() => {
     const fetchUserRoles = async () => {
       try {
@@ -56,6 +57,7 @@ const ApplyPosition = () => {
     fetchUserRoles();
   }, []);
 
+  // fetch distric values
   useEffect(() => {
     const fetchDistricts = async () => {
       try {
@@ -187,6 +189,7 @@ const handleExperienceChange = (e) => {
     );
 
     try {
+      // pass submit data to the backend
       const res = await axios.post(
         "http://localhost:8080/api/v1/user/apply-position",
 

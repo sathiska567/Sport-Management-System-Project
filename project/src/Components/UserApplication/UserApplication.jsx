@@ -42,6 +42,7 @@ const UserApplication = () => {
   const [applyingUserEmail,setApplyingUserEmail] = useState("");
   // const location = useLocation();
 
+// handle user status
 const handleStatus = async (id, status) => {
     try {
       // console.log(id,status);
@@ -50,9 +51,8 @@ const handleStatus = async (id, status) => {
         { id: id, status: status}
       );
 
-      message.success("Your Approval is Successfull");
+      message.success("Your Approval is Successful");
       navigate("/UserValidation", { state: { status: status } });
-
       setGetApproval(res.data.UpdatedUser.status);
 
     } catch (error) {
@@ -68,9 +68,10 @@ const handleStatus = async (id, status) => {
 
     } catch (error) {
       console.log("error found in gettign aproveResponse");
-      
     }
   };
+
+// handle updated function
 
   const handleUpdatedDetails = async (updatedId) => {
     try {
@@ -95,6 +96,7 @@ const handleStatus = async (id, status) => {
     }
   };
 
+  // handle pending function
   const handlePending = async () => {
     try {
       message.success("Pending added successfull");
@@ -104,6 +106,7 @@ const handleStatus = async (id, status) => {
     }
   };
 
+// handle reject function
   const handleReject = async (deletedUserId,email) => {
     try {
       console.log(deletedUserId,email);

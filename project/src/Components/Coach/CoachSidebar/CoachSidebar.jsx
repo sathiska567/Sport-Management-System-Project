@@ -49,6 +49,28 @@ const CoachSidebar = ({ children }) => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [positionNotification, setPositionNotification] = useState();
   const [isCoach, setIsCoach] = useState(false);
+  const currentPath = location.pathname.split("/")[1];
+
+  // Helper function to check if the current URL matches a specific path
+  const isPathActive = (path) => {
+    switch (path) {
+      case "/coach-stats":
+        return location.pathname === "/coach-stats";
+      case "/coach-availability":
+        return location.pathname === "/coach-availability";
+      case "/coach-review-players":
+        return location.pathname === "/coach-review-players";
+      case "/coach-profile":
+        return location.pathname === "/coach-profile";
+      case "/apply-position":
+        return location.pathname === "/apply-position";
+      case "logoff":
+        return false; // Since there's no dedicated URL for the "Log Off" item
+      default:
+        return false;
+    }
+  };
+
   // Event handlers for mouse hover events
   const handleHoverButton1 = () => {
     setIsHoveredButton1(true);
@@ -88,7 +110,7 @@ const CoachSidebar = ({ children }) => {
   };
 
   //GET CURRENT USER DATA
-const currentUserData = async () => {
+  const currentUserData = async () => {
     try {
       const res = await axios.get(
         "http://localhost:8080/api/v1/user/getCurrentUser",
@@ -108,8 +130,6 @@ const currentUserData = async () => {
     }
   };
 
-
-  
   // URL for the profile avatar
   const url =
     "https://static.vecteezy.com/system/resources/previews/009/383/461/non_2x/man-face-clipart-design-illustration-free-png.png";
@@ -200,25 +220,38 @@ const currentUserData = async () => {
           theme="dark"
           mode="inline"
           defaultSelectedKeys={["/eo-stats"]}
-          selectedKeys={[location.pathname]}
+          
           style={{
             backgroundColor: "#15295E",
             fontSize: "16px",
             height: "82vh",
           }}
         >
-          <Menu.Item key="/coach-stats" icon={<DashboardOutlined />}>
+          <Menu.Item
+            key="/coach-stats"
+            icon={<DashboardOutlined />}
+            className={
+              isPathActive("/coach-stats") ? "ant-menu-item-selected" : ""
+            }
+          >
             <NavLink to="/coach-stats">Dashboard</NavLink>
           </Menu.Item>
 
           {isCoach ? (
-            <div style={{ paddingLeft: "20px" }}>
-              <Menu.Item key="/coach-availability" icon={<EditOutlined />}>
+            <>
+              <Menu.Item
+                key="/coach-availability"
+                icon={<EditOutlined />}
+                className={
+                  isPathActive("/coach-availability")
+                    ? "ant-menu-item-selected"
+                    : ""
+                }
+              >
                 <NavLink to="/coach-availability">
                   <span className="nav-text">My Availability</span>
                 </NavLink>
               </Menu.Item>
-              
 
               <Menu.Item key="/coach-create-team" icon={<EditOutlined />}>
                 <NavLink to={`/create-team?coach_id=${currentCoachId}`}>
@@ -231,24 +264,42 @@ const currentUserData = async () => {
                 </NavLink>
               </Menu.Item>
 
-
               <Menu.Item
                 key="/coach-review-players"
                 icon={<CalendarOutlined />}
+                className={
+                  isPathActive("/coach-review-players")
+                    ? "ant-menu-item-selected"
+                    : ""
+                }
               >
                 <NavLink to="/coach-review-players">
                   <span className="nav-text">Review Players</span>
                 </NavLink>
               </Menu.Item>
-              <Menu.Item key="/coach-profile" icon={<Profile />}>
+              <Menu.Item
+                key="/coach-profile"
+                icon={<Profile />}
+                className={
+                  isPathActive("/coach-profile") ? "ant-menu-item-selected" : ""
+                }
+              >
                 <NavLink to="/coach-profile">
                   <span className="nav-text">My Profile</span>
                 </NavLink>
               </Menu.Item>
-            </div>
+            </>
           ) : (
             <div style={{ paddingLeft: "20px" }}>
-              <Menu.Item key="/apply-position" icon={<Profile />}>
+              <Menu.Item
+                key="/apply-position"
+                icon={<Profile />}
+                className={
+                  isPathActive("/apply-position")
+                    ? "ant-menu-item-selected"
+                    : ""
+                }
+              >
                 <NavLink to="/apply-position">Apply Position</NavLink>
               </Menu.Item>
             </div>
@@ -259,6 +310,7 @@ const currentUserData = async () => {
             icon={<PoweroffOutlined />}
             onMouseEnter={handleHoverButton1}
             onMouseLeave={handleMouseLeaveButton1}
+            className={isPathActive("logoff") ? "ant-menu-item-selected" : ""}
           >
             <NavLink onClick={handleLogOut}>Log Off</NavLink>
           </Menu.Item>

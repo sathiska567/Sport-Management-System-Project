@@ -73,7 +73,7 @@ const EOSizeBar = ({ children }) => {
   // Functional component to display text based on selected menu item
   const Text = ({ selectedMenuItem }) => {
     const text = {
-      "/eo-stats": "Dashboard",
+      "/dashboad": "Dashboard",
       "/eo-create-event": "Create Event",
       "/eo-edit-event": "Edit Event",
       "/create-fixture": "Create Fixture",
@@ -172,7 +172,7 @@ const EOSizeBar = ({ children }) => {
         trigger={null}
         collapsible
         collapsed={collapsed}
-        collapsedWidth={100} // Adjusted collapsed width
+        collapsedWidth={100}
       >
         {/* Profile section */}
         <div style={{ backgroundColor: "#15295E" }} className="profile">
@@ -203,7 +203,7 @@ const EOSizeBar = ({ children }) => {
           onSelect={handleMenuItemClick}
           theme="dark"
           mode="inline"
-          defaultSelectedKeys={["/eo-stats"]}
+          defaultSelectedKeys={["/dashboad"]}
           selectedKeys={[location.pathname]}
           style={{
             backgroundColor: "#15295E",
@@ -212,8 +212,8 @@ const EOSizeBar = ({ children }) => {
             fontSize: "16px",
           }}
         >
-          <Menu.Item key="/eo-stats" icon={<DashboardOutlined />}>
-            <NavLink to="/eo-stats">Dashboard</NavLink>
+          <Menu.Item key="/dashboad" icon={<DashboardOutlined />}>
+            <NavLink to="/dashboad">Dashboard</NavLink>
           </Menu.Item>
 
           {isEventOrganizer ? (
@@ -222,7 +222,7 @@ const EOSizeBar = ({ children }) => {
                 <NavLink to="/eo-create-event">Create Event</NavLink>
               </Menu.Item>
               <Menu.Item key="/eo-edit-event" icon={<FormOutlined />}>
-                <NavLink to="/eo-edit-event">Edit Event</NavLink>
+                <NavLink to="/EditEventTable">Edit Event</NavLink>
               </Menu.Item>
               <Menu.Item key="/create-fixture" icon={<CalendarOutlined />}>
                 <NavLink to="/create-fixture">Create Fixture</NavLink>
@@ -258,7 +258,6 @@ const EOSizeBar = ({ children }) => {
               </Menu.Item>
             </>
           )}
-
 
           <Menu.Item
             key="/logoff"

@@ -17,13 +17,14 @@ export default function SetFixtureRound() {
 
   console.log(location);
 
+// handle single eliminate npm function
   const singleEliminate = async () => {
     const elimBracket = SingleElimination(players, 1, false);
     setFixture(elimBracket);
     console.log(elimBracket);
   };
 
-
+// handle download function
   const handleDownload = async () => {
 
     const input = pdfRef.current;
