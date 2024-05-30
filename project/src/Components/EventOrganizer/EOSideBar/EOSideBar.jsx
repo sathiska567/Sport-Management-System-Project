@@ -81,7 +81,7 @@ const EOSizeBar = ({ children }) => {
       "/eo-view-fixture": "View Fixture",
       "/update-fixture": "Update Fixture",
       "/eo-assign-staff": "Assign Staff",
-      "/brackets": "Bracket",
+      "#": "Bracket",
       "/eo-profile": "My Profile",
       "/logoff": "Log Off",
     };
@@ -166,7 +166,7 @@ const EOSizeBar = ({ children }) => {
 
   // JSX structure for the Navbar component
   return (
-    <Layout className="ant-layout-sider-children" style={{height:'100vh'}}>
+    <Layout className="ant-layout-sider-children">
       {/* Sidebar component */}
       <Sider
         trigger={null}
@@ -243,10 +243,9 @@ const EOSizeBar = ({ children }) => {
                 <NavLink to="/eo-assign-staff">Assign Staff</NavLink>
               </Menu.Item> */}
 
-               <Menu.Item key="/eo-bracket" icon={<Bracket />}>
-                <NavLink to="/brackets">Bracket</NavLink>
-              </Menu.Item> 
-
+              {/* <Menu.Item key="/eo-bracket" icon={<Bracket />}>
+                <NavLink to="/eo-bracket">Bracket</NavLink>
+              </Menu.Item> */}
               <Menu.Item key="/eo-profile" icon={<Profile />}>
                 <NavLink to="/eo-profile">My Profile</NavLink>
               </Menu.Item>

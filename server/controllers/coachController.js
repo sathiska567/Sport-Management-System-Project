@@ -1,43 +1,17 @@
-const mongoose = require('mongoose');
 
-//const { Coach } = require('../models/coachModel');
-const Coach = require('../models/CoachProfileModel/CoachProfileModel')
+const { Coach } = require('../models/coachModel');
 const { Match } = require('../models/matchModel')
-//const Match = require('../models/CreateEventModel/createEventModel')
-const Player  = require('../models/playerAatheek')
-//const Player = require('../models/PlayerProfileModel/PlayerProfileModel')
-const { Team } = require('../models/teamModel');
-const { all } = require('..');
+const { Player } = require('../models/playerModel')
+const { Team } = require('../models/teamModel')
 
 
 const getMatches = async (req, res) => {
     try {
-        const coachId = new mongoose.Types.ObjectId(req.query.coach_id); // Convert coach_id to ObjectId
-        console.log(`\n coachId : ${coachId} \n`)
+        console.log('req came : ', req.query.coach_id)
+        const matches = await Match.find({ coaches: { $ne: req.query.coach_id } });
 
-        /*
-        // Step 1: Get all matches that are not referenced in any team
-        const unmatchedMatches = await Match.find({
-            _id: { $nin: await Team.distinct('match_id') }
-        });
-
-        // Step 2: Get all matches referenced in teams where coach_id is not the same
-        const matchedMatches = await Match.find({
-            _id: { $in: await Team.distinct('match_id', { coach_id: { $ne: coachId } }) }
-        });
-
-        console.log(`\n\n not same coach id teams matches : \n\n ${matchedMatches}`)
-
-        // Combine both sets of matches
-        const allMatches = [...unmatchedMatches, ...matchedMatches];
-        console.log(`matches for team create : \n ${allMatches}`)
-        */
-        
-        const allMatches = await Match.find({ coaches: { $nin: [coachId] } })
-        console.log('all matches : \n', allMatches)
-        
-
-        res.json(allMatches);
+        console.log(matches);
+        res.json(matches);
     } catch (err) {
         console.log(err);
     }
@@ -45,26 +19,13 @@ const getMatches = async (req, res) => {
 
 const getPlayers = async (req, res) => {
     try {
-        const matchId = req.query.match_id; 
-        const coachId = req.query.coach_id;
+        const match_id = req.query.match_id; // Extract matchId from req.params
+        console.log('match_id : ', match_id)
 
-        console.log('match_id : ', matchId);
-        console.log('coach_id : ', coachId);
-
-        // Get all players not in any team with the same match_id
-        const unmatchedPlayers = await Player.find({
-            _id: { $nin: await Team.distinct('players', { match_id: matchId }) }
-        });
-
-        // Get already existing players
-        const existPlayers = await Player.find({
-            _id: { $in: await Team.distinct('players', {coach_id:coachId, match_id:matchId}) }
-        })
-
-        //combine all players
-        const allPlayers = [...unmatchedPlayers, ...existPlayers]
-        console.log('players not in any team for the match : \n', unmatchedPlayers)
-        res.json(allPlayers);
+        // Find players whose status is "available" and who do not have the given matchId
+        const players = await Player.find();
+        console.log(players)
+        res.json(players);
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: 'Internal Server Error' });
@@ -112,7 +73,6 @@ const createTeam = async (req, res) => {
         const savedTeam = await newTeam.save()
         console.log('\n\nSaved team : \n', savedTeam)
 
-        /*
         //Player update
         for (let player_id of savedTeam.players) {
             const player = await Player.findById(player_id)
@@ -122,20 +82,18 @@ const createTeam = async (req, res) => {
             console.log('\n\nUpdated player: \n', updatedPlayer)
         }
 
-        //Coach update
-        const coach = await Coach.findById(savedTeam.coach_id)
-        coach.teams.push(savedTeam._id)
-        const updatedCoach = await coach.save();
-        console.log('\n\nUpdated coach :\n', updatedCoach)
-        */
-
         //Match update
         const match = await Match.findById(savedTeam.match_id)
         match.teams.push(savedTeam._id)
         match.coaches.push(savedTeam.coach_id)
         const updatedMatch = await match.save();
         console.log('\n\nUpdated match :\n', updatedMatch)
-        
+
+        //Coach update
+        const coach = await Coach.findById(savedTeam.coach_id)
+        coach.teams.push(savedTeam._id)
+        const updatedCoach = await coach.save();
+        console.log('\n\nUpdated coach :\n', updatedCoach)
 
         res.status(200).json({ success: true, team: savedTeam })
 
@@ -150,11 +108,10 @@ const createTeam = async (req, res) => {
 const getTeams = async (req, res) => {
     try {
         const coach_id = req.query.coach_id
-        console.log(coach_id, ' : coach Id')
-
-        const teams = await Team.find({ coach_id: coach_id });
-
-        res.json(teams);
+        console.log("\nreq for teams of coach ID : ", coach_id)
+        const coach = await Coach.findById(coach_id).populate('teams');
+        console.log(coach)
+        res.json(coach.teams)
 
     } catch (er) {
         res.json(er)
@@ -178,19 +135,13 @@ const getPlayersTeamUpdate = async (req, res) => {
 }
 */
 
-
 const editTeam = async (req, res) => {
     try {
         const editedTeam = req.body.teamData
-        const team_id = editedTeam._id
-        
+        const team_id = req.query.team_id
+        const match_id = editedTeam.match_id
         console.log('edited data for team ID : ', team_id, ' \n', editedTeam);
 
-        // Update the team
-        const updatedTeam = await Team.findByIdAndUpdate(team_id, editedTeam, { new: true, overwrite: true });
-        console.log('\n\nupdated team data : ', updatedTeam);
-
-        /*
         // Find the existing team data
         const existingTeam = await Team.findById(team_id);
         const existingPlayers = existingTeam.players || [];
@@ -205,14 +156,12 @@ const editTeam = async (req, res) => {
         const updatedTeam = await Team.findByIdAndUpdate(team_id, editedTeam, { new: true, overwrite: true });
         console.log('\n\nupdated team data : ', updatedTeam);
 
+
         // Add the team_id to teams array of each newly added player
         await Player.updateMany({ _id: { $in: newPlayers } }, { $addToSet: { teams: team_id, matches: match_id } });
 
         // Remove the team_id from teams array of each removed player
         await Player.updateMany({ _id: { $in: removedPlayers } }, { $pull: { teams: team_id, matches: match_id } });
-        */
-        
-        res.json({success: true});
 
     } catch (er) {
         console.log('team update error : ', er)
@@ -226,21 +175,18 @@ const deleteTeam = async (req, res) => {
         const deletedTeam = await Team.findByIdAndDelete(team_id)
         console.log('\ndeleted team :\n', deletedTeam);
 
-        
         const coach_id = req.query.coach_id
         await Coach.findByIdAndUpdate(coach_id, { $pull: { teams: team_id } });
 
         const match_id = req.query.match_id
         await Match.findByIdAndUpdate(match_id, { $pull: { teams: team_id, coaches: coach_id } })
 
-        /*
         const delplayers = deletedTeam.players
         for (var player_id of delplayers) {
             console.log('player id : ', player_id)
             const updPlayer = await Player.findByIdAndUpdate(player_id, { $pull: { teams: team_id, matches: match_id } })
             console.log('player after del team', updPlayer)
         }
-        */
 
         res.json({ success: true })
 
