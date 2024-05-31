@@ -2,10 +2,10 @@
 import "./CoachStats.css";
 import React, { useState, useEffect } from "react";
 import CountUp from "react-countup";
-import { Calendar } from "antd";
 import { Clock } from "@sujitsimon/react-flipclock";
 import { Line, Bar, Doughnut } from "react-chartjs-2";
 import EOSideBar from "../CoachSidebar/CoachSidebar";
+import Calendar from "react-calendar";
 
 import { Layout, Col, Statistic } from "antd";
 import axios from "axios";
@@ -38,7 +38,7 @@ const CoachStats = () => {
         <Layout>
           {/* Content section with statistics */}
           <div className="Stats flex-container">
-            <div className="dataCard flex-container1st ">
+            <div className="dataCard flex-container1st">
               <div className="flex-item1st">
                 <h3>Date</h3>
                 <Calendar className="my-calendar" />
