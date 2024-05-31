@@ -3,46 +3,80 @@ body {
   width: 100vw;
 }
 
-.stats {
-display: flex;
-flex-direction: column;
-gap: 20px;
-width: 100%;
-display: flex;
+
+.Stats {
+  margin: auto;
 }
 
-.sRow {
+.flex-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1.5fr 1fr 1fr;
+  gap: 25px;
+  height: 100vh;
+  width: 95%;
+  margin-top: 40px;
+}
+
+.dataCard {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  height: 250px;
+  
+}
+
+.PositionCard {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.categoryCard {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.clock {
+  font-size: 2rem;
+  color: #f1c40f;
+  font-family: 'Orbitron', sans-serif;
+}
+
+.flex-container1st {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  gap: 30px;
-  width: 100%;
+  gap: 20px;
+  padding: 10px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.item1st {
+  flex: 1;
 }
 
-.sItem {
-  width : 350px;
-  height: 170px;
-  background-color: white;
-  box-shadow: 1.5px 2px 2px 1.5px rgba(0, 0, 0, 0.17);
+
+.flex-item1st {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.ant-col  {
-  text-align: center;
-  margin-left: 25%;
-  margin-top: 8%;
+.clock {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.stats .ant-statistic-title {
-  font-size: 22px;
-  color: #6C6C6C;
-  margin-bottom: 0px;
+@media (min-width: 768px) {
+  .flex-container {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .revenueCard {
+    grid-column: 1 / span 2;
+  }
 }
-
-.stats .ant-statistic-content-value {
-  font-size: 48px;
-  color: #17404F;
-  font-weight: 500;
-
-}
-
 
