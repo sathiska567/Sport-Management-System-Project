@@ -71,6 +71,7 @@ import CoachToEOCommunication from "./Components/Coach/CoachCommunication/CoachT
 import CoachToEOCommunicationForm from "./Components/Coach/CoachCommunication/CoachToEOCommunicationForm.jsx";
 import TeamManagerToEOCommunication from "./Components/TeamManager/TeamManagerCommunication/TeamManagerToEOCommunication.jsx";
 import TeamManagerToEOCommunicationForm from "./Components/TeamManager/TeamManagerCommunication/TeamManagerToEOCommunicationForm.jsx";
+import RefreeProfileNew from "./Components/Referee/RefreeProfileNew/RefreeProfileNew.jsx";
 
 import { useState } from "react";
 
@@ -741,6 +742,19 @@ function App() {
             </ProtectedRoute>
           }
         ></Route>
+      </Routes>
+      <Routes>
+        <Route
+        path="/RefreeProfileNew"
+        element={
+          <ProtectedRoute>
+            <RefreeProfileNew/>
+          </ProtectedRoute>
+        }
+        
+        >
+
+        </Route>
       </Routes>
 
       {/* <Routes>
