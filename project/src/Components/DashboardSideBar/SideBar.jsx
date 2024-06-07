@@ -418,6 +418,12 @@ const SideBar = ({ children }) => {
                         </Menu.Item>
                       )
 
+                      : isReferee ? (
+                        <Menu.Item key="4" icon={<PendingActions />}>
+                          <Link to="/referee-stats">Referee</Link>
+                        </Menu.Item>
+                      )
+
                         : (
                           <Menu.Item key="2" icon={<PendingActions />}>
                             <Link to="/apply-position">Apply Position</Link>
