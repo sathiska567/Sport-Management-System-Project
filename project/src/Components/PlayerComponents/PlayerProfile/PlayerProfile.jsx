@@ -169,8 +169,8 @@ const PlayerProfile = () => {
         }
       }
 
-      try {
-        // Check if coverImageFileList is not empty
+    try {
+      // Check if coverImageFileList is not empty
         if (coverImageFileList.length > 0) {
           const coverImagefile = coverImageFileList[0].originFileObj;
           let coverImageFormData = new FormData();
@@ -251,11 +251,12 @@ const PlayerProfile = () => {
 
         // Handle response if needed
         console.log(playerProfileResponse.data);
-        if (playerProfileResponse.data.success) {
-          message.success(playerProfileResponse.data.message);
-          // setTime(false)
-          window.location.reload();
-        }
+
+        // if (playerProfileResponse.data.success) {
+        //   message.success(playerProfileResponse.data.message);
+        //   // setTime(false)
+        //   // window.location.reload();
+        // }
       } catch (error) {
         message.error("Error occurred inside the handleFormSubmit function");
       }
@@ -268,7 +269,7 @@ const PlayerProfile = () => {
 
   const onChangeProfile = async ({ fileList: newFileList }) => {
     console.log(newFileList);
-    setNewFileList(newFileList);
+    setFileListProfile(newFileList);
   };
 
   const onPreviewProfile = async (file) => {
@@ -447,20 +448,17 @@ const PlayerProfile = () => {
                 </div>
               </div>
               <div className="ImageUploading">
-                <div>
+              <div>
                   <label className="formLabel">Profile Image:</label>
                   <Modal
-                    visible={previewVisibleProfile}
+                    // visible={previewVisibleCover}
                     footer={null}
-                    onCancel={() => setPreviewVisibleProfile(false)}
-                    // onChange={hanldeProfileImageUpload}
+                    onCancel={() => setPreviewVisibleCover(true)}
                   >
                     <img
                       alt="example"
-                      style={{
-                        width: "100%",
-                      }}
-                      // src={previewImageProfile}
+                      style={{ width: "100%" }}
+                      // src={previewImageCover}
                     />
                   </Modal>
                   <ImgCrop rotationSlider>
@@ -470,7 +468,7 @@ const PlayerProfile = () => {
                       listType="picture-card"
                       fileList={fileListProfile}
                       onChange={onChangeProfile}
-                      // onPreview={onPreviewProfile}
+                      // onPreview={onPreviewCover}
                     >
                       {fileListProfile.length < 1 && "+ Upload"}
                     </Upload>
