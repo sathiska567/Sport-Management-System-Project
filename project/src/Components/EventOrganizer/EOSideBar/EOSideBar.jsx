@@ -81,7 +81,7 @@ const EOSizeBar = ({ children }) => {
       "/eo-view-fixture": "View Fixture",
       "/update-fixture": "Update Fixture",
       "/eo-assign-staff": "Assign Staff",
-      "#": "Bracket",
+      "/brackets": "Bracket",
       "/eo-communication-to-coach": "Mail to Coaches",
       "/eo-communication-to-tm": "Mail to Team Manager",
       "/eo-profile": "My Profile",
@@ -245,9 +245,9 @@ const EOSizeBar = ({ children }) => {
                 <NavLink to="/eo-assign-staff">Assign Staff</NavLink>
               </Menu.Item> */}
 
-              {/* <Menu.Item key="/eo-bracket" icon={<Bracket />}>
-                <NavLink to="/eo-bracket">Bracket</NavLink>
-              </Menu.Item> */}
+              <Menu.Item key="/eo-bracket" icon={<Bracket />}>
+                <NavLink to="/brackets">Bracket</NavLink>
+              </Menu.Item>
               <Menu.Item key="/eo-profile" icon={<Profile />}>
                 <NavLink to="/eo-profile">My Profile</NavLink>
               </Menu.Item>

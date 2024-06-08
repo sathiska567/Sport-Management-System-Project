@@ -1,0 +1,99 @@
+.custom-card {
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 0.25rem;
+  background-color: #fff;
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.card-body {
+  padding: 1.25rem; /* Adjust padding as needed */
+}
+
+.bg-light {
+  background-color: #f8f9fa; /* Use the desired background color */
+}
+
+/* Custom CSS */
+.select-lg {
+  width: 100%; /* Adjust width as needed */
+  padding: .5rem 1rem; /* Adjust padding as needed */
+  font-size: 1.25rem; /* Adjust font size as needed */
+  line-height: 1.5; /* Adjust line height as needed */
+  border-radius: .3rem; /* Adjust border radius as needed */
+  border: 1px solid #ced4da; /* Adjust border color as needed */
+}
+
+/* Optional: Margin bottom */
+.mb-3 {
+  margin-bottom: 1rem; /* Adjust margin bottom as needed */
+}
+
+/* Custom CSS */
+.btn-success {
+  background-color: #28a745; /* Adjust background color as needed */
+  color: #fff; /* Adjust text color as needed */
+  padding: .375rem .75rem; /* Adjust padding as needed */
+  font-size: 1rem; /* Adjust font size as needed */
+  border: 1px solid transparent; /* Adjust border as needed */
+  border-radius: .25rem; /* Adjust border radius as needed */
+}
+
+.btn-success:hover {
+  background-color: #218838; /* Adjust hover background color as needed */
+}
+
+
+/* Custom CSS */
+.btn-dark {
+  background-color: #343a40; /* Adjust background color as needed */
+  color: #fff; /* Adjust text color as needed */
+  padding: .375rem .75rem; /* Adjust padding as needed */
+  font-size: 1rem; /* Adjust font size as needed */
+  border: 1px solid transparent; /* Adjust border as needed */
+  border-radius: .25rem; /* Adjust border radius as needed */
+  margin-top: 1rem; /* Adjust top margin as needed */
+  margin-bottom: 1rem; /* Adjust bottom margin as needed */
+}
+
+.btn-dark:hover {
+  background-color: #23272b; /* Adjust hover background color as needed */
+}
+
+/* Custom CSS */
+.gap-2 > * + * {
+  margin-left: 0.5rem; /* Adjust the gap size as needed */
+}
+
+
+
+.form-check-input[type="radio"] {
+  margin: 5px; /* Adjust the margin as needed */
+  transform: scale(1.3);
+}
+
+
+/* Custom CSS */
+.form-check-container {
+  display: flex;
+  align-items: center; /* Align items vertically */
+  margin-bottom: 10px; /* Adjust margin as needed */
+}
+
+.form-check-label {
+  margin: 5px; /* Add space between label and radio button */
+}
+
+.bg-info{
+  background-color: #d1ecf1;
+}
+
+
+.text-light {
+  color: #f8f9fa; /* Replace with the desired text color */
+}
+
+.bg-dark {
+  background-color: #343a40; /* Replace with the desired background color */
+}

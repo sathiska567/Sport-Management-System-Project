@@ -76,7 +76,7 @@ import RefreeProfileNew from "./Components/Referee/RefreeProfileNew/RefreeProfil
 import { useState } from "react";
 
 function App() {
-  const [ eventId, setEventId]=useState("");
+  const [eventId, setEventId] = useState("");
 
   const isLoggedIn = window.localStorage.getItem("isLoggedIn");
 
@@ -745,13 +745,13 @@ function App() {
       </Routes>
       <Routes>
         <Route
-        path="/RefreeProfileNew"
-        element={
-          <ProtectedRoute>
-            <RefreeProfileNew/>
-          </ProtectedRoute>
-        }
-        
+          path="/RefreeProfileNew"
+          element={
+            <ProtectedRoute>
+              <RefreeProfileNew />
+            </ProtectedRoute>
+          }
+
         >
 
         </Route>
@@ -768,6 +768,17 @@ function App() {
         >         
         </Route>
       </Routes> */}
+
+
+      <Routes>
+        <Route path="/brackets" element={<ProtectedRoute><TournamentBracket /></ProtectedRoute>} />
+        <Route path="/create-team" element={<ProtectedRoute><CoachCreateTeam /></ProtectedRoute>} />
+        <Route path="/select-players" element={<ProtectedRoute><SelectPlayers /></ProtectedRoute>} />
+        {/* <Route path="/create-match" element={<CreateMatch />} /> */}
+        <Route path="/edit-team" element={<ProtectedRoute><CoachEditTeam /></ProtectedRoute>} />
+        <Route path="/update-team" element={<ProtectedRoute><UpdateTeam /></ProtectedRoute>} />
+      </Routes>
+
     </BrowserRouter>
 
     // <div className="App">
