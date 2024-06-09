@@ -40,6 +40,11 @@ const playerSearchProfile = require("./routes/PlayerSearchProfileRoute/PlayerSea
 const playerSearchTable = require("./routes/PlayerSearchTableRoute/PlayerSearchTableRoute")
 const EditEventTable = require("./routes/EditEventTableRoute/EditEventTableRoute")
 const refreeProfile = require("./routes/RefreeProfileRoute/RefreeProfileRoute")
+
+const organizerRoutes = require("./routes/organizerRoutes")
+const coachRoutes = require("./routes/coachRoutes")
+
+
 require("./db/mongoDb"); 
 
 const app = express();
@@ -141,6 +146,10 @@ app.use("/api/v1/playerSearchTable",playerSearchTable)
 app.use("/api/v1/EditEventTable",EditEventTable)
 //refree profile
 app.use("/api/v1/refreeProfile",refreeProfile)
+
+
+app.use("/api/v1/organizer", organizerRoutes)
+app.use("/api/v1/coach", coachRoutes)
 
 // //jwt
 // app.post('/user/login', async (req, res) => {
