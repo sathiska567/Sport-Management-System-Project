@@ -4,6 +4,7 @@ import { Form, Input, message } from "antd"; // Import message from Ant Design
 import { CloseSquareOutlined, EditOutlined } from "@ant-design/icons";
 import axios from "axios";
 import emailjs from "@emailjs/browser";
+import { useLocation } from "react-router-dom";
 
 const { TextArea } = Input;
 
@@ -14,6 +15,10 @@ const CoachToEOCommunicationForm = () => {
   const [to_email, setTo_email] = useState("");
   const [subject, setSubject] = useState("");
   const [userMessage, setUserMessage] = useState(""); // Rename to avoid conflict
+  const [userData, setUserData] = useState([]);
+  const location = useLocation()
+
+  console.log(location);
 
   const onFinish = async (values) => {
     setIsLoading(true);
@@ -47,12 +52,12 @@ const CoachToEOCommunicationForm = () => {
         .catch((error) => {
           console.error("Failed to send email:", error);
           // Use message.error from Ant Design
-          message.error("Failed to send email.");
+          message.error("Failed to send email.Please Use Verify Email Address !");
         });
     } catch (error) {
       console.error("Error sending email:", error);
       // Use message.error from Ant Design
-      message.error("Error sending email.");
+      message.error("Failed to send email.Please Use Verify Email Address !");
     } finally {
       setIsLoading(false);
     }
@@ -120,8 +125,8 @@ const CoachToEOCommunicationForm = () => {
                     id="to_name"
                     required
                     name="to_name"
-                    value={to_name}
-                    onChange={handleToNameChange}
+                    value={location.state.record.username}
+                    // onChange={handleToNameChange}
                   />
                 </div>
               </div>

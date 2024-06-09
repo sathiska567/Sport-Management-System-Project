@@ -69,26 +69,20 @@ const CoachToEOCommunication = () => {
   const [dataSource, setDataSource] = useState(initialDataSource);
   const navigate = useNavigate();
   const [createdEvent, setCreatedEvent] = useState([]);
+  const [eventOrganizers , setEventOrganizers] = useState([])
 
-  // GET ALL CREATED DATA || GET
-  //   const getAllCreatedEventData = async () => {
-  //     try {
-  //       const response = await axios.get(
-  //         "http://localhost:8080/api/v1/event/get-all-events"
-  //       );
-  //       console.log(response);
-
-  //       if (response.data.success) {
-  //         message.success(response.data.message);
-  //         setCreatedEvent(response.data.data);
-  //       }
-  //     } catch (error) {
-  //       message.error(error.message);
-  //     }
-  //   };
-  //   useEffect(() => {
-  //     getAllCreatedEventData();
-  //   }, []);
+  //  get all event organizers
+  const getOnlyEventOrganizers = async () => {
+    try {
+      const response = await axios.get("http://localhost:8080/api/v1/event-organizer/details")
+      // console.log(response);
+      if(response.data.success){
+        setEventOrganizers(response.data.data)
+      }
+    } catch (error) {
+      message.error("Error fetching event organizers");
+    }
+  }
 
   // filter data
   // console the value to search name of the event
@@ -105,6 +99,13 @@ const CoachToEOCommunication = () => {
   const handleDateChange = (date, dateString) => {
     console.log("Event Date Selected: ", dateString);
   };
+
+  useEffect(()=>{
+    getOnlyEventOrganizers()
+  },[])
+
+
+
   return (
     <CoachSidebar>
       <Layout className="ant-layout-sider-children">
@@ -148,12 +149,13 @@ const CoachToEOCommunication = () => {
                     title: "Event Organizer Name",
                     dataIndex: "eoName",
                     key: "eoName",
-                    render: (text, record) => <span>{record.eoName}</span>,
+                    render: (text, record) => <span>{record.username}</span>,
                   },
                   {
-                    title: "Location",
-                    dataIndex: "location",
-                    key: "location",
+                    title: "Email",
+                    dataIndex: "email",
+                    key: "email",
+                    render: (text, record) => <span>{record.email}</span>,
                   },
                   {
                     title: "Actions",
@@ -168,10 +170,11 @@ const CoachToEOCommunication = () => {
                           justifyContent: "center",
                         }}
                       >
+
                         <Button
                           type="primary"
                           onClick={() => {
-                            navigate("/coach-to-eo-communication-form");
+                            navigate("/coach-to-eo-communication-form",{state:{record:record}});
                           }}
                           style={{
                             backgroundColor: "#52c41a",
@@ -192,7 +195,7 @@ const CoachToEOCommunication = () => {
                 ]}
                 pagination={false}
                 // Displaying data from the backend
-                dataSource={initialDataSource}
+                dataSource={eventOrganizers}
               ></Table>
             </div>
           </Content>

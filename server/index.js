@@ -44,6 +44,8 @@ const refreeProfile = require("./routes/RefreeProfileRoute/RefreeProfileRoute")
 const organizerRoutes = require("./routes/organizerRoutes")
 const coachRoutes = require("./routes/coachRoutes")
 
+const getOnlyEventOrganizerRoute = require("./routes/GetOnlyEventOrganizerRoute/GetOnlyEventOrganizerRoute")
+
 
 require("./db/mongoDb"); 
 
@@ -150,6 +152,9 @@ app.use("/api/v1/refreeProfile",refreeProfile)
 
 app.use("/api/v1/organizer", organizerRoutes)
 app.use("/api/v1/coach", coachRoutes)
+
+
+app.use("/api/v1/event-organizer", getOnlyEventOrganizerRoute);
 
 // //jwt
 // app.post('/user/login', async (req, res) => {
