@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./CoachAvailability.css";
 import EOSiderBar from "../CoachSidebar/CoachSidebar";
-import { Layout, Checkbox, Input, Table, message, DatePicker } from "antd";
+import { Layout, Checkbox, Input, Table, message, DatePicker,Button } from "antd";
 import axios from "axios";
 
 const { Content } = Layout;
@@ -35,6 +35,10 @@ const CoachAvailability = () => {
   const [userLocation, setUserLocation] = useState("");
   const [coachId,setCoachId] = useState([])
   const [createEvent, setCreateEvent] = useState([]);
+  const [addedEvents, setAddedEvents] = useState(new Set());
+
+  var available;
+
   const currentUserData = async () => {
     try {
       const res = await axios.get(
@@ -94,6 +98,52 @@ const getAllCreateEvent = async () => {
     }
 
   };
+
+  const handleAvailability = async (id, isChecked) => {
+    try {
+      const availabilityResponse = await axios.post("http://localhost:8080/api/v1/availability/save-coach-availability",{eventId:id,coachId:coachId,availability:isChecked})
+      console.log(availabilityResponse.data);
+      
+      if(availabilityResponse.data.success){
+         message.success(availabilityResponse.data.message)
+         setAddedEvents(prev => new Set(prev).add(id));
+      }
+
+      else{
+        message.error(availabilityResponse.data.message)
+      }
+
+    } catch (error) {
+      message.error("Error adding availability");
+    }
+  };
+
+
+  const removeAvailability = async (id, isChecked) => {
+    console.log(id, isChecked);
+    try {
+      const removeResponse = await axios.post("http://localhost:8080/api/v1/availability/save-coach-availability",{eventId:id,coachId:coachId,availability:isChecked})
+      console.log(removeResponse.data);
+
+      if (removeResponse.data.success) {
+        available = removeResponse.data.setAvailability.availability;
+        console.log("current available", available);
+        message.success("Availability Remove Successful !");
+        setAddedEvents(prev => {
+          const newSet = new Set(prev);
+          newSet.delete(id);
+          return newSet;
+        });
+
+      } else {
+        message.error(removeResponse.data.message);
+      }
+    } catch (error) {
+      message.error("Error removing availability");
+    }
+  }
+
+
   useEffect(()=>{
     getAllCreateEvent()
     currentUserData()
@@ -182,15 +232,41 @@ const getAllCreateEvent = async () => {
                         justifyContent: "center",
                       }}
                     >
-                      <Checkbox
-                        onChange={(e) =>
-                          handleCheckboxChange(
-                            record._id,
-                            record.key,
-                            e.target.checked
-                          )
-                        }
-                      />
+                      <Button
+                        type="primary"
+                        style={{
+                          backgroundColor: "#05AD1B",
+                          color: "#fff",
+                          fontSize: "14px",
+                          marginRight: "10px",
+                          borderRadius: "5px",
+                          marginTop: "auto",
+                          marginBottom: "auto",
+                          width: "70px",
+                        }}
+                        onClick={() => handleAvailability(record._id, true)}
+                        disabled={addedEvents.has(record._id)}
+                      >
+                        {addedEvents.has(record._id) ? "Added" : "Add"}
+                      </Button>
+
+
+                      <Button
+                        type="primary"
+                        style={{
+                          backgroundColor: "#05AD1B",
+                          color: "#fff",
+                          fontSize: "14px",
+                          marginRight: "10px",
+                          borderRadius: "5px",
+                          marginTop: "auto",
+                          marginBottom: "auto",
+                          width: "90px",
+                        }}
+                        onClick={() => removeAvailability(record._id, false)}
+                      >
+                        Remove
+                      </Button>
                     </span>
                   ),
                 },
