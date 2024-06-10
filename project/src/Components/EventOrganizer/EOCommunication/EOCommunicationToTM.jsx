@@ -66,26 +66,21 @@ const EOCommunicationToTM = () => {
   const [dataSource, setDataSource] = useState(initialDataSource);
   const navigate = useNavigate();
   const [createdEvent, setCreatedEvent] = useState([]);
+  const [TeamManagers , setTeamManagers] = useState([])
 
-  // GET ALL CREATED DATA || GET
-  //   const getAllCreatedEventData = async () => {
-  //     try {
-  //       const response = await axios.get(
-  //         "http://localhost:8080/api/v1/event/get-all-events"
-  //       );
-  //       console.log(response);
+  //  get all event organizers
+  const getOnlyCoach = async () => {
+    try {
+      const response = await axios.get("http://localhost:8080/api/v1/team-manager/details")
+      // console.log(response);
+      if(response.data.success){
+        setTeamManagers(response.data.data)
+      }
+    } catch (error) {
+      message.error("Error fetching event organizers");
+    }
+  }
 
-  //       if (response.data.success) {
-  //         message.success(response.data.message);
-  //         setCreatedEvent(response.data.data);
-  //       }
-  //     } catch (error) {
-  //       message.error(error.message);
-  //     }
-  //   };
-  //   useEffect(() => {
-  //     getAllCreatedEventData();
-  //   }, []);
 
   // filter data
   // console the value to search name of the event
@@ -102,6 +97,12 @@ const EOCommunicationToTM = () => {
   const handleDateChange = (date, dateString) => {
     console.log("Event Date Selected: ", dateString);
   };
+ 
+  useEffect(()=>{
+    getOnlyCoach()
+  },[])
+
+
   return (
     <EOSizeBar>
       <Layout className="ant-layout-sider-children">
@@ -145,12 +146,13 @@ const EOCommunicationToTM = () => {
                     title: "Team Manager Name",
                     dataIndex: "tmName",
                     key: "tmName",
-                    render: (text, record) => <span>{record.tmName}</span>,
+                    render: (text, record) => <span>{record.username}</span>,
                   },
                   {
-                    title: "Location",
-                    dataIndex: "location",
-                    key: "location",
+                    title: "Email",
+                    dataIndex: "email",
+                    key: "email",
+                    render: (text, record) => <span>{record.email}</span>,
                   },
                   {
                     title: "Actions",
@@ -168,7 +170,7 @@ const EOCommunicationToTM = () => {
                         <Button
                           type="primary"
                           onClick={() => {
-                            navigate("/eo-communication-to-tm-form");
+                            navigate("/eo-communication-to-tm-form",{state:{record:record}});
                           }}
                           style={{
                             backgroundColor: "#52c41a",
@@ -189,7 +191,7 @@ const EOCommunicationToTM = () => {
                 ]}
                 pagination={false}
                 // Displaying data from the backend
-                dataSource={initialDataSource}
+                dataSource={TeamManagers}
               ></Table>
             </div>
           </Content>

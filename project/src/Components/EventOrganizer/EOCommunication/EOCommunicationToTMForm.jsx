@@ -4,6 +4,7 @@ import { Form, Input, message } from "antd"; // Import message from Ant Design
 import { CloseSquareOutlined, EditOutlined } from "@ant-design/icons";
 import axios from "axios";
 import emailjs from "@emailjs/browser";
+import { useLocation } from "react-router-dom";
 
 const { TextArea } = Input;
 
@@ -15,6 +16,9 @@ const EOCommunicationToTMForm = () => {
   const [to_email, setTo_email] = useState("");
   const [subject, setSubject] = useState("");
   const [userMessage, setUserMessage] = useState(""); // Rename to avoid conflict
+  const location = useLocation()
+
+  console.log(location);
 
   const onFinish = async (values) => {
     setIsLoading(true);
@@ -121,8 +125,8 @@ const EOCommunicationToTMForm = () => {
                     id="to_name"
                     required
                     name="to_name"
-                    value={to_name}
-                    onChange={handleToNameChange}
+                    value={location.state.record.username}
+                    // onChange={handleToNameChange}
                   />
                 </div>
               </div>
