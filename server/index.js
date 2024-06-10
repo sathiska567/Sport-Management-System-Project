@@ -40,6 +40,8 @@ const playerSearchProfile = require("./routes/PlayerSearchProfileRoute/PlayerSea
 const playerSearchTable = require("./routes/PlayerSearchTableRoute/PlayerSearchTableRoute")
 const EditEventTable = require("./routes/EditEventTableRoute/EditEventTableRoute")
 const refreeProfile = require("./routes/RefreeProfileRoute/RefreeProfileRoute")
+const RefereeEventRoute = require("./routes/RefereeEventRoute/RefereeEventRoute");
+
 
 const organizerRoutes = require("./routes/organizerRoutes")
 const coachRoutes = require("./routes/coachRoutes")
@@ -155,6 +157,8 @@ app.use("/api/v1/coach", coachRoutes)
 
 
 app.use("/api/v1/event-organizer", getOnlyEventOrganizerRoute);
+// REFREE ROUTE
+app.use("/api/v1/referee", RefereeEventRoute);
 
 // //jwt
 // app.post('/user/login', async (req, res) => {
