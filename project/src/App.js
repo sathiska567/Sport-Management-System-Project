@@ -73,7 +73,8 @@ import TournamentBracket from "./Components/EventOrganizer/EOBracket/Bracket.jsx
 import CoachCreateTeam from "./Components/Coach/CoachCreateTeam/CreateTeam.jsx";
 import SelectPlayers from "./Components/Coach/CoachCreateTeam/SelectPlayers.jsx"
 import CoachEditTeam from "./Components/Coach/CoachEditTeam/EditTeam.jsx";
-import UpdateTeam from "./Components/Coach/CoachEditTeam/UpdateTeam.jsx"
+import UpdateTeam from "./Components/Coach/CoachEditTeam/UpdateTeam.jsx";
+import RefereeEvent from "./Components/Referee/RefereeEvent/RefereeEvent.jsx";
 
 import { useState } from "react";
 
@@ -750,6 +751,16 @@ function App() {
         >
 
         </Route>
+      </Routes>
+      <Routes>
+        <Route
+          path="/RefereeEvent"
+          element={
+            <ProtectedRoute>
+              < RefereeEvent/>
+            </ProtectedRoute>
+          }
+        ></Route>
       </Routes>
 
       {/* <Routes>

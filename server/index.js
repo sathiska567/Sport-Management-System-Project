@@ -47,6 +47,7 @@ const coachRoutes = require("./routes/coachRoutes")
 const getOnlyEventOrganizerRoute = require("./routes/GetOnlyEventOrganizerRoute/GetOnlyEventOrganizerRoute")
 const GetOnlyCoachRoute = require("./routes/GetOnlyCoachRoute/GetOnlyCoachRoute")
 const GetOnlyTeamManagersRoute = require("./routes/GetOnlyTeamManagersRoute/GetOnlyTeamManagersRoute")
+const RefereeEventRoute = require("./routes/RefereeEventRoute/RefereeEventRoute")
 
 require("./db/mongoDb"); 
 
@@ -158,6 +159,8 @@ app.use("/api/v1/coach", coachRoutes)
 app.use("/api/v1/event-organizer", getOnlyEventOrganizerRoute);
 app.use("/api/v1/coach", GetOnlyCoachRoute);
 app.use("/api/v1/team-manager", GetOnlyTeamManagersRoute);
+// REFREE ROUTE
+app.use("/api/v1/referee", RefereeEventRoute);
 
 // //jwt
 // app.post('/user/login', async (req, res) => {
