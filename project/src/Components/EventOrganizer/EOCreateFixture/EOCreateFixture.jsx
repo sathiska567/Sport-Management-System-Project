@@ -143,6 +143,20 @@ const EOCreateFixture = () => {
       startingTime
     );
 
+    // get date
+    const date = new Date(eventDate.$d);
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Months are zero-based
+    const year = date.getFullYear();
+    const eventNewDate = `${day}-${month}-${year}`;
+
+
+    // get time
+    const time = new Date(startingTime.$d);
+    const formattedTime = time.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+    
+
+
     try {
       const response = await axios.post(
         "http://localhost:8080/api/v1/create/create-fixture",
@@ -150,6 +164,8 @@ const EOCreateFixture = () => {
           nameOfTheEvent: nameOfTheEvent,
           nameOfTheTeam: nameOfTheTeam,
           location: location,
+          eventNewDate:eventNewDate,
+          formattedTime:formattedTime
         }
       );
       console.log(response);

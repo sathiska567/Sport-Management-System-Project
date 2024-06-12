@@ -156,7 +156,7 @@ const handleDelete = async (id) => {
                                         dataIndex: "EventDate",
                                         key: "EventDate",
                                         render: (text, record) => (
-                                            <span>{record. date}</span>
+                                            <span>{record.eventNewDate}</span>
                                         )
                                     },
                                    
