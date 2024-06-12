@@ -114,15 +114,27 @@ const EOCreateEventForm = () => {
       nameOfTheEvent,
       // nameOfTheTeam,
       location,
-      // eventDate,
-      // startingTime,
+      // eventDate.$d,
       numberOfTeams
     );
+   
+  // get date
+    const date = new Date(eventDate.$d);
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Months are zero-based
+    const year = date.getFullYear();
+    const eventNewDate = `${day}-${month}-${year}`;
+
+
+    // get time
+    const time = new Date(startingTime.$d);
+    const formattedTime = time.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+    
 
     try {
       const response = await axios.post(
         "http://localhost:8080/api/v1/event/create-event",
-        { nameOfTheEvent, location, numberOfTeams }
+        { nameOfTheEvent, location, numberOfTeams ,eventNewDate ,formattedTime }
       );
       console.log(response);
 

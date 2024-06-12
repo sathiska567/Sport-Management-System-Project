@@ -101,17 +101,17 @@ const EOViewFixture = () => {
     console.log("Date Selected: ", dateString);
   };
 
-  const handleCreateBracket = async (id) => {
-    console.log(id);
+  // const handleCreateBracket = async (id) => {
+  //   console.log(id);
 
-    try {
-      navigate("/eo-bracket", {
-        state: { bracketDataId: id },
-      });
-    } catch (error) {
-      message.success("Error deleting fixture data");
-    }
-  };
+  //   try {
+  //     navigate("/eo-bracket", {
+  //       state: { bracketDataId: id },
+  //     });
+  //   } catch (error) {
+  //     message.success("Error deleting fixture data");
+  //   }
+  // };
 
   return (
     <EOSiderBar>
@@ -165,7 +165,7 @@ const EOViewFixture = () => {
                   title: "Event Date",
                   dataIndex: "eventDate",
                   width: "20%",
-                  render: (text, record) => <span>2024-02-14</span>,
+                  render: (text, record) => <span>{record.eventNewDate}</span>,
                 },
                 {
                   title: "Actions",
@@ -230,7 +230,7 @@ const EOViewFixture = () => {
                         Edit
                       </Button> */}
 
-                      <Button
+                      {/* <Button
                         type="primary"
                         style={{
                           color: "#fff",
@@ -243,7 +243,7 @@ const EOViewFixture = () => {
                         onClick={() => handleCreateBracket(record._id)}
                       >
                         Bracket
-                      </Button>
+                      </Button> */}
 
                       <Button
                         type="primary"

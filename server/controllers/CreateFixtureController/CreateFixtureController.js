@@ -4,14 +4,16 @@ const createFixtureModel = require('../../models/CreateFixtureModel/CreateFixtur
 const createFixtureController = async (req, res) => {
         try {
 
-           const { nameOfTheEvent, nameOfTheTeam, location } = req.body;
+           const { nameOfTheEvent, nameOfTheTeam, location,eventNewDate,formattedTime } = req.body;
 
-           console.log(nameOfTheEvent, nameOfTheTeam, location);
+           console.log(nameOfTheEvent, nameOfTheTeam, location,eventNewDate,formattedTime);
 
            const data = new createFixtureModel({
                 nameOfTheEvent: nameOfTheEvent,
                 nameOfTheTeam: nameOfTheTeam,
-                location: location
+                location: location,
+                eventNewDate:eventNewDate,
+                formattedTime:formattedTime
              })
 
            await data.save();

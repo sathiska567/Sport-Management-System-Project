@@ -1,43 +1,43 @@
-const mongoose = require('mongoose');   
+const mongoose = require('mongoose');
 
 const createFixtureSchema = new mongoose.Schema({
-        nameOfTheEvent:{
-          type:String,
-          required:[true ,'Event Name is required']
-        },
+  nameOfTheEvent: {
+    type: String,
+    required: [true, 'Event Name is required']
+  },
 
-        location:{
-          type:String,
-          required:[true ,'Location is required']
-        },
+  location: {
+    type: String,
+    required: [true, 'Location is required']
+  },
 
-        // numberOfTeams:{
-        //   type:String,
-        //   required:[true ,'Number of team is required']
-        // },
+  // numberOfTeams:{
+  //   type:String,
+  //   required:[true ,'Number of team is required']
+  // },
 
-        nameOfTheTeam:{
-           type:Array,
-           required:[true ,'Team Name is required']
-        },
+  nameOfTheTeam: {
+    type: Array,
+    required: [true, 'Team Name is required']
+  },
 
-        createdFixtureId:{
-          type:Object,
-          default:""
-        }
+  createdFixtureId: {
+    type: Object,
+    default: ""
+  },
 
-        // eventDate:{
-        //   type:String,
-        //   required:[true ,'Event Date is required']
-        // },
+  eventNewDate: {
+    type: String,
+    required: ["Please enter Date of the event", false]
+  },
 
-        // startingTime:{
-        //   type:String,
-        //   required:[true ,'Starting time is required']
-        // },
+  formattedTime: {
+    type: String,
+    required: ["Please enter Starting time of the event", false]
+  },
 })
 
 
-const createFixtureModel = mongoose.model('createFixtureModel',createFixtureSchema);
+const createFixtureModel = mongoose.model('createFixtureModel', createFixtureSchema);
 
 module.exports = createFixtureModel;
