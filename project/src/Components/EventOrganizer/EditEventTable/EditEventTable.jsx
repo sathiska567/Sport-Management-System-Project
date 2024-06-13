@@ -72,6 +72,15 @@ const handleDelete = async (id) => {
             console.error('Error fetching data:', error);
         }
     };
+
+
+    const handleEditNavigate = async(record)=>{
+      try {
+        navigate("/EditEventFormNew",{state:{record:record}})
+      } catch (error) {
+         message.error("An error occurred while navigate to editing the Event");
+      }
+    }
     
 
     useEffect(() => {
@@ -159,6 +168,15 @@ const handleDelete = async (id) => {
                                             <span>{record.eventNewDate}</span>
                                         )
                                     },
+                                    
+                                    {
+                                        title: "Event Time",
+                                        dataIndex: "EventTime",
+                                        key: "EventTime",
+                                        render: (text, record) => (
+                                            <span>{record.formattedTime}</span>
+                                        )
+                                    },
                                    
                                     {
                                         title: "Actions",
@@ -175,8 +193,8 @@ const handleDelete = async (id) => {
                                                 <Button
                                                     type="ghost"
                                                     ghost
-                                                    onClick={() => prams.setId(record._id)}
-                                                    href={"/EditEventFormNew/" + record._id}
+                                                    onClick={() => handleEditNavigate(record)}
+                                                    // href={"/EditEventFormNew/" ,{state:{record:record}}}
                                                     style={{
                                                         backgroundColor: "green",
                                                         color: "#fff",

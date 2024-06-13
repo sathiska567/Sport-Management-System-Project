@@ -49,6 +49,7 @@ const getFinalizeShuffle = async () => {
       console.log(id);
       const response = await axios.post("http://localhost:8080/api/v1/shuffle/newFixture", { id: id })
       console.log(response.data.data.shuffleTeam);
+
       setFinalShuffle(response.data.data.shuffleTeam)
       // // setShuffledNewArray(response.data.data)
       setNewArrayLength(response.data.data.shuffleTeam)
@@ -104,7 +105,7 @@ const handleDownload = async () => {
             columns={[
               {
                 title: "Team Number",
-                width: "20%",
+                // width: "20%",
                 dataIndex: "teamNumber",
                 render: (text, record, index) => (
                   <span key={index} style={{color:"black",fontFamily:"sans-serif",fontWeight:"bold"}}>{"Team Number "+(index + 1)}</span>
@@ -118,17 +119,17 @@ const handleDownload = async () => {
                 )
               },
 
-              {
-                title: "Event Time",
-                dataIndex: "time",
-                render: (text, record) => <span style={{color:"blue",fontFamily:"sans-serif",fontWeight:"bold"}}>8.30am</span>,
-              },
+              // {
+              //   title: "Event Time",
+              //   dataIndex: "time",
+              //   render: (text, record) => <span style={{color:"blue",fontFamily:"sans-serif",fontWeight:"bold"}}>{record.formattedTime}</span>,
+              // },
 
-              {
-                title: "Location",
-                dataIndex: "location",
-                render: (text, record) => <span style={{color:"green",fontFamily:"sans-serif",fontWeight:"bold"}}>Ground 01</span>,
-              },
+              // {
+              //   title: "Location",
+              //   dataIndex: "location",
+              //   render: (text, record) => <span style={{color:"green",fontFamily:"sans-serif",fontWeight:"bold"}}>Ground 01</span>,
+              // },
 
             ]}
             pagination={{

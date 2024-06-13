@@ -649,7 +649,7 @@ function App() {
 
       <Routes>
         <Route
-          path="/EditEventFormNew/:id"
+          path="/EditEventFormNew"
           element={
             <ProtectedRoute>
               <EOEditEventFormNew />

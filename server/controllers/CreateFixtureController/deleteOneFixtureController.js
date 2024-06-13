@@ -1,4 +1,5 @@
 const createFixtureModel = require("../../models/CreateFixtureModel/CreateFixtureModel");
+const deletedFixtureModel = require("../../models/DeletedFixtureModel/DeletedFixtureModel")
 
 
 const deleteFixtureController = async(req,res)=>{
@@ -8,6 +9,13 @@ const deleteFixtureController = async(req,res)=>{
         console.log(id);
 
         const response = await createFixtureModel.deleteOne({_id:id})
+
+        
+        const deletedFixture = new deletedFixtureModel({
+                eventId:id,
+         })
+
+         await deletedFixture.save()
 
         res.status(200).send({
                 success:true,

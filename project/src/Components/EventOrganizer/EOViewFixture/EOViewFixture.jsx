@@ -168,6 +168,12 @@ const EOViewFixture = () => {
                   render: (text, record) => <span>{record.eventNewDate}</span>,
                 },
                 {
+                  title: "Event Date",
+                  dataIndex: "eventDate",
+                  width: "20%",
+                  render: (text, record) => <span>{record.formattedTime}</span>,
+                },
+                {
                   title: "Actions",
                   dataIndex: "Actions",
                   width: "40%",

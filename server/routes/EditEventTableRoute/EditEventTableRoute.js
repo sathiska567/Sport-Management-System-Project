@@ -9,7 +9,7 @@ router.get("/get-create/",getevent)
 router.get("/get-single-create/:_id", getSingleEvent)
 
 //update data
-router.put("/update-event",updateevent)
+router.post("/update-event",updateevent)
 
 //delete data
 router.delete("/delete-event/:id",deletevent)
