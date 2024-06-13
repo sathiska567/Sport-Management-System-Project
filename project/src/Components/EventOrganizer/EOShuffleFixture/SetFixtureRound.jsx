@@ -14,6 +14,7 @@ export default function SetFixtureRound() {
   const location = useLocation([]);
   const players = location.state.teamsCount;
   const [size, setSize] = useState('large');
+  const [finalShuffle , setFinalShuffle] = useState([]);
 
   console.log(location);
 
@@ -48,6 +49,7 @@ export default function SetFixtureRound() {
 
 
   useEffect(() => {
+    setFinalShuffle(location.state.finalShuffle);
     singleEliminate();
   }, []);
 
@@ -70,7 +72,7 @@ export default function SetFixtureRound() {
                   dataIndex: "round",
                   backgroundColor: "blue",
                   render: (text, record) => (
-                    <span style={{ color: "red" }}>{"Round " + record.round + " " + " "}</span>
+                    <span style={{ color: "red" }}>{record.round + " " + "Round " + " "}</span>
                   )
                 },
 
@@ -82,24 +84,40 @@ export default function SetFixtureRound() {
 
 
                 {
-                  title: "Team 01",
+                  title: "Team Group 01",
                   dataIndex: "team01",
-                  render: (text, record) => <span>{"Team Number " + (record.player1 || " That made it to this round - Team01")}</span>,
+                  render: (text, record) => <span>{ (finalShuffle[record.player1-1] || " That made it to this round - Team01")}</span>,
                 },
 
                 {
-                  title: "Team 02",
+                  title: "Team Group 02",
                   dataIndex: "team02",
-                  render: (text, record) => <span>{"Team Number " + (record.player2 || " That made it to this round - Team02")}</span>,
+                  render: (text, record) => <span>{(finalShuffle[record.player2-1] || " That made it to this round - Team02")}</span>,
                 },
 
                 {
-                  title: "Next Round and Match",
+                  title: "Next Round",
                   dataIndex: "final-match",
                   render: (text, record) => (
                     <span>
                       {record.win ? (
-                        <span><span style={{ color: "red" }}>{("Next Roud " + record.win.round)}</span><br /><br /><span style={{ color: "green" }}>{("Next Match " + record.win.match)}</span></span>
+                        <span><span style={{ color: "red" }}>{("Next Roud " + record.win.round)}</span></span>
+                      ) : (
+                        (
+                          <p style={{ color: "red" }}>🏆 Final</p>
+                        )
+
+                      )}
+                    </span>
+                  ),
+                },
+                {
+                  title: "Next Match",
+                  dataIndex: "final-match",
+                  render: (text, record) => (
+                    <span>
+                      {record.win ? (
+                        <span><span style={{ color: "green" }}>{("Next Match " + record.win.match)}</span></span>
                       ) : (
                         (
                           <p style={{ color: "red" }}>🏆 Final</p>

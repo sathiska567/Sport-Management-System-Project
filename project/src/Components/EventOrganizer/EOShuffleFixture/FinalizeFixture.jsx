@@ -90,7 +90,7 @@ const handleDownload = async () => {
 
 // handle single eliminate 
   const handleSingleEliminate = async () => {
-    navigate("/test-fixture", { state: { teamsCount: newArrayLength.length } });
+    navigate("/test-fixture", { state: { teamsCount: newArrayLength.length , finalShuffle:finalShuffle} });
   }
 
 
