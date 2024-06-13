@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./EOViewFixture.css";
 import EOSiderBar from "../EOSideBar/EOSideBar";
-import { Layout, Button, Input, Table, message, DatePicker } from "antd";
+import { Layout, Button, Input, Table, message, DatePicker, Tooltip } from "antd";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -187,23 +187,26 @@ const EOViewFixture = () => {
                         justifyContent: "center",
                       }}
                     >
-                      <Button
-                        type="primary"
-                        className="Button"
-                        style={{
-                          backgroundColor: "#52c41a",
-                          color: "#fff",
-                          fontSize: "14px",
-                          marginRight: "10px",
-                          borderRadius: "5px",
-                          marginTop: "auto",
-                          marginBottom: "auto",
-                          width: "70px",
-                        }}
-                        onClick={() => handleView(record)}
-                      >
-                        View
-                      </Button>
+                      <Tooltip title={record.createdFixtureId === "" ? "Please shuffle fixture and then view" : "View fixture"}>
+                        <Button
+                          type="primary"
+                          className="Button"
+                          style={{
+                            backgroundColor: "#52c41a",
+                            color: "#fff",
+                            fontSize: "14px",
+                            marginRight: "10px",
+                            borderRadius: "5px",
+                            marginTop: "auto",
+                            marginBottom: "auto",
+                            width: "70px",
+                          }}
+                          onClick={() => handleView(record)}
+                          disabled={record.createdFixtureId === "" ? true : false}
+                        >
+                          View
+                        </Button>
+                      </Tooltip>
                       <Button
                         type="primary"
                         style={{
