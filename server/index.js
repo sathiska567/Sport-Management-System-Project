@@ -48,6 +48,7 @@ const getOnlyEventOrganizerRoute = require("./routes/GetOnlyEventOrganizerRoute/
 const GetOnlyCoachRoute = require("./routes/GetOnlyCoachRoute/GetOnlyCoachRoute")
 const GetOnlyTeamManagersRoute = require("./routes/GetOnlyTeamManagersRoute/GetOnlyTeamManagersRoute")
 const RefereeEventRoute = require("./routes/RefereeEventRoute/RefereeEventRoute")
+const getRefereeDetailsRoute = require("./routes/GetAllRefereeDetails/GetAllRefereeDetails")
 
 require("./db/mongoDb"); 
 
@@ -114,6 +115,9 @@ app.use("/api/v1/review-give-coach",getPlayerReviewRoute);
 
 // GET ONLY PLAYER ROUTE
 app.use("/api/v1/player",getPlayerDetailsRoute);
+
+// GET ONLY Referee ROUTE
+app.use("/api/v1/referee",getRefereeDetailsRoute);
 
 
 // PLAYER ROUTE
