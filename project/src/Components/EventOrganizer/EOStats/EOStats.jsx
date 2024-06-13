@@ -73,7 +73,7 @@ const ApplyingUser = async () => {
       setApprovedCount(approvedPosition.length)
 
     } else {
-      message("Error found in applying details section");
+      message("Error found when applying details section");
     }
   } catch (error) {
     message.error("Error while fetching data");
