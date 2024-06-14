@@ -37,6 +37,7 @@ const EOViewFixture = () => {
   const [createdFixture, setCreatedFixture] = useState([]);
   const navigate = useNavigate();
   const location = useLocation();
+  const [searchDate, setSearchDate] = useState("")
   console.log(location);
 
   //  GET ALL CREATED FIXTURE
@@ -92,14 +93,29 @@ const EOViewFixture = () => {
     getFixtureData();
   }, []);
 
-  // Filter userApplicationData based on userRole and Userlocation
-  const handleEventLocationSearch = (value) => {
-    console.log("Event Location Searched: ", value);
+  const handleDateChange = async (date, dateString) => {
+    console.log("Date Selected: ", dateString);
+    setSearchDate(dateString)
   };
 
-  const handleDateChange = (date, dateString) => {
-    console.log("Date Selected: ", dateString);
+  // Filter userApplicationData based on userRole and Userlocation
+  const handleEventLocationSearch = async (value) => {
+    console.log("Event Location Searched: ", value, searchDate);
+
+    try {
+      // const searchResponse = await axios.post("http://localhost:8080/api/v1/search/data",{value:value})
+      const searchResponse = await axios.post("http://localhost:8080/api/v1/search/data", { value: value, searchDate: searchDate })
+
+      if(searchResponse.data.success){
+        setCreatedFixture(searchResponse.data.data)
+      }
+
+    } catch (error) {
+      message.error("Error fetching searching data");
+    }
   };
+
+
 
   // const handleCreateBracket = async (id) => {
   //   console.log(id);
@@ -130,20 +146,22 @@ const EOViewFixture = () => {
             }} // Remove overflowY: "auto"
           >
             <div className="search">
-              <Input.Search
-                className="searchInputName"
-                placeholder="Search Event Location..."
-                style={{
-                  marginBottom: "8px",
-                }}
-                onSearch={handleEventLocationSearch}
-                allowClear
-              />
               <DatePicker
                 className="searchInputDate"
                 style={{ marginBottom: 8 }}
                 onChange={handleDateChange}
               />
+
+              <Tooltip title="Search for event location">
+                <Input.Search
+                  className="searchInputName"
+                  placeholder="Search Event Location..."
+                  style={{ marginBottom: "8px" }}
+                  onSearch={handleEventLocationSearch}
+                  allowClear
+                />
+              </Tooltip>
+
             </div>
             <Table
               columns={[
