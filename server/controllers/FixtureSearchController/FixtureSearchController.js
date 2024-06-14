@@ -4,22 +4,40 @@ const FixtureSearchController = async (req, res) => {
         try {
           console.log(req.body);
           const finalArray = [];
-          
-          const searchValue = req.body.value;
-        //   const searchDate = new Date(req.body.searchDate); // Convert searchDate to a Date object
-
-          const regex = new RegExp(searchValue,'i'); // 'i' makes the search case-insensitive
-        //   const regexDate = new RegExp(searchDate,'i'); // 'i' makes the search case-insensitive
       
-          const data = await createFixtureModel.find({ location: regex});
-
-          for (let i = 0; i < data.length; i++) {
-             const eventDate = new Date(data[i].eventNewDate);
-
-             if(data[i].eventNewDate == req.body.searchDate){
-                 finalArray.push(data[i]);
-             }
-               
+          const searchValue = req.body.value;
+          const searchDate = req.body.searchDate;
+      
+          let query = {};
+      
+          if (searchValue) {
+            const regex = new RegExp(searchValue, 'i'); // 'i' makes the search case-insensitive
+            query.location = regex;
+          }
+      
+          if (searchDate) {
+            const searchDateObj = new Date(searchDate);
+            const normalizedSearchDate = searchDateObj.toISOString().split('T')[0];
+            query.eventNewDate = normalizedSearchDate;
+          }
+      
+          const data = await createFixtureModel.find(query);
+      
+          // If searchDate is provided, further filter the data
+          if (searchDate) {
+            const searchDateObj = new Date(searchDate);
+            const normalizedSearchDate = searchDateObj.toISOString().split('T')[0];
+      
+            for (let i = 0; i < data.length; i++) {
+              const eventDate = new Date(data[i].eventNewDate);
+              const normalizedEventDate = eventDate.toISOString().split('T')[0];
+      
+              if (normalizedEventDate === normalizedSearchDate) {
+                finalArray.push(data[i]);
+              }
+            }
+          } else {
+            finalArray.push(...data);
           }
       
           res.status(200).send({
@@ -37,5 +55,4 @@ const FixtureSearchController = async (req, res) => {
         }
       };
       
-
 module.exports = {FixtureSearchController}
