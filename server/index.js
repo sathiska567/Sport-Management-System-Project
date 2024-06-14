@@ -52,6 +52,7 @@ const getRefereeDetailsRoute = require("./routes/GetAllRefereeDetails/GetAllRefe
 const FixtureSearchRoute = require("./routes/FixtureSearchRoute/FixtureSearchRoute")
 const CoachSearchRoute = require("./routes/CoachSearchRoute/CoachSearchRoute")
 const TMSearchRoute = require("./routes/TMSearchRoute/TMSearchRoute")
+const EventTableHomePage= require("./routes/EventTableHomePageRoute/EventTableHomePageRoute")
 
 require("./db/mongoDb"); 
 
@@ -178,6 +179,9 @@ app.use("/api/v1/search",CoachSearchRoute);
 
 // SEARCH TM
 app.use("/api/v1/search",TMSearchRoute);
+
+//Evrnt table for home page
+app.use("/api/v1/EventtableHomePage",EventTableHomePage);
 
 // //jwt
 // app.post('/user/login', async (req, res) => {
