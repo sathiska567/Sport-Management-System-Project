@@ -58,7 +58,7 @@ const EditTeam = () => {
             if (res.data.success) {
                 console.log('Team removed : ', team_id);
                 setTeams(dataSource.filter(team => team._id !== team_id));
-                //window.location.reload();
+                window.location.reload();
             }
         } catch (err) {
             console.log('team delete error :\n', err)

@@ -93,12 +93,12 @@ const getPlayers = async (req, res) => {
 
 
         // Get already existing players
-        const teamsNotExist = await Team.find({match_id: matchId, coach_id: coachId});
+        const teamsNotExist = await Team.find({ match_id: matchId, coach_id: coachId });
         const existPlayerIds = teamsNotExist.reduce((acc, team) => acc.concat(team.players), []);
         const validExistPlayers = await User.find({
             isPlayer: true,
-            _id: { $in: existPlayerIds } 
-        }) 
+            _id: { $in: existPlayerIds }
+        })
 
         console.log('players in this coach\'s team for this match : \n', validExistPlayers)
 
@@ -139,17 +139,28 @@ const createTeam = async (req, res) => {
         const team = req.body;
         console.log('Team data received : ', team);
 
-        //Team update
+        // Generate unique teamNo
+        const lastTeam = await Team.findOne().sort({ teamNo: -1 }); // Get the last team based on teamNo
+        let nextTeamNo = 1; // Default to 1 if no teams exist
+
+        if (lastTeam && !isNaN(lastTeam.teamNo.slice(1))) {
+            nextTeamNo = parseInt(lastTeam.teamNo.slice(1)) + 1;
+        }
+
+        // Convert nextTeamNo to a string and format as 'T' followed by at least 3 digits
+        const formattedTeamNo = 'T' + nextTeamNo.toString().padStart(3, '0');
+
+        // Team update
         const newTeam = new Team({
             teamName: team.teamName,
-            teamNo: team.teamNo,
+            teamNo: formattedTeamNo,
             match_id: team.matchId,
             coach_id: team.coachId,
             players: team.selectedPlayers
-        })
+        });
 
-        const savedTeam = await newTeam.save()
-        console.log('\n\nSaved team : \n', savedTeam)
+        const savedTeam = await newTeam.save();
+        console.log('\n\nSaved team : \n', savedTeam);
 
         /*
         //Player update
@@ -264,10 +275,11 @@ const deleteTeam = async (req, res) => {
         console.log('\ndeleted team :\n', deletedTeam);
 
 
-        const coach_id = req.query.coach_id
+        const coach_id = deletedTeam.coach_id
         //await Coach.findByIdAndUpdate(coach_id, { $pull: { teams: team_id } });
 
-        const match_id = req.query.match_id
+        const match_id = deletedTeam.match_id
+        console.log('282 : ', match_id)
         await Match.findByIdAndUpdate(match_id, { $pull: { teams: team_id, coaches: coach_id } })
 
         /*
