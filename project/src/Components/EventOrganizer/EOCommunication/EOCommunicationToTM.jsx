@@ -84,8 +84,19 @@ const EOCommunicationToTM = () => {
 
   // filter data
   // console the value to search name of the event
-  const handleEventNameSearch = (value) => {
+  const handleEventNameSearch = async(value) => {
     console.log("Event Name Searched: ", value);
+    try {
+      const searchResponse = await axios.post("http://localhost:8080/api/v1/search/filterTM",{TMName:value})
+      console.log(searchResponse);
+      
+      if(searchResponse.data.success){
+        setTeamManagers(searchResponse.data.data)
+      }
+
+    } catch (error) {
+      message.error("Error fetching event organizers");
+    }
   };
 
   // console the value to search location of the event
@@ -129,14 +140,14 @@ const EOCommunicationToTM = () => {
                 onSearch={handleEventNameSearch}
                 allowClear
               />
-              <Input.Search
+              {/* <Input.Search
                 placeholder="Search Location..."
                 styles={{
                   marginBottom: "8",
                 }}
                 onSearch={handleEventLocationSearch}
                 allowClear
-              />
+              /> */}
             </div>
             {/* Table section */}
             <div className="tableContainer">
