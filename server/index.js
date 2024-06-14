@@ -50,6 +50,8 @@ const GetOnlyTeamManagersRoute = require("./routes/GetOnlyTeamManagersRoute/GetO
 const RefereeEventRoute = require("./routes/RefereeEventRoute/RefereeEventRoute")
 const getRefereeDetailsRoute = require("./routes/GetAllRefereeDetails/GetAllRefereeDetails")
 const FixtureSearchRoute = require("./routes/FixtureSearchRoute/FixtureSearchRoute")
+const CoachSearchRoute = require("./routes/CoachSearchRoute/CoachSearchRoute")
+
 
 require("./db/mongoDb"); 
 
@@ -170,6 +172,9 @@ app.use("/api/v1/referee", RefereeEventRoute);
 
 // SEARCH FIXTURE ROUTE
 app.use("/api/v1/search",FixtureSearchRoute);
+
+// SEARCH Coach
+app.use("/api/v1/search",CoachSearchRoute);
 
 // //jwt
 // app.post('/user/login', async (req, res) => {
