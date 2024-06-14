@@ -51,6 +51,7 @@ const RefereeEventRoute = require("./routes/RefereeEventRoute/RefereeEventRoute"
 const getRefereeDetailsRoute = require("./routes/GetAllRefereeDetails/GetAllRefereeDetails")
 const FixtureSearchRoute = require("./routes/FixtureSearchRoute/FixtureSearchRoute")
 const CoachSearchRoute = require("./routes/CoachSearchRoute/CoachSearchRoute")
+const EventDetailsForm = require("./routes/EventDetailsFormRoutes/EventDetailsFormRoutes")
 
 
 require("./db/mongoDb"); 
@@ -175,6 +176,7 @@ app.use("/api/v1/search",FixtureSearchRoute);
 
 // SEARCH Coach
 app.use("/api/v1/search",CoachSearchRoute);
+app.use("/api/v1/EventDetailsForm", EventDetailsForm);
 
 // //jwt
 // app.post('/user/login', async (req, res) => {

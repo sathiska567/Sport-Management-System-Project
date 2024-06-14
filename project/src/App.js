@@ -75,6 +75,7 @@ import SelectPlayers from "./Components/Coach/CoachCreateTeam/SelectPlayers.jsx"
 import CoachEditTeam from "./Components/Coach/CoachEditTeam/EditTeam.jsx";
 import UpdateTeam from "./Components/Coach/CoachEditTeam/UpdateTeam.jsx";
 import RefereeEvent from "./Components/Referee/RefereeEvent/RefereeEvent.jsx";
+import EventDetailsForm from "./Components/TeamManager/EventDetailsForm/EventDetailsForm.jsx";
 
 import { useState } from "react";
 
@@ -761,6 +762,18 @@ function App() {
             </ProtectedRoute>
           }
         ></Route>
+      </Routes>
+      <Routes>
+        <Route
+        path="/EventDetailsForm"
+        element={
+          <ProtectedRoute>
+            <EventDetailsForm/>
+          </ProtectedRoute>
+        }
+        >
+
+        </Route>
       </Routes>
 
       {/* <Routes>
