@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import "./EventList.css";
 import axios from "axios";
-import { Layout, Button, Input, Table } from 'antd';
+import { Layout, Button, Input, Table, message } from 'antd';
 import { useLocation, useNavigate } from 'react-router-dom';
 import TeamManagerSideBar from '../TeamManagerSideBar/TeamManagerSideBar';
 const { Content } = Layout;
@@ -14,6 +14,7 @@ export default function ViewMatch() {
     const location = useLocation([]);
     const [teamname, setTeamName] = useState("");
     const [evedate, setEventDate] = useState("");
+    const [createEvent, setCreateEvent] = useState([]);
 
 
     const [dataSource, setDataSource] = useState([]);
@@ -31,16 +32,33 @@ export default function ViewMatch() {
         setTeamName(value);
     };
 
+    // GET ALL CREATE EVENT 
+    const getAllCreateEvent = async () => {
+        try {
+            const response = await axios.get(
+                "http://localhost:8080/api/v1/event/get-all-events"
+            );
+
+            console.log(response.data);
+
+            if (response.data.success) {
+                setCreateEvent(response.data.data);
+            }
+        } catch (error) {
+            message.error("Error fetching data");
+        }
+    };
+
 
 
     // getdata  and search players
     const getFetchData = async (teamname, evedate) => {
         axios.defaults.baseURL = "http://localhost:8080/api/v1/eventView"
-        
+
         try {
             const response = await axios.get(`/get-assignee-Event-Member?q=${teamname}&date=${evedate}`);
-            console.log(response.data);
-    
+            // console.log(response.data);
+
             if (response.data.success) {
                 setDataSource(response.data.data);
             }
@@ -48,11 +66,12 @@ export default function ViewMatch() {
             console.error('Error fetching data:', error);
         }
     };
-    
+
 
     useEffect(() => {
         getFetchData(teamname, evedate);
-    }, [teamname,evedate])
+        getAllCreateEvent()
+    }, [teamname, evedate])
 
     // End
 
@@ -105,7 +124,7 @@ export default function ViewMatch() {
                                         dataIndex: "EventName",
                                         key: "EventName",
                                         render: (text, record) => (
-                                            <span>{record. evename}</span>
+                                            <span>{record.nameOfTheEvent}</span>
                                         )
                                     },
 
@@ -114,20 +133,20 @@ export default function ViewMatch() {
                                         dataIndex: "TeamName",
                                         key: "TeamName",
                                         render: (text, record) => (
-                                            <span>{record.teamname}</span>
+                                            <span>{record.location}</span>
                                         )
                                     },
 
-                                    
+
                                     {
                                         title: "Event Date",
                                         dataIndex: "EventDate",
                                         key: "EventDate",
                                         render: (text, record) => (
-                                            <span>{record. evedate}</span>
+                                            <span>{record.eventNewDate}</span>
                                         )
                                     },
-                                   
+
                                     {
                                         title: "Actions",
                                         dataIndex: "Actions",
@@ -156,7 +175,7 @@ export default function ViewMatch() {
                                                 >
                                                     Assign Coaches
                                                 </Button>
-                                                <Button
+                                                {/* <Button
                                                     type="ghost"
                                                     ghost
                                                     href="/TeamManagerAssign"
@@ -171,7 +190,7 @@ export default function ViewMatch() {
                                                     }}
                                                 >
                                                     Assign Players
-                                                </Button>
+                                                </Button> */}
                                             </span>
                                         ),
                                     },
@@ -183,13 +202,13 @@ export default function ViewMatch() {
                                     pageSize: 5,
                                 }}
 
-                                dataSource={dataSource}
+                                dataSource={createEvent}
                             ></Table>
                             {console.log(dataSource)}
                         </div>
                     </Content>
                 </Layout>
             </Layout>
-            </TeamManagerSideBar>
+        </TeamManagerSideBar>
     );
 }
