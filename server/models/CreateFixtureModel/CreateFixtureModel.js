@@ -35,6 +35,13 @@ const createFixtureSchema = new mongoose.Schema({
     type: String,
     required: ["Please enter Starting time of the event", false]
   },
+
+  rounds: [{
+    roundNumber: String,
+    pairs: [],
+    winners: [],
+  }],
+
 })
 
 

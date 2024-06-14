@@ -17,7 +17,7 @@ const SelectPlayers = () => {
     const [teamData, setTeamData] = useState({
         matchId: matchId,
         coachId: coachId,
-        teamNo: '',
+        //teamNo: '',
         teamName: '',
         selectedPlayers: [] // State to hold selected player IDs
     });
@@ -84,8 +84,8 @@ const SelectPlayers = () => {
     //....................
 
     const columns = [
-        { title: 'Player No', dataIndex: 'playerId', key: 'playerId', align: 'center', render: (text) => <span className='text'>{text}</span> },
-        { title: 'Player Name', dataIndex: 'playerName', key: 'playerName', align: 'center', render: (text) => <span className='text'>{text}</span> },
+        { title: 'Player No', dataIndex: 'uid', key: 'playerId', align: 'center', render: (text) => <span className='text'>{text}</span> },
+        { title: 'Player Name', dataIndex: 'username', key: 'username', align: 'center', render: (text) => <span className='text'>{text}</span> },
         { title: 'Location', dataIndex: 'District', key: 'District', align: 'center', render: (text) => <span className='text'>{text}</span> },
         {
             title: 'Action',
@@ -119,16 +119,16 @@ const SelectPlayers = () => {
                         <Input placeholder="Team Name" name='teamName' value={teamData.teamName} onChange={handleChange} className='inputTag' />
                     </Form.Item>
 
-                    <Form.Item label='Team No' >
+                   {/* <Form.Item label='Team No' >
                         <Input placeholder="Team No" name='teamNo' value={teamData.teamNo} onChange={handleChange}  className='inputTag'/>
-                    </Form.Item>
+                    </Form.Item>*/}
 
                 </Form>
                 <Table columns={columns} dataSource={players} style={{ margin: 50, marginTop: 0, marginBottom: 0 }} />
 
 
                 <div style={{display:'flex', flexDirection:'row', justifyContent:'center', marginBottom:10}}>
-                    {teamData.teamName && teamData.teamNo && (
+                    {teamData.teamName && (
                         <Button style={{
                             alignSelf: 'center',
                             backgroundColor: "#52c41b",

@@ -76,8 +76,10 @@ const TournamentBracket = () => {
         });
 
         if (res.data.finalWinner) {
-          console.log(res.data.message, ' : ', res.data.finalWinner.teamName)
-          setFinalWinner(res.data.finalWinner.teamName);
+          //console.log(res.data.message, ' : ', res.data.finalWinner.teamName)
+          //setFinalWinner(res.data.finalWinner.teamName);
+          console.log(res.data.message, ' : ', res.data.finalWinner)
+          setFinalWinner(res.data.finalWinner);
         }
 
       })
@@ -86,9 +88,10 @@ const TournamentBracket = () => {
       });
   };
 
+
   const handleTeamSelection = (pairIndex, teamIndex) => {
     const updatedwinnersArray = [...winnersArray];
-    updatedwinnersArray[pairIndex] = pairs[pairIndex][teamIndex]._id;
+    updatedwinnersArray[pairIndex] = pairs[pairIndex][teamIndex];
     setWinnersArray(updatedwinnersArray);
   };
 
@@ -96,9 +99,12 @@ const TournamentBracket = () => {
   const handleViewWinners = async () => {
     try {
       const res = await axios.get(`http://localhost:8080/api/v1/organizer/getWinners/${selectedMatchId}`);
-      console.log("winn", res.data)
+      console.log("102 : winn", res.data.match)
       setRounds(res.data.match.rounds)
-      setTeams(res.data.match.teams)
+      console.log(" 104 ; rounds w", res.data.match.rounds)
+
+      //setTeams(res.data.match.teams)
+      setTeams(res.data.match.nameOfTheTeam)
       console.log("rounds w", rounds)
 
     } catch (err) {
@@ -122,8 +128,8 @@ const TournamentBracket = () => {
             <select className='select-lg mb-3 ' onChange={handleSelectMatch} value={selectedMatchId}>
               <option value="default">Select a match</option> {/* Default option */}
               {matches.map(match => (
-                <option key={match.matchNo} value={match.matchNo}>
-                  {match.name} : {match.matchNo}
+                <option key={match._id} value={match._id}>
+                  {match.nameOfTheEvent}  {match.matchNo}
                 </option>
               ))}
             </select>
@@ -133,7 +139,7 @@ const TournamentBracket = () => {
           {(!finalWinner) && (
             <div style={{ display: 'flex', flexDirection: 'column' }}>
 
-              <div style={{alignSelf:'center', fontWeight:'bolder', fontSize:25}}>Round - {roundNo}</div>
+              <div style={{ alignSelf: 'center', fontWeight: 'bolder', fontSize: 25 }}>Round - {roundNo}</div>
 
 
               {(pairs.length == 0) && (<button onClick={pairsGet} className='btn-success '>get pairs</button>)}
@@ -144,7 +150,7 @@ const TournamentBracket = () => {
                     <div key={pairIndex} className='custom-card' style={{ margin: 10, display: 'flex', flexDirection: 'column' }}>
                       {pair.map((team, teamIndex) => (
                         <div key={teamIndex} className='form-check-container'>
-                          <label className='form-check-label'>{team.teamName}</label>
+                          <label className='form-check-label'>{team}</label>
                           <input
                             className='form-check-input'
                             type='radio'
@@ -192,7 +198,7 @@ const TournamentBracket = () => {
                       <div key={pairIndex}>
                         <ul className='custom-card bg-dark text-light' style={{ listStyleType: 'none', marginBottom: 2, padding: 0 }}>
                           {pair.map((team, teamIndex) => {
-                            const tName = teams.find(t => t._id === team).teamName
+                            const tName = teams.find(t => t /*._id*/ === team) /*.teamName*/
                             return (
                               <li key={teamIndex} style={{ display: 'flex', justifyContent: 'space-between', padding: 3 }}>
                                 <span className='form-check-label' >{tName}</span>
@@ -200,7 +206,7 @@ const TournamentBracket = () => {
                                   type='radio'
                                   style={{ width: 20, }} className='form-check-input'
 
-                                  checked={round.winners.some(winner => winner._id === team)}
+                                  checked={round.winners.some(winner => winner /*._id*/ === team)}
                                 />
                               </li>
                             )

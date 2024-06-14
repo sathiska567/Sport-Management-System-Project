@@ -1,13 +1,12 @@
 const mongoose = require('mongoose');
 
 //const { Coach } = require('../models/coachModel');
-const Coach = require('../models/CoachProfileModel/CoachProfileModel')
-const { Match } = require('../models/matchModel')
-//const Match = require('../models/CreateEventModel/createEventModel')
-const Player  = require('../models/playerAatheek')
-//const Player = require('../models/PlayerProfileModel/PlayerProfileModel')
+//const Coach = require('../models/CoachProfileModel/CoachProfileModel')
+//const { Match } = require('../models/matchModel')
+const Match = require('../models/CreateEventModel/createEventModel')
+//const Player  = require('../models/playerAatheek')
+const User = require('../models/userModel')
 const { Team } = require('../models/teamModel');
-const { all } = require('..');
 
 
 const getMatches = async (req, res) => {
@@ -32,10 +31,10 @@ const getMatches = async (req, res) => {
         const allMatches = [...unmatchedMatches, ...matchedMatches];
         console.log(`matches for team create : \n ${allMatches}`)
         */
-        
+
         const allMatches = await Match.find({ coaches: { $nin: [coachId] } })
         console.log('all matches : \n', allMatches)
-        
+
 
         res.json(allMatches);
     } catch (err) {
@@ -43,7 +42,7 @@ const getMatches = async (req, res) => {
     }
 }
 
-const getPlayers = async (req, res) => {
+/* const getPlayers = async (req, res) => {
     try {
         const matchId = req.query.match_id; 
         const coachId = req.query.coach_id;
@@ -52,7 +51,7 @@ const getPlayers = async (req, res) => {
         console.log('coach_id : ', coachId);
 
         // Get all players not in any team with the same match_id
-        const unmatchedPlayers = await Player.find({
+        const unmatchedPlayers = await User.find({
             _id: { $nin: await Team.distinct('players', { match_id: matchId }) }
         });
 
@@ -69,8 +68,48 @@ const getPlayers = async (req, res) => {
         console.error(err);
         res.status(500).json({ error: 'Internal Server Error' });
     }
-};
+}; */
 
+
+const getPlayers = async (req, res) => {
+    try {
+        const matchId = req.query.match_id;
+        const coachId = req.query.coach_id;
+
+        console.log('match_id : ', matchId);
+        console.log('coach_id : ', coachId);
+
+        // Step 1: Find all teams associated with the specific match
+        const teamsExist = await Team.find({ match_id: matchId });
+        const teamPlayerIds = teamsExist.reduce((acc, team) => acc.concat(team.players), []);
+
+        // Step 3: Find all users with isPlayer: true that are not in the list of team players
+        const validNotExistPlayers = await User.find({
+            isPlayer: true,
+            _id: { $nin: teamPlayerIds }
+        });
+
+        console.log('players not in any team for this match : \n', validNotExistPlayers)
+
+
+        // Get already existing players
+        const teamsNotExist = await Team.find({ match_id: matchId, coach_id: coachId });
+        const existPlayerIds = teamsNotExist.reduce((acc, team) => acc.concat(team.players), []);
+        const validExistPlayers = await User.find({
+            isPlayer: true,
+            _id: { $in: existPlayerIds }
+        })
+
+        console.log('players in this coach\'s team for this match : \n', validExistPlayers)
+
+        //combine all players
+        const allPlayers = [...validNotExistPlayers, ...validExistPlayers]
+        res.json(allPlayers);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
 
 
 const createMatch = async (req, res) => {
@@ -100,17 +139,28 @@ const createTeam = async (req, res) => {
         const team = req.body;
         console.log('Team data received : ', team);
 
-        //Team update
+        // Generate unique teamNo
+        const lastTeam = await Team.findOne().sort({ teamNo: -1 }); // Get the last team based on teamNo
+        let nextTeamNo = 1; // Default to 1 if no teams exist
+
+        if (lastTeam && !isNaN(lastTeam.teamNo.slice(1))) {
+            nextTeamNo = parseInt(lastTeam.teamNo.slice(1)) + 1;
+        }
+
+        // Convert nextTeamNo to a string and format as 'T' followed by at least 3 digits
+        const formattedTeamNo = 'T' + nextTeamNo.toString().padStart(3, '0');
+
+        // Team update
         const newTeam = new Team({
             teamName: team.teamName,
-            teamNo: team.teamNo,
+            teamNo: formattedTeamNo,
             match_id: team.matchId,
             coach_id: team.coachId,
             players: team.selectedPlayers
-        })
+        });
 
-        const savedTeam = await newTeam.save()
-        console.log('\n\nSaved team : \n', savedTeam)
+        const savedTeam = await newTeam.save();
+        console.log('\n\nSaved team : \n', savedTeam);
 
         /*
         //Player update
@@ -135,7 +185,7 @@ const createTeam = async (req, res) => {
         match.coaches.push(savedTeam.coach_id)
         const updatedMatch = await match.save();
         console.log('\n\nUpdated match :\n', updatedMatch)
-        
+
 
         res.status(200).json({ success: true, team: savedTeam })
 
@@ -162,8 +212,7 @@ const getTeams = async (req, res) => {
 }
 
 
-/*
-const getPlayersTeamUpdate = async (req, res) => {
+/* const getPlayersTeamUpdate = async (req, res) => {
     try {
         const team_id = req.query.team_id
         console.log('\nreq for team players , team_id : ', team_id);
@@ -183,15 +232,14 @@ const editTeam = async (req, res) => {
     try {
         const editedTeam = req.body.teamData
         const team_id = editedTeam._id
-        
+
         console.log('edited data for team ID : ', team_id, ' \n', editedTeam);
 
         // Update the team
         const updatedTeam = await Team.findByIdAndUpdate(team_id, editedTeam, { new: true, overwrite: true });
         console.log('\n\nupdated team data : ', updatedTeam);
 
-        /*
-        // Find the existing team data
+        /* // Find the existing team data
         const existingTeam = await Team.findById(team_id);
         const existingPlayers = existingTeam.players || [];
 
@@ -211,8 +259,8 @@ const editTeam = async (req, res) => {
         // Remove the team_id from teams array of each removed player
         await Player.updateMany({ _id: { $in: removedPlayers } }, { $pull: { teams: team_id, matches: match_id } });
         */
-        
-        res.json({success: true});
+
+        res.json({ success: true });
 
     } catch (er) {
         console.log('team update error : ', er)
@@ -226,11 +274,12 @@ const deleteTeam = async (req, res) => {
         const deletedTeam = await Team.findByIdAndDelete(team_id)
         console.log('\ndeleted team :\n', deletedTeam);
 
-        
-        const coach_id = req.query.coach_id
-        await Coach.findByIdAndUpdate(coach_id, { $pull: { teams: team_id } });
 
-        const match_id = req.query.match_id
+        const coach_id = deletedTeam.coach_id
+        //await Coach.findByIdAndUpdate(coach_id, { $pull: { teams: team_id } });
+
+        const match_id = deletedTeam.match_id
+        console.log('282 : ', match_id)
         await Match.findByIdAndUpdate(match_id, { $pull: { teams: team_id, coaches: coach_id } })
 
         /*
