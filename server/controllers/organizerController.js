@@ -1,6 +1,7 @@
 
-const { Match } = require('../models/matchModel')
-//const Match = require('../models/CreateEventModel/createEventModel')
+//const { Match } = require('../models/matchModel')
+const Match = require('../models/CreateFixtureModel/CreateFixtureModel')
+const Shuffle = require('../models/ShuffleTeamModel/ShuffleTeamModel')
 const { Team } = require('../models/teamModel')
 const mongoose = require('mongoose');
 
@@ -22,12 +23,22 @@ const createRound = async (req, res) => {
     const matchNo = req.params.matchId;
     const roundNo = req.params.roundNo;
 
-    // Find the match by its matchId field
-    const match = await Match.findOne({ matchNo: matchNo });
+    // Find the match by its matchId field 
+    //const match = await Match.findOne({ matchNo: matchNo });
+    const match = await Match.findById(matchNo).populate('createdFixtureId').exec();
+    console.log('match : ', match)
+
 
     if (!match) {
       console.log("match not found")
       return res.status(404).json({ error: 'Match not found' });
+    }
+
+    const shuffling = await Shuffle.findById(match.createdFixtureId._id).populate('shuffleTeam').exec();
+    console.log('shuf : ', shuffling)
+
+    if (!shuffling) {
+      return { message: 'Shuffling not found' };
     }
 
     // Check if the round with the specified roundNumber already exists
@@ -43,7 +54,7 @@ const createRound = async (req, res) => {
 
       if (roundNo == 1) {
         // For the first round, use the original teams
-        currentRound.pairs = createPairs(match.teams || []);
+        currentRound.pairs = createPairs(/*match.teams*/ shuffling.shuffleTeam || []);
       } else {
         // For subsequent rounds, use the winners from the previous round
         const previousRoundIndex = existingRoundIndex - 1;
@@ -63,7 +74,7 @@ const createRound = async (req, res) => {
 
       if (roundNo == 1) {
         // For the first round, use the original teams
-        pairsArray = createPairs(match.teams || []);
+        pairsArray = createPairs(/*match.teams*/ shuffling.shuffleTeam || []);
         console.log(pairsArray)
       } else {
         // For subsequent rounds, use the winners from the previous round
@@ -89,13 +100,13 @@ const createRound = async (req, res) => {
     //populating teams in pairs array to send
     const popPairs = updatedMatch.rounds[roundNo-1].pairs
 
-    for (let pair of popPairs) {
+    /*for (let pair of popPairs) {
       for (let i = 0; i < pair.length; i++) {
           const teamId = pair[i];
           const team = await Team.findById(teamId);
           pair[i] = team
       }
-    }
+    }*/
     console.log("populated pairs : ", updatedMatch.rounds[roundNo-1].pairs)
 
     res.json(popPairs);
@@ -107,8 +118,7 @@ const createRound = async (req, res) => {
 
 
 
-/*
-const getPairs = (req, res) => {
+/*const getPairs = (req, res) => {
   try {
 
     const roundName = req.query.round; // Extract the round parameter from the request query
@@ -160,10 +170,10 @@ const createPairs = (array) => {
 const getWinners = async (req, res) => {
   try {
     const matchId = req.params.matchId;
-    console.log(matchId);
+    console.log('173 : mid : ', matchId);
     const match = await Match.findOne(
-      { matchNo: matchId }
-    ).populate('teams rounds.winners') 
+      { _id: matchId }
+    ) //.populate('teams rounds.winners') 
     console.log(match)
     res.json({ match: match })
 
@@ -180,9 +190,12 @@ const setWinners = async (req, res) => {
     const roundNo = req.params.roundNo;
     const winnersArray = req.body.winnersArray;
     console.error('winners:', winnersArray);
+    console.error('match No :', matchNo);
+    console.error('round No:', roundNo);
+
 
     let match = await Match.findOneAndUpdate(
-      { matchNo: matchNo, 'rounds.roundNumber': roundNo },
+      { _id: matchNo, 'rounds.roundNumber': roundNo },
       {
         $set: {
           'rounds.$.winners': winnersArray,
@@ -193,7 +206,7 @@ const setWinners = async (req, res) => {
 
     if (winnersArray.length === 1) {
       match = await Match.findOneAndUpdate(
-        { matchNo: matchNo },
+        { _id: matchNo },
         {
           $pull: {
             rounds: { roundNumber: { $gt: roundNo } },
@@ -202,11 +215,12 @@ const setWinners = async (req, res) => {
         { new: true }
       );
       
-      const finalWinner = await Team.findById(winnersArray[0])
+      //const finalWinner = await Team.findById(winnersArray[0])
+      const finalWinner = winnersArray[0];
       return res.json({ message: "final winner already selected", finalWinner: finalWinner })
     }
-
-    console.log('match; ', match)
+      
+    console.log('219 : match : ', match)
     res.json(match);
   } catch (error) {
     console.error('Error saving winners:', error);

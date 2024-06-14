@@ -52,13 +52,13 @@ const CreateTeam = () => {
     const [columns, setColumns] = useState([
         {
             title: 'EID',
-            dataIndex: 'matchNo',
+            dataIndex: 'eid',
             align: 'center',
             render:(text)=><span className='text'>{text}</span>
         },
         {
             title: 'Name',
-            dataIndex: 'name',
+            dataIndex: 'nameOfTheEvent',
             align: 'center',
             render:(text)=><span className='text'>{text}</span>
         },

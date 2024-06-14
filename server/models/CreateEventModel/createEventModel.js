@@ -1,36 +1,40 @@
 const mongoose = require("mongoose");
 
+const createEventSchema = new mongoose.Schema({
+      nameOfTheEvent: {
+            type: String,
+            required: [true, "Please enter the name of the event"]
+      },
 
-const createEventSchema = mongoose.Schema({
-  nameOfTheEvent :{
-        type:String,
-        required:["Please enter name of the event",true]
-  },
-
-  location :{
-        type:String,
-        required:["Please enter location of the event",true]
-  },
-
-  numberOfTeams :{
-        type:Number,
-        required:["Please enter number of team of the event",true]
-  },
-
-  eventNewDate:{
-        type:String,
-        required:["Please enter Date of the event",false]
-  },
-
-  formattedTime :{
-        type:String,
-        required:["Please enter Starting time of the event",false]
-  },
-   
-
-
-})
-
+      location: {
+            type: String,
+            required: [true, "Please enter the location of the event"]
+      },
+      
+      numberOfTeams: {
+            type: Number,
+            required: [true, "Please enter the number of teams for the event"]
+      },
+      eventNewDate: {
+            type: String,
+            required: [false, "Please enter the date of the event"]
+      },
+      formattedTime: {
+            type: String,
+            required: [false, "Please enter the starting time of the event"]
+      },
+      teams: [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Team'
+      }],
+      coaches: [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User'
+      }],
+      eid:{
+            type: String
+      }
+});
 
 const createEvent = mongoose.model("createEvent", createEventSchema);
 module.exports = createEvent;

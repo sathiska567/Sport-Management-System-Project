@@ -108,13 +108,13 @@ const UpdateTeam = () => {
     const columns = [
         {
             title: 'Player No',
-            dataIndex: 'playerId',
+            dataIndex: 'uid',
             align: 'center',
             render: (text) => <span className='text'>{text}</span>
         },
         {
             title: 'Player Name',
-            dataIndex: 'playerName',
+            dataIndex: 'username',
             align: 'center',
             render: (text) => <span className='text'>{text}</span>
         },
@@ -135,7 +135,7 @@ const UpdateTeam = () => {
 
     return (
         <CoachSidebar>
-            <div style={{ height: 'fit-content', overflowY: 'auto',marginBottom:10 }}>
+            <div style={{ height: 'fit-content', overflowY: 'auto', marginBottom: 10 }}>
                 <Form className='text' style={{ margin: 150, marginBottom: 80, marginTop: "0px" }}>
                     <Form.Item label='Team Name' >
                         <Input placeholder="Team Name" name='teamName' value={teamData.teamName} onChange={handleChange} className='inputTag' />
@@ -193,8 +193,8 @@ export default UpdateTeam;
 
 
 // dont delete the following please
-/*
-import axios from 'axios';
+
+/* import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import CoachSidebar from '../CoachSidebar/CoachSidebar';
@@ -315,8 +315,7 @@ export default UpdateTeam;
 
 
 
-{/*
-import axios from 'axios';
+{/*  import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom';
 

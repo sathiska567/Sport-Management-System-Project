@@ -84,8 +84,8 @@ const SelectPlayers = () => {
     //....................
 
     const columns = [
-        { title: 'Player No', dataIndex: 'playerId', key: 'playerId', align: 'center', render: (text) => <span className='text'>{text}</span> },
-        { title: 'Player Name', dataIndex: 'playerName', key: 'playerName', align: 'center', render: (text) => <span className='text'>{text}</span> },
+        { title: 'Player No', dataIndex: 'uid', key: 'playerId', align: 'center', render: (text) => <span className='text'>{text}</span> },
+        { title: 'Player Name', dataIndex: 'username', key: 'username', align: 'center', render: (text) => <span className='text'>{text}</span> },
         { title: 'Location', dataIndex: 'District', key: 'District', align: 'center', render: (text) => <span className='text'>{text}</span> },
         {
             title: 'Action',

@@ -71,6 +71,10 @@ const userSchema = new mongoose.Schema({
 
   availability: {
     type: Boolean
+  },
+
+  uid: {
+    type: String
   }
 
 });
