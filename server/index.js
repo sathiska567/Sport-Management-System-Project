@@ -52,6 +52,7 @@ const getRefereeDetailsRoute = require("./routes/GetAllRefereeDetails/GetAllRefe
 const FixtureSearchRoute = require("./routes/FixtureSearchRoute/FixtureSearchRoute")
 const CoachSearchRoute = require("./routes/CoachSearchRoute/CoachSearchRoute")
 const TMSearchRoute = require("./routes/TMSearchRoute/TMSearchRoute")
+const PointTableFormRoutes = require("./routes/PointTableFormRoutes/PointTableFormRoutes")
 
 require("./db/mongoDb"); 
 
@@ -178,6 +179,7 @@ app.use("/api/v1/search",CoachSearchRoute);
 
 // SEARCH TM
 app.use("/api/v1/search",TMSearchRoute);
+app.use("/api/v1/PointTableForm", PointTableFormRoutes);
 
 // //jwt
 // app.post('/user/login', async (req, res) => {
