@@ -20,6 +20,31 @@ const UserApplicationTable = () => {
   const [userApplicationData, setUserApplicationData] = useState([]);
   const navigate = useNavigate();
   const location = useLocation([]);
+  const [data, setData] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [total, setTotal] = useState(1);
+  const [limits , setLimits] = useState(3);
+  
+
+  const fetchData = async (page) => {
+    try {
+      const response = await axios.post('http://localhost:8080/api/v1/admin/pagination', { page });
+      console.log("response", response)
+      setUserApplicationData(response.data.data.players);
+      setTotal(response.data.data.totalPlayers);
+      setLimits(response.data.data.limit)
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData(currentPage);
+  }, [currentPage]);
+
+  const handlePagination = (page) => {
+    setCurrentPage(page);
+  };
 
 // get current applying user data
 const ApplyingUser = async () => {
@@ -30,7 +55,7 @@ const ApplyingUser = async () => {
       // console.log(res.data.allApplyingDetails.status);
 
       if (res.data.success) {
-        setUserApplicationData(res.data.allApplyingDetails);
+        // setUserApplicationData(res.data.allApplyingDetails);
       } else {
         message("Error found in applying details section");
       }
@@ -274,8 +299,13 @@ const handleRemove = async (record) => {
                   style: {
                     marginTop: "10px",
                   },
-                  pageSize: 5,
+                  // pageSize: 5,
+                  current: currentPage ? currentPage : 1,
+                  total: total,
+                  pageSize: limits,
+                  onChange: handlePagination,
                 }}
+                
                 // Displaying data from the backend
                 dataSource={filteredData}
               ></Table>

@@ -1,7 +1,7 @@
 const express = require("express")
 const router = express.Router()
 const authMiddleware = require("../middleware/authMiddleware");
-const { getAllDetailsController, handleStatusController,updateDetailsController,deleteDetailsController,removeDetailsController } = require("../controllers/adminController");
+const { getAllDetailsController, handleStatusController,updateDetailsController,deleteDetailsController,removeDetailsController, PaginationController } = require("../controllers/adminController");
 
 
 // GET ALL APPLYING POSITION USERS DETAILS
@@ -20,6 +20,9 @@ router.delete("/delete-details",deleteDetailsController)
 
 // Remove POSITION APPLYING PLAYER DETAILS
 router.delete("/remove-details",removeDetailsController)
+
+// Get Pagination data
+router.post("/pagination",PaginationController)
 
 
 
