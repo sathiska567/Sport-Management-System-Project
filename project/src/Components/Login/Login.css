@@ -14,7 +14,7 @@ body {
     border: 1px solid greenyellow;
 }
 
-.custom-message {
+.custom-messag {
     font-size: 20px !important;
     /* Custom font size */
     color: red !important;
@@ -32,7 +32,7 @@ body {
     margin: 0 auto;
 }
 
-.custom-message-success {
+.custom-message-succes {
     font-size: 20px !important;
     /* Custom font size for success messages */
     color: green !important;
