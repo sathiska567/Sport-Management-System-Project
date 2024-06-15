@@ -39,6 +39,31 @@ const EOViewFixture = () => {
   const location = useLocation();
   const [searchDate, setSearchDate] = useState("")
   console.log(location);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [total, setTotal] = useState(1);
+  const [limits , setLimits] = useState(3);
+  
+
+  const fetchData = async (page) => {
+    try {
+      const response = await axios.post('http://localhost:8080/api/v1/get/pagination', { page });
+      console.log("response", response)
+      setCreatedFixture(response.data.data.fixture);
+      setTotal(response.data.data.totalFixtures
+      );
+      setLimits(response.data.data.limit)
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData(currentPage);
+  }, [currentPage]);
+
+  const handlePagination = (page) => {
+    setCurrentPage(page);
+  };
 
   //  GET ALL CREATED FIXTURE
   const getFixtureData = async () => {
@@ -47,7 +72,7 @@ const EOViewFixture = () => {
         "http://localhost:8080/api/v1/get/get-fixture"
       );
       // console.log(response.data.data);
-      setCreatedFixture(response.data.data);
+      // setCreatedFixture(response.data.data);
     } catch (error) {
       message.error("Error fetching fixture data");
     }
@@ -292,7 +317,16 @@ const EOViewFixture = () => {
                 },
               ]}
               dataSource={createdFixture}
-              pagination={{ pageSize: 5 }}
+              pagination={{
+                style: {
+                  marginTop: "10px",
+                },
+                // pageSize: 5,
+                current: currentPage ? currentPage : 1,
+                total: total,
+                pageSize: limits,
+                onChange: handlePagination,
+              }}
             />
           </Content>
         </Layout>

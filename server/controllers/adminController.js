@@ -202,6 +202,46 @@ try {
 
 }
 
+// backend pagination
+const PaginationController = async (req, res) => {
+       try {
+         const { page } = req.body;
+         console.log(page);
+     
+         // Default to page 1 if not provided or invalid
+         const pageNumber = parseInt(page, 10) || 1;
+         
+         // Define the limit per page
+         const limit = 5;
+     
+         // Calculate the skip based on pageNumber and limit
+         const skip = (pageNumber - 1) * limit;
+     
+         // Fetch the players with limit and skip
+         const players = await PlayerModel.find().limit(limit).skip(skip).exec();
+     
+         // Count total number of players
+         const totalPlayers = await PlayerModel.countDocuments();
+     
+         res.status(200).send({
+           success: true,
+           message: "Data fetched successfully",
+           data: {
+             limit,
+             players,
+             totalPlayers,
+             totalPages: Math.ceil(totalPlayers / limit),
+             currentPage: pageNumber,
+           },
+         });
+       } catch (error) {
+         res.status(400).send({
+           success: false,
+           message: error.message,
+         });
+       }
+     };
 
 
-module.exports = {getAllDetailsController,handleStatusController,updateDetailsController,deleteDetailsController,removeDetailsController}
+
+module.exports = {getAllDetailsController,handleStatusController,updateDetailsController,deleteDetailsController,removeDetailsController,PaginationController}
