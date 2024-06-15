@@ -64,8 +64,9 @@ const registerController = async (req, res) => {
 
 // Handle the user login
 const loginController = async (req, res) => {
-    // try {
-    //   const { username, password } = req.body;
+
+    /* try {
+       const { username, password } = req.body;
 
     //   // Check if the admin exists
     //   const user = await User.findOne({ username });
@@ -88,7 +89,7 @@ const loginController = async (req, res) => {
     // } catch (error) {
     //   console.error('Login error:', error);
     //   res.status(500).json({ message: 'Internal Server Error' });
-    // }
+     } */
 
     try {
         const user = await User.findOne({ email: req.body.email });
@@ -105,7 +106,7 @@ const loginController = async (req, res) => {
         // check the passwords are match or not
         if (!isMatch) {
             return res.status(200).send({
-                message: "Invlid Email or Password",
+                message: "Invalid Email or Password",
                 success: false
             });
         }
@@ -156,7 +157,7 @@ const getCurrentUserController = async (req, res) => {
     } catch (error) {
 
         res.status(400).send({
-            message: "Error while occure executing getCurrentUserController ",
+            message: "Error occured while login ",
             success: false
         })
 

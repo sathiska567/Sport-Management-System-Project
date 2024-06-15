@@ -1,51 +1,61 @@
 import "./OTPPage.css";
 import { Button, Form, message } from "antd";
 import React, { useState } from "react";
-import Email from "../icons/Email.jsx"
+import Email from "../icons/Email"
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const OTPPage = () => {
 
-  // Restrict input only numbers
   const [otp, setOtp] = useState("");
   const location = useLocation([]);
   const navigate = useNavigate();
   console.log(location);
 
-const submitOTP = async()=>{
-        try {
-          console.log(location.state.email);
-          const email = location.state.email;
+  const [otpError, setOtpError] = useState(null);
+  const [error, setError] = useState('')
 
-          const response = await axios.post("http://localhost:8080/api/v1/forgotten/verify-otp", {email:email , otp : otp });
-          console.log("OTP verifyied response is " , response.data);
-          console.log(response.data.success);
+  const validateFields = () => {
+    if (!otp) {
+      message.error({ content: 'Please enter your OTP', className: 'custom-message' });
+      setOtpError(true); setError('Please enter your OTP')
+      return false;
+    } else { setOtpError(null) }
 
-          if(response.data.success){
-            message.success("OTP was mached")
-            navigate("/reset-pass",{state : {email :email}})
-          }
+    return true;
+  };
 
-          else{
-            message.error("Forgotten Password backend have an erro")
-          }
+  const submitOTP = async () => {
+    setOtpError(null); setError('')
+    if (!validateFields()) {
+      return; 
+    }
 
-          
-        } catch (error) {
-          //  message.error("OTP was not mached")
-        }
+    try {
+      console.log(location.state.email);
+      const email = location.state.email;
+
+      const response = await axios.post("http://localhost:8080/api/v1/forgotten/verify-otp", { email: email, otp: otp });
+      console.log("OTP verifyied response is ", response.data);
+      console.log(response.data.success);
+
+      if (response.data.success) {
+        message.success({ content: response.data.message, className: 'custom-message-success' })
+        navigate("/reset-pass", { state: { email: email } })
+      } else {
+        message.error({ content: response.data.message, className: 'custom-message' })
+        setOtpError(true)
+        setError(response.data.message)
+      }
+    } catch (error) {
+      message.error({ content: error.response.data.message, className: 'custom-message' })
+    }
   }
 
-
-  const handleKeyPress = (event) => {
-    const key = event.key;
-    const isDigit = /[0-9]/.test(key);
-
-    if (!isDigit) {
-      event.preventDefault();
-    } else {
-      setOtp(otp + key);
+  const handleChange = (event) => {
+    const value = event.target.value;
+    if (/^\d*$/.test(value)) {
+      setOtp(value);
     }
   };
 
@@ -53,29 +63,30 @@ const submitOTP = async()=>{
     <div className="OTPPage">
       <div className="OTPDetails">
         <h1 className="OTPHeading">GameSync Pro</h1>
-        <Email className = "emailIcon" />
+        <Email  />
         <p className="OTPText">Enter the code we sent to your email address</p>
-        <div>
-          <Form name="nest-messages">
+        <div style={{  height: '50%' }}>
+          <span style={{ color: 'red' }}>* {error}</span>
+          <Form name="nest-messages" style={{height:50}}>
             <label htmlFor="" className="LoginLabel">
               Code
             </label>
             <input
               type="text"
-              className="OTPInput"
+              className={`OTPInput ${otpError == null ? '' : otpError ? 'error' : 'success'}`}
               id="otp"
               name="otp"
               value={otp}
-              onChange={(event) => setOtp(event.target.value)}
-              onKeyPress={handleKeyPress}
+              onChange={handleChange}
             />
-            <Button type="primary" className="Next" htmlType="submit" onClick={submitOTP}>
+            <Button type="primary" style={{margin:0}} className="Next" htmlType="submit" onClick={submitOTP}>
               NEXT
             </Button>
-          </Form>
-          <a href="/" className="otpResendLink">
+            <a href="/forgot-password" className="otpResendLink">
             Didn't get the code?
           </a>
+          </Form>
+          
           <p className="copyright">
             Copyright &copy;2024 Design by DevOps DreamViewers
           </p>
@@ -87,12 +98,13 @@ const submitOTP = async()=>{
           alt="LoginImage"
           style={{
             width: "100%",
-            height: "100%",
+            height: "99.4vh",
             objectFit: "cover",
             opacity: 0.2,
           }}
         />
       </div>
+      
     </div>
   );
 };

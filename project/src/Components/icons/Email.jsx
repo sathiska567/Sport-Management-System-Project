@@ -1,7 +1,7 @@
 // manage_user.jsx
 import React from "react";
 
-const email = () => {
+const Email = () => {
   return (
     <div className="email-icon">
       <svg
@@ -27,4 +27,4 @@ const email = () => {
   );
 };
 
-export default email;
+export default Email;
