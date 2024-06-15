@@ -7,10 +7,10 @@ const bcrypt = require("bcryptjs")
 // Combined endpoint for checking email validity, saving otp, and sending otp
 const SendOtpController = async (req, res) => {
         const { email } = req.body;
-      
+      console.log('forgot pass : ', email);
         try {
           // Check if the email exists in the database
-          const user = await User.findOne({ email });
+          const user = await User.findOne({ email: email });
           console.log(user);
           
       
@@ -32,23 +32,23 @@ const SendOtpController = async (req, res) => {
         //     res.json({ message: 'OTP sent', token, user: { email: user.email, username: user.username } });
 
             res.status(200).send({
-                succuss : true,
-                message:"OTP Generate adn Send successfull.please check your email",
+                success : true,
+                message:"OTP Generated and Sent successfully. please check your email",
                 user
             })
       
           } else {
-                res.status(400).send({
-                        succuss : false,
+                res.status(200).send({
+                        success : false,
                         message:"User not Found",
                         
                     })
           }
         } catch (error) {
                 res.status(400).send({
-                        succuss : false,
-                        message:"OTP Generate adn Send Have an error.",
-                        error
+                        success : false,
+                        message:"OTP Generate and Send Have an error.",
+                        
                     })
         }
       };
@@ -78,7 +78,7 @@ const VerifyOtpController = async (req, res) => {
 
             res.status(200).send({
                 success:true,
-                message:"OTP Verify Successfully.",
+                message:"OTP Verified Successfully.",
                 user
             })
       
@@ -86,23 +86,19 @@ const VerifyOtpController = async (req, res) => {
         //     // If OTP is incorrect or user not found, return an error
         //     res.json({ error: 'Invalid OTP' });
         //     console.log('invalid otp');
-
-        res.status(400).send({
-                succuss:false,
-                message:"OTP Verify Have Error.",                
+        res.status(200).send({
+                success:false,
+                message:"Invalid OTP.",                
             })
-
-
           }
+
         } catch (error) {
         //   res.status(500).json({ error: 'Internal server error' });
-
-        res.status(200).send({
-                succuss:false,
-                message:"Error occure in Forgotten Password Controller",
+        res.status(400).send({
+                success:false,
+                message:"Server Error occured in OTP verification",
                 error
             })
-
         }
       };
 
@@ -129,7 +125,7 @@ const ResetPasswordController = async (req, res) => {
               user: { email: user.email, username: user.username },
             });
           } else {
-            res.status(404).send({
+            res.status(200).send({
               success: false,
               message: "User not found",
             });

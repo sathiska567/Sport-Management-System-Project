@@ -9,27 +9,59 @@ import axios from "axios";
 const ForgetPassword = () => {
   // State to manage password visibility
   const navigate = useNavigate();
-  const [email,setEmail] = useState("");
+  const [email, setEmail] = useState("");
   const location = useLocation([]);
 
+  // Custom validation 
+  const [emailError, setEmailError] = useState(null);
+  const [error, setError] = useState('')
 
-  const handleNavigate = async()=>{
+  const validateFields = () => {
+    if (!email) {
+      message.error({ content: 'Please enter your email', className: 'custom-message' });
+      setEmailError(true); setError('Please enter your email')
+      return false;
+    } else { setEmailError(false) }
+
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email)) {
+      message.error({ content: 'Please enter a valid email address', className: 'custom-message' });
+      setEmailError(true); setError('Please enter a valid email address')
+      return false;
+    } else { setEmailError(false) }
+
+    return true;
+  };
+
+
+
+  const handleNavigate = async () => {
     // <SpinComponent />
+    setEmailError(null); setError('')
+    if (!validateFields()) {
+      return;
+    }
 
     try {
       // console.log(email);
-      const response = await axios.post("http://localhost:8080/api/v1/forgotten/forgot-password",{email:email})
+      const response = await axios.post("http://localhost:8080/api/v1/forgotten/forgot-password", { email: email })
       // console.log(response.data.user.email);
-
+      if(response.data.success){
       const currentUserEmail = response.data.user.email;
 
-      message.success("OTP sent to your email")
+      message.success({ content: response.data.message, className: 'custom-message-success' })
       navigate("/otp-reset-pass", { state: { email: currentUserEmail } })
+      }else{
+        message.error({ content: response.data.message, className: 'custom-message' });
+        setEmailError(true);
+        setError(response.data.message);
+      }
 
     } catch (error) {
-       message.error("This email haven't any registered account.please register !")
+      console.log(error)
+      message.error({ content: error.message, className: 'custom-message' })
     }
-    
+
   }
 
   return (
@@ -38,24 +70,22 @@ const ForgetPassword = () => {
         <h1 className="ForgetPasswordHeading">GameSync Pro</h1>
         <h3 className="ForgetPasswordSubTitle">Forget your password?</h3>
         <p className="ForgetPasswordText">
-          Enter your username and we’ll help you reset your password.
+          Enter your email and we’ll help you reset your password.
         </p>
         <div>
-          <Form name="nest-messages">
+          <span style={{ color: 'red' }}>* {error}</span>
+
+          <Form style={{ height: 200 }} name="nest-messages">
             <label htmlFor="" className="LoginLabel">
               Email:
             </label>
             <Input
-              type="email"
-              className="ForgetPasswordInput"
+              type="text"
+              className={`ForgetPasswordInput ${emailError==null? '' : emailError ? 'error' : 'success'}`}
               id="email"
               name="email"
-              onChange={(e)=>setEmail(e.target.value)}
-              rules={[
-                {
-                  required: true,
-                },
-              ]}
+              onChange={(e) => setEmail(e.target.value)}
+             
             />
             <Button type="primary" className="ResetButton" htmlType="submit" onClick={handleNavigate}>
               RESET PASSWORD
