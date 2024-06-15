@@ -76,6 +76,7 @@ import CoachEditTeam from "./Components/Coach/CoachEditTeam/EditTeam.jsx";
 import UpdateTeam from "./Components/Coach/CoachEditTeam/UpdateTeam.jsx";
 import RefereeEvent from "./Components/Referee/RefereeEvent/RefereeEvent.jsx";
 import PointTableForm from "./Components/TeamManager/PointTableForm/PointTableForm.jsx";
+import AssignedPlayersTable from "./Components/TeamManager/AssignedPlayersTable/AssignedPlayersTable.jsx"
 
 import { useState } from "react";
 
@@ -794,6 +795,21 @@ function App() {
         {/* <Route path="/create-match" element={<CreateMatch />} /> */}
         <Route path="/edit-team" element={<ProtectedRoute><CoachEditTeam /></ProtectedRoute>} />
         <Route path="/update-team" element={<ProtectedRoute><UpdateTeam /></ProtectedRoute>} />
+      </Routes>
+
+      <Routes>
+
+        <Route
+        path="/AssignedPlayersTable"
+        element={
+          <ProtectedRoute>
+            <AssignedPlayersTable />
+          </ProtectedRoute>
+        }
+        >
+
+        </Route>
+
       </Routes>
 
     </BrowserRouter>
