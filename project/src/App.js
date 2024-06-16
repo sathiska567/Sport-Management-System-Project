@@ -76,7 +76,9 @@ import CoachEditTeam from "./Components/Coach/CoachEditTeam/EditTeam.jsx";
 import UpdateTeam from "./Components/Coach/CoachEditTeam/UpdateTeam.jsx";
 import RefereeEvent from "./Components/Referee/RefereeEvent/RefereeEvent.jsx";
 import PointTableForm from "./Components/TeamManager/PointTableForm/PointTableForm.jsx";
-import TeamManagerAssignCoachesNew from "./Components/TeamManager/TeamManagerAssignCoachesNew/TeamManagerAssignCoachesNew.jsx"
+import TeamManagerAssignCoachesNew from "./Components/TeamManager/TeamManagerAssignCoachesNew/TeamManagerAssignCoachesNew.jsx";
+import AssignPlayerMatches from "./Components/PlayerComponents/AssignPlayerMatchesAndDetails/AssignPlayerMatches.jsx";
+import AssignPlayerMatchesDeatils from "./Components/PlayerComponents/AssignPlayerMatchesAndDetails/AssignedPlayerMatchDetails.jsx"
 
 import { useState } from "react";
 import AssignCoachesFinal from "./Components/TeamManager/AssignCoachesFinal/AssignCoachesFinal.jsx";
@@ -785,6 +787,31 @@ function App() {
             </ProtectedRoute>
           }
         ></Route>
+      </Routes>
+      <Routes>
+        <Route
+        path="/AssignPlayerMatches"
+
+        element={
+          <ProtectedRoute>
+            <AssignPlayerMatches setId={setEventId}/>
+          </ProtectedRoute>
+        }
+        >
+
+        </Route>
+      </Routes>
+      <Routes>
+        <Route
+       path="/AssignPlayerMatchDetails"
+
+          element={
+            <ProtectedRoute>
+              <AssignPlayerMatchesDeatils  />
+            </ProtectedRoute>
+          }
+  >
+        </Route>
       </Routes>
 
       {/* <Routes>
