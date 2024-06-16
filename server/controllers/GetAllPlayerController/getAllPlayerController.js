@@ -46,4 +46,44 @@ const getPlayerDetailsController = async (req, res) => {
 };
 
 
-module.exports = {getPlayerDetailsController}
+const playerPaginationController = async (req, res) => {
+   try {
+     const { page } = req.body;
+ 
+     // Default to page 1 if not provided or invalid
+     const pageNumber = parseInt(page, 10) || 1;
+ 
+     // Define the limit per page
+     const limit = 5;
+ 
+     // Calculate the skip based on pageNumber and limit
+     const skip = (pageNumber - 1) * limit;
+ 
+     // Fetch the players with limit and skip
+     const players = await userModel.find({ isPlayer: true }).limit(limit).skip(skip).exec();
+ 
+     // Count total number of players
+     const totalPlayers = await userModel.countDocuments({ isPlayer: true });
+ 
+     res.status(200).send({
+       success: true,
+       message: "Data fetched successfully",
+       data: {
+         limit,
+         players,  // Corrected from fixture to players
+         totalPlayers,
+         totalPages: Math.ceil(totalPlayers / limit),
+         currentPage: pageNumber,
+       },
+     });
+   } catch (error) {
+     res.status(400).send({
+       success: false,
+       message: "Get Player Details encountered an error",
+       error: error.message,
+     });
+   }
+ };
+ 
+
+module.exports = { getPlayerDetailsController, playerPaginationController }
