@@ -203,10 +203,10 @@ const RefereeSideBar = ({ children }) => {
             <NavLink to="/referee-stats">Dashboard</NavLink>
           </Menu.Item>
           <Menu.Item
-            key="/referee-availability"
+            key="/RefereeEvent"
             icon={<FontAwesomeIcon icon={faCalendarCheck} />}
           >
-            <NavLink to="/referee-availability">Availability</NavLink>
+            <NavLink to="/RefereeEvent">Availability</NavLink>
           </Menu.Item>
           <Menu.Item
             key="/referee-matches"

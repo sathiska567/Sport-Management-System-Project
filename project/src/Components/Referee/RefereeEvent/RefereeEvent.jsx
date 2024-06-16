@@ -48,8 +48,7 @@ const RefereeEvent = () => {
   const handleCheckboxChange = (key, isChecked) => {
     // Update your state or data here based on the checkbox state
     console.log(
-      `Checkbox for row with key ${key} is now ${
-        isChecked ? "checked" : "unchecked"
+      `Checkbox for row with key ${key} is now ${isChecked ? "checked" : "unchecked"
       }`
     );
 

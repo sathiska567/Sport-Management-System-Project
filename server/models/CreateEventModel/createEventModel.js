@@ -31,6 +31,10 @@ const createEventSchema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: 'User'
       }],
+      refereeId: {
+            type: String,
+            default: null
+      },
       eid:{
             type: String
       }

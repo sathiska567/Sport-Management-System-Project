@@ -22,7 +22,7 @@ const TeamManagerAssignCoaches = () => {
 
   const [searchedText, setSearchedText] = useState("")
 
-  const [filteredData,setFilteredData] = useState([])
+  const [filteredData, setFilteredData] = useState([])
 
   const [dataSource, setDataSource] = useState([
     {
@@ -33,11 +33,11 @@ const TeamManagerAssignCoaches = () => {
   const handleSearch = (e) => {
     const searchText = e.target.value.toLowerCase();
     setSearchedText(searchText);
-    
+
     // Use the functional form of setDataSource to ensure proper state update
     const filteredData = dataSource.filter(item => item.name.toLowerCase().includes(searchedText));
     setDataSource(filteredData);
-};
+  };
 
   // table
   const getFetchData = async () => {
@@ -53,12 +53,12 @@ const TeamManagerAssignCoaches = () => {
   useEffect(() => {
     axios.defaults.baseURL = "http://localhost:8080/api/v1/coaches-assign-delete"
     getFetchData()
-   
+
   }, [])
 
 
-   // delete button
-   const handleDelete = async (id) => {
+  // delete button
+  const handleDelete = async (id) => {
     try {
       const confirmed = await new Promise((resolve, reject) => {
         Modal.confirm({
@@ -66,15 +66,15 @@ const TeamManagerAssignCoaches = () => {
           okText: 'Yes',
           okType: 'danger',
           onOk: () => resolve(true),
-          onCancel: () => resolve(false) 
+          onCancel: () => resolve(false)
         });
       });
-   
+
       if (confirmed) {
         console.log(id);
         const response = await axios.post("/delete-coachesstatus", { id: id });
-  
-  
+
+
         if (response.data.success) {
           message.success("Deletion is successful");
           window.location.reload();
@@ -82,59 +82,59 @@ const TeamManagerAssignCoaches = () => {
       }
     } catch (error) {
       console.error("Error deleting member:", error);
-      
+
       message.error("An error occurred while deleting the member");
     }
   };
 
 
-   //Assign button
-   const handleAssign = async (id, status) => {
-    
+  //Assign button
+  const handleAssign = async (id, status) => {
+
     try {
       const confirmed = await new Promise((resolve, reject) => {
         Modal.confirm({
-         // title: Are you sure you want to assign "${status}" to this member?,
+          // title: Are you sure you want to assign "${status}" to this member?,
           okText: 'Yes',
           okType: 'primary',
           onOk: () => resolve(true),
           onCancel: () => resolve(false)
         });
       });
-  
+
       if (confirmed) {
         setAssignedIds([...assignedIds, id]);
-    
-     
+
+
         await axios
-        .post("/change-coachesstatus", { id: id }) // Adjust the endpoint URL accordingly
-        .then((res) => {
-          if(res.data.success){
-            // setIsAssigned(true)
-          message.success("Status assigned successfully");
-          window.location.reload();
-          // window.location.reload();
-          }else{
+          .post("/change-coachesstatus", { id: id }) // Adjust the endpoint URL accordingly
+          .then((res) => {
+            if (res.data.success) {
+              // setIsAssigned(true)
+              message.success("Status assigned successfully");
+              window.location.reload();
+              // window.location.reload();
+            } else {
+              message.success("error");
+            }
+          }).catch((err) => {
             message.success("error");
-          }
-        }).catch((err)=>{
-          message.success("error");
-        })
+          })
         // if (response.data.success) {
         //   setIsAssigned(true)
         //   message.success("Status assigned successfully");
         //   window.location.reload();
         // }
-     
-     
-     
+
+
+
       }
     } catch (error) {
       console.error("Error assigning status:", error);
     }
 
   };
-  
+
 
   // JSX structure for the Navbar component
   return (
@@ -162,10 +162,10 @@ const TeamManagerAssignCoaches = () => {
                 <Input.Search
                   placeholder="Search Coach Name..."
                   style={{ marginBottom: 8 }}
-          //  onSearch={(value) => {
-          //   setSearchedText(value)
-          //  }}
-            onChange={handleSearch}
+                  //  onSearch={(value) => {
+                  //   setSearchedText(value)
+                  //  }}
+                  onChange={handleSearch}
                 />
               </div>
               <div
@@ -182,17 +182,17 @@ const TeamManagerAssignCoaches = () => {
                     title: "ID",
                     dataIndex: "sid",
                     key: "ID",
-                    render: (text, record) => 
-                    (<span>{record._id}</span>)
+                    render: (text, record) =>
+                      (<span>{record._id}</span>)
                   },
                   {
                     title: "Coach Name",
                     dataIndex: "name",
                     key: "coachName",
                     filterValue: ["s"], // Set filterValue directly to searchText
-      onFilter: (value, record) => {
-        return record.name.includes(value);
-      },
+                    onFilter: (value, record) => {
+                      return record.name.includes(value);
+                    },
                   },
                   {
                     title: "Location",
@@ -202,13 +202,13 @@ const TeamManagerAssignCoaches = () => {
                   {
                     title: 'Actions',
                     render: (text, record) => {
-                
+
                       return <>
-                        <button className="assignBtn"  onClick={() => handleAssign(record._id, record.status)} disabled={assignedIds.includes(record._id)}>{record.status?"Assigned":"Assign"}</button>
+                        <button className="assignBtn" onClick={() => handleAssign(record._id, record.status)} disabled={assignedIds.includes(record._id)}>{record.status ? "Assigned" : "Assign"}</button>
                         <button className="assignBtnDelete" onClick={() => handleDelete(record._id)}>Delete</button>
                       </>
                       // console.log(record);
-                  
+
                     }
                   },
                 ]}
