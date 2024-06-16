@@ -187,6 +187,7 @@ const getAllCreateEvent = async () => {
                                                     style={{
                                                         backgroundColor: "blue",
                                                         color: "#fff",
+                                                        width: "100px",
                                                         fontSize: "14px",
                                                         marginRight: "10px",
                                                         borderRadius: "8px",
@@ -194,7 +195,25 @@ const getAllCreateEvent = async () => {
                                                         marginBottom: "auto",
                                                     }}
                                                 >
-                                                    Assign Coaches
+                                                   Coaches
+                                                </Button>
+
+                                                <Button
+                                                    type="ghost"
+                                                    ghost
+                                                    // "/AssignCoachesFinal"
+                                                    onClick={()=>handleAssignCoachNavigate(record._id)}
+                                                    style={{
+                                                        backgroundColor: "blue",
+                                                        color: "#fff",
+                                                        fontSize: "14px",
+                                                        marginRight: "10px",
+                                                        borderRadius: "8px",
+                                                        marginTop: "auto",
+                                                        marginBottom: "auto",
+                                                    }}
+                                                >
+                                                   Referees
                                                 </Button>
                                                 
                                             </span>
