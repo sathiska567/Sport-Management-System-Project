@@ -79,6 +79,7 @@ import PointTableForm from "./Components/TeamManager/PointTableForm/PointTableFo
 import TeamManagerAssignCoachesNew from "./Components/TeamManager/TeamManagerAssignCoachesNew/TeamManagerAssignCoachesNew.jsx";
 import AssignPlayerMatches from "./Components/PlayerComponents/AssignPlayerMatchesAndDetails/AssignPlayerMatches.jsx";
 import AssignPlayerMatchesDeatils from "./Components/PlayerComponents/AssignPlayerMatchesAndDetails/AssignedPlayerMatchDetails.jsx"
+import PointTableDetails from "./Components/TeamManager/PointTableDetils/PointTableDetails.jsx"
 
 import { useState } from "react";
 import AssignCoachesFinal from "./Components/TeamManager/AssignCoachesFinal/AssignCoachesFinal.jsx";
@@ -841,6 +842,19 @@ function App() {
         element={
           <ProtectedRoute>
             <TeamManagerAssignCoachesNew/>
+          </ProtectedRoute>
+        }
+        >
+
+        </Route>
+      </Routes>
+
+      <Routes>
+        <Route
+        path="/pointTableDetails"
+        element={
+          <ProtectedRoute>
+            <PointTableDetails />
           </ProtectedRoute>
         }
         >

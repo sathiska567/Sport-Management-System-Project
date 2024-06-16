@@ -30,19 +30,35 @@ const PointTableForm = async (req, res) => {
 
 
 
-      const data = new PointTableFormModel({
-         nameOfTheMatch,
-         nameOfTheTeam,
-         wonMatches,
-         lostMatches,
-         totalRunsEachTeamMatches,
-         totalOversEachTeam,
-         totalMarksForEachTeam
-      });
+      // for point table get 
 
-      
+      const exists = await PointTableFormModel.findOne({ nameOfTheTeam, nameOfTheTeam });
 
-      await data.save();
+      console.log("Exist:", exists)
+
+      let data;
+
+      if (!exists) {
+         data = new PointTableFormModel({
+            nameOfTheMatch,
+            nameOfTheTeam,
+            wonMatches,
+            lostMatches,
+            totalRunsEachTeamMatches,
+            totalOversEachTeam,
+            totalMarksForEachTeam
+         });
+
+
+         await data.save();
+      } else {
+
+         
+         //won matches and lost matches 
+         data = await PointTableFormModel.findOneAndUpdate({ _id: exists._id }, {
+            wonMatches, lostMatches
+         }, { new: true })
+      }
 
       res.status(200).send({
          success: true,
