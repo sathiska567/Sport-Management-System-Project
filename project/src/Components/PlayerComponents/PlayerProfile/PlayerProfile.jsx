@@ -190,11 +190,11 @@ const PlayerProfile = () => {
           console.log(coverImageResponse.data);
 
           if (coverImageResponse.data.success) {
-            message.success(coverImageResponse.data.message);
+            message.success("Medical Report Image Upload successful");
             // window.location.reload();
           }
         } else {
-          message.error("No cover image selected");
+          message.error("No Medical Report Image selected");
         }
       } catch (error) {
         // Log the error details (optional)
@@ -203,37 +203,37 @@ const PlayerProfile = () => {
         message.error("Error uploading cover image");
       }
 
-      try {
-        console.log(medicalReportFileList);
+      // try {
+      //   console.log(medicalReportFileList);
 
-        if (medicalReportFileList.length > 0) {
-          const medicalReportfile = medicalReportFileList[1].originFileObj;
+      //   if (medicalReportFileList.length > 0) {
+      //     const medicalReportfile = medicalReportFileList[1].originFileObj;
 
-          let medicalReportFormData = new FormData();
-          medicalReportFormData.append("medicalReport", medicalReportfile);
-          medicalReportFormData.append("playerId", playerId);
+      //     let medicalReportFormData = new FormData();
+      //     medicalReportFormData.append("medicalReport", medicalReportfile);
+      //     medicalReportFormData.append("playerId", playerId);
 
-          // Log FormData for debugging (optional)
-          console.log([...medicalReportFormData]);
+      //     // Log FormData for debugging (optional)
+      //     console.log([...medicalReportFormData]);
 
-          // Upload Medical report
-          const coverImageResponse = await axios.post(
-            "http://localhost:8080/api/v1/profile/player-medical-report-upload",
-            medicalReportFormData
-          );
+      //     // Upload Medical report
+      //     const coverImageResponse = await axios.post(
+      //       "http://localhost:8080/api/v1/profile/player-medical-report-upload",
+      //       medicalReportFormData
+      //     );
 
-          // Handle coverImageResponse if needed
-          console.log(coverImageResponse.data);
+      //     // Handle coverImageResponse if needed
+      //     console.log(coverImageResponse.data);
 
-          if (coverImageResponse.data.success) {
-            message.success(coverImageResponse.data.message);
-          }
-        } else {
-          message.error("No cover image selected");
-        }
-      } catch (error) {
-        message.error("Error uploading medical report");
-      }
+      //     if (coverImageResponse.data.success) {
+      //       message.success(coverImageResponse.data.message);
+      //     }
+      //   } else {
+      //     message.error("No Medical Report selected");
+      //   }
+      // } catch (error) {
+      //   message.error("Error uploading medical report");
+      // }
 
       try {
         // Now, make a second API call to save player profile data with the image URL
@@ -254,7 +254,7 @@ const PlayerProfile = () => {
         if (playerProfileResponse.data.success) {
           message.success(playerProfileResponse.data.message);
           // setTime(false)
-          window.location.reload();
+          // window.location.reload();
         }
       } catch (error) {
         message.error("Error occurred inside the handleFormSubmit function");
@@ -478,7 +478,7 @@ const PlayerProfile = () => {
                 </div>
 
                 <div>
-                  <label className="formLabel">Cover Image:</label>
+                  <label className="formLabel">Upload Medical Report Image:</label>
                   <Modal
                     // visible={previewVisibleCover}
                     footer={null}
@@ -504,7 +504,7 @@ const PlayerProfile = () => {
                   </ImgCrop>
                 </div>
 
-                <div>
+                {/* <div>
                   <label className="formLabel">Upload Medical Reports:</label>
                   <div>
                     <Upload
@@ -524,7 +524,7 @@ const PlayerProfile = () => {
                       </div>
                     )}
                   </div>
-                </div>
+                </div> */}
               </div>
               <br />
               <Button
