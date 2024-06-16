@@ -40,7 +40,7 @@ const getOverrallReviewController = async (req, res) => {
         const pageNumber = parseInt(page, 10) || 1;
 
         // Define the limit per page
-        const limit = 2;
+        const limit = 5;
 
         // Calculate the skip based on pageNumber and limit
         const skip = (pageNumber - 1) * limit;
@@ -110,4 +110,26 @@ const searchReviewController = async (req, res) => {
 }
 
 
-module.exports = { coachReviewCreateController, getOverrallReviewController, searchReviewController };
+
+// get all reviews
+const getOverrallReviewWithoutPaginationController = async(req,res)=>{
+  try {
+    const review = await reviewModel.find({});
+    
+
+    res.status(200).send({
+        success: true,
+        message: 'Review Fetched Successfully',
+        data:review
+    })
+    
+  } catch (error) {
+     res.status(400).send({
+        success: false,
+        message: 'Error While Getting Review',
+        error
+     })
+  }
+}
+
+module.exports = { coachReviewCreateController, getOverrallReviewController, searchReviewController,getOverrallReviewWithoutPaginationController };

@@ -44,9 +44,6 @@ export default function SearchPlayerProfile() {
     };
 
 
-
-
-
     // Filter userApplicationData based on userRole and Userlocation
 
 
@@ -54,8 +51,6 @@ export default function SearchPlayerProfile() {
         console.log("Team Name Searched: ", value);
         setEmail(value);
     };
-
-
 
     // getdata  and search players
     const getFetchData = async (email) => {
