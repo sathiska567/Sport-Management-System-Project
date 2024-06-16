@@ -7,6 +7,7 @@ const Match = require('../models/CreateEventModel/createEventModel')
 //const Player  = require('../models/playerAatheek')
 const User = require('../models/userModel')
 const { Team } = require('../models/teamModel');
+const createdEventModel = require("../models/CreateEventModel/createEventModel")
 
 
 const getMatches = async (req, res) => {
@@ -35,8 +36,26 @@ const getMatches = async (req, res) => {
         const allMatches = await Match.find({ coaches: { $nin: [coachId] } })
         console.log('all matches : \n', allMatches)
 
+        const eventData = await createdEventModel.find({})
+        const assignMatches = []
 
-        res.json(allMatches);
+        for (let i = 0; i < eventData.length; i++) {
+            if(eventData[i].coaches.includes(coachId)){
+                assignMatches.push(eventData[i])
+            }
+        }
+
+
+        // res.json(allMatches);
+        
+        res.status(200).send({
+            success: true,
+            message: 'Matches fetched successfully',
+            data: assignMatches,
+        })
+
+
+
     } catch (err) {
         console.log(err);
     }

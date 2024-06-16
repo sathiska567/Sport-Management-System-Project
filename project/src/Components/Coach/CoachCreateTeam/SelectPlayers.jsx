@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import './CoachCreateTeam.css'
-import { Table, Input, Button, Form } from 'antd';
+import { Table, Input, Button, Form, message } from 'antd';
 import CoachSidebar from '../CoachSidebar/CoachSidebar';
 import axios from 'axios';
 
@@ -9,10 +9,26 @@ const SelectPlayers = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const params = new URLSearchParams(location.search);
+
     const matchId = params.get('matchId');
     const coachId = params.get('coachId');
+
     console.log('matchId : ', matchId)
     console.log('coachId : ', coachId)
+
+   const getOnlyAvailablePlayer = async()=>{
+     try {
+       const availablePlayer = await axios.post("http://localhost:8080/api/v1/player-availability/getEventPlayer" , {eventId:matchId}) 
+       console.log(availablePlayer);
+       setPlayers(availablePlayer.data.data)
+     } catch (error) {
+        message.error("Error Fetching Data")
+     }
+   }
+
+   useEffect(() => {
+    getOnlyAvailablePlayer()
+   },[])
 
     const [teamData, setTeamData] = useState({
         matchId: matchId,
@@ -28,7 +44,7 @@ const SelectPlayers = () => {
         axios.get(`http://localhost:8080/api/v1/coach/players?match_id=${matchId}&coach_id=${coachId}`)
             .then(res => {
                 console.log(res.data);
-                setPlayers(res.data);
+                // setPlayers(res.data);
             })
             .catch(err => {
                 console.log(err);
@@ -86,7 +102,7 @@ const SelectPlayers = () => {
     const columns = [
         { title: 'Player No', dataIndex: 'uid', key: 'playerId', align: 'center', render: (text) => <span className='text'>{text}</span> },
         { title: 'Player Name', dataIndex: 'username', key: 'username', align: 'center', render: (text) => <span className='text'>{text}</span> },
-        { title: 'Location', dataIndex: 'District', key: 'District', align: 'center', render: (text) => <span className='text'>{text}</span> },
+        { title: 'Player Email', dataIndex: 'email', key: 'email', align: 'center', render: (text) => <span className='text'>{text}</span> },
         {
             title: 'Action',
             key: 'action',
