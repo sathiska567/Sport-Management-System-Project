@@ -41,7 +41,34 @@ const CoachReviewPlayers = () => {
   const location = useLocation();
   const [playerDetails, setPlayerDetails] = useState([]);
   const [playerReview, setPlayerReview] = useState([]);
-  let sum = 0 ;
+  let sum = 0;
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [total, setTotal] = useState(1);
+  const [limits, setLimits] = useState(3);
+
+
+  const fetchData = async (page) => {
+    try {
+      const response = await axios.post('http://localhost:8080/api/v1/player/player-pagination', { page });
+      console.log("response", response)
+      setPlayerDetails(response.data.data.players);
+      setTotal(response.data.data.totalPlayers);
+      setLimits(response.data.data.limit)
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+
+  useEffect(() => {
+    fetchData(currentPage);
+  }, [currentPage]);
+
+  const handlePagination = (page) => {
+    setCurrentPage(page);
+  };
+
 
   const handleGetAllPlayerDetails = async () => {
     try {
@@ -52,7 +79,7 @@ const CoachReviewPlayers = () => {
 
       if (response.data.success) {
         // message.success(response.data.message)
-        setPlayerDetails(response.data.players);
+        // setPlayerDetails(response.data.players);
       }
     } catch (error) {
       message.error("Something went wrong");
@@ -69,23 +96,15 @@ const CoachReviewPlayers = () => {
   const getReview = async () => {
     try {
       const reviewResponse = await axios.get(
-        "http://localhost:8080/api/v1/review/get-overall-review"
+        "http://localhost:8080/api/v1/review/get-overall-review-without-pagination"
       );
-      console.log(reviewResponse);
-
       if (reviewResponse.data.success) {
-        setPlayerReview(reviewResponse.data.review);
-        // message.success(reviewResponse.data.message)
+        setPlayerReview(reviewResponse.data.data);
       }
     } catch (error) {
       message.error("Something went wrong inside the get Review section");
     }
   };
-
-
-  // create sorting algorithm to 
-
-
 
 
 
@@ -97,13 +116,20 @@ const CoachReviewPlayers = () => {
 
 
   // Filter userApplicationData based on userRole and Userlocation
-  const handlePlayerNameSearch = (value) => {
+  const handlePlayerNameSearch = async(value) => {
     console.log(value);
+    try {
+      const searchResult = await axios.post("http://localhost:8080/api/v1/player/search-player",{playerName:value});
+      console.log(searchResult.data.data);
+      setPlayerDetails(searchResult.data.data);
+    } catch (error) {
+      message.error("Something went wrong");
+    }
   };
 
-  const handleEventLocationSearch = (value) => {
-    console.log(value);
-  };
+  // const handleEventLocationSearch = (value) => {
+  //   console.log(value);
+  // };
 
 
   return (
@@ -127,12 +153,13 @@ const CoachReviewPlayers = () => {
                 className="searchInputName"
                 placeholder="Search Player Name..."
                 style={{
-                  marginBottom: "8px",
+                  marginBottom: "8px"
                 }}
                 onSearch={handlePlayerNameSearch}
                 allowClear
               />
-              <Input.Search
+
+              {/* <Input.Search
                 className="searchInputName"
                 placeholder="Search Event Location..."
                 style={{
@@ -140,17 +167,17 @@ const CoachReviewPlayers = () => {
                 }}
                 onSearch={handleEventLocationSearch}
                 allowClear
-              />
+              /> */}
             </div>
             <Table
               columns={[
-                {
-                  title: "P_ID",
-                  dataIndex: "pid",
-                  width: "10%",
-                  align: "center",
-                  render: (text, record) => <span>PId</span>,
-                },
+                // {
+                //   title: "P_ID",
+                //   dataIndex: "pid",
+                //   width: "10%",
+                //   align: "center",
+                //   render: (text, record) => <span>{record._id}</span>,
+                // },
                 {
                   title: "Player Name",
                   dataIndex: "playerName",
@@ -171,27 +198,20 @@ const CoachReviewPlayers = () => {
                   width: "15%",
                   align: "center",
                   render: (text, record) => {
-                    let sum = 0;
-                    // filter the using id
                     const relevantReviews = playerReview.filter((review) => review.playerId === record._id);
-
-                    // get relevant record overall review value
-                    relevantReviews.forEach((review) => {
-                      sum = sum + review.overallReview;
-                    });
-
-                    // calculate the overall review average
-                    const averageRating = relevantReviews.length > 0 ? sum / relevantReviews.length : 0;
-
-                    // print data
-                    console.log("Overall Review for", record.username, "is", averageRating);
-
-                    // return the average review
-                    return <Rate disabled defaultValue={averageRating} />;
+                    const sum = relevantReviews.reduce((acc, review) => acc + review.overallReview,0);
+                    const averageRating = relevantReviews.length ? sum / relevantReviews.length : 0;
+                    return (
+                      <div>
+                        <Rate disabled value={averageRating}  />
+                        {console.log(averageRating)}
+                        {/* <span>{averageRating.toFixed(2)}</span> */}
+                      </div>
+                    );
                   },
                 },
-                
-              
+
+
                 {
                   title: "Actions",
                   dataIndex: "Actions",
@@ -228,6 +248,16 @@ const CoachReviewPlayers = () => {
                   ),
                 },
               ]}
+              pagination={{
+                style: {
+                  marginTop: "10px",
+                },
+                // pageSize: 5,
+                current: currentPage ? currentPage : 1,
+                total: total,
+                pageSize: limits,
+                onChange: handlePagination,
+              }}
               dataSource={playerDetails}
             />
           </Content>
