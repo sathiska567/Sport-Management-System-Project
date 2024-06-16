@@ -7,7 +7,7 @@ const coachAvailabilityController = async (req, res) => {
 
         try {
 
-                const data = await coachAvailabilityModel.find({ eventId: eventId });
+                const data = await coachAvailabilityModel.find({ eventId: eventId , coachId:coachId });
 
                 console.log(data);
 

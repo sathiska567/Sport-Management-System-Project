@@ -76,4 +76,37 @@ const getAllEventsController = async (req, res) => {
 }
 
 
-module.exports = { createEventController, getAllEventsController }
+const AddCoachesToEventController = async(req,res)=>{
+   try {
+      const {eventId , coachId} = req.body;
+      console.log(eventId,coachId);
+
+      const data = await createEventModel.find({_id:eventId});
+
+      if(!data){
+         res.status(404).send({
+            success: false,
+            message: "Event Not Found",
+         })
+      }
+
+      const event = await createEventModel.findByIdAndUpdate(eventId, {$push: {coaches: coachId}}, {new: true});
+     
+      res.status(200).send({
+         success: true,
+         message: "Coach Added Successful",
+         data:event
+      })
+      
+
+
+   } catch (error) {
+      res.status(400).send({
+         success: false,
+         message: "All Events Fetch Unsuccessfull",
+         error:error.message
+      })
+   }
+}
+
+module.exports = { createEventController, getAllEventsController,AddCoachesToEventController }
