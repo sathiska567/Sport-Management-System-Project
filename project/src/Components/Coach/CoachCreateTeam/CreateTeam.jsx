@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import CoachSidebar from '../CoachSidebar/CoachSidebar'
 import './CoachCreateTeam.css'
-import { Button, Table } from "antd";
+import { Button, message, Table } from "antd";
 
 
 
@@ -12,8 +12,32 @@ const CreateTeam = () => {
     const navigate = useNavigate()
     //const [matches, setMatches] = useState([])
     const [coach_id, setCoach_id] = useState();
+    const [coachId , setCurrentCoachId] = useState('');
 
     const location = useLocation();
+
+//       //GET CURRENT USER DATA
+//   const currentUserData = async () => {
+//     try {
+//       const res = await axios.get(
+//         "http://localhost:8080/api/v1/user/getCurrentUser",
+//         {
+//           headers: {
+//             Authorization: `Bearer ${localStorage.getItem("token")}`,
+//           },
+//         }
+//       );
+//       console.log(res);
+//       setCurrentCoachId(res.data.user._id)
+
+//     } catch (error) {
+//       message.error("Error have inside the Get currentUserData function");
+//     }
+//   };
+
+//   useEffect(()=>{
+//     currentUserData()
+//   },[])
 
     useEffect(() => {
         const searchParams = new URLSearchParams(location.search);
@@ -30,10 +54,10 @@ const CreateTeam = () => {
         if (coach_id) {
             axios.get(`http://localhost:8080/api/v1/coach/matches?coach_id=${coach_id}`)
                 .then(res => {
-                    console.log(res.data);
+                    console.log(res);
                     //setMatches(res.data)
 
-                    setDataSource(res.data);
+                    setDataSource(res.data.data);
                 })
                 .catch(err => {
                     console.log(err);

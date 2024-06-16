@@ -3,7 +3,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import CoachSidebar from '../CoachSidebar/CoachSidebar';
-import { Button, Form, Input, Table } from 'antd';
+import { Button, Form, Input, message, Table } from 'antd';
 
 const UpdateTeam = () => {
     const navigate = useNavigate()
@@ -18,12 +18,26 @@ const UpdateTeam = () => {
         axios.get(`http://localhost:8080/api/v1/coach/players?match_id=${team.match_id}&coach_id=${team.coach_id}`)
             .then(res => {
                 console.log(res.data);
-                setAllplayers(res.data);
+                // setAllplayers(res.data);
             })
             .catch(err => {
                 console.log(err);
             });
     }, [team.match_id, team.coach_id]);
+
+    const getOnlyAvailablePlayer = async()=>{
+        try {
+          const availablePlayer = await axios.post("http://localhost:8080/api/v1/player-availability/getEventPlayer" , {eventId:team.match_id}) 
+          console.log(availablePlayer);
+          setAllplayers(availablePlayer.data.data)
+        } catch (error) {
+           message.error("Error Fetching Data")
+        }
+      }
+
+    useEffect(()=>{
+        getOnlyAvailablePlayer()
+    },[])
 
     const handleAdd = async (player_id) => {
         // Check if the player ID is already selected

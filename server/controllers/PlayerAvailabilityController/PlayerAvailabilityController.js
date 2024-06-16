@@ -1,4 +1,6 @@
 const PlayerAvailabilityModel = require("../../models/PlayerAvailabilityModel/PlayerAvailabilityModel");
+const User = require("../../models/userModel")
+
 
 const PlayerAvailabilityController = async(req,res)=>{
    //   console.log(req.body);
@@ -6,7 +8,7 @@ const PlayerAvailabilityController = async(req,res)=>{
 
    try {
 
-           const data = await PlayerAvailabilityModel.find({ eventId: eventId });
+           const data = await PlayerAvailabilityModel.find({ eventId: eventId , playerId:playerId });
 
            console.log(data);
 
@@ -51,6 +53,29 @@ const PlayerAvailabilityController = async(req,res)=>{
    }
 }
 
+const getEventAvailablePlayersController = async(req,res)=>{
+    try {
+        const { eventId } = req.body;
+
+            const availableData = await PlayerAvailabilityModel.find({ eventId: eventId,availability:true});
+
+            const data = await User.find({ _id: { $in: availableData.map((item) => item.playerId) } });
+
+            console.log(availableData);
 
 
-module.exports = {PlayerAvailabilityController};
+        res.status(200).send({
+                success: true,
+                message: "Event Available Players Fetch successful",
+                data:data
+            })  
+    } catch (error) {
+        res.status(400).send({
+            success: false,
+            message: "Availability added Unsuccessfully",
+            error
+        })
+    }    
+}
+
+module.exports = {PlayerAvailabilityController,getEventAvailablePlayersController};
