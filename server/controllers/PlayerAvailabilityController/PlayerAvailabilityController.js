@@ -78,4 +78,7 @@ const getEventAvailablePlayersController = async(req,res)=>{
     }    
 }
 
+
+
+
 module.exports = {PlayerAvailabilityController,getEventAvailablePlayersController};

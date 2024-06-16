@@ -1,5 +1,5 @@
 const express = require("express");
-const { GetOnlyCoachController, GetEventAvailableCoachesController } = require("../../controllers/GetOnlyCoachController/GetOnlyCoachController");
+const { GetOnlyCoachController, GetEventAvailableCoachesController, GetOnlyCoachesPaginationController } = require("../../controllers/GetOnlyCoachController/GetOnlyCoachController");
 const router = express.Router();
 
 
@@ -10,6 +10,7 @@ router.get("/details",GetOnlyCoachController)
 // Get Event Assign Coaches
 router.post("/assign",GetEventAvailableCoachesController)
 
-
+// pagination
+router.post("/pagination",GetOnlyCoachesPaginationController)
 
 module.exports = router;

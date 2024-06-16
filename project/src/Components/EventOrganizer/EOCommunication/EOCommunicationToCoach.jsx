@@ -64,13 +64,42 @@ const EOCommunicationToCoach = () => {
 
   const [coaches , setCoaches] = useState([])
 
+  
+  const [currentPage, setCurrentPage] = useState(1);
+  const [total, setTotal] = useState(1);
+  const [limits , setLimits] = useState(3);
+  
+
+  const fetchData = async (page) => {
+    try {
+      const response = await axios.post('http://localhost:8080/api/v1/coach/pagination', { page });
+      console.log("response", response)
+      setCoaches(response.data.data.coaches);
+      setTotal(response.data.data.totalCoaches);
+      setLimits(response.data.data.limit)
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData(currentPage);
+  }, [currentPage]);
+
+  const handlePagination = (page) => {
+    setCurrentPage(page);
+  };
+
+
+
+
   //  get all event organizers
   const getOnlyCoach = async () => {
     try {
       const response = await axios.get("http://localhost:8080/api/v1/coach/details")
       // console.log(response);
       if(response.data.success){
-        setCoaches(response.data.data)
+        // setCoaches(response.data.data)
       }
     } catch (error) {
       message.error("Error fetching event organizers");
@@ -194,7 +223,16 @@ const EOCommunicationToCoach = () => {
                     ),
                   },
                 ]}
-                pagination={false}
+                pagination={{
+                  style: {
+                    marginTop: "10px",
+                  },
+                  // pageSize: 5,
+                  current: currentPage ? currentPage : 1,
+                  total: total,
+                  pageSize: limits,
+                  onChange: handlePagination,
+                }}
                 // Displaying data from the backend
                 dataSource={coaches}
               ></Table>

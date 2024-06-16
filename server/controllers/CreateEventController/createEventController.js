@@ -109,4 +109,46 @@ const AddCoachesToEventController = async(req,res)=>{
    }
 }
 
-module.exports = { createEventController, getAllEventsController,AddCoachesToEventController }
+// Add Paginations
+const AddPaginationToGetEvent = async(req,res)=> {
+   try {
+     const {page} = req.body
+ 
+     // Default to page 1 if not provided or invalid
+     const pageNumber = parseInt(page, 10) || 1;
+
+   //   define limit number
+     const limit = 5;
+
+     // Calculate the skip value base on pageNumber and limits
+     const skip = (pageNumber - 1) * limit;
+
+     // Find all documents with the skip and limit
+     const events = await createEventModel.find().skip(skip).limit(limit);
+
+     // Count the total number of documents
+     const totalDocuments = await createEventModel.countDocuments();
+
+     res.status(200).send({
+      success: true,
+      message: "Data fetched successfully",
+      data: {
+        limit,
+        events,
+        totalDocuments,
+        totalPages: Math.ceil(totalDocuments / limit),
+        currentPage: pageNumber,
+      },
+    });
+     
+         
+   } catch (error) {
+      res.status(400).send({
+          success: false,
+          message: "Event data fetch Unsuccessfully",
+          error:error.message
+      })
+   }
+ }
+
+module.exports = { createEventController, getAllEventsController,AddCoachesToEventController,AddPaginationToGetEvent }

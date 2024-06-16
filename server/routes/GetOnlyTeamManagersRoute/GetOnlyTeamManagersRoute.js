@@ -1,10 +1,14 @@
 const express = require("express");
-const { GetOnlyTeamManagersController } = require("../../controllers/GetOnlyTeamManagersController/GetOnlyTeamManagersController");
+const { GetOnlyTeamManagersController, GetOnlyTMPaginationController } = require("../../controllers/GetOnlyTeamManagersController/GetOnlyTeamManagersController");
 const router = express.Router();
 
 
-// Get Only Coaches
+// Get Only TM
 router.get("/details",GetOnlyTeamManagersController)
+
+
+// Get Only TM
+router.post("/pagination",GetOnlyTMPaginationController)
 
 
 
