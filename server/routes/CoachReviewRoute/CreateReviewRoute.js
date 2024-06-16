@@ -1,5 +1,5 @@
 const express = require('express');
-const {coachReviewCreateController,getOverrallReviewController} = require('../../controllers/CoachReviewController/CoachReviewControll');
+const {coachReviewCreateController,getOverrallReviewController, searchReviewController} = require('../../controllers/CoachReviewController/CoachReviewControll');
 
 const router = express.Router();
 
@@ -7,7 +7,10 @@ const router = express.Router();
 router.post("/create-review",coachReviewCreateController)
 
 // GET OVERALL REVIEW COSIDERING INDIVIDUAL PLAYER
-router.get("/get-overall-review",getOverrallReviewController)
+router.post("/get-overall-review",getOverrallReviewController)
+
+// SEARCH REVIEW || POST
+router.post("/search-review",searchReviewController)
 
 
 module.exports = router;
