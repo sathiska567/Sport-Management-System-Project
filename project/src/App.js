@@ -79,6 +79,7 @@ import PointTableForm from "./Components/TeamManager/PointTableForm/PointTableFo
 import TeamManagerAssignCoachesNew from "./Components/TeamManager/TeamManagerAssignCoachesNew/TeamManagerAssignCoachesNew.jsx"
 
 import { useState } from "react";
+import AssignCoachesFinal from "./Components/TeamManager/AssignCoachesFinal/AssignCoachesFinal.jsx";
 
 function App() {
   const [eventId, setEventId] = useState("");
@@ -580,6 +581,17 @@ function App() {
           element={
             <ProtectedRoute>
               <TeamManagerAssignCoaches />
+            </ProtectedRoute>
+          }
+        ></Route>
+      </Routes>
+
+      <Routes>
+        <Route
+          path="/AssignCoachesFinal"
+          element={
+            <ProtectedRoute>
+              <AssignCoachesFinal/>
             </ProtectedRoute>
           }
         ></Route>

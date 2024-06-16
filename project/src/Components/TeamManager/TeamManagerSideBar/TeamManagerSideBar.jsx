@@ -205,13 +205,13 @@ const TeamManagerSideBar = ({ children }) => {
                 key="/TeamManager-create-team"
                 icon={<FontAwesomeIcon icon={faPeopleGroup} />}
               >
-                <NavLink to="/TeamManager-create-team">Create Team</NavLink>
+                <NavLink to="/PointTableForm">Point Table</NavLink>
               </Menu.Item>
               <Menu.Item
-                key="/TeamManager-assign-members"
+                key="/PointTableForm"
                 icon={<UserAddOutlined />}
               >
-                <NavLink to="/EventView">Assign Members</NavLink>
+                <NavLink to="/EventView">Assign Coaches</NavLink>
               </Menu.Item>
               <Menu.Item key="/TeamManager-profile" icon={<Profile />}>
                 <NavLink to="/TeamManager-profile">My Profile</NavLink>
