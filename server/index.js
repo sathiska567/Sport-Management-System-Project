@@ -53,7 +53,7 @@ const FixtureSearchRoute = require("./routes/FixtureSearchRoute/FixtureSearchRou
 const CoachSearchRoute = require("./routes/CoachSearchRoute/CoachSearchRoute")
 const TMSearchRoute = require("./routes/TMSearchRoute/TMSearchRoute")
 const PointTableFormRoutes = require("./routes/PointTableFormRoutes/PointTableFormRoutes")
-
+const AssignCoachesNewRoute = require("./routes/AssignCoachesNewRoute/AssignCoachesNewRoutes")
 require("./db/mongoDb"); 
 
 const app = express();
@@ -181,6 +181,8 @@ app.use("/api/v1/search",CoachSearchRoute);
 app.use("/api/v1/search",TMSearchRoute);
 app.use("/api/v1/PointTableForm", PointTableFormRoutes);
 
+//Asssign coaches New
+app.use("/api/v1/Assign-Coaches-New",AssignCoachesNewRoute);
 // //jwt
 // app.post('/user/login', async (req, res) => {
 //     const { username, password } = req.body;
