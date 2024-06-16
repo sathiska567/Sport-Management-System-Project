@@ -1,5 +1,5 @@
 const express = require("express")
-const { createEventController,getAllEventsController, AddCoachesToEventController } = require("../../controllers/CreateEventController/createEventController")
+const { createEventController,getAllEventsController, AddCoachesToEventController, AddPaginationToGetEvent } = require("../../controllers/CreateEventController/createEventController")
 
 const router = express.Router()
 
@@ -13,6 +13,9 @@ router.get("/get-all-events",getAllEventsController)
 
 // Assign Coaches To Event || POST
 router.post("/assignCoaches",AddCoachesToEventController)
+
+// PAGINATION || POST
+router.post("/pagination",AddPaginationToGetEvent)
 
 
 
