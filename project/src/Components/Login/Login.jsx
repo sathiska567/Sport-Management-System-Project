@@ -8,8 +8,8 @@ import { useNavigate } from "react-router-dom";
 const Login = () => {
   // State to manage password visibility
   const [visible, setVisible] = useState(false);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
   // Function to toggle password visibility
@@ -17,30 +17,48 @@ const Login = () => {
     setVisible(!visible);
   };
 
-  // Custom validation 
+  // Custom validation
   const [emailError, setEmailError] = useState(null);
   const [passwordError, setPasswordError] = useState(null);
-  const [error, setError] = useState('')
+  const [error, setError] = useState("");
 
   const validateFields = () => {
     if (!email) {
-      message.error({ content: 'Please enter your email', className: 'custom-message' });
-      setEmailError(true); setError('Please enter your email')
+      message.error({
+        content: "Please enter your email",
+        className: "custom-message",
+      });
+      setEmailError(true);
+      setError("Please enter your email");
       return false;
-    } else { setEmailError(false) }
+    } else {
+      setEmailError(false);
+    }
 
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailPattern.test(email)) {
-      message.error({ content: 'Please enter a valid email address', className: 'custom-message' });
-      setEmailError(true); setError('Please enter a valid email address')
+      message.error({
+        content: "Please enter a valid email address",
+        className: "custom-message",
+      });
+      setEmailError(true);
+      setError("Please enter a valid email address");
       return false;
-    } else { setEmailError(false) }
+    } else {
+      setEmailError(false);
+    }
 
     if (!password) {
-      message.error({ content: 'Please enter your password', className: 'custom-message' });
-      setPasswordError(true); setError('Please enter your password')
+      message.error({
+        content: "Please enter your password",
+        className: "custom-message",
+      });
+      setPasswordError(true);
+      setError("Please enter your password");
       return false;
-    } else { setPasswordError(false) }
+    } else {
+      setPasswordError(false);
+    }
 
     /*  if (password.length < 6) {
       message.error({ content: 'Password must be at least 6 characters long', className: 'custom-message' });
@@ -56,27 +74,38 @@ const Login = () => {
 
   // Handle login user
   const onFinish = async () => {
-    setEmailError(null); setPasswordError(null); setError('')
+    setEmailError(null);
+    setPasswordError(null);
+    setError("");
     if (!validateFields()) {
       return;
     }
 
     try {
-      const res = await axios.post('http://localhost:8080/api/v1/user/login', { email, password });
+      const res = await axios.post("http://localhost:8080/api/v1/user/login", {
+        email,
+        password,
+      });
 
-      console.log('Login successful');
+      console.log("Login successful");
       console.log(res.data);
 
-      localStorage.setItem('email', email);
-      localStorage.setItem('token', res.data.token);
+      localStorage.setItem("email", email);
+      localStorage.setItem("token", res.data.token);
 
       // Check backend validation
       if (res.data.success) {
         // Redirect to the admin dashboard or another page after successful login
-        navigate('/dashboad');
-        message.success({ content: "Login successful", className: 'custom-message-success' });
+        navigate("/dashboad");
+        message.success({
+          content: "Login successful",
+          className: "custom-message-success",
+        });
       } else {
-        message.error({ content: res.data.message, className: 'custom-message' });
+        message.error({
+          content: res.data.message,
+          className: "custom-message",
+        });
         setEmailError(true);
         setPasswordError(true);
         setError(res.data.message);
@@ -86,8 +115,11 @@ const Login = () => {
       console.log("Login error");
 
       // setError(error.response?.data?.message);
-      message.error({ content: "Error occured while login ", className: 'custom-message' });
-      setError(error)
+      message.error({
+        content: "Error occured while login ",
+        className: "custom-message",
+      });
+      setError(error);
     }
   };
 
@@ -95,35 +127,53 @@ const Login = () => {
     <div className="LoginPage">
       <div className="LoginDetails">
         <h1 className="LoginHeading">GameSync Pro</h1>
-        <div style={{ height:'65%'}}>
-          <span style={{ color: 'red' }}>* {error}</span>
+        <div style={{ height: "65%" }}>
           <Form name="loginForm" onFinish={onFinish}>
-            <label htmlFor="email" className="LoginLabel">Email:</label>
+            <label htmlFor="email" className="LoginLabel">
+              Email:
+            </label>
             <Input
               type="text"
-              className={`LoginInput ${emailError==null?'':emailError ? 'error' : 'success'}`}
+              className={`LoginInput ${
+                emailError == null ? "" : emailError ? "error" : "success"
+              }`}
               id="email"
               name="email"
               onChange={(e) => setEmail(e.target.value)}
             />
-            <label htmlFor="password" className="LoginLabel">Password:</label>
+            {emailError && <span style={{ color: "red" }}>{error}</span>}
+            <label htmlFor="password" className="LoginLabel">
+              Password:
+            </label>
             <Input.Password
               type={visible ? "text" : "password"}
-              className={`LoginInput ${passwordError==null?'':passwordError ? 'error' : 'success'}`}
+              className={`LoginInput ${
+                passwordError == null ? "" : passwordError ? "error" : "success"
+              }`}
               id="password"
               name="password"
-              iconRender={(visible) => visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />}
+              iconRender={(visible) =>
+                visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+              }
               onClick={togglePasswordVisibility}
               onChange={(e) => setPassword(e.target.value)}
             />
-            <a href="/forgot-password" className="LoginLink">Forgot Password?</a>
-            <p>Don't have an account?
-              <a href="/register" className="LoginLink">Create a new account.</a>
+            {passwordError && <span style={{ color: "red" }}>{error}</span>}
+            <a href="/forgot-password" className="LoginLink">
+              Forgot Password?
+            </a>
+            <p>
+              Don't have an account?
+              <a href="/register" className="LoginLink">
+                Create a new account.
+              </a>
             </p>
-            <Button type="primary" className="LoginButton" htmlType="submit">SIGN IN</Button>
+            <Button type="primary" className="LoginButton" htmlType="submit">
+              SIGN IN
+            </Button>
           </Form>
           <p className="copyright">
-            Copyright &copy;2024 Design by DevOps DreamViewers
+            Copyright ©2024 Design by DevOps DreamViewers
           </p>
         </div>
       </div>
