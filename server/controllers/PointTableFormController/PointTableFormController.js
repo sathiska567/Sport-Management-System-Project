@@ -28,21 +28,34 @@ const PointTableForm = async (req, res) => {
          totalMarksForEachTeam
       );
 
+   
+      // for point table get 
+
+      const exists = await PointTableFormModel.findOne({ nameOfTheTeam, nameOfTheTeam });
+
+      console.log("Exist:", exists)
+
+      let data;
+
+      if (!exists) {
+         data = new PointTableFormModel({
+            nameOfTheMatch,
+            nameOfTheTeam,
+            wonMatches,
+            lostMatches,
+            totalRunsEachTeamMatches,
+            totalOversEachTeam,
+            totalMarksForEachTeam
+         });
+
+         await data.save();
+      } else {
+         data = await PointTableFormModel.findOneAndUpdate({ _id: exists._id }, {
+            wonMatches, lostMatches
+         }, { new: true })
+      }
 
 
-      const data = new PointTableFormModel({
-         nameOfTheMatch,
-         nameOfTheTeam,
-         wonMatches,
-         lostMatches,
-         totalRunsEachTeamMatches,
-         totalOversEachTeam,
-         totalMarksForEachTeam
-      });
-
-      
-
-      await data.save();
 
       res.status(200).send({
          success: true,
@@ -50,11 +63,11 @@ const PointTableForm = async (req, res) => {
          data
       });
    } catch (error) {
-       res.status(400).send({
-          success: false,
-          message: "Failed to create event details",
-          error
-       })
+      res.status(400).send({
+         success: false,
+         message: "Failed to create event details",
+         error
+      })
    }
 }
 
