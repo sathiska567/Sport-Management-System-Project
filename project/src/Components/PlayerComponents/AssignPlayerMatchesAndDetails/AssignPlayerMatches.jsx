@@ -13,20 +13,22 @@ export default function ViewMatch() {
     const navigate = useNavigate();
 
     const handleDateSearch = (value) => {
-        console.log("Event Date Searched: ", value);
         setEventDate(value);
     };
 
     const handleTeamNameSearch = (value) => {
-        console.log("Team Name Searched: ", value);
         setTeamName(value);
     };
 
     const getFetchData = async (nameOfTheEvent, eventDate) => {
         try {
-            const response = await axios.get(`http://localhost:8080/api/v1/EditEventTable/get-create/?q=${nameOfTheEvent}&date=${eventDate}`);
-            console.log(response.data);
-
+            const response = await axios.get(`http://localhost:8080/api/v1/DisplayAssignPlayers/get-playersassigne/?q=${nameOfTheEvent}&date=${eventDate}, {
+                headers: {
+                    // Add your authorization token if needed
+                    'Authorization': Bearer ${localStorage.getItem('token')}
+                }
+            }`);
+            
             if (response.data.success) {
                 setDataSource(response.data.data);
             }
