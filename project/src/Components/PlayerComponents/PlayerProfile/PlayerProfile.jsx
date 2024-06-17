@@ -128,20 +128,20 @@ const PlayerProfile = () => {
     if (!playerName || !playerEmail || !playerDateOfBirth || !playerAge) {
       alert("Please Fill Required Fields!");
     } else {
-      setLoadings((prevLoadings) => {
-        // console.log(prevLoadings);
-        const newLoadings = [...prevLoadings];
-        newLoadings[index] = true;
-        return newLoadings;
-      });
+      // setLoadings((prevLoadings) => {
+      //   // console.log(prevLoadings);
+      //   const newLoadings = [...prevLoadings];
+      //   newLoadings[index] = true;
+      //   return newLoadings;
+      // });
 
-      setTimeout(() => {
-        setLoadings((prevLoadings) => {
-          const newLoadings = [...prevLoadings];
-          newLoadings[index] = false;
-          return newLoadings;
-        });
-      }, 30000);
+      // setTimeout(() => {
+      //   setLoadings((prevLoadings) => {
+      //     const newLoadings = [...prevLoadings];
+      //     newLoadings[index] = false;
+      //     return newLoadings;
+      //   });
+      // }, 30000);
 
       if (NewfileList.length > 0) {
         const file = NewfileList[0].originFileObj;
