@@ -109,6 +109,120 @@ const AddCoachesToEventController = async(req,res)=>{
    }
 }
 
+const AddRefereesToEventController = async(req,res)=>{
+   try {
+      const {eventId , refereeId} = req.body;
+      console.log(eventId,refereeId);
+
+      const data = await createEventModel.find({_id:eventId});
+
+      if(!data){
+         res.status(404).send({
+            success: false,
+            message: "Event Not Found",
+         })
+      }
+
+      const event = await createEventModel.findByIdAndUpdate(eventId, {$push: {refereeId: refereeId}}, {new: true});
+     
+      res.status(200).send({
+         success: true,
+         message: "Referee Added Successful",
+         data:event
+      })
+      
+
+   } catch (error) {
+      res.status(400).send({
+         success: false,
+         message: "All Events Fetch Unsuccessfull",
+         error:error.message
+      })
+   }
+}
+
+// get referee assign matches
+const GetRefereeAddEventController = async(req,res)=>{
+   try {
+      const {refereeId,page} = req.body;
+      console.log(refereeId,page);
+
+       // Default to page 1 if not provided or invalid
+       const pageNumber = parseInt(page, 10) || 1;
+                
+       // Define the limit per page
+       const limit = 5;
+   
+       // Calculate the skip based on pageNumber and limit
+       const skip = (pageNumber - 1) * limit;
+
+      const data = await createEventModel.find({refereeId:refereeId}).limit(limit).skip(skip).exec();
+
+       // Count total number of Fixtures
+       const totalData = await createEventModel.countDocuments({refereeId:refereeId});
+
+      if(!data){
+         res.status(404).send({
+            success: false,
+            message: "Event Not Found",
+         })
+      }
+
+      res.status(200).send({
+         success: true,
+         message: "Data fetched successfully",
+         data: {
+           limit,
+           data,
+           totalData,
+           totalPages: Math.ceil(totalData / limit),
+           currentPage: pageNumber,
+         },
+       });
+
+   } catch (error) {
+      res.status(400).send({
+         success: false,
+         message: "Assign Events Fetch Unsuccessful",
+         error:error.message
+      })
+   }
+}
+
+const searchRefereeAddEventController = async(req,res)=>{
+   try {
+     const {eventName} = req.body
+     console.log(eventName); 
+
+     if(eventName == ""){
+       return 0;
+     }
+
+     const regex = RegExp(eventName, 'i');
+     const data = await createEventModel.find({nameOfTheEvent:regex});
+
+     if(!data){
+        res.status(404).send({
+           success: false,
+           message: "Event Not Found",
+        })
+     }
+
+     res.status(200).send({
+        success: true,
+        message: "Data fetched successfully",
+        data:data
+     })
+
+   } catch (error) {
+      res.status(400).send({
+         success: false,
+         message: "Search Events Fetch Unsuccessful",
+         error:error.message
+      })
+   }
+}
+
 // Add Paginations
 const AddPaginationToGetEvent = async(req,res)=> {
    try {
@@ -151,4 +265,4 @@ const AddPaginationToGetEvent = async(req,res)=> {
    }
  }
 
-module.exports = { createEventController, getAllEventsController,AddCoachesToEventController,AddPaginationToGetEvent }
+module.exports = { createEventController, getAllEventsController,AddCoachesToEventController,AddRefereesToEventController,AddPaginationToGetEvent,GetRefereeAddEventController,searchRefereeAddEventController }

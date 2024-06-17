@@ -82,6 +82,7 @@ import AssignPlayerMatchesDeatils from "./Components/PlayerComponents/AssignPlay
 
 import { useState } from "react";
 import AssignCoachesFinal from "./Components/TeamManager/AssignCoachesFinal/AssignCoachesFinal.jsx";
+import AssignRefereeFinal from "./Components/TeamManager/AssignRefereeFinal/AssignRefereeFinal.jsx";
 
 function App() {
   const [eventId, setEventId] = useState("");
@@ -487,6 +488,18 @@ function App() {
           }
         />
       </Routes>
+
+      <Routes>
+        <Route
+          path="/referee-availability-final"
+          element={
+            <ProtectedRoute>
+              <AssignRefereeFinal />
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
+
       <Routes>
         <Route
           path="/referee-matches"
