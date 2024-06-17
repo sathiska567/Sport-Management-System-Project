@@ -55,6 +55,10 @@ const TMSearchRoute = require("./routes/TMSearchRoute/TMSearchRoute")
 const PointTableFormRoutes = require("./routes/PointTableFormRoutes/PointTableFormRoutes")
 const AssignCoachesNewRoute = require("./routes/AssignCoachesNewRoute/AssignCoachesNewRoutes")
 const DisplayAssignPlayers = require("./routes/DisplayAssignPlayersRoute/DisplayAssignPlayersRoute")
+const RefereeAvailabilityRoute = require("./routes/RefereeAvailabilityRoute/RefereeAvailabilityRoute")
+
+
+
 require("./db/mongoDb"); 
 
 const app = express();
@@ -137,6 +141,9 @@ app.use("/api/v1/profile",eventOrganizerProfileRoute);
 
 // COACH AVAILABILITY
 app.use("/api/v1/availability",coachAvailabilityRoute);
+
+// REFEREE AVAILABILITY
+app.use("/api/v1/availability",RefereeAvailabilityRoute);
 
 // PLAYER AVAILABILITY
 app.use("/api/v1/player-availability",PlayerAvailabilityRoute);
