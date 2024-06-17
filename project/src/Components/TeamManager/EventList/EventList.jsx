@@ -203,7 +203,7 @@ const getAllCreateEvent = async () => {
                                                    Coaches
                                                 </Button>
 
-                                                <Button
+                                                {/* <Button
                                                     type="ghost"
                                                     ghost
                                                     // "/AssignCoachesFinal"
@@ -219,7 +219,7 @@ const getAllCreateEvent = async () => {
                                                     }}
                                                 >
                                                    Referees
-                                                </Button>
+                                                </Button> */}
                                                 
                                             </span>
                                         ),
