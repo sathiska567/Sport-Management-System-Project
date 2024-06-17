@@ -56,7 +56,7 @@ const PointTableFormRoutes = require("./routes/PointTableFormRoutes/PointTableFo
 const AssignCoachesNewRoute = require("./routes/AssignCoachesNewRoute/AssignCoachesNewRoutes")
 const DisplayAssignPlayers = require("./routes/DisplayAssignPlayersRoute/DisplayAssignPlayersRoute")
 const RefereeAvailabilityRoute = require("./routes/RefereeAvailabilityRoute/RefereeAvailabilityRoute")
-
+const GetPlayerAssignEventRoute = require("./routes/GetPlayerAssignEventRoute/GetPlayerAssignEventRoute")
 
 
 require("./db/mongoDb"); 
@@ -193,6 +193,12 @@ app.use("/api/v1/PointTableForm", PointTableFormRoutes);
 app.use("/api/v1/Assign-Coaches-New",AssignCoachesNewRoute);
 //Assign players for matches
 app.use("/api/v1/DisplayAssignPlayers", DisplayAssignPlayers);
+
+
+// GET Player Assign event
+app.use("/api/v1/event",GetPlayerAssignEventRoute)
+
+
 // //jwt
 // app.post('/user/login', async (req, res) => {
 //     const { username, password } = req.body;
