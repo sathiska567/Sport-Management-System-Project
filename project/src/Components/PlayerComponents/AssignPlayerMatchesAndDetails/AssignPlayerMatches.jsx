@@ -10,6 +10,7 @@ export default function ViewMatch() {
     const [nameOfTheEvent, setTeamName] = useState("");
     const [eventDate, setEventDate] = useState("");
     const [dataSource, setDataSource] = useState([]);
+    const [playerId , setPlayerId] = useState("");
     const navigate = useNavigate();
 
     const handleDateSearch = (value) => {
@@ -22,30 +23,45 @@ export default function ViewMatch() {
         setTeamName(value);
     };
 
-    const getFetchData = async (nameOfTheEvent, eventDate) => {
-        try {
-            const response = await axios.get(`http://localhost:8080/api/v1/EditEventTable/get-create/?q=${nameOfTheEvent}&date=${eventDate}`);
-            console.log(response.data);
-
-            if (response.data.success) {
-                setDataSource(response.data.data);
-            }
-        } catch (error) {
-            console.error('Error fetching data:', error);
+      //GET CURRENT USER DATA
+  const currentUserData = async () => {
+    try {
+      const res = await axios.get(
+        "http://localhost:8080/api/v1/user/getCurrentUser",
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
         }
-    };
+      );
+      setPlayerId(res.data.user._id)
 
-    const handleViewNavigate = (record) => {
+    } catch (error) {
+      message.error("Error have inside the Get currentUserData function");
+    }
+  };
+
+    const getAssignPlayerMatches = async()=>{
         try {
-            navigate("/AssignPlayerMatchDetails", { state: { record: record } });
+           const assignEventResponse = await axios.post("http://localhost:8080/api/v1/event/getPlayerAssignEvent",{playerId:playerId})
+           console.log(assignEventResponse.data); 
+           if(assignEventResponse.data.success){
+               setDataSource(assignEventResponse.data.data)
+           }
         } catch (error) {
-            message.error("An error occurred while navigating to view the Event");
+           message.error("An error occurred while getting assign matches data.");
         }
-    };
+    }
 
     useEffect(() => {
-        getFetchData(nameOfTheEvent, eventDate);
-    }, [nameOfTheEvent, eventDate]);
+        currentUserData();
+    }, []);
+
+    useEffect(() => {
+        if (playerId) {
+            getAssignPlayerMatches();
+        }
+    }, [playerId]);
 
     return (
         <PlayerSideBar>
@@ -123,37 +139,37 @@ export default function ViewMatch() {
                                             <span>{record.formattedTime}</span>
                                         )
                                     },
-                                    {
-                                        title: "Actions",
-                                        dataIndex: "Actions",
-                                        key: "Actions",
-                                        render: (text, record) => (
-                                            <span
-                                                style={{
-                                                    display: "flex",
-                                                    flexDirection: "row",
-                                                    gap: "10px",
-                                                }}
-                                            >
-                                                <Button
-                                                    type="ghost"
-                                                    ghost
-                                                    onClick={() => handleViewNavigate(record)}
-                                                    style={{
-                                                        backgroundColor: "green",
-                                                        color: "#fff",
-                                                        fontSize: "14px",
-                                                        marginRight: "10px",
-                                                        borderRadius: "8px",
-                                                        marginTop: "auto",
-                                                        marginBottom: "auto",
-                                                    }}
-                                                >
-                                                    View
-                                                </Button>
-                                            </span>
-                                        ),
-                                    },
+                                    // {
+                                    //     title: "Actions",
+                                    //     dataIndex: "Actions",
+                                    //     key: "Actions",
+                                    //     render: (text, record) => (
+                                    //         <span
+                                    //             style={{
+                                    //                 display: "flex",
+                                    //                 flexDirection: "row",
+                                    //                 gap: "10px",
+                                    //             }}
+                                    //         >
+                                    //             <Button
+                                    //                 type="ghost"
+                                    //                 ghost
+                                    //                 onClick={() => handleViewNavigate(record)}
+                                    //                 style={{
+                                    //                     backgroundColor: "green",
+                                    //                     color: "#fff",
+                                    //                     fontSize: "14px",
+                                    //                     marginRight: "10px",
+                                    //                     borderRadius: "8px",
+                                    //                     marginTop: "auto",
+                                    //                     marginBottom: "auto",
+                                    //                 }}
+                                    //             >
+                                    //                 View
+                                    //             </Button>
+                                    //         </span>
+                                    //     ),
+                                    // },
                                 ]}
                                 pagination={{
                                     style: {

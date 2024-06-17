@@ -807,7 +807,7 @@ function App() {
 
         element={
           <ProtectedRoute>
-            <AssignPlayerMatches setId={setEventId}/>
+            <AssignPlayerMatches/>
           </ProtectedRoute>
         }
         >
