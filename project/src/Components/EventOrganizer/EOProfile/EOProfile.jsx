@@ -119,7 +119,7 @@ const PlayerProfile = () => {
         const profileImage = fileListProfile[0].originFileObj;
         const profileImageFormData = new FormData();
         profileImageFormData.append("image", profileImage);
-        profileImageFormData.append("eventOrganizerName", eventOrganizerName);
+        profileImageFormData.append("eventOrganizerId", eventOrganizerId);
 
         const profileImageResponse = await axios.post(
           "http://localhost:8080/api/v1/profile/eventOrganizer-profile-image-upload",
