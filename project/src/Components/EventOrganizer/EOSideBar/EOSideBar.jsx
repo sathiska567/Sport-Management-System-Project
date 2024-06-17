@@ -248,9 +248,14 @@ const EOSizeBar = ({ children }) => {
               <Menu.Item key="/eo-bracket" icon={<Bracket />}>
                 <NavLink to="/brackets">Bracket</NavLink>
               </Menu.Item>
+              <Menu.Item key="/EO-EventView" icon={<Profile />}>
+                <NavLink to="/EO-EventView">Assign Referee</NavLink>
+              </Menu.Item>
+
               <Menu.Item key="/eo-profile" icon={<Profile />}>
                 <NavLink to="/eo-profile">My Profile</NavLink>
               </Menu.Item>
+
               <Menu.Item
                 key="/eo-communication-to-coach"
                 icon={<MailOutlined />}

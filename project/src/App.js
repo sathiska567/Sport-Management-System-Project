@@ -83,6 +83,8 @@ import AssignPlayerMatchesDeatils from "./Components/PlayerComponents/AssignPlay
 import { useState } from "react";
 import AssignCoachesFinal from "./Components/TeamManager/AssignCoachesFinal/AssignCoachesFinal.jsx";
 import AssignRefereeFinal from "./Components/TeamManager/AssignRefereeFinal/AssignRefereeFinal.jsx";
+import EOEventList from "./Components/EventOrganizer/EOEventList/EOEventList.jsx";
+import EOAssignRefereeFinal from "./Components/EventOrganizer/EOAssignRefereeFinal/EOAssignRefereeFinal.jsx";
 
 function App() {
   const [eventId, setEventId] = useState("");
@@ -622,6 +624,28 @@ function App() {
           }
         ></Route>
       </Routes>
+      <Routes>
+        <Route
+          path="/EO-EventView"
+          element={
+            <ProtectedRoute>
+               <EOEventList/>
+            </ProtectedRoute>
+          }
+        ></Route>
+      </Routes>
+
+      <Routes>
+        <Route
+          path="/EO-RefereeAssign"
+          element={
+            <ProtectedRoute>
+               <EOAssignRefereeFinal/>
+            </ProtectedRoute>
+          }
+        ></Route>
+      </Routes>
+
       <Routes>
         <Route
           path="/AdminCharts"
