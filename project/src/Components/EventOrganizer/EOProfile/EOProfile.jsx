@@ -219,9 +219,9 @@ const EOProfile = () => {
     currentUserData();
   }, []);
 
-  const onChangeProfile = async ({ fileList: newFileList }) => {
-    console.log(newFileList);
-    setNewFileList(newFileList);
+  const onChangeProfile = ({ fileList: newFileList }) => {
+    // Update fileListProfile state with the new files
+    setFileListProfile(newFileList); 
   };
 
   const onPreviewProfile = async (file) => {
@@ -384,22 +384,18 @@ const EOProfile = () => {
                     visible={previewVisibleProfile}
                     footer={null}
                     onCancel={() => setPreviewVisibleProfile(false)}
-                    // onChange={hanldeProfileImageUpload}
                   >
                     <img
                       alt="example"
-                      style={{
-                        width: "100%",
-                      }}
+                      style={{ width: "100%" }}
                       src={previewImageProfile}
                     />
                   </Modal>
                   <ImgCrop rotationSlider>
                     <Upload
-                      style={{}}
                       action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
                       listType="picture-card"
-                      fileList={fileListProfile}
+                      fileList={fileListProfile} // Display the profile image files
                       onChange={onChangeProfile}
                       onPreview={onPreviewProfile}
                     >

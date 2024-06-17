@@ -3,7 +3,7 @@
     width: 80%;
     overflowX: auto !important;
     margin: auto;
-    margin-top: 6vh;
+    background-color: white;
 }
 
 .ProfileHeader {
@@ -74,6 +74,9 @@
 }
 
 .EOProfileForm {
-    height: 50vh !important;
-    margin-bottom: 10vh !important;
+    height: 65vh !important;
+}
+
+.ant-upload-list-item-actions {
+    margin-top: 25%;
 }

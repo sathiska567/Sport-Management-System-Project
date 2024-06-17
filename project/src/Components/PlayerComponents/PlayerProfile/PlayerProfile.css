@@ -3,7 +3,7 @@
     width: 80% !important;
     overflowX: auto !important;
     margin: auto;
-    margin-top: 6vh !important;
+    background-color: white;
 }
 
 .ProfileHeader {
@@ -81,3 +81,11 @@
     height: 50vh !important;
     margin-bottom: 10vh !important;
 }
+
+
+.ant-upload-list-item-actions {
+    margin-top: 25%;
+}
+
+
+

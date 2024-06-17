@@ -266,9 +266,9 @@ const PlayerProfile = () => {
     currentUserData();
   }, []);
 
-  const onChangeProfile = async ({ fileList: newFileList }) => {
-    console.log(newFileList);
-    setNewFileList(newFileList);
+  const onChangeProfile = ({ fileList: newFileList }) => {
+    // Update fileListProfile state with the new files
+    setFileListProfile(newFileList);
   };
 
   const onPreviewProfile = async (file) => {
@@ -453,24 +453,20 @@ const PlayerProfile = () => {
                     visible={previewVisibleProfile}
                     footer={null}
                     onCancel={() => setPreviewVisibleProfile(false)}
-                    // onChange={hanldeProfileImageUpload}
                   >
                     <img
                       alt="example"
-                      style={{
-                        width: "100%",
-                      }}
-                      // src={previewImageProfile}
+                      style={{ width: "100%" }}
+                      src={previewImageProfile}
                     />
                   </Modal>
                   <ImgCrop rotationSlider>
                     <Upload
-                      // style={{}}
-                      // action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
+                      action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
                       listType="picture-card"
-                      fileList={fileListProfile}
+                      fileList={fileListProfile} // Display the profile image files
                       onChange={onChangeProfile}
-                      // onPreview={onPreviewProfile}
+                      onPreview={onPreviewProfile}
                     >
                       {fileListProfile.length < 1 && "+ Upload"}
                     </Upload>
@@ -478,7 +474,9 @@ const PlayerProfile = () => {
                 </div>
 
                 <div>
-                  <label className="formLabel">Upload Medical Report Image:</label>
+                  <label className="formLabel">
+                    Upload Medical Report Image:
+                  </label>
                   <Modal
                     // visible={previewVisibleCover}
                     footer={null}
