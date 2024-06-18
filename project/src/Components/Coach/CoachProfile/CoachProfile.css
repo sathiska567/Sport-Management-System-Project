@@ -1,9 +1,13 @@
 .coach-profile {
     position: relative;
-    width: 80% !important;
+    width: 80%;
     overflowX: auto !important;
     margin: auto;
-    margin-top: 6vh;
+    background-color: white;
+}
+
+.ant-upload-list-item-actions {
+    margin-top: 25%;
 }
 
 .ProfileHeader {

@@ -11,7 +11,7 @@ const SignUp = () => {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState("");
   const navigate = useNavigate();
 
   // Function to toggle password visibility
@@ -19,38 +19,62 @@ const SignUp = () => {
     setVisible(!visible);
   };
 
-  // Custom validation 
+  // Custom validation
   const [nameError, setNameError] = useState(null);
   const [emailError, setEmailError] = useState(null);
   const [passwordError, setPasswordError] = useState(null);
-  const [confirmPasswordError, setConfirmPasswordError] = useState(null)
-  const [error, setError] = useState('')
+  const [confirmPasswordError, setConfirmPasswordError] = useState(null);
+  const [error, setError] = useState("");
 
   const validateFields = () => {
     if (!name) {
-      message.error({ content: 'Please enter your username', className: 'custom-message' });
-      setNameError(true); setError('Please enter your username')
+      message.error({
+        content: "Please enter your username",
+        className: "custom-message",
+      });
+      setNameError(true);
+      setError("Please enter your username");
       return false;
-    } else { setNameError(false) }
+    } else {
+      setNameError(false);
+    }
 
     if (!email) {
-      message.error({ content: 'Please enter your email', className: 'custom-message' });
-      setEmailError(true); setError('Please enter your email')
+      message.error({
+        content: "Please enter your email",
+        className: "custom-message",
+      });
+      setEmailError(true);
+      setError("Please enter your email");
       return false;
-    } else { setEmailError(false) }
+    } else {
+      setEmailError(false);
+    }
 
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailPattern.test(email)) {
-      message.error({ content: 'Please enter a valid email address', className: 'custom-message' });
-      setEmailError(true); setError('Please enter a valid email address')
+      message.error({
+        content: "Please enter a valid email address",
+        className: "custom-message",
+      });
+      setEmailError(true);
+      setError("Please enter a valid email address");
       return false;
-    } else { setEmailError(false) }
+    } else {
+      setEmailError(false);
+    }
 
     if (!password) {
-      message.error({ content: 'Please enter your password', className: 'custom-message' });
-      setPasswordError(true); setError('Please enter your password')
+      message.error({
+        content: "Please enter your password",
+        className: "custom-message",
+      });
+      setPasswordError(true);
+      setError("Please enter your password");
       return false;
-    } else { setPasswordError(false) }
+    } else {
+      setPasswordError(false);
+    }
 
     /*  if (password.length < 6) {
       message.error({ content: 'Password must be at least 6 characters long', className: 'custom-message' });
@@ -63,24 +87,40 @@ const SignUp = () => {
     }  */
 
     if (!confirmPassword) {
-      message.error({ content: 'Please re-confirm your password', className: 'custom-message' });
-      setConfirmPasswordError(true); setError('Please re-confirm your password')
+      message.error({
+        content: "Please re-confirm your password",
+        className: "custom-message",
+      });
+      setConfirmPasswordError(true);
+      setError("Please re-confirm your password");
       return false;
-    } else { setConfirmPasswordError(false) }
+    } else {
+      setConfirmPasswordError(false);
+    }
 
     if (confirmPassword !== password) {
-      message.error({ content: 'Passwords do not match', className: 'custom-message' });
-      setConfirmPasswordError(true); setPasswordError(true); setError('Passwords do not match')
+      message.error({
+        content: "Passwords do not match",
+        className: "custom-message",
+      });
+      setConfirmPasswordError(true);
+      setPasswordError(true);
+      setError("Passwords do not match");
       return false;
-    } else { setConfirmPasswordError(false) }
+    } else {
+      setConfirmPasswordError(false);
+    }
 
     return true;
   };
 
-
   // handle registration
   const onFinish = async () => {
-    setEmailError(null); setPasswordError(null); setConfirmPasswordError(null); setNameError(null); setError('')
+    setEmailError(null);
+    setPasswordError(null);
+    setConfirmPasswordError(null);
+    setNameError(null);
+    setError("");
     if (!validateFields()) {
       return;
     }
@@ -88,61 +128,71 @@ const SignUp = () => {
     console.log(name, email, password);
 
     try {
-
-      const response = await axios.post('http://localhost:8080/api/v1/user/register', { username: name, email: email, password: password });
+      const response = await axios.post(
+        "http://localhost:8080/api/v1/user/register",
+        { username: name, email: email, password: password }
+      );
       console.log(response);
 
       if (response.data.success) {
-        message.success({ content: "Registration is successful", className: 'custom-message-success' })
-        navigate("/")
-      }
-      else {
-        message.success({ content: response.data.message, className: 'custom-message' })
+        message.success({
+          content: "Registration is successful",
+          className: "custom-message-success",
+        });
+        navigate("/");
+      } else {
+        message.success({
+          content: response.data.message,
+          className: "custom-message",
+        });
         setError(response.data.message);
       }
-
     } catch (error) {
-      message.error(error)
+      message.error(error);
       setError(error);
     }
-  }
-
+  };
 
   return (
     <div className="SignUpPage">
       <div className="SignUpDetails">
         <h1 className="SignUpHeading">GameSync Pro</h1>
-        <div style={{height:'65%'}}>
-          <span style={{ color: 'red' }}>{error}</span>
-          <Form name="nest-messages" onFinish={onFinish} >
+        <div style={{ height: "65%" }}>
+          <Form name="nest-messages" onFinish={onFinish}>
             <label htmlFor="" className="SignUpLabel">
               User Name:
             </label>
             <Input
               type="text"
-              className={`SignUpInput ${nameError==null?'':nameError ? 'error' : 'success'}`}
+              className={`SignUpInput ${
+                nameError == null ? "" : nameError ? "error" : "success"
+              }`}
               id="name"
               name="name"
-              
               onChange={(e) => setName(e.target.value)}
             />
+            {nameError && <span style={{ color: "red" }}>{error}</span>}
             <label htmlFor="" className="SignUpLabel">
               Email:
             </label>
             <Input
               type="text"
-              className={`SignUpInput ${emailError==null?'':emailError ? 'error' : 'success'}`}
+              className={`SignUpInput ${
+                emailError == null ? "" : emailError ? "error" : "success"
+              }`}
               id="email"
               name="email"
-              
               onChange={(e) => setEmail(e.target.value)}
             />
+            {emailError && <span style={{ color: "red" }}>{error}</span>}
             <label htmlFor="" className="SignUpLabel">
               Create a Password:
             </label>
             <Input.Password
               type={visible ? "text" : "password"}
-              className={`SignUpInput ${passwordError==null?'':passwordError ? 'error' : 'success'}`}
+              className={`SignUpInput ${
+                passwordError == null ? "" : passwordError ? "error" : "success"
+              }`}
               id="password"
               name="password"
               iconRender={(visible) =>
@@ -151,12 +201,19 @@ const SignUp = () => {
               onClick={togglePasswordVisibility}
               onChange={(e) => setPassword(e.target.value)}
             />
+            {passwordError && <span style={{ color: "red" }}>{error}</span>}
             <label htmlFor="" className="SignUpLabel">
               Confirm Password:
             </label>
             <Input.Password
               type={visible ? "text" : "password"}
-              className={`SignUpInput ${confirmPasswordError==null?'':confirmPasswordError ? 'error' : 'success'}`}
+              className={`SignUpInput ${
+                confirmPasswordError == null
+                  ? ""
+                  : confirmPasswordError
+                  ? "error"
+                  : "success"
+              }`}
               id="password"
               name="password"
               iconRender={(visible) =>
@@ -165,6 +222,9 @@ const SignUp = () => {
               onClick={togglePasswordVisibility}
               onChange={(e) => setConfirmPassword(e.target.value)}
             />
+            {confirmPasswordError && (
+              <span style={{ color: "red" }}>{error}</span>
+            )}
             <div style={{ whiteSpace: "nowrap" }}>
               <span>Have account already? </span>
               <a href="/" className="SignUpLink">
@@ -176,7 +236,7 @@ const SignUp = () => {
             </Button>
           </Form>
           <p className="copyright">
-            Copyright &copy;2024 Design by DevOps DreamViewers
+            Copyright ©2024 Design by DevOps DreamViewers
           </p>
         </div>
       </div>

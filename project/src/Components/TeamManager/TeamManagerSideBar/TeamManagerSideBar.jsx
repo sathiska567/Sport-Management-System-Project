@@ -211,11 +211,11 @@ const TeamManagerSideBar = ({ children }) => {
                 key="/PointTableForm"
                 icon={<UserAddOutlined />}
               >
-                <NavLink to="/EventView">Assign Coaches</NavLink>
+                <NavLink to="/EventView">Assign Members</NavLink>
               </Menu.Item>
-              <Menu.Item key="/TeamManager-profile" icon={<Profile />}>
+              {/* <Menu.Item key="/TeamManager-profile" icon={<Profile />}>
                 <NavLink to="/TeamManager-profile">My Profile</NavLink>
-              </Menu.Item>
+              </Menu.Item> */}
               <Menu.Item
                 key="/team-manager-to-eo-communication"
                 icon={<MailOutlined />}

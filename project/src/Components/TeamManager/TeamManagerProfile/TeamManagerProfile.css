@@ -3,8 +3,12 @@
     width: 80%;
     overflowX: auto !important;
     margin: auto;
-    margin-top: 6vh !important;
+    background-color: white;
 }
+.ant-upload-list-item-actions {
+    margin-top: 25%;
+}
+
 
 .ProfileHeader {
     background-color: #15295E;

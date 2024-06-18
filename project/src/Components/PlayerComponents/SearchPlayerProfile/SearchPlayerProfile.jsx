@@ -16,14 +16,8 @@ export default function SearchPlayerProfile() {
     const navigate = useNavigate();
     const location = useLocation([]);
     const [name, setName] = useState("");
-   
-
 
     const [dataSource, setDataSource] = useState([]);
-
-
-
-
 
     // Filter userApplicationData based on userRole and Userlocation
     
@@ -32,8 +26,6 @@ export default function SearchPlayerProfile() {
         console.log("Team Name Searched: ", value);
         setName(value);
     };
-
-
 
     // getdata  and search players
     const getFetchData = async (name) => {
@@ -92,14 +84,14 @@ export default function SearchPlayerProfile() {
                                 className="Tab"
                                 columns={[
 
-                                    {
-                                        title: "PID",
-                                        dataIndex: "PID",
-                                        key: "PID",
-                                        render: (text, record) => (
-                                            <span>{record.pid}</span>
-                                        )
-                                    },
+                                    // {
+                                    //     title: "PID",
+                                    //     dataIndex: "PID",
+                                    //     key: "PID",
+                                    //     render: (text, record) => (
+                                    //         <span>{record.pid}</span>
+                                    //     )
+                                    // },
 
                                     {
                                         title: " Name",

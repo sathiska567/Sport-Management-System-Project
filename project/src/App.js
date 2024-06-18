@@ -76,10 +76,15 @@ import CoachEditTeam from "./Components/Coach/CoachEditTeam/EditTeam.jsx";
 import UpdateTeam from "./Components/Coach/CoachEditTeam/UpdateTeam.jsx";
 import RefereeEvent from "./Components/Referee/RefereeEvent/RefereeEvent.jsx";
 import PointTableForm from "./Components/TeamManager/PointTableForm/PointTableForm.jsx";
-import TeamManagerAssignCoachesNew from "./Components/TeamManager/TeamManagerAssignCoachesNew/TeamManagerAssignCoachesNew.jsx"
+import TeamManagerAssignCoachesNew from "./Components/TeamManager/TeamManagerAssignCoachesNew/TeamManagerAssignCoachesNew.jsx";
+import AssignPlayerMatches from "./Components/PlayerComponents/AssignPlayerMatchesAndDetails/AssignPlayerMatches.jsx";
+import AssignPlayerMatchesDeatils from "./Components/PlayerComponents/AssignPlayerMatchesAndDetails/AssignedPlayerMatchDetails.jsx"
 
 import { useState } from "react";
 import AssignCoachesFinal from "./Components/TeamManager/AssignCoachesFinal/AssignCoachesFinal.jsx";
+import AssignRefereeFinal from "./Components/TeamManager/AssignRefereeFinal/AssignRefereeFinal.jsx";
+import EOEventList from "./Components/EventOrganizer/EOEventList/EOEventList.jsx";
+import EOAssignRefereeFinal from "./Components/EventOrganizer/EOAssignRefereeFinal/EOAssignRefereeFinal.jsx";
 
 function App() {
   const [eventId, setEventId] = useState("");
@@ -485,6 +490,18 @@ function App() {
           }
         />
       </Routes>
+
+      <Routes>
+        <Route
+          path="/referee-availability-final"
+          element={
+            <ProtectedRoute>
+              <AssignRefereeFinal />
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
+
       <Routes>
         <Route
           path="/referee-matches"
@@ -607,6 +624,28 @@ function App() {
           }
         ></Route>
       </Routes>
+      <Routes>
+        <Route
+          path="/EO-EventView"
+          element={
+            <ProtectedRoute>
+               <EOEventList/>
+            </ProtectedRoute>
+          }
+        ></Route>
+      </Routes>
+
+      <Routes>
+        <Route
+          path="/EO-RefereeAssign"
+          element={
+            <ProtectedRoute>
+               <EOAssignRefereeFinal/>
+            </ProtectedRoute>
+          }
+        ></Route>
+      </Routes>
+
       <Routes>
         <Route
           path="/AdminCharts"
@@ -785,6 +824,31 @@ function App() {
             </ProtectedRoute>
           }
         ></Route>
+      </Routes>
+      <Routes>
+        <Route
+        path="/AssignPlayerMatches"
+
+        element={
+          <ProtectedRoute>
+            <AssignPlayerMatches/>
+          </ProtectedRoute>
+        }
+        >
+
+        </Route>
+      </Routes>
+      <Routes>
+        <Route
+       path="/AssignPlayerMatchDetails"
+
+          element={
+            <ProtectedRoute>
+              <AssignPlayerMatchesDeatils  />
+            </ProtectedRoute>
+          }
+  >
+        </Route>
       </Routes>
 
       {/* <Routes>

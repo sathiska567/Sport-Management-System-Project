@@ -39,6 +39,31 @@ const CoachAvailability = () => {
 
   var available;
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const [total, setTotal] = useState(1);
+  const [limits , setLimits] = useState(3);
+  
+
+  const fetchData = async (page) => {
+    try {
+      const response = await axios.post('http://localhost:8080/api/v1/event/pagination', { page });
+      console.log("response", response)
+      setCreateEvent(response.data.data.events);
+      setTotal(response.data.data.totalDocuments);
+      setLimits(response.data.data.limit)
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData(currentPage);
+  }, [currentPage]);
+
+  const handlePagination = (page) => {
+    setCurrentPage(page);
+  };
+
   const currentUserData = async () => {
     try {
       const res = await axios.get(
@@ -65,7 +90,7 @@ const getAllCreateEvent = async () => {
     );
 
     if (response.data.success) {
-      setCreateEvent(response.data.data);
+      // setCreateEvent(response.data.data);
     }
   } catch (error) {
     message.error("Error fetching data");
@@ -271,6 +296,16 @@ const getAllCreateEvent = async () => {
                   ),
                 },
               ]}
+              pagination={{
+                style: {
+                  marginTop: "10px",
+                },
+                // pageSize: 5,
+                current: currentPage ? currentPage : 1,
+                total: total,
+                pageSize: limits,
+                onChange: handlePagination,
+              }}
               dataSource={createEvent}
             />
           </Content>

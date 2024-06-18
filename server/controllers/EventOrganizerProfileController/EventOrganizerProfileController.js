@@ -45,7 +45,7 @@ const eventOrganizerProfileController = async (req, res) => {
 
 
 const eventOrganizerProfileUploadController = async (req, res) => {
-        // console.log(req.files);
+        console.log(req.fields.eventOrganizerId);
         try {
                 if (!req.files || !req.files.image) {
                         return res.status(400).send({

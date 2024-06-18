@@ -20,11 +20,14 @@ const PlayerReviews = () => {
   const [reviewGivenCoachId, setReviewGivenCoachId] = useState([]);
   const [reviewGivenCoachName, setReviewGivenCoachName] = useState([]);
   const [reviewGivenCoachEmail, setReviewGivenCoachEmail] = useState([]);
-
+  
+  const [currentPage, setCurrentPage] = useState(1);
+  const [total, setTotal] = useState(1);
+  const [limits , setLimits] = useState(3);
   
 
   //GET CURRENT USER DATA
-  const currentUserData = async () => {
+  const currentUserData = async (page) => {
     try {
       const res = await axios.get(
         "http://localhost:8080/api/v1/user/getCurrentUser",
@@ -38,24 +41,22 @@ const PlayerReviews = () => {
       // Update the state with the current user ID
       setCurrentPlayerId(res.data.user._id);
 
-      const playerReviewResponse = await axios.get(
-        "http://localhost:8080/api/v1/review/get-overall-review"
-      );
-      console.log(playerReviewResponse.data.review);
+    const playerReviewResponse = await axios.post("http://localhost:8080/api/v1/review/get-overall-review",{page:page});
+      console.log(playerReviewResponse);
 
       if (playerReviewResponse.data.success) {
-        message.success(playerReviewResponse.data.message);
+        // message.success(playerReviewResponse.data.message);
       }
 
       const newReview = [];
       const coachId = [];
 
-      for (let i = 0; i < playerReviewResponse.data.review.length; i++) {
+      for (let i = 0; i < playerReviewResponse.data.data.review.length; i++) {
         if (
-          playerReviewResponse.data.review[i].playerId === res.data.user._id
+          playerReviewResponse.data.data.review[i].playerId === res.data.user._id
         ) {
-          newReview.push(playerReviewResponse.data.review[i]);
-          coachId.push(playerReviewResponse.data.review[i].reviewGivenCoachId);
+          newReview.push(playerReviewResponse.data.data.review[i]);
+          coachId.push(playerReviewResponse.data.data.review[i].reviewGivenCoachId);
         }
 
         // console.log(playerReviewResponse.data.review[i].playerId);
@@ -63,11 +64,21 @@ const PlayerReviews = () => {
 
       setCurrentPlayerReviews(newReview);
       setReviewGivenCoachId(coachId);
+      setTotal(playerReviewResponse.data.data.totalReview);
+      setLimits(playerReviewResponse.data.data.limit)
 
       console.log("Current player Review", newReview);
     } catch (error) {
       message.error("Error inside the Get currentUserData function");
     }
+  };
+
+  useEffect(() => {
+    currentUserData(currentPage);
+  }, [currentPage]);
+
+  const handlePagination = (page) => {
+    setCurrentPage(page);
   };
 
   const combineTable = [...currentPlayerReviews, reviewGivenCoachName];
@@ -77,12 +88,25 @@ const PlayerReviews = () => {
   }, []);
 
   // Filter sampleData based on userRole and Userlocation
-const handleCoachNameSearch = (value) => {
+const handleCoachNameSearch = async(value) => {
   console.log("Coach Name Searched: ", value);
   const filteredReviews = currentPlayerReviews.filter((review) =>
     review.reviewGivenCoachName.toLowerCase().includes(value.toLowerCase())
   );
   setReviews(filteredReviews);
+
+  try {
+    const searchResponse = await axios.post("http://localhost:8080/api/v1/review/search-review",{coachName:value})
+    console.log(searchResponse);
+
+
+    if (searchResponse.data.success) {
+      message.success(searchResponse.data.message);
+      setCurrentPlayerReviews(searchResponse.data.data)
+    }
+  } catch (error) {
+    message.error("Error inside the handleCoachNameSearch function");
+  }
 };
 
 
@@ -191,7 +215,11 @@ const handleCoachNameSearch = (value) => {
                   style: {
                     marginTop: "10px",
                   },
-                  pageSize: 5,
+                  // pageSize: 5,
+                  current: currentPage ? currentPage : 1,
+                  total: total,
+                  pageSize: limits,
+                  onChange: handlePagination,
                 }}
                 // Displaying data from the frontend
                 dataSource={currentPlayerReviews}

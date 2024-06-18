@@ -214,9 +214,9 @@ const RefereeSideBar = ({ children }) => {
           >
             <NavLink to="/referee-matches">Matches</NavLink>
           </Menu.Item>
-          <Menu.Item key="/referee-profile" icon={<Profile />}>
+          {/* <Menu.Item key="/referee-profile" icon={<Profile />}>
             <NavLink to="/RefreeProfileNew">My Profile</NavLink>
-          </Menu.Item>
+          </Menu.Item> */}
           <Menu.Item
             key="logoff"
             icon={<PoweroffOutlined />}

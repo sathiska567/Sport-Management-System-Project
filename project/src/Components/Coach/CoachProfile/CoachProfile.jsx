@@ -23,107 +23,82 @@ const getBase64 = (file) =>
     reader.onerror = (error) => reject(error);
   });
 
-const CoachProfile = () => {
-  /*----------------------Profile Image upload-Start--------------------*/
+const CoachProfile  = () => {
   const [previewVisibleProfile, setPreviewVisibleProfile] = useState(false);
   const [previewImageProfile, setPreviewImageProfile] = useState("");
   const [fileListProfile, setFileListProfile] = useState([]);
+  const [fileListCover, setFileListCover] = useState([]);
 
   const [coachName, setcoachName] = useState("");
   const [coachEmail, setcoachEmail] = useState("");
   const [coachDateOfBirth, setcoachDateOfBirth] = useState("");
   const [coachAge, setcoachAge] = useState(0);
   const [coachId, setcoachId] = useState("");
-  const [formData, setFormData] = useState([]);
-  const [NewfileList, setNewFileList] = useState([]);
-  const [coverImageFileList, setCoverImageFileList] = useState([]);
-  const [medicalReportFileList, setMedicalReportFileList] = useState([]);
+  
   const [loadings, setLoadings] = useState([]);
-  const [coachEmailRef, setcoachEmailRef] = useState("");
-  const [emailError, setEmailError] = useState(false);
-  const [isTyping, setIsTyping] = useState(false);
-  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-  const [ageError, setAgeError] = useState(false);
   const [nameError, setNameError] = useState(false);
+  const [emailError, setEmailError] = useState("");
   const [dateError, setDateError] = useState(false);
-  const [uploadError, setUploadError] = useState(false);
+  const [ageError, setAgeError] = useState("");
 
-  // Name validation
-  const handleNameChange = (e) => {
+  useEffect(() => {
+    const fetchCurrentUser = async () => {
+      try {
+        const res = await axios.get("http://localhost:8080/api/v1/user/getCurrentUser", {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        });
+        setcoachId(res.data.user._id);
+      } catch (error) {
+        message.error("Error fetching current user data");
+      }
+    };
+
+    fetchCurrentUser();
+  }, []);
+
+  const handlePlayerNameChange = (e) => {
     const name = e.target.value;
     setcoachName(name);
     setNameError(name.trim() === "");
   };
 
-  // Email validation
   const handleEmailChange = (e) => {
     const email = e.target.value;
-
-    if (email.trim() === "") {
-      setEmailError("Email cannot be empty");
-    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
-      setEmailError("Invalid email format");
-    } else {
-      setEmailError("");
-    }
+    setcoachEmail(email);
+    setEmailError(
+      email.trim() === ""
+        ? "Email cannot be empty"
+        : !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)
+        ? "Invalid email format"
+        : ""
+    );
   };
 
-  // Birthdate validation
   const handleDateChange = (date, dateString) => {
     setcoachDateOfBirth(dateString);
     setDateError(dateString === "");
   };
 
-  // Age validation
   const handleAgeChange = (value) => {
     const age = value;
-
-    if (!age) {
-      setAgeError("Age cannot be empty");
-    } else if (age < 16 || age > 70) {
-      setAgeError("Invalid age. Age should be between 16 and 70");
-    } else {
-      setAgeError("");
-    }
-  };
-
-  // Medical Report validation
-  const onUploadChange = ({ fileList: newFileList }) => {
-    setFileList(newFileList);
-    setUploadError(newFileList.length === 0);
-  };
-
-  // GET CURRENT USER DETAILS
-  const currentUserData = async () => {
-    try {
-      const res = await axios.get(
-        "http://localhost:8080/api/v1/user/getCurrentUser",
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
-
-      // console.log(res.data.user._id);
-      setcoachId(res.data.user._id);
-    } catch (error) {
-      message.error("Error have inside the Get currentUserData function");
-    }
+    setcoachAge(age);
+    setAgeError(
+      !age
+        ? "Age cannot be empty"
+        : age < 16 || age > 70
+        ? "Invalid age. Age should be between 16 and 70"
+        : ""
+    );
   };
 
   const handleFormSubmit = async (index) => {
-    console.log(
-      coachId,
-      coachName,
-      coachEmail,
-      coachDateOfBirth,
-      coachAge,
-      NewfileList,
-      index
-    );
+    if (!coachName || !coachEmail || !coachDateOfBirth || !coachAge) {
+      alert("Please fill in all required fields!");
+      return;
+    }
 
     setLoadings((prevLoadings) => {
+      // console.log(prevLoadings);
       const newLoadings = [...prevLoadings];
       newLoadings[index] = true;
       return newLoadings;
@@ -135,103 +110,47 @@ const CoachProfile = () => {
         newLoadings[index] = false;
         return newLoadings;
       });
-    }, 20000);
-
-    if (NewfileList.length > 0) {
-      const file = NewfileList[0].originFileObj;
-
-      let formData = new FormData();
-      formData.append("image", file);
-      formData.append("coachId", coachId);
-
-      try {
-        // Upload profile image and get the response
-        const imageUploadResponse = await axios.post(
-          "http://localhost:8080/api/v1/profile/coach-profile-image-upload",
-          formData
-        );
-        console.log(imageUploadResponse.data.success);
-        // Extract image URL from the response
-        const imageUrl = imageUploadResponse.data.data.coachprofileImageLink;
-
-        if (imageUploadResponse.data.success) {
-          message.success(imageUploadResponse.data.message);
-          // window.location.reload();
-        }
-      } catch (error) {
-        message.error("Error occurred inside the handleFormSubmit function");
-      }
-    }
+    }, 30000);
 
     try {
-      // Check if coverImageFileList is not empty
-      if (coverImageFileList.length > 0) {
-        const coverImagefile = coverImageFileList[0].originFileObj;
-        let coverImageFormData = new FormData();
-        coverImageFormData.append("coverImage", coverImagefile);
+
+      if (fileListProfile.length > 0) {
+        const profileImage = fileListProfile[0].originFileObj;
+        const profileImageFormData = new FormData();
+        profileImageFormData.append("image", profileImage);
+        profileImageFormData.append("coachId", coachId);
+
+        const profileImageResponse = await axios.post(
+          "http://localhost:8080/api/v1/profile/coach-profile-image-upload",
+          profileImageFormData
+        );
+
+        if (profileImageResponse.data.success) {
+          message.success(profileImageResponse.data.message);
+        } else {
+          message.error("Profile image upload failed");
+        }
+      }
+
+      if (fileListCover.length > 0) {
+        const coverImage = fileListCover[0].originFileObj;
+        const coverImageFormData = new FormData();
+        coverImageFormData.append("coverImage", coverImage);
         coverImageFormData.append("coachId", coachId);
 
-        // // Log FormData for debugging (optional)
-        // console.log([...coverImageFormData]);
-
-        // Upload cover image
         const coverImageResponse = await axios.post(
           "http://localhost:8080/api/v1/profile/coach-cover-image-upload",
           coverImageFormData
         );
 
-        // Handle coverImageResponse if needed
-        console.log(coverImageResponse.data);
-
         if (coverImageResponse.data.success) {
-          message.success(coverImageResponse.data.message);
-          // window.location.reload();
+          message.success("Cover image upload successful");
+        } else {
+          message.error("Cover image upload failed");
         }
-      } else {
-        message.error("No cover image selected");
       }
-    } catch (error) {
-      // Log the error details (optional)
-      console.error("Error uploading cover image:", error);
 
-      message.error("Error uploading cover image");
-    }
-
-    try {
-      console.log(medicalReportFileList);
-
-      if (medicalReportFileList.length > 0) {
-        const medicalReportfile = medicalReportFileList[1].originFileObj;
-
-        let medicalReportFormData = new FormData();
-        medicalReportFormData.append("medicalReport", medicalReportfile);
-        medicalReportFormData.append("coachId", coachId);
-
-        // Log FormData for debugging (optional)
-        console.log([...medicalReportFormData]);
-
-        // Upload Medical report
-        const coverImageResponse = await axios.post(
-          "http://localhost:8080/api/v1/profile/coach-medical-report-upload",
-          medicalReportFormData
-        );
-
-        // Handle coverImageResponse if needed
-        console.log(coverImageResponse.data);
-
-        if (coverImageResponse.data.success) {
-          message.success(coverImageResponse.data.message);
-        }
-      } else {
-        message.error("No cover image selected");
-      }
-    } catch (error) {
-      message.error("Error uploading medical report");
-    }
-
-    try {
-      // Now, make a second API call to save coach profile data with the image URL
-      const coachProfileResponse = await axios.post(
+      const playerProfileResponse = await axios.post(
         "http://localhost:8080/api/v1/profile/coach-profile",
         {
           coachId: coachId,
@@ -239,28 +158,23 @@ const CoachProfile = () => {
           coachEmail: coachEmail,
           coachDateOfBirth: coachDateOfBirth,
           coachAge: coachAge,
-          // coachprofileImageLink: imageUrl,
         }
       );
 
-      // Handle response if needed
-      console.log(coachProfileResponse.data);
-      if (coachProfileResponse.data.success) {
-        message.success(coachProfileResponse.data.message);
-        window.location.reload();
+      if (playerProfileResponse.data.success) {
+        message.success(playerProfileResponse.data.message);
+        window.location.reload()
+      } else {
+        message.error("Profile update failed");
+        
       }
     } catch (error) {
-      message.error("Error occurred inside the handleFormSubmit function");
+      message.error("Error occurred while submitting the form");
     }
   };
 
-  useEffect(() => {
-    currentUserData();
-  }, []);
-
-  const onChangeProfile = async ({ fileList: newFileList }) => {
-    console.log(newFileList);
-    setNewFileList(newFileList);
+  const onChangeProfile = ({ fileList: newFileList }) => {
+    setFileListProfile(newFileList);
   };
 
   const onPreviewProfile = async (file) => {
@@ -276,16 +190,8 @@ const CoachProfile = () => {
     setPreviewVisibleProfile(true);
   };
 
-  /*----------------------Profile Image upload-End--------------------*/
-
-  /*----------------------Cover Image upload-Start--------------------*/
-  const [previewVisibleCover, setPreviewVisibleCover] = useState(false);
-  const [previewImageCover, setPreviewImageCover] = useState("");
-  const [fileListCover, setFileListCover] = useState([]);
-
   const onChangeCover = ({ fileList: newFileList }) => {
     setFileListCover(newFileList);
-    setCoverImageFileList(newFileList);
   };
 
   const onPreviewCover = async (file) => {
@@ -297,52 +203,21 @@ const CoachProfile = () => {
         reader.onload = () => resolve(reader.result);
       });
     }
-    setPreviewImageCover(src);
-    setPreviewVisibleCover(true);
+    // setPreviewImageCover(src);
+    // setPreviewVisibleCover(true);
   };
-  /*----------------------Cover Image upload-End--------------------*/
-
-  /*----------------------Medical Image upload-Start--------------------*/
-  const [fileList, setFileList] = useState([
-    {
-      uid: "1",
-      name: "image.png",
-      status: "done",
-      url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-    },
-  ]);
-  const onChange = ({ fileList: newFileList }) => {
-    setMedicalReportFileList(newFileList);
-  };
-
-  const onPreview = async (file) => {
-    let src = file.url;
-    if (!src) {
-      src = await new Promise((resolve) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file.originFileObj);
-        reader.onload = () => resolve(reader.result);
-      });
-    }
-    const image = new Image();
-    image.src = src;
-    const imgWindow = window.open(src);
-    imgWindow?.document.write(image.outerHTML);
-  };
-  /*----------------------Medical Image upload-End--------------------*/
-
   return (
     <div>
       <CoachSideBar>
-        <div className="coach-profile">
+        <div className="player-profile">
           <div className="ProfileHeader">
-            <h3 className="coachDetails">My Profile</h3>
+            <h3>My Profile</h3>
           </div>
           <div
             className="coachProfile"
             style={{ overflowX: "auto", height: "65vh" }}
           >
-            <form className="coachProfileForm">
+            <form className="playerProfileForm">
               <label className="formLabel">
                 Name:
                 <div>
@@ -350,11 +225,12 @@ const CoachProfile = () => {
                     type="text"
                     name="name"
                     className="inputBox"
-                    onChange={handleNameChange}
+                    onChange={handlePlayerNameChange}
+                    allowClear
                   />
                   {nameError && (
                     <div
-                      className="error"
+                      className="errorText"
                       style={{ fontSize: "13px", color: "red" }}
                     >
                       Name cannot be empty
@@ -362,6 +238,7 @@ const CoachProfile = () => {
                   )}
                 </div>
               </label>
+
               <label className="formLabel">
                 Email:
                 <div>
@@ -370,6 +247,7 @@ const CoachProfile = () => {
                     name="email"
                     className={`inputBox ${emailError ? "error" : ""}`}
                     onChange={handleEmailChange}
+                    allowClear
                   />
                   {emailError && (
                     <div
@@ -388,7 +266,7 @@ const CoachProfile = () => {
                   <div>
                     <DatePicker
                       style={{
-                        width: "300%",
+                        width: "400%",
                       }}
                       onChange={handleDateChange}
                       disabledDate={(current) => {
@@ -396,7 +274,7 @@ const CoachProfile = () => {
                         return (
                           current &&
                           (current <
-                            moment().endOf("day").subtract(70, "years") ||
+                            moment().endOf("day").subtract(35, "years") ||
                             current >
                               moment().endOf("day").subtract(16, "years"))
                         );
@@ -404,19 +282,24 @@ const CoachProfile = () => {
                     />
                     {dateError && (
                       <div
-                        className="error"
-                        style={{ fontSize: "13px", color: "red" }}
+                        className="errorText"
+                        style={{
+                          fontSize: "13px",
+                          color: "red",
+                          width: "150%",
+                        }}
                       >
                         Date cannot be empty
                       </div>
                     )}
                   </div>
                 </div>
+
                 <div>
                   <label className="formLabel">Age:</label>
-                  <InputNumber
+                  <input
                     type="number"
-                    onChange={handleAgeChange}
+                    onChange={(e) => handleAgeChange(e.target.value)}
                     style={{ width: "100%" }}
                   />
                   {ageError && (
@@ -436,22 +319,18 @@ const CoachProfile = () => {
                     visible={previewVisibleProfile}
                     footer={null}
                     onCancel={() => setPreviewVisibleProfile(false)}
-                    // onChange={hanldeProfileImageUpload}
                   >
                     <img
                       alt="example"
-                      style={{
-                        width: "100%",
-                      }}
+                      style={{ width: "100%" }}
                       src={previewImageProfile}
                     />
                   </Modal>
                   <ImgCrop rotationSlider>
                     <Upload
-                      style={{}}
                       action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
                       listType="picture-card"
-                      fileList={fileListProfile}
+                      fileList={fileListProfile} // Display the profile image files
                       onChange={onChangeProfile}
                       onPreview={onPreviewProfile}
                     >
@@ -459,32 +338,37 @@ const CoachProfile = () => {
                     </Upload>
                   </ImgCrop>
                 </div>
+
                 <div>
-                  <label className="formLabel">Cover Image:</label>
+                  <label className="formLabel">
+                    Upload Medical Report Image:
+                  </label>
                   <Modal
-                    visible={previewVisibleCover}
+                    // visible={previewVisibleCover}
                     footer={null}
-                    onCancel={() => setPreviewVisibleCover(false)}
+                    // onCancel={() => setPreviewVisibleCover(true)}
                   >
                     <img
                       alt="example"
                       style={{ width: "100%" }}
-                      src={previewImageCover}
+                      // src={previewImageCover}
                     />
                   </Modal>
                   <ImgCrop rotationSlider>
                     <Upload
-                      action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
+                      // style={{}}
+                      // action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
                       listType="picture-card"
                       fileList={fileListCover}
                       onChange={onChangeCover}
-                      onPreview={onPreviewCover}
+                      // onPreview={onPreviewCover}
                     >
                       {fileListCover.length < 1 && "+ Upload"}
                     </Upload>
                   </ImgCrop>
                 </div>
-                <div>
+
+                {/* <div>
                   <label className="formLabel">Upload Medical Reports:</label>
                   <div>
                     <Upload
@@ -492,20 +376,19 @@ const CoachProfile = () => {
                       listType="picture-card"
                       fileList={fileList}
                       onChange={onUploadChange}
-                      onPreview={onPreview}
                     >
                       {fileList.length < 5 && "+ Upload"}
                     </Upload>
                     {uploadError && (
                       <div
-                        className="error"
+                        className="errorText"
                         style={{ fontSize: "13px", color: "red" }}
                       >
                         At least one image must be uploaded
                       </div>
                     )}
                   </div>
-                </div>
+                </div> */}
               </div>
               <br />
               <Button
@@ -528,4 +411,4 @@ const CoachProfile = () => {
   );
 };
 
-export default CoachProfile;
+export default CoachProfile ;

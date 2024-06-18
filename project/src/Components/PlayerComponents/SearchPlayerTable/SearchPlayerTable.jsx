@@ -9,46 +9,63 @@ const { Content } = Layout;
 
 axios.defaults.baseURL = "http://localhost:8080/api/v1/playerSearchTable"
 
-export default function SearchPlayerProfile() { 
+export default function SearchPlayerProfile() {
     const [userRole, setUserRole] = useState("");
     const [Userlocation, setUserLocation] = useState("");
     const [userApplicationData, setUserApplicationData] = useState([]);
     const navigate = useNavigate();
     const location = useLocation([]);
     const [email, setEmail] = useState("");
-   
-
-
     const [dataSource, setDataSource] = useState([]);
 
-
-
+    const [currentPage, setCurrentPage] = useState(1);
+    const [total, setTotal] = useState(1);
+    const [limits , setLimits] = useState(3);
+    
+  
+    const fetchData = async (page) => {
+      try {
+        const response = await axios.post('http://localhost:8080/api/v1/player/player-pagination', { page });
+        console.log("response", response)
+        setDataSource(response.data.data.players);
+        setTotal(response.data.data.totalPlayers);
+        setLimits(response.data.data.limit)
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+  
+    useEffect(() => {
+      fetchData(currentPage);
+    }, [currentPage]);
+  
+    const handlePagination = (page) => {
+      setCurrentPage(page);
+    };
 
 
     // Filter userApplicationData based on userRole and Userlocation
-    
+
 
     const handleTeamNameSearch = (value) => {
         console.log("Team Name Searched: ", value);
         setEmail(value);
     };
 
-
-
     // getdata  and search players
     const getFetchData = async (email) => {
         try {
             const response = await axios.get(`/get-search-player-profile?q=${email}&role=player`);
             console.log(response.data);
-    
+
             if (response.data.success) {
-                setDataSource(response.data.data);
+                // setDataSource(response.data.data);
             }
         } catch (error) {
             console.error('Error fetching data:', error);
         }
     };
-    
+
 
     useEffect(() => {
         getFetchData(email);
@@ -84,7 +101,7 @@ export default function SearchPlayerProfile() {
                                 // onChange={(e) => handleEventNameSearch(e.target.value)}
                                 allowClear
                             />
-                            
+
                         </div>
                         {/* Table section */}
                         <div className="tabContainer">
@@ -92,14 +109,14 @@ export default function SearchPlayerProfile() {
                                 className="Tab"
                                 columns={[
 
-                                    {
-                                        title: "PID",
-                                        dataIndex: "PID",
-                                        key: "PID",
-                                        render: (text, record) => (
-                                            <span>{record._id}</span>
-                                        )
-                                    },
+                                    // {
+                                    //     title: "PID",
+                                    //     dataIndex: "PID",
+                                    //     key: "PID",
+                                    //     render: (text, record) => (
+                                    //         <span>{record._id}</span>
+                                    //     )
+                                    // },
 
                                     {
                                         title: " Name",
@@ -110,7 +127,7 @@ export default function SearchPlayerProfile() {
                                         )
                                     },
 
-                                    
+
                                     {
                                         title: "Email",
                                         dataIndex: "Email",
@@ -153,10 +170,14 @@ export default function SearchPlayerProfile() {
                                 ]}
                                 pagination={{
                                     style: {
-                                        marginTop: "10px",
+                                      marginTop: "10px",
                                     },
-                                    pageSize: 5,
-                                }}
+                                    // pageSize: 5,
+                                    current: currentPage ? currentPage : 1,
+                                    total: total,
+                                    pageSize: limits,
+                                    onChange: handlePagination,
+                                  }}
 
                                 dataSource={dataSource}
                             ></Table>
