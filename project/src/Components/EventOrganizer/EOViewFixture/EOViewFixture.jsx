@@ -98,7 +98,7 @@ const EOViewFixture = () => {
 
     try {
       const deleteResponse = await axios.post(
-        "http://localhost:8080/api/v1/delete/delete-fixture",
+        "http://localhost:8080/api/v1/del-fixture/delete-fixture",
         { id }
       );
       console.log(deleteResponse);

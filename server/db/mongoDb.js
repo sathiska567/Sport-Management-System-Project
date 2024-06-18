@@ -3,9 +3,9 @@ const mongoose = require("mongoose")
 const Mongo_url = process.env.MONGO_URL
 
 
-// console.log(Mongo_url);
+ //console.log(typeof Mongo_url);
 
-mongoose.connect(Mongo_url);
+mongoose.connect('mongodb+srv://ravishan:Pass123@cluster0.zmi2r0z.mongodb.net/userModel');
 
 const connection = mongoose.connection;
 

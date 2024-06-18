@@ -11,13 +11,13 @@ const SendOtpController = async (req, res) => {
         try {
           // Check if the email exists in the database
           const user = await User.findOne({ email: email });
-          console.log(user);
+          //console.log(user);
           
       
           if (user) {
             // Generate a random 4-digit OTP
             const resetCode = Math.floor(1000 + Math.random() * 9000).toString();
-            console.log(resetCode);
+            //console.log(resetCode);
       
             // Save the reset code in the database
             user.otp = resetCode;
@@ -61,7 +61,7 @@ const VerifyOtpController = async (req, res) => {
         try {
           // Find the user in the database by email
           const user = await User.findOne({ email });
-          console.log(user.username);
+          //console.log(user.username);
       
           if (user && user.otp == otp) {
 
@@ -88,7 +88,7 @@ const VerifyOtpController = async (req, res) => {
         //     console.log('invalid otp');
         res.status(200).send({
                 success:false,
-                message:"Invalid OTP.",                
+                message:"Invalid OTP",                
             })
           }
 

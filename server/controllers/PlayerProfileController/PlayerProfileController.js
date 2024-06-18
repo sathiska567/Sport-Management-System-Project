@@ -13,7 +13,7 @@ cloudinary.config({
 
 const playerProfileController = async (req, res) => {
         const { playerId, playerName, playerEmail, playerDateOfBirth, playerAge } = req.body;
-        console.log(playerId, playerName, playerEmail, playerDateOfBirth, playerAge);
+        //console.log(playerId, playerName, playerEmail, playerDateOfBirth, playerAge);
         try {
 
                 const response = new playerProfileModel({
@@ -25,7 +25,7 @@ const playerProfileController = async (req, res) => {
                 })
 
                 await response.save();
-                console.log(response);
+                //console.log(response);
 
                 return res.status(200).send({
                         success: true,

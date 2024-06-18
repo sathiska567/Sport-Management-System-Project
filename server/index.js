@@ -249,8 +249,11 @@ app.use("/api/v1/Assign-Coaches-New",AssignCoachesNewRoute);
 //   });
 
 
-const PORT = process.env.PORT || 3000; // Define a default port if PORT is not set in .env
+/* const PORT = process.env.PORT || 3000; // Define a default port if PORT is not set in .env
 
 server.listen(PORT, () => {
   console.log("Server is running on port " + PORT);
-});
+}); */
+
+
+module.exports = app;

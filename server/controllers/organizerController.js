@@ -11,7 +11,7 @@ const getMatches = async (req, res) => {
     console.log('req came')
     const matches = await Match.find();
 
-    console.log(matches);
+    //console.log(matches);
     res.json(matches);
   } catch (err) {
     console.log(err);
@@ -26,16 +26,16 @@ const createRound = async (req, res) => {
     // Find the match by its matchId field 
     //const match = await Match.findOne({ matchNo: matchNo });
     const match = await Match.findById(matchNo).populate('createdFixtureId').exec();
-    console.log('match : ', match)
+    //console.log('match : ', match)
 
 
     if (!match) {
-      console.log("match not found")
+      //console.log("match not found")
       return res.status(404).json({ error: 'Match not found' });
     }
 
     const shuffling = await Shuffle.findById(match.createdFixtureId._id).populate('shuffleTeam').exec();
-    console.log('shuf : ', shuffling)
+    //console.log('shuf : ', shuffling)
 
     if (!shuffling) {
       return { message: 'Shuffling not found' };
@@ -47,7 +47,7 @@ const createRound = async (req, res) => {
     console.log(existingRoundIndex);
 
     if (existingRoundIndex !== -1) {
-      console.log("Already exists round");
+      //console.log("Already exists round");
 
       // If roundNumber exists, update the existing round
       const currentRound = match.rounds[existingRoundIndex];
@@ -75,7 +75,7 @@ const createRound = async (req, res) => {
       if (roundNo == 1) {
         // For the first round, use the original teams
         pairsArray = createPairs(/*match.teams*/ shuffling.shuffleTeam || []);
-        console.log(pairsArray)
+       // console.log(pairsArray)
       } else {
         // For subsequent rounds, use the winners from the previous round
         const previousRoundIndex = roundNo - 2;
@@ -83,7 +83,7 @@ const createRound = async (req, res) => {
         if (previousRoundIndex >= 0 && match.rounds[previousRoundIndex].winners) {
           pairsArray = createPairs(match.rounds[previousRoundIndex].winners);
         } else {
-          console.log("Error: Winners not found for the previous round.");
+          //console.log("Error: Winners not found for the previous round.");
           return res.status(400).json({ error: 'Winners not found for the previous round.' });
         }
       }
@@ -111,7 +111,7 @@ const createRound = async (req, res) => {
 
     res.json(popPairs);
   } catch (error) {
-    console.error('Round creation error:', error);
+    //console.error('Round creation error:', error);
     res.status(500).json({ error: 'Round creation error', details: error.message });
   }
 };
@@ -174,7 +174,7 @@ const getWinners = async (req, res) => {
     const match = await Match.findOne(
       { _id: matchId }
     ) //.populate('teams rounds.winners') 
-    console.log(match)
+    //console.log(match)
     res.json({ match: match })
 
   } catch (error) {
@@ -189,9 +189,9 @@ const setWinners = async (req, res) => {
     const matchNo = req.params.matchId;
     const roundNo = req.params.roundNo;
     const winnersArray = req.body.winnersArray;
-    console.error('winners:', winnersArray);
-    console.error('match No :', matchNo);
-    console.error('round No:', roundNo);
+    console.log('winners:', winnersArray);
+    console.log('match No :', matchNo);
+    console.log('round No:', roundNo);
 
 
     let match = await Match.findOneAndUpdate(
@@ -204,6 +204,8 @@ const setWinners = async (req, res) => {
       { new: true }
     );
 
+    //console.log(match)
+
     if (winnersArray.length === 1) {
       match = await Match.findOneAndUpdate(
         { _id: matchNo },
@@ -215,12 +217,13 @@ const setWinners = async (req, res) => {
         { new: true }
       );
       
+      //console.log(match)
       //const finalWinner = await Team.findById(winnersArray[0])
       const finalWinner = winnersArray[0];
-      return res.json({ message: "final winner already selected", finalWinner: finalWinner })
+      return res.json({ message: "final winner already selected", finalWinner: finalWinner, rounds:match.rounds })
     }
       
-    console.log('219 : match : ', match)
+    //console.log('219 : match : ', match)
     res.json(match);
   } catch (error) {
     console.error('Error saving winners:', error);

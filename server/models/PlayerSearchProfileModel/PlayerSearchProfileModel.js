@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 //schema
-const playerSearchProfileSchema = mongoose.Schema({
+const playerSearchProfileSchema = new mongoose.Schema({
    
     pid:String,
     name: String,
