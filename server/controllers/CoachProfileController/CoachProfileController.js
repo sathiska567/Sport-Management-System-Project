@@ -15,6 +15,17 @@ const coachProfileController = async (req, res) => {
         const { coachId, coachName, coachEmail, coachDateOfBirth, coachAge } = req.body;
         console.log(coachId, coachName, coachEmail, coachDateOfBirth, coachAge);
         try {
+                const profile = await coachProfileModel.findOne({ coachId });
+
+                if (profile) {
+                        const response = await coachProfileModel.findOneAndUpdate({ coachId }, { coachName, coachEmail, coachDateOfBirth, coachAge }, { new: true });
+                        return res.status(200).send({
+                                success: true,
+                                message: 'Details Updated successfully',
+                                response
+
+                        });
+                }
 
                 const response = new coachProfileModel({
                         coachName: coachName,
@@ -57,6 +68,19 @@ const coachProfileUploadController = async (req, res) => {
 
                 const result = await cloudinary.uploader.upload(req.files.image.path);
 
+                const response = await coachImageModel.findOne({ coachId: req.fields.coachId });
+
+                if (response) {
+                        const data = await coachImageModel.findOneAndUpdate({ coachId: req.fields.coachId }, { coachprofileImageSecureLink: result.secure_url }, { coachprofileImageLink: result.url }, { new: true });
+
+                        return res.status(200).send({
+                                success: true,
+                                message: 'Profile Image updated successfully',
+                                data
+
+                        });
+                }
+
                 const data = new coachImageModel({
                         coachId : req.fields.coachId,
                         coachprofileImageSecureLink: result.secure_url,
@@ -98,6 +122,19 @@ const coachCoverImageUploadController = async(req,res)=>{
 
                 const CoverImageResult = await cloudinary.uploader.upload(req.files.coverImage.path);
 
+                const data = await coachCoverImageModel.findOne({ coachId: req.fields.coachId })
+
+                if (data) {
+                        const CoverImageData = await coachCoverImageModel.findOneAndUpdate({ coachId: req.fields.coachId }, { coachCoverImageSecureLink: CoverImageResult.secure_url }, { coachCoverImageLink: CoverImageResult.url }, { new: true });
+
+                        return res.status(200).send({
+                                success: true,
+                                message: 'Cover Image updated successfully',
+                                CoverImageData
+
+                        });
+                }
+
                 const CoverImageData = new coachCoverImageModel({
                         coachId : req.fields.coachId,
                         coachCoverImageSecureLink: CoverImageResult.secure_url,
@@ -110,7 +147,7 @@ const coachCoverImageUploadController = async(req,res)=>{
                 // we might want to send a response to the client indicating success
                 return res.status(200).send({
                         success: true,
-                        message: 'Image uploaded successfully',
+                        message: 'Cover Image uploaded successfully',
                         CoverImageData
 
                 });

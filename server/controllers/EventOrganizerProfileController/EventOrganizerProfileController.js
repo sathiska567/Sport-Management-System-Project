@@ -15,6 +15,17 @@ const eventOrganizerProfileController = async (req, res) => {
         console.log(eventOrganizerId, eventOrganizerName, eventOrganizerEmail, eventOrganizerDateOfBirth, eventOrganizerAge);
         try {
 
+                const profile = await eventOrganizerProfileModel.findOne({ eventOrganizerId });
+                if (profile) {
+                        const response = await eventOrganizerProfileModel.findOneAndUpdate({ eventOrganizerId }, { eventOrganizerName, eventOrganizerEmail, eventOrganizerDateOfBirth, eventOrganizerAge }, { new: true });
+                        return res.status(200).send({
+                                success: true,
+                                message: 'Details Updated successfully',
+                                response
+
+                        });
+                }
+
                 const response = new eventOrganizerProfileModel({
                         eventOrganizerName: eventOrganizerName,
                         eventOrganizerEmail: eventOrganizerEmail,
@@ -56,6 +67,19 @@ const eventOrganizerProfileUploadController = async (req, res) => {
 
                 const result = await cloudinary.uploader.upload(req.files.image.path);
 
+                const response = await eventOrganizerImageModel.findOne({ eventOrganizerId:req.fields.eventOrganizerId });
+
+                if (response) {
+                        const data = await eventOrganizerImageModel.findOneAndUpdate({ eventOrganizerId: req.fields.eventOrganizerId }, { eventOrganizerprofileImageSecureLink: result.secure_url }, {eventOrganizerprofileImageLink:result.url}, { new: true });
+
+                        return res.status(200).send({
+                                success: true,
+                                message: 'Profile Image Update successfully',
+                                data
+
+                        });
+                }
+
                 const data = new eventOrganizerImageModel({
                         eventOrganizerId : req.fields.eventOrganizerId,
                         eventOrganizerprofileImageSecureLink: result.secure_url,
@@ -96,6 +120,19 @@ const eventOrganizerCoverImageUploadController = async(req,res)=>{
                 }
 
                 const CoverImageResult = await cloudinary.uploader.upload(req.files.coverImage.path);
+
+                const data = await eventOrganizerCoverImageModel.findOne({ eventOrganizerId: req.fields.eventOrganizerId })
+
+                if (data) {
+                        const CoverImageData = await eventOrganizerCoverImageModel.findOneAndUpdate({ eventOrganizerId: req.fields.eventOrganizerId }, { eventOrganizerCoverImageSecureLink: CoverImageResult.secure_url }, {  eventOrganizerCoverImageLink:CoverImageResult.url }, { new: true });
+
+                        return res.status(200).send({
+                                success: true,
+                                message: 'Cover Image updated successfully',
+                                CoverImageData
+
+                        });
+                }
 
                 const CoverImageData = new eventOrganizerCoverImageModel({
                         eventOrganizerId : req.fields.eventOrganizerId,

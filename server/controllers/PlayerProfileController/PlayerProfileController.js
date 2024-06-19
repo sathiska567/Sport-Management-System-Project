@@ -16,6 +16,17 @@ const playerProfileController = async (req, res) => {
         console.log(playerId, playerName, playerEmail, playerDateOfBirth, playerAge);
         try {
 
+                const profile = await playerProfileModel.findOne({ playerId });
+                if (profile) {
+                        const response = await playerProfileModel.findOneAndUpdate({ playerId }, { playerName, playerEmail, playerDateOfBirth, playerAge }, { new: true });
+                        return res.status(200).send({
+                                success: true,
+                                message: 'Details Updated successfully',
+                                response
+
+                        });
+                }
+
                 const response = new playerProfileModel({
                         playerName: playerName,
                         playerEmail: playerEmail,
@@ -35,7 +46,7 @@ const playerProfileController = async (req, res) => {
                 });
 
         } catch (error) {
-             res.status(400).send({
+                res.status(400).send({
                         success: false,
                         message: 'Details uploaded Unsuccessfully',
                         error
@@ -57,10 +68,23 @@ const playerProfileUploadController = async (req, res) => {
 
                 const result = await cloudinary.uploader.upload(req.files.image.path);
 
+                const response = await playerProfileModel.findOne({ playerId: req.fields.playerId });
+
+                if (response) {
+                        const data = await playerProfileModel.findOneAndUpdate({ playerId: req.fields.playerId }, { PlayerprofileImageSecureLink: result.secure_url }, { PlayerprofileImageLink: result.url }, { new: true });
+
+                        return res.status(200).send({
+                                success: true,
+                                message: 'Profile Image updated successfully',
+                                data
+
+                        });
+                }
+
                 const data = new playerImageModel({
-                        playerId : req.fields.playerId,
+                        playerId: req.fields.playerId,
                         PlayerprofileImageSecureLink: result.secure_url,
-                        PlayerprofileImageLink:result.url,
+                        PlayerprofileImageLink: result.url,
 
                 })
 
@@ -87,7 +111,7 @@ const playerProfileUploadController = async (req, res) => {
 };
 
 
-const playerCoverImageUploadController = async(req,res)=>{
+const playerCoverImageUploadController = async (req, res) => {
         try {
                 if (!req.files || !req.files.coverImage) {
                         return res.status(400).send({
@@ -98,10 +122,24 @@ const playerCoverImageUploadController = async(req,res)=>{
 
                 const CoverImageResult = await cloudinary.uploader.upload(req.files.coverImage.path);
 
+                const data = await playerCoverImageModel.findOne({ playerId: req.fields.playerId })
+
+                if (data) {
+                        const CoverImageData = await playerCoverImageModel.findOneAndUpdate({ playerId: req.fields.playerId }, { PlayerCoverImageSecureLink: CoverImageResult.secure_url }, { PlayerCoverImageLink: CoverImageResult.url }, { new: true });
+
+                        return res.status(200).send({
+                                success: true,
+                                message: 'Cover Image updated successfully',
+                                CoverImageData
+
+                        });
+                }
+
+
                 const CoverImageData = new playerCoverImageModel({
-                        playerId : req.fields.playerId,
+                        playerId: req.fields.playerId,
                         PlayerCoverImageSecureLink: CoverImageResult.secure_url,
-                        PlayerCoverImageLink:CoverImageResult.url,
+                        PlayerCoverImageLink: CoverImageResult.url,
 
                 })
 
@@ -128,7 +166,7 @@ const playerCoverImageUploadController = async(req,res)=>{
 }
 
 
-const playerMedicalReportUploadController = async(req,res)=>{
+const playerMedicalReportUploadController = async (req, res) => {
         console.log(req.files);
         try {
                 if (!req.files || !req.files.medicalReport) {
@@ -143,9 +181,9 @@ const playerMedicalReportUploadController = async(req,res)=>{
                 console.log(medicalReportResult);
 
                 const medicalReportData = new playerMedicalReportModel({
-                        playerId : req.fields.playerId,
+                        playerId: req.fields.playerId,
                         PlayermedicalReportSecureLink: medicalReportResult.secure_url,
-                        PlayerMedicalReportLink:medicalReportResult.url,
+                        PlayerMedicalReportLink: medicalReportResult.url,
 
                 })
 
@@ -173,4 +211,4 @@ const playerMedicalReportUploadController = async(req,res)=>{
 
 
 
-module.exports = { playerProfileController, playerProfileUploadController,playerCoverImageUploadController,playerMedicalReportUploadController}
+module.exports = { playerProfileController, playerProfileUploadController, playerCoverImageUploadController, playerMedicalReportUploadController }
