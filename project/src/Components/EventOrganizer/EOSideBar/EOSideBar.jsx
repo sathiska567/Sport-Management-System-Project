@@ -226,8 +226,8 @@ const EOSizeBar = ({ children }) => {
               <Menu.Item key="/eo-edit-event" icon={<FormOutlined />}>
                 <NavLink to="/EditEventTable">Edit Event</NavLink>
               </Menu.Item>
-              <Menu.Item key="/create-fixture" icon={<CalendarOutlined />}>
-                <NavLink to="/create-fixture">Create Fixture</NavLink>
+              <Menu.Item key="/EOCreatedEventView" icon={<CalendarOutlined />}>
+                <NavLink to="/EOCreatedEventView">Create Fixture</NavLink>
               </Menu.Item>
               <Menu.Item key="/eo-view-fixture" icon={<CalendarOutlined />}>
                 <NavLink to="/eo-view-fixture">View Fixture</NavLink>
