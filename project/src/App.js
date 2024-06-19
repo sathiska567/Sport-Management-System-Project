@@ -85,6 +85,8 @@ import AssignCoachesFinal from "./Components/TeamManager/AssignCoachesFinal/Assi
 import AssignRefereeFinal from "./Components/TeamManager/AssignRefereeFinal/AssignRefereeFinal.jsx";
 import EOEventList from "./Components/EventOrganizer/EOEventList/EOEventList.jsx";
 import EOAssignRefereeFinal from "./Components/EventOrganizer/EOAssignRefereeFinal/EOAssignRefereeFinal.jsx";
+import EOCreateEventForm from "./Components/EventOrganizer/EOCreateEvent/EOCreateEventForm.jsx";
+import EOCreatedEventView from "./Components/EventOrganizer/EOCreateFixture/EOCreatedEventView.jsx";
 
 function App() {
   const [eventId, setEventId] = useState("");
@@ -517,7 +519,7 @@ function App() {
           path="/referee-profile"
           element={
             <ProtectedRoute>
-              <RefereeProfile />
+              <RefreeProfileNew/>
             </ProtectedRoute>
           }
         />
@@ -641,6 +643,17 @@ function App() {
           element={
             <ProtectedRoute>
                <EOAssignRefereeFinal/>
+            </ProtectedRoute>
+          }
+        ></Route>
+      </Routes>
+
+      <Routes>
+        <Route
+          path="/EOCreatedEventView"
+          element={
+            <ProtectedRoute>
+               <EOCreatedEventView/>
             </ProtectedRoute>
           }
         ></Route>

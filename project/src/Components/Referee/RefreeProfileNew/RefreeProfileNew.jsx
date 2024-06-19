@@ -1,6 +1,6 @@
 import { React, useEffect, useState } from "react";
 import "./RefreeProfileNew.css";
-import RefreeSideBar from "../RefereeSideBar/RefereeSideBar";
+import RefereeSideBar from "../RefereeSideBar/RefereeSideBar";
 import {
   Upload,
   Modal,
@@ -10,6 +10,7 @@ import {
   InputNumber,
   message,
   Flex,
+  Spin
 } from "antd";
 import { PoweroffOutlined } from "@ant-design/icons";
 import ImgCrop from "antd-img-crop";
@@ -25,258 +26,157 @@ const getBase64 = (file) =>
   });
 
 const RefreeProfileNew = () => {
-  //----------------------Profile Image upload-Start--------------------/
   const [previewVisibleProfile, setPreviewVisibleProfile] = useState(false);
   const [previewImageProfile, setPreviewImageProfile] = useState("");
   const [fileListProfile, setFileListProfile] = useState([]);
-
+  const [fileListCover, setFileListCover] = useState([]);
+  
   const [RefreeName, setRefreeName] = useState("");
   const [RefreeEmail, setRefreeEmail] = useState("");
   const [RefreeDateOfBirth, setRefreeDateOfBirth] = useState("");
   const [RefreeAge, setRefreeAge] = useState(0);
   const [RefreeId, setRefreeId] = useState("");
-  const [formData, setFormData] = useState([]);
-  const [NewfileList, setNewFileList] = useState([]);
-  const [coverImageFileList, setCoverImageFileList] = useState([]);
-  const [ReportFileList, setReportFileList] = useState([]);
+  
   const [loadings, setLoadings] = useState([]);
-  const [time, setTime] = useState(true);
   const [nameError, setNameError] = useState(false);
   const [emailError, setEmailError] = useState("");
   const [dateError, setDateError] = useState(false);
   const [ageError, setAgeError] = useState("");
-  const [uploadError, setUploadError] = useState(false);
 
-  // Name Validation
-  const handleRefreeNameChange = (e) => {
+  useEffect(() => {
+    const fetchCurrentUser = async () => {
+      try {
+        const res = await axios.get("http://localhost:8080/api/v1/user/getCurrentUser", {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        });
+        setRefreeId(res.data.user._id);
+      } catch (error) {
+        message.error("Error fetching current user data");
+      }
+    };
+
+    fetchCurrentUser();
+  }, []);
+
+  const handlePlayerNameChange = (e) => {
     const name = e.target.value;
     setRefreeName(name);
     setNameError(name.trim() === "");
   };
 
-  // Email Validation
   const handleEmailChange = (e) => {
     const email = e.target.value;
     setRefreeEmail(email);
-
-    if (email.trim() === "") {
-      setEmailError("Email cannot be empty");
-    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
-      setEmailError("Invalid email format");
-    } else {
-      setEmailError("");
-    }
+    setEmailError(
+      email.trim() === ""
+        ? "Email cannot be empty"
+        : !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)
+        ? "Invalid email format"
+        : ""
+    );
   };
 
-  // Birthdate Validation
   const handleDateChange = (date, dateString) => {
     setRefreeDateOfBirth(dateString);
     setDateError(dateString === "");
   };
 
-  // Age Validation
   const handleAgeChange = (value) => {
     const age = value;
     setRefreeAge(age);
-
-    if (!age) {
-      setAgeError("Age cannot be empty");
-    } else if (age < 16 || age > 70) {
-      setAgeError("Invalid age. Age should be between 16 and 70");
-    } else {
-      setAgeError("");
-    }
-  };
-
-  // Medical Report Validation
-  // Medical Report validation
-  const onUploadChange = ({ fileList: newFileList }) => {
-    console.log(newFileList);
-    setFileList(newFileList);
-    setUploadError(newFileList.length === 0);
-  };
-
-  // GET CURRENT USER DETAILS
-  const currentUserData = async () => {
-    try {
-      const res = await axios.get(
-        "http://localhost:8080/api/v1/user/getCurrentUser",
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
-
-      // console.log(res.data.user._id);
-      setRefreeId(res.data.user._id);
-     } catch (error) {
-      message.error("Error have inside the Get currentUserData function");
-    }
+    setAgeError(
+      !age
+        ? "Age cannot be empty"
+        : age < 16 || age > 70
+        ? "Invalid age. Age should be between 16 and 70"
+        : ""
+    );
   };
 
   const handleFormSubmit = async (index) => {
-    console.log(
-      RefreeId,
-      RefreeName,
-      RefreeEmail,
-      RefreeDateOfBirth,
-      RefreeAge,
-      NewfileList,
-      index
-    );
+    if (!setRefreeName || !setRefreeEmail || !setRefreeDateOfBirth || !setRefreeAge) {
+      alert("Please fill in all required fields!");
+      return;
+    }
 
-    if (!RefreeName || !RefreeEmail || !RefreeDateOfBirth || !RefreeAge) {
-      alert("Please Fill Required Fields!");
-    } else {
+    setLoadings((prevLoadings) => {
+      // console.log(prevLoadings);
+      const newLoadings = [...prevLoadings];
+      newLoadings[index] = true;
+      return newLoadings;
+    });
+
+    setTimeout(() => {
       setLoadings((prevLoadings) => {
-        // console.log(prevLoadings);
         const newLoadings = [...prevLoadings];
-        newLoadings[index] = true;
+        newLoadings[index] = false;
         return newLoadings;
       });
+    }, 30000);
 
-      setTimeout(() => {
-        setLoadings((prevLoadings) => {
-          const newLoadings = [...prevLoadings];
-          newLoadings[index] = false;
-          return newLoadings;
-        });
-      }, 30000);
+    try {
 
-      if (NewfileList.length > 0) {
-        const file = NewfileList[0].originFileObj;
+      if (fileListProfile.length > 0) {
+        const profileImage = fileListProfile[0].originFileObj;
+        const profileImageFormData = new FormData();
+        profileImageFormData.append("image", profileImage);
+        profileImageFormData.append("RefreeId", RefreeId);
 
-        let formData = new FormData();
-        formData.append("image", file);
-        formData.append("RefreeId", RefreeId);
-
-        try {
-          // Upload profile image and get the response
-          const imageUploadResponse = await axios.post(
-            "http://localhost:8080/api/v1/refreeProfile/Refree-profile-image-upload",
-            formData
-          );
-          console.log(imageUploadResponse.data.success);
-          // Extract image URL from the response
-          const imageUrl = imageUploadResponse.data.data.PlayerprofileImageLink;
-
-          if (imageUploadResponse.data.success) {
-            message.success(imageUploadResponse.data.message);
-            // window.location.reload();
-          }
-        } catch (error) {
-          message.error("Error occurred inside the handleFormSubmit function");
-        }
-      }
-
-
-
-      try {
-        // Check if coverImageFileList is not empty
-        if (coverImageFileList.length > 0) {
-          const coverImagefile = coverImageFileList[0].originFileObj;
-          let coverImageFormData = new FormData();
-          coverImageFormData.append("coverImage", coverImagefile);
-          coverImageFormData.append("RefreeId", RefreeId);
-
-
-
-          // Upload cover image
-          const coverImageResponse = await axios.post(
-            "http://localhost:8080/api/v1/refreeProfile/Refree-cover-image-upload",
-            coverImageFormData
-          );
-
-          // Handle coverImageResponse if needed
-          console.log(coverImageResponse.data);
-
-          if (coverImageResponse.data.success) {
-            message.success(coverImageResponse.data.message);
-            // window.location.reload();
-          }
-        } else {
-          message.error("No cover image selected");
-        }
-      } catch (error) {
-        // Log the error details (optional)
-        console.error("Error uploading cover image:", error);
-
-        message.error("Error uploading cover image");
-      }
-
-
-
-      try {
-        console.log("Report:", fileList);
-
-        if (fileList.length > 0) {
-          const Reportfile = fileList[0].originFileObj;
-
-          let ReportFormData = new FormData();
-          ReportFormData.append("Report", Reportfile);
-          ReportFormData.append("RefreeId", RefreeId);
-
-          // Log FormData for debugging (optional)
-          console.log([...ReportFormData]);
-
-          // Upload Medical report
-          const ReportResponse = await axios.post(
-            "http://localhost:8080/api/v1/refreeProfile/Refree-report-upload",
-            ReportFormData
-          );
-
-          // Handle coverImageResponse if needed
-          console.log(ReportResponse.data);
-
-          if (ReportResponse.data.success) {
-            message.success(ReportResponse.data.message);
-          }
-        } else {
-          message.error("No Report selected");
-        }
-      } catch (error) {
-
-        console.error("Error uploading Report", error);
-
-        message.error("Error uploading  report");
-      }
-
-      try {
-        // Now, make a second API call to save player profile data with the image URL
-        const RefreeProfileResponse = await axios.post(
-          "http://localhost:8080/api/v1/refreeProfile/Refree-profile",
-          {
-            RefreeId: RefreeId,
-            RefreeName: RefreeName,
-            RefreeEmail: RefreeEmail,
-            RefreeDateOfBirth: RefreeDateOfBirth,
-            RefreeAge: RefreeAge,
-
-          }
+        const profileImageResponse = await axios.post(
+          "http://localhost:8080/api/v1/refreeProfile/Refree-profile-image-upload",
+          profileImageFormData
         );
 
-        // Handle response if needed
-        console.log(RefreeProfileResponse.data);
-        if (RefreeProfileResponse.data.success) {
-          message.success(RefreeProfileResponse.data.message);
-          // setTime(false)
-          // window.location.reload();
+        if (profileImageResponse.data.success) {
+          message.success(profileImageResponse.data.message);
+        } else {
+          message.error("Profile image upload failed");
         }
       }
-      catch (error) {
-        message.error("Error occurred inside the handleFormSubmit function");
+
+      if (fileListCover.length > 0) {
+        const coverImage = fileListCover[0].originFileObj;
+        const coverImageFormData = new FormData();
+        coverImageFormData.append("coverImage", coverImage);
+        coverImageFormData.append("RefreeId",RefreeId);
+
+        const coverImageResponse = await axios.post(
+          "http://localhost:8080/api/v1/refreeProfile/Refree-cover-image-upload",
+          coverImageFormData
+        );
+
+        if (coverImageResponse.data.success) {
+          message.success("Cover image upload successful");
+        } else {
+          message.error("Cover image upload failed");
+        }
       }
+
+      const playerProfileResponse = await axios.post(
+        "http://localhost:8080/api/v1/refreeProfile/Refree-profile",
+        {
+          RefreeId,
+          RefreeName,
+          RefreeEmail,
+          RefreeDateOfBirth,
+          RefreeAge,
+        }
+      );
+
+      if (playerProfileResponse.data.success) {
+        message.success(playerProfileResponse.data.message);
+        window.location.reload()
+      } else {
+        message.error("Profile update failed");
+        
+      }
+    } catch (error) {
+      message.error("Error occurred while submitting the form");
     }
   };
 
-  useEffect(() => {
-    currentUserData();
-  }, []);
-
-  const onChangeProfile = async ({ fileList: newFileList }) => {
-    console.log(newFileList);
-    setNewFileList(newFileList);
+  const onChangeProfile = ({ fileList: newFileList }) => {
+    setFileListProfile(newFileList);
   };
 
   const onPreviewProfile = async (file) => {
@@ -292,17 +192,8 @@ const RefreeProfileNew = () => {
     setPreviewVisibleProfile(true);
   };
 
-  //----------------------Profile Image upload-End--------------------/
-
-  //----------------------Cover Image upload-Start--------------------/
-
-  const [previewVisibleCover, setPreviewVisibleCover] = useState(false);
-  const [previewImageCover, setPreviewImageCover] = useState("");
-  const [fileListCover, setFileListCover] = useState([]);
-
   const onChangeCover = ({ fileList: newFileList }) => {
     setFileListCover(newFileList);
-    setCoverImageFileList(newFileList);
   };
 
   const onPreviewCover = async (file) => {
@@ -314,50 +205,21 @@ const RefreeProfileNew = () => {
         reader.onload = () => resolve(reader.result);
       });
     }
-    setPreviewImageCover(src);
-    setPreviewVisibleCover(true);
+    // setPreviewImageCover(src);
+    // setPreviewVisibleCover(true);
   };
-  //----------------------Cover Image upload-End--------------------/
-
-  //----------------------Medical Image upload-Start--------------------/
-
-  const [fileList, setFileList] = useState([
-
-  ]);
-
-  const onChange = ({ fileList: newFileList }) => {
-    setReportFileList(newFileList);
-  };
-
-  const onPreview = async (file) => {
-    let src = file.url;
-    if (!src) {
-      src = await new Promise((resolve) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file.originFileObj);
-        reader.onload = () => resolve(reader.result);
-      });
-    }
-    const image = new Image();
-    image.src = src;
-    const imgWindow = window.open(src);
-    imgWindow?.document.write(image.outerHTML);
-  };
-  //----------------------Medical Image upload-End--------------------/
-
-
   return (
     <div>
-      <RefreeSideBar>
-        <div className="Refree-profile">
+      <RefereeSideBar>
+        <div className="player-profile">
           <div className="ProfileHeader">
             <h3>My Profile</h3>
           </div>
           <div
-            className="RefreeProfile"
+            className="coachProfile"
             style={{ overflowX: "auto", height: "65vh" }}
           >
-            <form className="RefreeProfileForm">
+            <form className="playerProfileForm">
               <label className="formLabel">
                 Name:
                 <div>
@@ -365,7 +227,7 @@ const RefreeProfileNew = () => {
                     type="text"
                     name="name"
                     className="inputBox"
-                    onChange={handleRefreeNameChange}
+                    onChange={handlePlayerNameChange}
                     allowClear
                   />
                   {nameError && (
@@ -385,7 +247,7 @@ const RefreeProfileNew = () => {
                   <Input
                     type="email"
                     name="email"
-                    className={`inputBox ${ emailError? "error" : ""}`}
+                    className={`inputBox ${emailError ? "error" : ""}`}
                     onChange={handleEmailChange}
                     allowClear
                   />
@@ -416,7 +278,7 @@ const RefreeProfileNew = () => {
                           (current <
                             moment().endOf("day").subtract(35, "years") ||
                             current >
-                            moment().endOf("day").subtract(16, "years"))
+                              moment().endOf("day").subtract(16, "years"))
                         );
                       }}
                     />
@@ -459,23 +321,20 @@ const RefreeProfileNew = () => {
                     visible={previewVisibleProfile}
                     footer={null}
                     onCancel={() => setPreviewVisibleProfile(false)}
-                  // onChange={hanldeProfileImageUpload}
                   >
                     <img
                       alt="example"
-                      style={{
-                        width: "100%",
-                      }}
-                    // src={previewImageProfile}
+                      style={{ width: "100%" }}
+                      src={previewImageProfile}
                     />
                   </Modal>
                   <ImgCrop rotationSlider>
                     <Upload
-
+                      action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
                       listType="picture-card"
-                      fileList={fileListProfile}
+                      fileList={fileListProfile} // Display the profile image files
                       onChange={onChangeProfile}
-
+                      onPreview={onPreviewProfile}
                     >
                       {fileListProfile.length < 1 && "+ Upload"}
                     </Upload>
@@ -483,33 +342,36 @@ const RefreeProfileNew = () => {
                 </div>
 
                 <div>
-                  <label className="formLabel">Cover Image:</label>
+                  <label className="formLabel">
+                    Upload Medical Report Image:
+                  </label>
                   <Modal
-
+                    // visible={previewVisibleCover}
                     footer={null}
-                    onCancel={() => setPreviewVisibleCover(true)}
+                    // onCancel={() => setPreviewVisibleCover(true)}
                   >
                     <img
                       alt="example"
                       style={{ width: "100%" }}
-                    // src={previewImageCover}
+                      // src={previewImageCover}
                     />
                   </Modal>
                   <ImgCrop rotationSlider>
                     <Upload
-
+                      // style={{}}
+                      // action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
                       listType="picture-card"
                       fileList={fileListCover}
                       onChange={onChangeCover}
-
+                      // onPreview={onPreviewCover}
                     >
                       {fileListCover.length < 1 && "+ Upload"}
                     </Upload>
                   </ImgCrop>
                 </div>
 
-                <div>
-                  <label className="formLabel">Upload Special Reports:</label>
+                {/* <div>
+                  <label className="formLabel">Upload Medical Reports:</label>
                   <div>
                     <Upload
                       action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
@@ -528,7 +390,7 @@ const RefreeProfileNew = () => {
                       </div>
                     )}
                   </div>
-                </div>
+                </div> */}
               </div>
               <br />
               <Button
@@ -540,11 +402,13 @@ const RefreeProfileNew = () => {
                 Submit
               </Button>
 
-
+              {/* <Button type="primary" loading={loadings[0]} onClick={() => enterLoading(0)}>
+                Click me!
+              </Button> */}
             </form>
           </div>
         </div>
-      </RefreeSideBar>
+      </RefereeSideBar>
     </div>
   );
 };

@@ -1,14 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./EOCreateFixture.css";
 import EOSidebar from "../EOSideBar/EOSideBar";
 import { Form, Input, DatePicker, TimePicker, message } from "antd";
 import { CloseSquareOutlined, EditOutlined } from "@ant-design/icons";
 import axios from "axios";
 import moment from "moment";
-
-const date = moment();
+import { useLocation } from "react-router-dom";
 
 const EOCreateFixture = () => {
+  const locationData = useLocation();
+
   const [numberOfTeams, setNumberOfTeams] = useState(0);
   const [nameOfTheEvent, setEventName] = useState("");
   const [nameOfTheTeam, setTeamName] = useState([]);
@@ -21,10 +22,20 @@ const EOCreateFixture = () => {
   const [numberOfTeamsError, setNumberOfTeamsError] = useState("");
   const [eventDateError, setEventDateError] = useState("");
   const [startingTimeError, setStartingTimeError] = useState("");
+
+  useEffect(() => {
+    if (locationData.state) {
+      const { record } = locationData.state;
+      setEventName(record.nameOfTheEvent);
+      setLocation(record.location);
+    }
+  }, [locationData.state]);
+
   // Event Name First Input Validation
   const handleEventNameChange = (e) => {
-    setEventName(e.target.value);
-    if (e.target.value === "") {
+    const eventName = e.target.value;
+    setEventName(eventName);
+    if (eventName === "") {
       setEventNameError("This field cannot be empty");
     } else {
       setEventNameError("");
@@ -33,8 +44,9 @@ const EOCreateFixture = () => {
 
   // Location Validation
   const handleLocationChange = (e) => {
-    setLocation(e.target.value);
-    if (e.target.value === "") {
+    const location = e.target.value;
+    setLocation(location);
+    if (location === "") {
       setLocationError("Location cannot be empty");
     } else {
       setLocationError("");
@@ -44,9 +56,10 @@ const EOCreateFixture = () => {
   // Team name Validation
   const handleTeamNameChange = (e, index) => {
     const teamName = e.target.value;
-    setTeamName(() => {
-      nameOfTheTeam[index] = teamName;
-      return nameOfTheTeam;
+    setTeamName((prevTeamNames) => {
+      const updatedTeamNames = [...prevTeamNames];
+      updatedTeamNames[index] = teamName;
+      return updatedTeamNames;
     });
 
     setTeamNameError((prevErrors) => ({
@@ -55,18 +68,15 @@ const EOCreateFixture = () => {
     }));
   };
 
-  const handleNumberOfTeamsChange = (event) => {
-    setNumberOfTeams(event.target.value);
-  };
-
   // Number of Teams Validation
-  const handleNumberOfTeamsChangeFirst = (e) => {
-    setNumberOfTeams(e.target.value);
-    if (e.target.value === "") {
+  const handleNumberOfTeamsChange = (e) => {
+    const value = e.target.value;
+    setNumberOfTeams(value);
+    if (value === "") {
       setNumberOfTeamsError("Number of teams cannot be empty");
-    } else if (e.target.value < 4) {
+    } else if (value < 4) {
       setNumberOfTeamsError("Minimum number of teams is 4");
-    } else if (e.target.value > 25) {
+    } else if (value > 25) {
       setNumberOfTeamsError("Maximum number of teams is 25");
     } else {
       setNumberOfTeamsError("");
@@ -121,6 +131,7 @@ const EOCreateFixture = () => {
       return minutes;
     }
   };
+
   const handleCreate = async () => {
     // Check if any required fields are empty
     const isAnyFieldEmpty =
@@ -148,25 +159,21 @@ const EOCreateFixture = () => {
     const day = date.getDate().toString().padStart(2, '0');
     const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Months are zero-based
     const year = date.getFullYear();
-    // const eventNewDate = `${day}-${month}-${year}`;
     const eventNewDate = `${year}-${month}-${day}`;
-
 
     // get time
     const time = new Date(startingTime.$d);
     const formattedTime = time.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-    
-
 
     try {
       const response = await axios.post(
         "http://localhost:8080/api/v1/create/create-fixture",
         {
-          nameOfTheEvent: nameOfTheEvent,
-          nameOfTheTeam: nameOfTheTeam,
-          location: location,
-          eventNewDate:eventNewDate,
-          formattedTime:formattedTime
+          nameOfTheEvent,
+          nameOfTheTeam,
+          location,
+          eventNewDate,
+          formattedTime
         }
       );
       console.log(response);
@@ -190,9 +197,9 @@ const EOCreateFixture = () => {
             margin: "auto",
             width: "75%",
           }}
-          layout="verticle"
+          layout="vertical"
         >
-          <div style={{}} className="CreateEventForm">
+          <div className="CreateEventForm">
             <div
               style={{
                 backgroundColor: "#15295E",
@@ -235,6 +242,7 @@ const EOCreateFixture = () => {
                       id="eventName"
                       required
                       name="eventName"
+                      value={nameOfTheEvent}
                       onChange={handleEventNameChange}
                       allowClear
                     />
@@ -243,7 +251,7 @@ const EOCreateFixture = () => {
                         className="error"
                         style={{ fontSize: "13px", color: "red" }}
                       >
-                        Team name cannot be empty
+                        {eventNameError}
                       </div>
                     )}
                   </div>
@@ -257,6 +265,7 @@ const EOCreateFixture = () => {
                       id="location"
                       required
                       name="location"
+                      value={location}
                       onChange={handleLocationChange}
                       allowClear
                     />
@@ -265,7 +274,7 @@ const EOCreateFixture = () => {
                         className="error"
                         style={{ fontSize: "13px", color: "red" }}
                       >
-                        Location cannot be empty
+                        {locationError}
                       </div>
                     )}
                   </div>
@@ -279,7 +288,8 @@ const EOCreateFixture = () => {
                       id="numberOfTeams"
                       required
                       name="numberOfTeams"
-                      onChange={handleNumberOfTeamsChangeFirst}
+                      value={numberOfTeams}
+                      onChange={handleNumberOfTeamsChange}
                     />
                     {numberOfTeamsError && (
                       <div
