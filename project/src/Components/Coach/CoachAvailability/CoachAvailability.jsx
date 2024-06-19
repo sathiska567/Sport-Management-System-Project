@@ -260,7 +260,9 @@ const getAllCreateEvent = async () => {
                       <Button
                         type="primary"
                         style={{
-                          backgroundColor: "#05AD1B",
+                          backgroundColor: addedEvents.has(record._id)
+                            ? "#f5222d"
+                            : "#05AD1B",
                           color: "#fff",
                           fontSize: "14px",
                           marginRight: "10px",
@@ -274,7 +276,6 @@ const getAllCreateEvent = async () => {
                       >
                         {addedEvents.has(record._id) ? "Added" : "Add"}
                       </Button>
-
 
                       <Button
                         type="primary"

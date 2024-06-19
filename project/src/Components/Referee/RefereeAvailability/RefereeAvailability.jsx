@@ -249,13 +249,15 @@ const RefereeAvailability = () => {
                         display: "flex",
                         flexDirection: "row",
                         gap: "20px",
-                        paddingLeft: "50px"
+                        paddingLeft: "50px",
                       }}
                     >
                       <Button
                         type="primary"
                         style={{
-                          backgroundColor: "#05AD1B",
+                          backgroundColor: addedEvents.has(record._id)
+                            ? "#f5222d"
+                            : "#05AD1B",
                           color: "#fff",
                           fontSize: "14px",
                           marginRight: "10px",
@@ -269,7 +271,6 @@ const RefereeAvailability = () => {
                       >
                         {addedEvents.has(record._id) ? "Added" : "Add"}
                       </Button>
-
 
                       <Button
                         type="primary"
@@ -290,8 +291,6 @@ const RefereeAvailability = () => {
                     </span>
                   ),
                 },
-
-
               ]}
               pagination={{
                 style: {
@@ -303,7 +302,6 @@ const RefereeAvailability = () => {
                 pageSize: limits,
                 onChange: handlePagination,
               }}
-
               dataSource={createdEvent}
             />
           </Content>
