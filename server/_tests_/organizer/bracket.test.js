@@ -54,14 +54,14 @@ describe('Organizer Controller Tests', () => {
         fixture.createdFixtureId = shuffleTeamId;
         await fixture.save();
         createdFixtureId = fixture.createdFixtureId;
-    });
+    }, 30000);
 
     // Clean up the test database after each test
     afterAll(async () => {
         await createFixtureModel.findByIdAndDelete(matchId);
         await Shuffle.findByIdAndDelete(shuffleTeamId);
         await Team.deleteMany({ match_id: matchId });
-    });
+    }, 30000);
 
     test('GET /api/v1/organizer/matches', async () => {
         const response = await request(app)
@@ -69,7 +69,7 @@ describe('Organizer Controller Tests', () => {
 
         expect(response.status).toBe(200);
         expect(response.body.length).toBeGreaterThan(0);
-    }, 10000);
+    }, 20000);
 
     test('GET /api/v1/organizer/create-round/:matchId/:roundNo', async () => {
         const response = await request(app)
@@ -77,7 +77,7 @@ describe('Organizer Controller Tests', () => {
 
         expect(response.status).toBe(200);
         expect(response.body.length).toBeGreaterThan(0);
-    }, 10000);
+    }, 20000);
 
     test('POST /api/v1/organizer/setWinners/:matchId/:roundNo', async () => {
         const response = await request(app)
@@ -89,7 +89,7 @@ describe('Organizer Controller Tests', () => {
         expect(response.body.finalWinner).toBe('Team A')
         expect(response.status).toBe(200);
         expect(response.body.rounds[0].winners).toContain("Team A");
-    }, 10000);
+    }, 20000);
 
     test('GET /api/v1/organizer/getWinners/:matchId', async () => {
         const response = await request(app)

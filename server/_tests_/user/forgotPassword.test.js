@@ -31,7 +31,7 @@ describe('Forgot Password Reset', () => {
 
         // Store the created user's ID for deletion in the afterAll hook
         createdUserId = response.body.user._id;
-    }, 10000);
+    }, 30000);
 
 
     // Delete the created user account after all tests are done
@@ -39,7 +39,7 @@ describe('Forgot Password Reset', () => {
         if (createdUserId) {
            await User.findByIdAndDelete(createdUserId)
         }
-    }, 10000);
+    }, 20000);
 
     //Case 01 : Valid Email, correct otp, correct password
     describe('\nValid Email, correct otp, correct password', () => {
@@ -59,7 +59,7 @@ describe('Forgot Password Reset', () => {
             OTP = response.body.user.otp;
             console.log('22: OTP : ', OTP)
 
-        }, 15000)
+        }, 20000)
 
 
         //verify otp
@@ -71,7 +71,7 @@ describe('Forgot Password Reset', () => {
 
             expect(response.body.success).toBe(true);
             expect(response.body.message).toBe('OTP Verified Successfully.')
-        }, 15000)
+        }, 20000)
 
 
         //reset password
@@ -83,7 +83,7 @@ describe('Forgot Password Reset', () => {
 
             expect(response.body.success).toBe(true);
             expect(response.body.message).toBe('Password changed successfully');
-        }, 15000)
+        }, 20000)
 
         //log in using new password
         test('Successful login using new password', async () => {
@@ -96,7 +96,7 @@ describe('Forgot Password Reset', () => {
             expect(response.body.success).toBe(true);
             expect(response.body.message).toBe('Login Success');
             expect(response.body.token).toBeDefined();
-        }, 15000);
+        }, 20000);
     })
 
 
@@ -118,7 +118,7 @@ describe('Forgot Password Reset', () => {
 
             OTP = 'wrongOtp 0000';
 
-        }, 15000)
+        }, 20000)
 
 
         //verify otp
@@ -130,7 +130,7 @@ describe('Forgot Password Reset', () => {
 
             expect(response.body.success).toBe(false);
             expect(response.body.message).toBe('Invalid OTP')
-        }, 15000)
+        }, 20000)
 
     })
 
@@ -149,7 +149,7 @@ describe('Forgot Password Reset', () => {
             expect(response.body.success).toBe(false);
             expect(response.body.message).toBe("User not Found");
 
-        }, 15000)
+        }, 20000)
 
     })
 

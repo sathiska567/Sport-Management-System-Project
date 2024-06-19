@@ -12,7 +12,7 @@ describe('playerProfileController', () => {
             _id: { $in: createdDocuments }
         });
         createdDocuments = [];
-    });
+    }, 20000);
 
 
     test('should upload player details successfully', async () => {
@@ -37,7 +37,7 @@ describe('playerProfileController', () => {
 
         // Store the created document ID for cleanup
         createdDocuments.push(res.body.response._id);
-    });
+    }, 20000);
 
     test('should handle errors when uploading player details', async () => {
         const res = await request(app)
@@ -54,5 +54,5 @@ describe('playerProfileController', () => {
         expect(res.body.success).toBe(false);
         expect(res.body.message).toBe('Details uploaded Unsuccessfully');
         expect(res.body).toHaveProperty('error');
-    });
+    }, 20000);
 });

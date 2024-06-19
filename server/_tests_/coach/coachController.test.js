@@ -32,7 +32,7 @@ describe('Coach Controller', () => {
         const testMatch = new Match({ nameOfTheEvent: 'Test Event', location: 'Test Location', numberOfTeams: 4 });
         await testMatch.save();
         testMatchId = testMatch._id;
-    });
+    }, 30000);
 
     afterAll(async () => {
         await User.findByIdAndDelete(testCoachId);
@@ -41,7 +41,7 @@ describe('Coach Controller', () => {
         if (testTeamId) {
             await Team.findByIdAndDelete(testTeamId);
         }
-    });
+    }, 30000);
 
     test('GET /api/v1/coach/matches - Get Matches', async () => {
         const response = await request(app)

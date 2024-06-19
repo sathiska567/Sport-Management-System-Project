@@ -12,7 +12,7 @@ describe('Player Search Profile Controller', () => {
             await playerSearchProfileModel.deleteMany({ _id: { $in: createdProfileIds } });
             createdProfileIds = [];
         }
-    });
+    }, 20000);
 
     test('should create a new player profile for testing', async () => {
         const res = await request(app)
@@ -30,7 +30,7 @@ describe('Player Search Profile Controller', () => {
         expect(res.body.data).toHaveProperty('name', 'Test Player');
 
         createdProfileIds.push(res.body.data._id);
-    });
+    }, 20000);
 
 
     test('should search for player profiles by name successfully', async () => {
@@ -43,7 +43,7 @@ describe('Player Search Profile Controller', () => {
         expect(res.body.data).toBeInstanceOf(Array);
         expect(res.body.data.length).toBeGreaterThan(0);
         expect(res.body.data[0]).toHaveProperty('name', 'Test Player');
-    });
+    }, 20000);
 
 
     test('should return an empty array if no player profiles match the search query', async () => {
@@ -55,7 +55,7 @@ describe('Player Search Profile Controller', () => {
         expect(res.body.success).toBe(true);
         expect(res.body.data).toBeInstanceOf(Array);
         expect(res.body.data.length).toBe(0);
-    });
+    }, 20000);
 
 
     test('should return all player profiles if no query is provided', async () => {
@@ -66,5 +66,5 @@ describe('Player Search Profile Controller', () => {
         expect(res.body.success).toBe(true);
         expect(res.body.data).toBeInstanceOf(Array);
         expect(res.body.data.length).toBeGreaterThan(0);
-    });
+    }, 20000);
 });

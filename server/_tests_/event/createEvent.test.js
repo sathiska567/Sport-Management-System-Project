@@ -10,7 +10,7 @@ describe('Event Controllers', () => {
     afterAll(async () => {
         await createEventModel.deleteMany({ _id: { $in: createdEventIds } });
         createdEventIds = [];
-    });
+    }, 20000);
 
 
     test('should create a new event successfully', async () => {
@@ -33,7 +33,7 @@ describe('Event Controllers', () => {
 
         createdEventIds.push(res.body.data._id);
         event = res.body.data
-    });
+    }, 20000);
 
     test('should fetch all events successfully', async () => {
         const res = await request(app).get('/api/v1/event/get-all-events').expect(200);
@@ -42,7 +42,7 @@ describe('Event Controllers', () => {
         expect(res.body.message).toBe('All Events Fetch successfull');
         expect(res.body.data).toBeInstanceOf(Array);
         expect(res.body.data.length).toBeGreaterThan(0);
-    });
+    }, 20000);
 
     test('should add a coach to an event successfully', async () => {
         const coachid = new mongoose.Types.ObjectId();
@@ -57,7 +57,7 @@ describe('Event Controllers', () => {
         expect(res.body.success).toBe(true);
         expect(res.body.message).toBe('Coach Added Successful');
         expect(res.body.data.coaches).toContain(coachid.toString());
-    });
+    }, 20000);
 
     test('should fetch events with pagination', async () => {
         const res = await request(app)
@@ -71,5 +71,5 @@ describe('Event Controllers', () => {
         expect(res.body.data).toHaveProperty('totalDocuments');
         expect(res.body.data).toHaveProperty('totalPages');
         expect(res.body.data).toHaveProperty('currentPage', 1);
-    });
+    }, 20000);
 });

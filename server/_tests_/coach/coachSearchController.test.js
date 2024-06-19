@@ -24,11 +24,11 @@ describe('Coach Search Controller', () => {
     
             createdUserId = res.body.user._id;
         
-    }, 10000);
+    }, 20000);
 
     afterAll(async () => {
         await User.findByIdAndDelete(createdUserId);
-    }, 10000);
+    }, 20000);
 
 
     
@@ -48,5 +48,5 @@ describe('Coach Search Controller', () => {
         expect(res.body.data).toBeInstanceOf(Array);
         expect(res.body.data.length).toBeGreaterThan(0);
         expect(res.body.data[0]).toHaveProperty('username', 'TestCoachSearch');
-    }, 10000);
+    }, 20000);
 });

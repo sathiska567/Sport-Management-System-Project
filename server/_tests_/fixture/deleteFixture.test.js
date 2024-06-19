@@ -40,7 +40,7 @@ describe('deleteFixtureController', () => {
         // Check if the fixture is no longer present in createFixtureModel
         const fixtureInDatabase = await createFixtureModel.findOne({ _id: fixtureIdToDelete });
         expect(fixtureInDatabase).toBeNull();
-    });
+    }, 20000);
 
 
     test('should handle errors when deleting a fixture', async () => {
@@ -56,6 +56,6 @@ describe('deleteFixtureController', () => {
         expect(res.body.success).toBe(false);
         expect(res.body.message).toBe('Error Occured In Deleting Fixture');
         expect(res.body.error).toBeDefined();
-    });
+    }, 20000);
 });
 

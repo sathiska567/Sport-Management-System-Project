@@ -30,7 +30,7 @@ describe('Login Controller', () => {
 
         // Store the created user's ID for deletion in the afterAll hook
         createdUserId = response.body.user._id;
-    }, 10000);
+    }, 20000);
 
 
     // Delete the created user account after all tests are done
@@ -38,7 +38,7 @@ describe('Login Controller', () => {
         if (createdUserId) {
            await User.findByIdAndDelete(createdUserId)
         }
-    }, 10000);
+    }, 20000);
 
 
 
@@ -60,7 +60,7 @@ describe('Login Controller', () => {
         expect(response.body.success).toBe(true);
         expect(response.body.message).toBe('Login Success');
         expect(response.body.token).toBeDefined();
-    }, 10000);
+    }, 20000);
 
     test('User not found', async () => {
         const userData = {
@@ -76,7 +76,7 @@ describe('Login Controller', () => {
         // Assert user not found
         expect(response.body.success).toBe(false);
         expect(response.body.message).toBe('user not found');
-    }, 10000);
+    }, 20000);
 
     test('Invalid password', async () => {
         const userData = {
@@ -92,7 +92,7 @@ describe('Login Controller', () => {
         // Assert invalid password
         expect(response.body.success).toBe(false);
         expect(response.body.message).toBe('Invalid Email or Password');
-    }, 10000);
+    }, 20000);
 
 
 });

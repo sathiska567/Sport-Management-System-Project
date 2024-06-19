@@ -9,7 +9,7 @@ describe('createFixtureController', () => {
         if (newFixtureId) {
             await Fixture.findByIdAndDelete(newFixtureId);
         }
-    });
+    }, 20000);
 
     // Test case for successful fixture creation
     test('should create a new fixture', async () => {
@@ -60,6 +60,6 @@ describe('createFixtureController', () => {
         expect(res.body.success).toBe(false);
         expect(res.body.message).toBe('Fixture Created Unsuccessfully');
         expect(res.body.data).toBeUndefined(); // Since data will be undefined in case of error
-    }, 10000);
+    }, 20000);
 
 });

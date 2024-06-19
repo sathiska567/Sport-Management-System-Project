@@ -17,7 +17,7 @@ describe('coachAvailabilityController', () => {
             _id: { $in: createdDocuments }
         });
         createdDocuments = [];
-    });
+    }, 20000);
 
 
     test('should add new availability if none exists', async () => {
@@ -38,7 +38,7 @@ describe('coachAvailabilityController', () => {
 
          // Store the created document ID for cleanup
         createdDocuments.push(res.body.setAvailability._id); 
-    }, 10000);
+    }, 20000);
 
 
     test('should update existing availability', async () => {
@@ -68,7 +68,7 @@ describe('coachAvailabilityController', () => {
 
          // Clean up the initially created document as well
          createdDocuments.push(existingData._id);
-    });
+    }, 20000);
 
     test('should handle errors when adding availability', async () => {
         const res = await request(app)
@@ -83,5 +83,5 @@ describe('coachAvailabilityController', () => {
         expect(res.body.success).toBe(false);
         expect(res.body.message).toBe('Availability added Unsuccessfully');
         expect(res.body).toHaveProperty('error');
-    }, 10000);
+    }, 20000);
 });

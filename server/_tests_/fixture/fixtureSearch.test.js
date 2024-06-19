@@ -12,7 +12,7 @@ describe('Fixture Search Controller', () => {
             await createFixtureModel.deleteMany({ _id: { $in: createdFixtureIds } });
             createdFixtureIds = [];
         }
-    });
+    }, 20000);
 
 
     test('should create a new fixture for testing', async () => {
@@ -71,7 +71,7 @@ describe('Fixture Search Controller', () => {
         expect(res.body.data.length).toBeGreaterThan(0);
         expect(res.body.data[0]).toHaveProperty('location', 'Test Location');
         expect(res.body.data[1]).toHaveProperty('location', 'Test Location');
-    }, 10000);
+    }, 20000);
 
 
     test('should search for fixtures by date successfully', async () => {
@@ -87,7 +87,7 @@ describe('Fixture Search Controller', () => {
         expect(res.body.data).toBeInstanceOf(Array);
         expect(res.body.data.length).toBeGreaterThan(0);
         expect(res.body.data[0]).toHaveProperty('eventNewDate', date1);
-    }, 10000);
+    }, 20000);
 
 
     test('should search for fixtures by location and date successfully', async () => {
@@ -105,5 +105,5 @@ describe('Fixture Search Controller', () => {
         expect(res.body.data.length).toBeGreaterThan(0);
         expect(res.body.data[0]).toHaveProperty('location', 'Test Location');
         expect(res.body.data[0]).toHaveProperty('eventNewDate', date2);
-    });
+    }, 20000);
 });

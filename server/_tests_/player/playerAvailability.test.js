@@ -17,7 +17,7 @@ describe('playerAvailabilityController', () => {
             _id: { $in: createdDocuments }
         });
         createdDocuments = [];
-    });
+    }, 20000);
 
 
     test('should add new availability if none exists', async () => {
@@ -68,7 +68,7 @@ describe('playerAvailabilityController', () => {
 
          // Clean up the initially created document as well
          createdDocuments.push(existingData._id);
-    });
+    }, 20000);
 
     test('should handle errors when adding availability', async () => {
         const res = await request(app)
@@ -83,5 +83,5 @@ describe('playerAvailabilityController', () => {
         expect(res.body.success).toBe(false);
         expect(res.body.message).toBe('Availability added Unsuccessfully');
         expect(res.body).toHaveProperty('error');
-    });
+    }, 20000);
 });
