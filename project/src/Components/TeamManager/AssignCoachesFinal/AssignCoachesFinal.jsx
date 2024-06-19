@@ -75,7 +75,7 @@ export default function AssignCoachesFinal() {
                         className="ant-layout-content"
                         style={{
                             margin: "16px",
-                            padding: 24,
+                            padding: 0,
                             minHeight: 180,
                             height: "100%",
                             background: "whitesmoke",
@@ -163,7 +163,7 @@ export default function AssignCoachesFinal() {
                                     style: {
                                         marginTop: "10px",
                                     },
-                                    pageSize: 5,
+                                    pageSize: 6,
                                 }}
 
                                 dataSource={dataSource}

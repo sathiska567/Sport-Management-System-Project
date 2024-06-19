@@ -149,8 +149,8 @@ const EOCommunicationToTM = () => {
           <Content
             className="ant-layout-content"
             style={{
-              margin: "16px",
-              padding: 24,
+              margin: "15px",
+              padding: "0",
               minHeight: 180,
               height: "100%",
               background: "whitesmoke",

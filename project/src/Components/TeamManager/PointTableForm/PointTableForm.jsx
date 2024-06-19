@@ -128,7 +128,7 @@ const PointTableForm = () => {
                   fontWeight: "500",
                 }}
               >
-                Create Event
+                Point Table
               </h3>
 
 

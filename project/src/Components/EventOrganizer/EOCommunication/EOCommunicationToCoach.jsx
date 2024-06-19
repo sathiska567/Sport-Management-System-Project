@@ -146,10 +146,9 @@ const EOCommunicationToCoach = () => {
           <Content
             className="ant-layout-content"
             style={{
-              margin: "16px",
-              padding: 24,
-              minHeight: 180,
-              height: "100%",
+              margin: "20px",
+              padding: 0,
+              minHeight: 280,
               background: "whitesmoke",
             }}
           >
