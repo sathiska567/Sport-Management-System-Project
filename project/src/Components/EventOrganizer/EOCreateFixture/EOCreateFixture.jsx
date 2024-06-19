@@ -215,7 +215,7 @@ const EOCreateFixture = () => {
               >
                 Create Fixture
               </h3>
-              <a href="#">
+              <a href="/EOCreatedEventView">
                 <CloseSquareOutlined
                   style={{
                     color: "white",

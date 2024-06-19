@@ -75,7 +75,7 @@ export default function EOAssignRefereeFinal() {
                         className="ant-layout-content"
                         style={{
                             margin: "16px",
-                            padding: 24,
+                            padding: 20,
                             minHeight: 180,
                             height: "100%",
                             background: "whitesmoke",
@@ -109,7 +109,7 @@ export default function EOAssignRefereeFinal() {
                                 columns={[
 
                                     {
-                                        title: "Coach Name",
+                                        title: "Referee Name",
                                         dataIndex: "CoachName",
                                         key: "CoachName",
                                         render: (text, record) => (

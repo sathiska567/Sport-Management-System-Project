@@ -1,110 +1,106 @@
-import React, { useEffect, useState } from 'react'
-import SideBar from '../EOSideBar/EOSideBar'
-import axios from 'axios'
-import { useLocation, useNavigate } from 'react-router-dom'
-import { Button, Flex, Table, message } from 'antd'
-import { CheckOutlined, DeleteOutlined } from '@ant-design/icons'
+import React, { useEffect, useState } from "react";
+import SideBar from "../EOSideBar/EOSideBar";
+import axios from "axios";
+import { useLocation, useNavigate } from "react-router-dom";
+import { Button, Flex, Table, message } from "antd";
+import { CheckOutlined, DeleteOutlined } from "@ant-design/icons";
+import "./Fixture.css";
 
 export default function Fixture() {
-
-  const [teamData, setTeamData] = useState([])
-  const shuffledArray = []
-  const usedIndexes = []
+  const [teamData, setTeamData] = useState([]);
+  const shuffledArray = [];
+  const usedIndexes = [];
   const [shuffledNewArray, setShuffledNewArray] = useState([]);
   // const [newArrayLength,setNewArrayLength] = useState([])
-  const navigate = useNavigate()
-  const location = useLocation()
+  const navigate = useNavigate();
+  const location = useLocation();
   const matches = [];
 
-  const [teamDetails, setTeamDetails] = useState([])
+  const [teamDetails, setTeamDetails] = useState([]);
 
   // console.log(location);
 
-// get created fixture
-const getOneCreatedFixture = async () => {
+  // get created fixture
+  const getOneCreatedFixture = async () => {
     try {
-      const id = location.state.id
+      const id = location.state.id;
       console.log("id : ", id);
 
-      const response = await axios.post("http://localhost:8080/api/v1/event/get-one-fixture", { id })
+      const response = await axios.post(
+        "http://localhost:8080/api/v1/event/get-one-fixture",
+        { id }
+      );
       console.log(response.data.data.nameOfTheTeam);
-      setTeamDetails(response.data.data.nameOfTheTeam)
-      setTeamData(response.data.data.nameOfTheTeam)
-      setShuffledNewArray(response.data.data.nameOfTheTeam)
-
+      setTeamDetails(response.data.data.nameOfTheTeam);
+      setTeamData(response.data.data.nameOfTheTeam);
+      setShuffledNewArray(response.data.data.nameOfTheTeam);
     } catch (error) {
       message.error("Error in fetching data");
     }
-  }
+  };
 
-// Random shuffle data
-const ShuffleData = () => {
+  // Random shuffle data
+  const ShuffleData = () => {
     let i = 0;
     console.log(teamDetails.length);
     // window.location.reload();
 
     while (i < teamDetails.length) {
-      const randomIndex = Math.floor(Math.random() * teamDetails.length)
+      const randomIndex = Math.floor(Math.random() * teamDetails.length);
       // console.log(randomIndex);
 
-      if(!usedIndexes.includes(randomIndex)){
-        shuffledArray.push(teamDetails[randomIndex])
-        usedIndexes.push(randomIndex)
-        i++ ;
+      if (!usedIndexes.includes(randomIndex)) {
+        shuffledArray.push(teamDetails[randomIndex]);
+        usedIndexes.push(randomIndex);
+        i++;
       }
-
     }
 
-  console.log("shuffle array is : " , shuffledArray);
-  setShuffledNewArray(shuffledArray)
+    console.log("shuffle array is : ", shuffledArray);
+    setShuffledNewArray(shuffledArray);
+  };
 
-
-  }
-
-// shuffle data store
+  // shuffle data store
   const shuffleDataStore = async () => {
     try {
-      const id = location.state.id
+      const id = location.state.id;
       console.log("shuffled data : ", shuffledNewArray);
-      
-      const response = await axios.post("http://localhost:8080/api/v1/shuffle/newTeam", {shuffledNewArray,id})
+
+      const response = await axios.post(
+        "http://localhost:8080/api/v1/shuffle/newTeam",
+        { shuffledNewArray, id }
+      );
       console.log(response);
 
-      if(response.data.success){
-         message.success(response.data.message)
-         navigate("/eo-view-fixture")
+      if (response.data.success) {
+        message.success(response.data.message);
+        navigate("/eo-view-fixture");
+      } else {
+        message.error(response.data.message);
       }
-
-      else{
-        message.error(response.data.message)
-      }
- 
-
     } catch (error) {
-      message.error("Shuffle fixture save have an error")
+      message.error("Shuffle fixture save have an error");
     }
-  }
-
+  };
 
   const handleDelete = async (id) => {
     try {
-      const response = await axios.post("http://localhost:8080/api/v1/delete/delte-team", { id: id })
-      message.success(response.data.message)
-      window.location.reload()
-
+      const response = await axios.post(
+        "http://localhost:8080/api/v1/delete/delte-team",
+        { id: id }
+      );
+      message.success(response.data.message);
+      window.location.reload();
     } catch (error) {
-      message.error("Delete have an error")
-
+      message.error("Delete have an error");
     }
-  }
-
+  };
 
   useEffect(() => {
     // getTeamData();
     ShuffleData();
     getOneCreatedFixture();
-  }, [])
-
+  }, []);
 
   return (
     <>
@@ -115,9 +111,7 @@ const ShuffleData = () => {
              ))}
          </div> */}
 
-
         <div className="fixtureContainer">
-
           <Table
             className="Table"
             columns={[
@@ -126,21 +120,49 @@ const ShuffleData = () => {
                 width: "20%",
                 dataIndex: "teamNumber",
                 render: (text, record, index) => (
-                  <span key={index} style={{color:"black",fontFamily:"sans-serif",fontWeight:"bold"}}>{"Team Number "+(index + 1)}</span>
-                )
+                  <span
+                    key={index}
+                    style={{
+                      color: "black",
+                      fontFamily: "sans-serif",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    {"Team Number " + (index + 1)}
+                  </span>
+                ),
               },
               {
                 title: "Teams Name",
-                dataIndex: "teamName",               
+                dataIndex: "teamName",
                 render: (text, record, index) => (
-                  <span key={index} style={{color:"green",fontFamily:"sans-serif",fontWeight:"bold"}}>{record}</span>
-                )
+                  <span
+                    key={index}
+                    style={{
+                      color: "green",
+                      fontFamily: "sans-serif",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    {record}
+                  </span>
+                ),
               },
 
               {
                 title: "Event Time",
                 dataIndex: "time",
-                render: (text, record) => <span style={{color:"blue",fontFamily:"sans-serif",fontWeight:"bold"}}>8.30am</span>,
+                render: (text, record) => (
+                  <span
+                    style={{
+                      color: "blue",
+                      fontFamily: "sans-serif",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    8.30am
+                  </span>
+                ),
               },
 
               {
@@ -148,77 +170,61 @@ const ShuffleData = () => {
                 dataIndex: "action",
                 render: (text, record) => (
                   <div>
-                    <span><Button
-                      type="primary"
-                      style={{
-                        backgroundColor: "#D94D34",
-                        color: "#fff",
-                        fontSize: "14px",
-                        borderRadius: "5px",
-                        marginTop: "auto",
-                        marginBottom: "auto",
-                      }}
-                      onClick={() => handleDelete(record._id)}
-                    >
-                      <DeleteOutlined />
-                      Delete
-                    </Button>
-
+                    <span>
+                      <Button
+                        type="primary"
+                        style={{
+                          backgroundColor: "#D94D34",
+                          color: "#fff",
+                          fontSize: "14px",
+                          borderRadius: "5px",
+                          marginTop: "auto",
+                          marginBottom: "auto",
+                        }}
+                        onClick={() => handleDelete(record._id)}
+                      >
+                        <DeleteOutlined />
+                        Delete
+                      </Button>
                     </span>
 
-
                     {/* <Button type="danger" onClick={() => handleDelete(record._id)}>delete</Button> */}
-
                   </div>
                 ),
               },
-
             ]}
             pagination={{
               style: {
                 marginTop: "50px",
               },
-              pageSize: 100,
+              pageSize: 5,
             }}
-
             // Displaying data from the backend
             dataSource={shuffledNewArray}
-          >
+          ></Table>
 
-          </Table>
-
-          <Flex gap="small" wrap="wrap">
+          <div className="ShuffleButtons">
             <Button
+              className="ViewTableButtons"
               type="primary"
               onClick={ShuffleData}
-              style={{
-                borderRadius: "5px",
-              }}
-              
-              >
+            >
               Suffle
             </Button>
-            <Button 
-            type="primary" 
-            onClick={shuffleDataStore}
-            style={{
-              borderRadius: "5px",
-            }}
+            <Button
+              className="ViewTableButtons"
+              type="primary"
+              onClick={shuffleDataStore}
             >
-            Save Shuffle
-            
+              Save Shuffle
             </Button>
-          </Flex>
+          </div>
 
           {/* <button onClick={ShuffleData}>Suffle</button> */}
           {/* <button onClick={shuffleDataStore}>Save Shuffle</button> */}
           {/* <button onClick={handleSingleEliminate}>Single Eliminate</button> */}
-
-
         </div>
-
       </SideBar>
     </>
-  )
+  );
 }
-

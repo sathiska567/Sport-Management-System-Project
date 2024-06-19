@@ -84,7 +84,7 @@ export default function SearchPlayerProfile() {
                         className="ant-layout-content"
                         style={{
                             margin: "16px",
-                            padding: 24,
+                            padding: 0,
                             minHeight: 180,
                             height: "100%",
                             background: "whitesmoke",

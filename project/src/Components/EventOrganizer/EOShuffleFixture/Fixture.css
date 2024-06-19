@@ -2,6 +2,21 @@
         width: 95%;
         margin-top: 30px;
         margin-left: 30px;
-        max-height: 480px; /* Set the maximum height as per your requirement */
-        overflow-y: auto; /* Add a vertical scroll bar if the content overflows */
+        max-height: 60vh;
+}
+
+.ViewTableButtons {
+        width: 200px !important;
+        border-radius: 15px;
+        padding: 20px;
+}
+
+.ShuffleButtons {
+        height: 15vh;
+        display: flex;
+        flex-direction: row;
+        gap: 1rem;;
+        border-radius: 15px;
+        position: absolute;
+        bottom: 0;
 }

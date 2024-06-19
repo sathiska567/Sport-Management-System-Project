@@ -60,10 +60,8 @@ const TeamManagerSideBar = ({ children }) => {
   const Text = ({ selectedMenuItem }) => {
     const text = {
       "/TeamManager-stats": "Dashboard",
-      "/TeamManager-assign-members": "Assign Members",
-      "/TeamManager-create-team": "Create Team",
-      "/TeamManager-assign-team-form": "Assign Members",
-      "/TeamManager-profile": "My Profile",
+      "/PointTableForm": "Point Table",
+      "/EventView": "Assign Members",
       "/team-manager-to-eo-communication": "Mail to Organizer",
     };
 
@@ -202,15 +200,12 @@ const TeamManagerSideBar = ({ children }) => {
                 </NavLink>
               </Menu.Item>
               <Menu.Item
-                key="/TeamManager-create-team"
+                key="/PointTableForm"
                 icon={<FontAwesomeIcon icon={faPeopleGroup} />}
               >
                 <NavLink to="/PointTableForm">Point Table</NavLink>
               </Menu.Item>
-              <Menu.Item
-                key="/PointTableForm"
-                icon={<UserAddOutlined />}
-              >
+              <Menu.Item key="/EventView" icon={<UserAddOutlined />}>
                 <NavLink to="/EventView">Assign Members</NavLink>
               </Menu.Item>
               {/* <Menu.Item key="/TeamManager-profile" icon={<Profile />}>
