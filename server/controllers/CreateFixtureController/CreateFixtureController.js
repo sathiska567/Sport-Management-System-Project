@@ -6,9 +6,10 @@ const createFixtureController = async (req, res) => {
 
            const { nameOfTheEvent, nameOfTheTeam, location,eventNewDate,formattedTime } = req.body;
 
+         //console.log(req.body)
            console.log(nameOfTheEvent, nameOfTheTeam, location,eventNewDate,formattedTime);
 
-           const data = new createFixtureModel({
+           let data = new createFixtureModel({
                 nameOfTheEvent: nameOfTheEvent,
                 nameOfTheTeam: nameOfTheTeam,
                 location: location,
@@ -16,21 +17,21 @@ const createFixtureController = async (req, res) => {
                 formattedTime:formattedTime
              })
 
-           await data.save();
+           data =  await data.save();
 
-           console.log(data);
+           //console.log(data);
 
            res.status(200).send({
                 success:true,
                 message:'Fixture Created Successfully',
-                data:data
+                data: data
            })
 
         } catch (error) {
            res.status(400).send({
                 success:false,
                 message:'Fixture Created Unsuccessfully',
-                data:data
+                data: undefined
              })
         }
 

@@ -13,7 +13,7 @@ cloudinary.config({
 
 const RefreeProfileController = async (req, res) => {
         const { RefreeId, RefreeName, RefreeEmail, RefreeDateOfBirth, RefreeAge } = req.body;
-        console.log(RefreeId, RefreeName, RefreeEmail, RefreeDateOfBirth, RefreeAge);
+        //console.log(RefreeId, RefreeName, RefreeEmail, RefreeDateOfBirth, RefreeAge);
         try {
 
                 const response = new RefreeProfileDetailsNewModel({
@@ -26,7 +26,7 @@ const RefreeProfileController = async (req, res) => {
                 })
 
                 await response.save();
-                console.log(response);
+               // console.log(response);
 
                 return res.status(200).send({
                         success: true,

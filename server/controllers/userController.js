@@ -1,4 +1,4 @@
-// controllers/adminController.js
+
 
 const bcrypt = require('bcrypt');
 // const { registerUser } = require('../services/userService');
@@ -52,7 +52,7 @@ const registerController = async (req, res) => {
         });
 
     } catch (error) {
-        console.error("Register Controller Error:", error);
+        console.log("Register Controller Error:", error);
         res.status(500).send({
             success: false,
             message: `Register Controller Error: ${error.message}`
@@ -112,7 +112,7 @@ const loginController = async (req, res) => {
         }
 
         // Generate a JWT token after user creation
-        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+        const token = jwt.sign({ id: user._id }, 'project21', {
             expiresIn: '1d',
         });
 
