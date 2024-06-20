@@ -9,6 +9,10 @@
         width: 200px !important;
         border-radius: 15px;
         padding: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
 }
 
 .ShuffleButtons {
