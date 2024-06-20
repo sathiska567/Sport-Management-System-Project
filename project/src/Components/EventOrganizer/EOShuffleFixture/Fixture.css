@@ -24,3 +24,10 @@
         position: absolute;
         bottom: 0;
 }
+
+.TbaleBUttons {
+        display: flex;
+        flex-direction: row;
+        gap: 1rem;
+        
+}

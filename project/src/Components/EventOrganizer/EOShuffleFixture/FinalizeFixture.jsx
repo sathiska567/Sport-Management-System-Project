@@ -162,7 +162,7 @@ export default function FinalizeFixture() {
           <p>{data}</p>
       ))} */}
 
-        <div>
+        <div className="TbaleBUttons">
           <Button
             type="primary"
             style={{ marginLeft: "20px" }}
