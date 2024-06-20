@@ -1,7 +1,7 @@
 // Importing necessary libraries and components
 import "./CoachSidebar.css";
 import React, { useState, useEffect } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation, useNavigate, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendar } from "@fortawesome/free-solid-svg-icons";
 import { ReactComponent as Profile } from "../../icons/Profile.svg";
@@ -12,14 +12,13 @@ import {
   PoweroffOutlined,
   FormOutlined,
   BellOutlined,
-  UserOutlined,
   EditOutlined,
   CalendarOutlined,
   MailOutlined,
 } from "@ant-design/icons";
 
 import { ReactComponent as Bracket } from "../../icons/tournament.svg";
-import { useLocation } from "react-router-dom";
+
 import {
   Layout,
   Menu,
@@ -33,6 +32,7 @@ import {
 import axios from "axios";
 // Destructuring components from Ant Design's Layout
 const { Header, Sider } = Layout;
+
 
 // Navbar component
 const CoachSidebar = ({ children }) => {
@@ -48,28 +48,19 @@ const CoachSidebar = ({ children }) => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [positionNotification, setPositionNotification] = useState();
   const [isCoach, setIsCoach] = useState(false);
-  const currentPath = location.pathname.split("/")[1];
+  const navigate = useNavigate();
 
   // Helper function to check if the current URL matches a specific path
   const isPathActive = (path) => {
-    switch (path) {
-      case "/coach-stats":
-        return location.pathname === "/coach-stats";
-      case "/coach-availability":
-        return location.pathname === "/coach-availability";
-      case "/coach-review-players":
-        return location.pathname === "/coach-review-players";
-      case "/coach-profile":
-        return location.pathname === "/coach-profile";
-      case "/coach-to-eo-communication":
-        return location.pathname === "/coach-to-eo-communication";
-      case "/apply-position":
-        return location.pathname === "/apply-position";
-      case "logoff":
-        return false; // Since there's no dedicated URL for the "Log Off" item
-      default:
-        return false;
-    }
+    return location.pathname.startsWith(path);
+  };
+
+  // Custom Function to Check Query Parameter
+  const hasQueryParam = (queryParam, queryValue) => {
+    const { search } = location;
+    const url = new URLSearchParams(search);
+    const paramValue = url.get(queryParam);
+    return paramValue === queryValue; 
   };
 
   // Event handlers for mouse hover events
@@ -106,6 +97,7 @@ const CoachSidebar = ({ children }) => {
       "/select-players": "Select players for the team",
       "/update-team": "Update the team details and players",
       "/coach-to-eo-communication": "Mail To Organizer",
+      "/apply-position": "Apply Position",
     };
 
     return <p>{text[selectedMenuItem]}</p>;
@@ -125,7 +117,7 @@ const CoachSidebar = ({ children }) => {
 
       setIsCoach(res.data.user.isCoach);
       setCurrentUsername(res.data.user.username);
-      setCurrentCoachId(res.data.user._id)
+      setCurrentCoachId(res.data.user._id);
     } catch (error) {
       message.error("Error have inside the Get currentUserData function");
     }
@@ -221,7 +213,6 @@ const CoachSidebar = ({ children }) => {
           theme="dark"
           mode="inline"
           defaultSelectedKeys={["/eo-stats"]}
-          
           style={{
             backgroundColor: "#15295E",
             fontSize: "16px",
@@ -254,18 +245,45 @@ const CoachSidebar = ({ children }) => {
                 </NavLink>
               </Menu.Item>
 
-              <Menu.Item key="/coach-create-team" icon={<EditOutlined />}>
-                <NavLink to={`/create-team?coach_id=${currentCoachId}`}>
+              <Menu.Item
+                key={`/create-team-${currentCoachId}`} // Unique key
+                icon={<EditOutlined />}
+                className={
+                  hasQueryParam("coach_id", currentCoachId) &&
+                  location.pathname.includes("/create-team") // Check for both query and path
+                    ? "ant-menu-item-selected"
+                    : ""
+                }
+              >
+                <NavLink
+                  to={`/create-team?coach_id=${currentCoachId}`}
+                  onClick={() =>
+                    navigate(`/create-team?coach_id=${currentCoachId}`)
+                  }
+                >
                   <span className="nav-text">Create Team</span>
                 </NavLink>
               </Menu.Item>
-              <Menu.Item key="/coach-edit-team" icon={<FormOutlined />}>
-                <NavLink to={`/edit-team?coach_id=${currentCoachId}`}>
+
+              <Menu.Item
+                key={`/edit-team-${currentCoachId}`} // Unique key
+                icon={<FormOutlined />}
+                className={
+                  hasQueryParam("coach_id", currentCoachId) &&
+                  location.pathname.includes("/edit-team") // Check for both query and path
+                    ? "ant-menu-item-selected"
+                    : ""
+                }
+              >
+                <NavLink
+                  to={`/edit-team?coach_id=${currentCoachId}`}
+                  onClick={() =>
+                    navigate(`/edit-team?coach_id=${currentCoachId}`)
+                  }
+                >
                   <span className="nav-text">Edit Team</span>
                 </NavLink>
               </Menu.Item>
-
-
               <Menu.Item
                 key="/coach-review-players"
                 icon={<CalendarOutlined />}

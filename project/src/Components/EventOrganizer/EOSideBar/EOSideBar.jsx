@@ -75,7 +75,7 @@ const EOSizeBar = ({ children }) => {
     const text = {
       "/dashboad": "Dashboard",
       "/eo-create-event": "Create Event",
-      "/eo-edit-event": "Edit Event",
+      "/EditEventTable": "Edit Event",
       "/create-fixture": "Create Fixture",
       "/fixture": "Shuffle Fixture",
       "/eo-view-fixture": "View Fixture",
@@ -223,7 +223,7 @@ const EOSizeBar = ({ children }) => {
               <Menu.Item key="/eo-create-event" icon={<EditOutlined />}>
                 <NavLink to="/eo-create-event">Create Event</NavLink>
               </Menu.Item>
-              <Menu.Item key="/eo-edit-event" icon={<FormOutlined />}>
+              <Menu.Item key="/EditEventTable" icon={<FormOutlined />}>
                 <NavLink to="/EditEventTable">Edit Event</NavLink>
               </Menu.Item>
               <Menu.Item key="/EOCreatedEventView" icon={<CalendarOutlined />}>
@@ -245,7 +245,7 @@ const EOSizeBar = ({ children }) => {
                 <NavLink to="/eo-assign-staff">Assign Staff</NavLink>
               </Menu.Item> */}
 
-              <Menu.Item key="/eo-bracket" icon={<Bracket />}>
+              <Menu.Item key="/brackets" icon={<Bracket />}>
                 <NavLink to="/brackets">Bracket</NavLink>
               </Menu.Item>
               <Menu.Item key="/EO-EventView" icon={<Profile />}>
