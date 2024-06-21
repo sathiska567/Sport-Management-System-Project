@@ -219,7 +219,11 @@ const handleExperienceChange = (e) => {
   return (
     <div>
       <SideBar>
-        <div className="UserApplicationForm">
+        <div 
+        style={{
+          marginTop: "3vh",
+        }}
+        className="UserApplicationForm">
           <div
             className="UserApplicationFormHeader"
             style={{
