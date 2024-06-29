@@ -1,4 +1,5 @@
 const reviewModel = require('../../models/CoachReviewModel/CoachReviewModel');
+const playerModel = require('../../models/userModel')
 
 const coachReviewCreateController = async (req, res) => {
     const { battingReview, bowlingReview, fieldingReview, overallReview, comment, playerId, reviewGivenCoachId, reviewGivenCoachName, reviewGivenCoachEmail } = req.body;
@@ -29,7 +30,6 @@ const coachReviewCreateController = async (req, res) => {
     }
 
 }
-
 
 const getOverrallReviewController = async (req, res) => {
     try {
@@ -132,4 +132,72 @@ const getOverrallReviewWithoutPaginationController = async(req,res)=>{
   }
 }
 
-module.exports = { coachReviewCreateController, getOverrallReviewController, searchReviewController,getOverrallReviewWithoutPaginationController };
+
+const getReviewWithSortingController = async (req, res) => {
+    try {
+      const playerWithReview = [];
+      const players = await playerModel.find({ isPlayer: true });
+      const playerReview = await reviewModel.find({});
+    
+      // Create a map to store cumulative overall review for each player
+      const playerFinalOverallReview = new Map();
+    
+      // Iterate over players
+      for (let i = 0; i < players.length; i++) {
+        const player = players[i];
+        let totalOverallReview = 0;
+        let count = 0; // Initialize count of reviews for averaging
+    
+        // Iterate over reviews to aggregate overallReview for the current player
+        for (let j = 0; j < playerReview.length; j++) {
+          if (player._id.equals(playerReview[j].playerId)) {
+            totalOverallReview += playerReview[j].overallReview;
+            count++; // Increment count for averaging
+          }
+        }
+    
+        // Calculate average overall review if there are reviews for the player
+        if (count > 0) {
+          const averageOverallReview = totalOverallReview / count;
+          // Store player with their average overall review in the map
+          playerFinalOverallReview.set(player._id.toString(), {
+            player,
+            overallReview: averageOverallReview
+          });
+        }
+
+        else{
+            playerFinalOverallReview.set(player._id.toString(), {
+                player,
+                overallReview: 0
+              });
+        }
+      }
+    
+      // Push entries from map to playerWithReview array
+      playerFinalOverallReview.forEach(entry => {
+        playerWithReview.push(entry);
+      });
+
+    //   b.overallReview is greater than a.overallReview, b should come before a
+      playerWithReview.sort((a, b) => b.overallReview - a.overallReview);
+    
+      res.status(200).send({
+        success: true,
+        message: 'Review Fetched Successfully',
+        data: playerWithReview
+      });
+    
+    } catch (error) {
+      res.status(400).send({
+        success: false,
+        message: 'Error While Getting Review',
+        error
+      });
+    }
+  };
+  
+  
+  
+
+module.exports = { coachReviewCreateController, getOverrallReviewController, searchReviewController,getOverrallReviewWithoutPaginationController,getReviewWithSortingController };

@@ -47,6 +47,8 @@ const CoachReviewPlayers = () => {
   const [total, setTotal] = useState(1);
   const [limits, setLimits] = useState(3);
 
+  const [sortingReviews , setSortingReviews] = useState([])
+
 
   const fetchData = async (page) => {
     try {
@@ -107,11 +109,28 @@ const CoachReviewPlayers = () => {
   };
 
 
+  const getPlayerWithSorting = async()=>{
+    try {
+      const SortingReviewResponse = await axios.get(
+        "http://localhost:8080/api/v1/review/get-review-with-sorting"
+      );
+
+      if (SortingReviewResponse.data.success) {
+        setSortingReviews(SortingReviewResponse.data.data);
+      }
+
+      // console.log(SortingReviewResponse);
+    } catch (error) {
+      message.error("Something went wrong inside the get Review section");
+    }
+  }
+
 
   useEffect(() => {
     handleGetAllPlayerDetails();
     getReview();
     // individualRatings()
+    getPlayerWithSorting()
   }, []);
 
 
@@ -183,14 +202,14 @@ const CoachReviewPlayers = () => {
                   dataIndex: "playerName",
                   width: "25%",
                   align: "center",
-                  render: (text, record) => <span>{record.username}</span>,
+                  render: (text, record) => <span>{record.player.username}</span>,
                 },
                 {
                   title: "Email",
                   dataIndex: "location",
                   width: "15%",
                   align: "center",
-                  render: (text, record) => <span>{record.email}</span>,
+                  render: (text, record) => <span>{record.player.email}</span>,
                 },
                 {
                   title: "Overall Review",
@@ -198,18 +217,35 @@ const CoachReviewPlayers = () => {
                   width: "15%",
                   align: "center",
                   render: (text, record) => {
-                    const relevantReviews = playerReview.filter((review) => review.playerId === record._id);
-                    const sum = relevantReviews.reduce((acc, review) => acc + review.overallReview,0);
-                    const averageRating = relevantReviews.length ? sum / relevantReviews.length : 0;
                     return (
-                      <div>
-                        <Rate disabled value={averageRating}  />
-                        {console.log(averageRating)}
-                        {/* <span>{averageRating.toFixed(2)}</span> */}
-                      </div>
-                    );
-                  },
+                            <div>
+                              <Rate disabled value={record.overallReview}  />
+                              {/* {console.log(averageRating)} */}
+                              {/* <span>{averageRating.toFixed(2)}</span> */}
+                            </div>
+                          );
+                  }
                 },
+
+                // {
+                //   title: "Overall Review",
+                //   dataIndex: "review",
+                //   width: "15%",
+                //   align: "center",
+                //   render: (text, record) => {
+                //     const relevantReviews = playerReview.filter((review) => review.playerId === record._id);
+                //     // reduce method to calculate the sum of the overallReview values from an array of relevantReviews
+                //     const sum = relevantReviews.reduce((acc, review) => acc + review.overallReview,0);
+                //     const averageRating = relevantReviews.length ? sum / relevantReviews.length : 0;
+                //     return (
+                //       <div>
+                //         <Rate disabled value={averageRating}  />
+                //         {console.log(averageRating)}
+                //         {/* <span>{averageRating.toFixed(2)}</span> */}
+                //       </div>
+                //     );
+                //   },
+                // },
 
 
                 {
@@ -240,7 +276,7 @@ const CoachReviewPlayers = () => {
                           marginBottom: "auto",
                           width: "100px",
                         }}
-                        onClick={() => handleNavigate(record._id)}
+                        onClick={() => handleNavigate(record.player._id)}
                       >
                         Comment
                       </Button>
@@ -258,7 +294,7 @@ const CoachReviewPlayers = () => {
                 pageSize: limits,
                 onChange: handlePagination,
               }}
-              dataSource={playerDetails}
+              dataSource={sortingReviews}
             />
           </Content>
         </Layout>
