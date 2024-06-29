@@ -124,7 +124,7 @@ const getAllCreateEvent = async () => {
 
   };
 
-  const handleAvailability = async (id, isChecked) => {
+const handleAvailability = async (id, isChecked) => {
     try {
       const availabilityResponse = await axios.post("http://localhost:8080/api/v1/availability/save-coach-availability",{eventId:id,coachId:coachId,availability:isChecked})
       console.log(availabilityResponse.data);
@@ -144,7 +144,7 @@ const getAllCreateEvent = async () => {
   };
 
 
-  const removeAvailability = async (id, isChecked) => {
+const removeAvailability = async (id, isChecked) => {
     console.log(id, isChecked);
     try {
       const removeResponse = await axios.post("http://localhost:8080/api/v1/availability/save-coach-availability",{eventId:id,coachId:coachId,availability:isChecked})
@@ -176,8 +176,17 @@ const getAllCreateEvent = async () => {
 
 
   //filter data
-  const handleEventLocationSearch = (value) => {
+  const handleEventLocationSearch = async(value) => {
     console.log("Event Location Searched: ", value);
+    try {
+      const searchResponse = await axios.post("http://localhost:8080/api/v1/search/search-location", { value })
+      console.log(searchResponse.data.data);
+      setCreateEvent(searchResponse.data.data)
+
+    } catch (error) {
+      message.error("Error searching event location");
+    }
+
   };
 
   const handleDateChange = (date, dateString) => {
@@ -212,11 +221,11 @@ const getAllCreateEvent = async () => {
                 allowClear
               />
 
-              <DatePicker
+              {/* <DatePicker
                 className="searchInputDate"
                 style={{ marginBottom: 8 }}
                 onChange={handleDateChange}
-              />
+              /> */}
             </div>
             <Table
               columns={[
