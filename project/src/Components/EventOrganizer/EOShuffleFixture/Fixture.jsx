@@ -18,12 +18,12 @@ export default function Fixture() {
 
   const [teamDetails, setTeamDetails] = useState([]);
 
-  // console.log(location);
+  console.log(location);
 
   // get created fixture
   const getOneCreatedFixture = async () => {
     try {
-      const id = location.state.id;
+      const id = location.state.record._id;
       console.log("id : ", id);
 
       const response = await axios.post(
@@ -63,7 +63,7 @@ export default function Fixture() {
   // shuffle data store
   const shuffleDataStore = async () => {
     try {
-      const id = location.state.id;
+      const id = location.state.record._id;
       console.log("shuffled data : ", shuffledNewArray);
 
       const response = await axios.post(
@@ -125,7 +125,6 @@ export default function Fixture() {
                     style={{
                       color: "black",
                       fontFamily: "sans-serif",
-                      fontWeight: "bold",
                     }}
                   >
                     {"Team Number " + (index + 1)}
@@ -141,7 +140,6 @@ export default function Fixture() {
                     style={{
                       color: "green",
                       fontFamily: "sans-serif",
-                      fontWeight: "bold",
                     }}
                   >
                     {record}
@@ -150,6 +148,34 @@ export default function Fixture() {
               },
 
               {
+                title: "Event Location",
+                dataIndex: "location",
+                render: (text, record) => (
+                  <span
+                    style={{
+                      color: "black",
+                      fontFamily: "sans-serif",
+                    }}
+                  >
+                    {location.state.record.location}
+                  </span>
+                ),
+              },
+              {
+                title: "Event Date",
+                dataIndex: "date",
+                render: (text, record) => (
+                  <span
+                    style={{
+                      color: "black",
+                      fontFamily: "sans-serif",
+                    }}
+                  >
+                    {location.state.record.eventNewDate}
+                  </span>
+                ),
+              },
+              {
                 title: "Event Time",
                 dataIndex: "time",
                 render: (text, record) => (
@@ -157,41 +183,40 @@ export default function Fixture() {
                     style={{
                       color: "blue",
                       fontFamily: "sans-serif",
-                      fontWeight: "bold",
                     }}
                   >
-                    8.30am
+                    {location.state.record.formattedTime}
                   </span>
                 ),
               },
 
-              {
-                title: "Action",
-                dataIndex: "action",
-                render: (text, record) => (
-                  <div>
-                    <span>
-                      <Button
-                        type="primary"
-                        style={{
-                          backgroundColor: "#D94D34",
-                          color: "#fff",
-                          fontSize: "14px",
-                          borderRadius: "5px",
-                          marginTop: "auto",
-                          marginBottom: "auto",
-                        }}
-                        onClick={() => handleDelete(record._id)}
-                      >
-                        <DeleteOutlined />
-                        Delete
-                      </Button>
-                    </span>
+              // {
+              //   title: "Action",
+              //   dataIndex: "action",
+              //   render: (text, record) => (
+              //     <div>
+              //       <span>
+              //         <Button
+              //           type="primary"
+              //           style={{
+              //             backgroundColor: "#D94D34",
+              //             color: "#fff",
+              //             fontSize: "14px",
+              //             borderRadius: "5px",
+              //             marginTop: "auto",
+              //             marginBottom: "auto",
+              //           }}
+              //           onClick={() => handleDelete(record._id)}
+              //         >
+              //           <DeleteOutlined />
+              //           Delete
+              //         </Button>
+              //       </span>
 
-                    {/* <Button type="danger" onClick={() => handleDelete(record._id)}>delete</Button> */}
-                  </div>
-                ),
-              },
+              //       {/* <Button type="danger" onClick={() => handleDelete(record._id)}>delete</Button> */}
+              //     </div>
+              //   ),
+              // },
             ]}
             pagination={{
               style: {

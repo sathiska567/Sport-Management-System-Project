@@ -50,9 +50,15 @@ export default function EOCreatedEventView() {
         setEventDate(value);
     };
 
-    const handleTeamNameSearch = (value) => {
-        console.log("Team Name Searched: ", value);
-        setTeamName(value);
+    const handleLocationSearch = async(value) => {
+        try {
+            const searchResponse = await axios.post("http://localhost:8080/api/v1/search/search-location", { value })
+            console.log(searchResponse.data.data);
+            setCreateEvent(searchResponse.data.data)
+      
+          } catch (error) {
+            message.error("Error searching event location");
+          }
     };
 
 
@@ -106,11 +112,11 @@ const getAllCreateEvent = async () => {
                         {/* Search section */}
                         <div className="search">
                             <Input.Search
-                                placeholder="Search by Team Name"
+                                placeholder="Search by Location"
                                 styles={{
                                     marginBottom: "9",
                                 }}
-                                onSearch={handleTeamNameSearch}
+                                onSearch={handleLocationSearch}
                                 // onChange={(e) => handleEventNameSearch(e.target.value)}
                                 allowClear
                             />
