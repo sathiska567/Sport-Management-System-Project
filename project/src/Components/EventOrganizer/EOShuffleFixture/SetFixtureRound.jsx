@@ -97,7 +97,7 @@ export default function SetFixtureRound() {
                   render: (text, record) => (
                     <span>
                       {finalShuffle[record.player1 - 1] ||
-                        " That made it to this round - Team01"}
+                        " That made it to this round"}
                     </span>
                   ),
                 },
@@ -108,7 +108,7 @@ export default function SetFixtureRound() {
                   render: (text, record) => (
                     <span>
                       {finalShuffle[record.player2 - 1] ||
-                        " That made it to this round - Team02"}
+                        " That made it to this round"}
                     </span>
                   ),
                 },
@@ -121,7 +121,7 @@ export default function SetFixtureRound() {
                       {record.win ? (
                         <span>
                           <span style={{ color: "red" }}>
-                            {"Next Roud " + record.win.round}
+                            {" Goes To => " + "Round " +  record.win.round}
                           </span>
                         </span>
                       ) : (
@@ -138,7 +138,7 @@ export default function SetFixtureRound() {
                       {record.win ? (
                         <span>
                           <span style={{ color: "green" }}>
-                            {"Next Match " + record.win.match}
+                            { " Goes To => " + "Match " + record.win.match}
                           </span>
                         </span>
                       ) : (

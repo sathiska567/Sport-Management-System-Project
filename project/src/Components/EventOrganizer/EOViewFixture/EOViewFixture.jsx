@@ -79,9 +79,9 @@ const EOViewFixture = () => {
   };
 
   // hanlde fixture shuffle
-  const handleShuffle = async (id) => {
-    console.log(id);
-    navigate("/shuffle-fixture", { state: { id: id } });
+  const handleShuffle = async (record) => {
+    // console.log(id);
+    navigate("/shuffle-fixture", { state: { record: record } });
   };
 
   // hanlde fixture view
@@ -262,7 +262,7 @@ const EOViewFixture = () => {
                           marginBottom: "auto",
                           width: "70px",
                         }}
-                        onClick={() => handleShuffle(record._id)}
+                        onClick={() => handleShuffle(record)}
                       >
                         Shuffle
                       </Button>

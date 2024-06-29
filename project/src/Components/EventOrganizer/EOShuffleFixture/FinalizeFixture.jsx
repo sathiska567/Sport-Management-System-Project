@@ -115,7 +115,7 @@ export default function FinalizeFixture() {
                     style={{
                       color: "black",
                       fontFamily: "sans-serif",
-                      fontWeight: "bold",
+                      // fontWeight: "bold",
                     }}
                   >
                     {"Team Number " + (index + 1)}
@@ -130,7 +130,7 @@ export default function FinalizeFixture() {
                     style={{
                       color: "green",
                       fontFamily: "sans-serif",
-                      fontWeight: "bold",
+                      // fontWeight: "bold",
                     }}
                   >
                     {record}
