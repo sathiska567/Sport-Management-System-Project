@@ -140,6 +140,7 @@ const getReviewWithSortingController = async (req, res) => {
       const playerReview = await reviewModel.find({});
     
       // Create a map to store cumulative overall review for each player
+      // A Map is useful when you need to associate values with keys and the keys can be of any type.
       const playerFinalOverallReview = new Map();
     
       // Iterate over players
