@@ -60,6 +60,20 @@ const getAllCreateEvent = async () => {
     getAllCreateEvent() 
   },[])
 
+    //filter data
+    const handleEventLocationSearch = async(value) => {
+        console.log("Event Location Searched: ", value);
+        try {
+          const searchResponse = await axios.post("http://localhost:8080/api/v1/search/search-location", { value })
+          console.log(searchResponse.data.data);
+          setCreateEvent(searchResponse.data.data)
+    
+        } catch (error) {
+          message.error("Error searching event location");
+        }
+    
+      };
+
 
     // End
 
@@ -83,15 +97,15 @@ const getAllCreateEvent = async () => {
                         {/* Search section */}
                         <div className="search">
                             <Input.Search
-                                placeholder="Search by Team Name"
+                                placeholder="Search by Location"
                                 styles={{
                                     marginBottom: "9",
                                 }}
-                                onSearch={handleTeamNameSearch}
+                                onSearch={handleEventLocationSearch}
                                 // onChange={(e) => handleEventNameSearch(e.target.value)}
                                 allowClear
                             />
-                            <Input.Search
+                            {/* <Input.Search
                                 type='date'
                                 styles={{
                                     marginBottom: "9",
@@ -99,7 +113,7 @@ const getAllCreateEvent = async () => {
                                 onSearch={handleDateSearch}
                                 // onChange={(e) => handleTeamNameSearch(e.target.value)}
                                 allowClear
-                            />
+                            /> */}
                         </div>
                         {/* Table section */}
                         <div className="tabContainer">
