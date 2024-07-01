@@ -59,17 +59,18 @@ const EventAvailableRefereeController = async (req, res) => {
                 const availableRefereeIds = availability.map((item) => item.RefereeId);
 
                 // Find details of the coaches who are available and are coaches
+                // $in - operator selects the documents where the value of a field equals any value in the specified array
                 const refereeDetails = await User.find({
                         _id: { $in: availableRefereeIds },
                         isReferee: true,
                 });
 
                 // Collect the relevant details of the available coaches
-                refereeDetails.forEach((coach) => {
+                refereeDetails.forEach((referee) => {
                         availableRefereeDetails.push({
-                                id: coach._id,
-                                username: coach.username,
-                                email: coach.email,
+                                id: referee._id,
+                                username: referee.username,
+                                email: referee.email,
                         });
                 });
 

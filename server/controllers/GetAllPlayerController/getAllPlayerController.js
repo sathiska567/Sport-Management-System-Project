@@ -57,9 +57,11 @@ const playerPaginationController = async (req, res) => {
       const limit = 5;
 
       // Calculate the skip based on pageNumber and limit
+      // number of record want to skip
       const skip = (pageNumber - 1) * limit;
 
       // Fetch the players with limit and skip
+      // The exec method executes the query and returns a Promise.
       const players = await userModel.find({ isPlayer: true }).limit(limit).skip(skip).exec();
 
       // Count total number of players
