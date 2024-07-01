@@ -78,7 +78,7 @@ export default function ViewMatch() {
                         }}
                     >
                         <div className="search">
-                            <Input.Search
+                            {/* <Input.Search
                                 placeholder="Search by Event Name"
                                 styles={{
                                     marginBottom: "9",
@@ -93,7 +93,7 @@ export default function ViewMatch() {
                                 }}
                                 onSearch={handleDateSearch}
                                 allowClear
-                            />
+                            /> */}
                         </div>
                         <div className="tabContainer">
                             <Table
