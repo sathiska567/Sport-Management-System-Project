@@ -50,8 +50,8 @@ export default function EOAssignRefereeFinal() {
                 const addCoaches = await axios.post("http://localhost:8080/api/v1/event/assignReferee",{eventId:location.state.eventId ,refereeId:refereeId})
                 console.log(addCoaches);
                 if(addCoaches.data.success){
-                    message.success("Coach Assigned Successfully");
-                //     setAddedEvents(addCoaches.data.success);
+                    message.success("Referee Assigned Successfully");
+                    setAddedEvents(addCoaches.data.success);
                 }
 
                 console.log(addedEvents);
@@ -82,7 +82,7 @@ export default function EOAssignRefereeFinal() {
                         }}
                     >
                         {/* Search section */}
-                        <div className="search">
+                        {/* <div className="search">
                             <Input.Search
                                 placeholder="Search by Team Name"
                                 styles={{
@@ -101,7 +101,7 @@ export default function EOAssignRefereeFinal() {
                                 // onChange={(e) => handleTeamNameSearch(e.target.value)}
                                 allowClear
                             />
-                        </div>
+                        </div> */}
                         {/* Table section */}
                         <div className="tabContainer">
                             <Table
@@ -154,7 +154,7 @@ export default function EOAssignRefereeFinal() {
                                                         marginBottom: "auto",
                                                     }}
                                                 >
-                                                   Add Referee
+                                                   {addedEvents ? "Added Referee" : "Add Referee"}
                                                 </Button>
                                                 
                                             </span>

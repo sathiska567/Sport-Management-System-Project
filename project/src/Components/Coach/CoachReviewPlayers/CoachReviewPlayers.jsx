@@ -116,6 +116,7 @@ const CoachReviewPlayers = () => {
       );
 
       if (SortingReviewResponse.data.success) {
+        console.log(SortingReviewResponse.data.data);
         setSortingReviews(SortingReviewResponse.data.data);
       }
 
@@ -168,7 +169,7 @@ const CoachReviewPlayers = () => {
             }}
           >
             <div className="search">
-              <Input.Search
+              {/* <Input.Search
                 className="searchInputName"
                 placeholder="Search Player Name..."
                 style={{
@@ -176,7 +177,7 @@ const CoachReviewPlayers = () => {
                 }}
                 onSearch={handlePlayerNameSearch}
                 allowClear
-              />
+              /> */}
 
               {/* <Input.Search
                 className="searchInputName"

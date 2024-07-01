@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import './SearchPlayerTab.css'
 import axios from "axios";
-import { Layout, Button, Input, Table } from 'antd';
+import { Layout, Button, Input, Table, message } from 'antd';
 import { useLocation, useNavigate } from 'react-router-dom';
 import PlayerSideBar from '../PlayerSideBar/PlayerSideBar';
 const { Content } = Layout;
@@ -20,27 +20,27 @@ export default function SearchPlayerProfile() {
 
     const [currentPage, setCurrentPage] = useState(1);
     const [total, setTotal] = useState(1);
-    const [limits , setLimits] = useState(3);
-    
-  
+    const [limits, setLimits] = useState(3);
+
+
     const fetchData = async (page) => {
-      try {
-        const response = await axios.post('http://localhost:8080/api/v1/player/player-pagination', { page });
-        console.log("response", response)
-        setDataSource(response.data.data.players);
-        setTotal(response.data.data.totalPlayers);
-        setLimits(response.data.data.limit)
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
+        try {
+            const response = await axios.post('http://localhost:8080/api/v1/player/player-pagination', { page });
+            console.log("response", response)
+            setDataSource(response.data.data.players);
+            setTotal(response.data.data.totalPlayers);
+            setLimits(response.data.data.limit)
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
     };
-  
+
     useEffect(() => {
-      fetchData(currentPage);
+        fetchData(currentPage);
     }, [currentPage]);
-  
+
     const handlePagination = (page) => {
-      setCurrentPage(page);
+        setCurrentPage(page);
     };
 
 
@@ -71,6 +71,18 @@ export default function SearchPlayerProfile() {
         getFetchData(email);
     }, [email])
 
+    // Filter userApplicationData based on userRole and Userlocation
+    const handlePlayerNameSearch = async (value) => {
+        console.log(value);
+        try {
+            const searchResult = await axios.post("http://localhost:8080/api/v1/player/search-player", { playerName: value });
+            console.log(searchResult.data.data);
+            setDataSource(searchResult.data.data);
+        } catch (error) {
+            message.error("Something went wrong");
+        }
+    };
+
     // End
 
     // JSX structure for the Navbar component
@@ -93,12 +105,12 @@ export default function SearchPlayerProfile() {
                         {/* Search section */}
                         <div className="searched">
                             <Input.Search
-                                placeholder="Search by Email"
-                                styles={{
-                                    marginBottom: "9",
+                                className="searchInputName"
+                                placeholder="Search Player Name..."
+                                style={{
+                                    marginBottom: "8px"
                                 }}
-                                onSearch={handleTeamNameSearch}
-                                // onChange={(e) => handleEventNameSearch(e.target.value)}
+                                onSearch={handlePlayerNameSearch}
                                 allowClear
                             />
 
@@ -136,48 +148,48 @@ export default function SearchPlayerProfile() {
                                             <span>{record.email}</span>
                                         )
                                     },
-                                    {
-                                        title: "Actions",
-                                        dataIndex: "Actions",
-                                        key: "Actions",
-                                        render: (text, record) => (
-                                            <span
-                                                style={{
-                                                    display: "flex",
-                                                    flexDirection: "row",
-                                                    gap: "10px",
-                                                }}
-                                            >
-                                                <Button
-                                                    type="ghost"
-                                                    ghost
-                                                    href="/PlayerGetProfile"
-                                                    style={{
-                                                        backgroundColor: "green",
-                                                        color: "#fff",
-                                                        fontSize: "14px",
-                                                        marginRight: "10px",
-                                                        borderRadius: "8px",
-                                                        marginTop: "auto",
-                                                        marginBottom: "auto",
-                                                    }}
-                                                >
-                                                    VIEW
-                                                </Button>
-                                            </span>
-                                        ),
-                                    },
+                                    // {
+                                    //     title: "Actions",
+                                    //     dataIndex: "Actions",
+                                    //     key: "Actions",
+                                    //     render: (text, record) => (
+                                    //         <span
+                                    //             style={{
+                                    //                 display: "flex",
+                                    //                 flexDirection: "row",
+                                    //                 gap: "10px",
+                                    //             }}
+                                    //         >
+                                    //             <Button
+                                    //                 type="ghost"
+                                    //                 ghost
+                                    //                 href="/PlayerGetProfile"
+                                    //                 style={{
+                                    //                     backgroundColor: "green",
+                                    //                     color: "#fff",
+                                    //                     fontSize: "14px",
+                                    //                     marginRight: "10px",
+                                    //                     borderRadius: "8px",
+                                    //                     marginTop: "auto",
+                                    //                     marginBottom: "auto",
+                                    //                 }}
+                                    //             >
+                                    //                 VIEW
+                                    //             </Button>
+                                    //         </span>
+                                    //     ),
+                                    // },
                                 ]}
                                 pagination={{
                                     style: {
-                                      marginTop: "10px",
+                                        marginTop: "10px",
                                     },
                                     // pageSize: 5,
                                     current: currentPage ? currentPage : 1,
                                     total: total,
                                     pageSize: limits,
                                     onChange: handlePagination,
-                                  }}
+                                }}
 
                                 dataSource={dataSource}
                             ></Table>

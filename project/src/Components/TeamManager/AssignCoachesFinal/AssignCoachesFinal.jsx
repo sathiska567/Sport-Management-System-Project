@@ -51,7 +51,7 @@ export default function AssignCoachesFinal() {
                 console.log(addCoaches);
                 if(addCoaches.data.success){
                     message.success("Coach Assigned Successfully");
-                //     setAddedEvents(addCoaches.data.success);
+                    setAddedEvents(addCoaches.data.success);
                 }
 
                 console.log(addedEvents);
@@ -152,7 +152,7 @@ export default function AssignCoachesFinal() {
                                                         marginBottom: "auto",
                                                     }}
                                                 >
-                                                   Add Coach
+                                                   {addedEvents ? "Added Coach" : "Add Coach"}
                                                 </Button>
                                                 
                                             </span>

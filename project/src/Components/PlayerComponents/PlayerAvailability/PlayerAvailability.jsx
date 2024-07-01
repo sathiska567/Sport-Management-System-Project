@@ -207,11 +207,11 @@ const PlayerAvailability = () => {
                 // onChange={(e) => handleEventLocationSearch(e.target.value)}
                 allowClear
               />
-              <DatePicker
+              {/* <DatePicker
                 className="searchInputDate"
                 style={{ marginBottom: 8 }}
                 onChange={handleDateChange}
-              />
+              /> */}
             </div>
             <Table
               columns={[
@@ -236,7 +236,7 @@ const PlayerAvailability = () => {
                   dataIndex: "eventDate",
                   width: "20%",
                   align: "center",
-                  render: (text, record) => <span>2024-03-02</span>,
+                  render: (text, record) => <span>{record.eventNewDate}</span>,
                 },
                 {
                   title: "Actions",
