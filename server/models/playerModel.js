@@ -38,6 +38,10 @@ LastName : {
         type :String,
       //   require : [true,"UserRole is required"]
   },
+  catagory:{
+        type :String,
+      //   require : [true,"UserRole is required"]
+  },
 
   status : {
       type:String,

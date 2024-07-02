@@ -31,18 +31,22 @@ const ApplyPosition = () => {
   const [newEmail, setNewEmail] = useState();
   const [newAge, setNewAge] = useState();
   const [userRole, setUserRole] = useState();
+  const [newPlayerCatagory, setNewPlayerCatagory] = useState();
   const [experience, setExperience] = useState();
   const [distric, setDistric] = useState();
   const [selectedUserRole, setSelectedUserRole] = useState([]);
   const [showAgeError, setAgeError] = useState(false);
   const [userRoles, setUserRoles] = useState([]);
+  const [playerCatagory, setPlayerCatagory] = useState([]);
   const [districts, setDistricts] = useState([]);
   const [district, setDistrict] = useState(null);
   const [userRoleError, setUserRoleError] = useState(false);
   const [districtError, setDistrictError] = useState(false);
   const [experienceError, setExperienceError] = useState(false);
+  const [buttonDisable , setButtonDisable] = useState(false);
+  const [newPlayerCatagoryError, setNewPlayerCatagoryError] = useState(false);
 
-// fetch role values
+  // fetch role values
   useEffect(() => {
     const fetchUserRoles = async () => {
       try {
@@ -55,6 +59,21 @@ const ApplyPosition = () => {
     };
 
     fetchUserRoles();
+  }, []);
+
+  // fetch role values
+  useEffect(() => {
+    const fetchPlayerCatagoty = async () => {
+      try {
+        const response = await fetch("/playerCatagory.json");
+        const data = await response.json();
+        setPlayerCatagory(data);
+      } catch (error) {
+        console.error("Error fetching user roles:", error);
+      }
+    };
+
+    fetchPlayerCatagoty();
   }, []);
 
   // fetch distric values
@@ -84,6 +103,12 @@ const ApplyPosition = () => {
     }
   };
 
+  // User Role Validation
+  const onPlayerCatagory = (value, selectedOptions) => {
+    console.log(value);
+    setNewPlayerCatagory(value)
+  };
+
   // District Validation
   const onDistrictChange = (value, selectedOptions) => {
     setUserRoleError(false);
@@ -101,7 +126,7 @@ const ApplyPosition = () => {
   // Age Validation
   const handleAgeChange = (value) => {
     setNewAge(value);
-    if (value === undefined || value === null) {
+    if (value === undefined || value === null || value < 16 || value > 70) {
       setAgeError(true);
     } else {
       setAgeError(false);
@@ -109,13 +134,19 @@ const ApplyPosition = () => {
   };
 
   //Experience Validation
-const handleExperienceChange = (e) => {
-  const value = e.target.value;
-  setExperience(value);
-  setExperienceError(value ? value.trim() === "" : true);
-};
+  const handleExperienceChange = (e) => {
+    const value = e.target.value;
+    setExperience(value);
+    setExperienceError(value ? value.trim() === "" : true);
+  };
 
   const userRoleFilter = (inputValue, path) =>
+    path.some(
+      (option) =>
+        option.label.toLowerCase().indexOf(inputValue.toLowerCase()) > -1
+    );
+
+  const playerCatagoryFilter = (inputValue, path) =>
     path.some(
       (option) =>
         option.label.toLowerCase().indexOf(inputValue.toLowerCase()) > -1
@@ -171,44 +202,67 @@ const handleExperienceChange = (e) => {
       alert("Please fill all the fields correctly!");
     } else {
 
-    const messageData = {
-      message: "Apply Position",
-    };
-
-    console.log(messageData);
-    socket.emit("send_message", messageData);
-
-    console.log(
-      FirstName,
-      LastName,
-      newEmail,
-      userRole ? userRole[0] : null,
-      experience,
-      district ? district[0] : null,
-      newAge
-    );
-
-    try {
-      // pass submit data to the backend
-      const res = await axios.post(
-        "http://localhost:8080/api/v1/user/apply-position",
-
-        {
-          FirstName: FirstName,
-          LastName: LastName,
-          Email: newEmail,
-          Age: newAge,
-          UserRole: userRole ? userRole[0] : null,
-          Experience: experience,
-          Distric: district ? district[0] : null,
+      if(userRole == 'player'){
+        if(!newPlayerCatagory){
+          message.error("Without Selecting Player Catagory Cannot Submit Your Form.");
+          return
         }
+      }
+
+      const messageData = {
+        message: "Apply Position",
+      };
+
+      console.log(messageData);
+      socket.emit("send_message", messageData);
+
+      console.log(
+        FirstName,
+        LastName,
+        newEmail,
+        userRole ? userRole[0] : null,
+        experience,
+        district ? district[0] : null,
+        newAge,
+        newPlayerCatagory ? newPlayerCatagory[0] : null
       );
 
-      message.success("Position Applying successfull");
-      navigate("/dashboad");
-    } catch (error) {
-      message.error(error);
-    }
+      // if(FirstName && LastName && newEmail && newAge.length > 0 && district.length > 0){
+
+      //    if(userRole == 'player'){
+      //        if(newPlayerCatagory){
+      //         setButtonDisable(false)
+      //        }else{
+      //         setButtonDisable(true)
+      //        }
+      //    }else{
+      //     setButtonDisable(false)
+      //    }
+      // }
+
+      try {
+        // pass submit data to the backend
+        const res = await axios.post(
+          "http://localhost:8080/api/v1/user/apply-position",
+
+          {
+            FirstName: FirstName,
+            LastName: LastName,
+            Email: newEmail,
+            Age: newAge,
+            UserRole: userRole ? userRole[0] : null,
+            Experience: experience,
+            Distric: district ? district[0] : null,
+            catagory: newPlayerCatagory ? newPlayerCatagory[0] : null
+          }
+        );
+
+        message.success("Position Applying successfull");
+        navigate("/dashboad");
+
+      } catch (error) {
+        message.error(error);
+      }
     }
   };
 
@@ -219,11 +273,11 @@ const handleExperienceChange = (e) => {
   return (
     <div>
       <SideBar>
-        <div 
-        style={{
-          marginTop: "3vh",
-        }}
-        className="UserApplicationForm">
+        <div
+          style={{
+            marginTop: "3vh",
+          }}
+          className="UserApplicationForm">
           <div
             className="UserApplicationFormHeader"
             style={{
@@ -256,7 +310,7 @@ const handleExperienceChange = (e) => {
                 name="FirstName"
                 className="formInput"
                 onChange={(e) => setFirstName(e.target.value)}
-                required 
+                required
               />
               {FirstName === "" && (
                 <span style={{ color: "red", fontSize: "13px" }}>
@@ -270,7 +324,7 @@ const handleExperienceChange = (e) => {
                 name="LastName"
                 className="formInput"
                 onChange={(e) => setLastName(e.target.value)}
-                required 
+                required
               />
               {LastName === "" && (
                 <span style={{ color: "red", fontSize: "13px" }}>
@@ -292,8 +346,8 @@ const handleExperienceChange = (e) => {
               </p>
 
               <div style={{ display: "flex" }}>
-                <div style={{ flex: 1, marginRight: "50px" }}>
-                  <label htmlFor="">Age:</label>
+                <div style={{ flex: 1, marginRight: '50px' }}>
+                  <label htmlFor="Age">Age:</label>
                   <InputNumber
                     type="number"
                     id="Age"
@@ -301,18 +355,18 @@ const handleExperienceChange = (e) => {
                     className="formInput"
                     value={newAge}
                     onChange={handleAgeChange}
-                    min={16}
-                    max={70}
+                    // min={16}
+                    // max={70}
                     required
-                    style={{ width: "100%" }}
+                    style={{ width: '100%' }}
                   />
                   {showAgeError && (
-                    <span style={{ color: "red", fontSize: "13px" }}>
-                      Age cannot be empty!
+                    <span style={{ color: 'red', fontSize: '13px' }}>
+                      Age must be between 16 and 70!
                     </span>
                   )}
                 </div>
-                <div style={{ flex: 2 }}>
+                <div style={{ flex: 1, marginRight: '50px' }}>
                   <label htmlFor="userRole">User Role:</label>
                   <Cascader
                     id="userRole"
@@ -330,6 +384,26 @@ const handleExperienceChange = (e) => {
                       User role cannot be empty!
                     </span>
                   )}
+                </div>
+                <div style={{ flex: 1 }}>
+                  <label htmlFor="userRole">Player Catagory {userRole == 'player' ? '' : ' (optional)'} : </label>
+
+                  <Cascader
+                    id="userRole"
+                    options={playerCatagory}
+                    onChange={onPlayerCatagory}
+                    placeholder="Select user role"
+                    showSearch={{ filter: playerCatagoryFilter }}
+                    onSearch={(value) => console.log(value)}
+                    required
+                    style={{ width: "100%" }}
+                  />
+                  {userRole == 'player' && !newPlayerCatagory && (
+                    <span style={{ color: 'red', fontSize: '13px' }}>
+                      Player Category cannot be empty!
+                    </span>
+                  )}
+
                 </div>
               </div>
 
@@ -374,7 +448,7 @@ const handleExperienceChange = (e) => {
               </div>
 
               <div className="buttonSet">
-                <button className="approve userAppBTn">
+                <button className="approve userAppBTn" disabled={buttonDisable}>
                   <UserAddOutlined className="UserApplicationIcon" />
                   Submit
                 </button>
