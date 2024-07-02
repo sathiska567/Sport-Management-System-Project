@@ -189,6 +189,20 @@ const ApplyPosition = () => {
 
   // handle position registration
   const handleSubmit = async (values) => {
+    if(!userRole){
+     message.error("Please Fill All Fields")
+     return
+    }
+
+    if(!district){
+     message.error("Please Fill All Fields")
+     return
+    }
+
+    if(!experience){
+     message.error("Please Fill All Fields")
+     return
+    }
 
     if (
       FirstName === "" ||
