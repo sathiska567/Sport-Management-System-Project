@@ -13,6 +13,7 @@
     "@testing-library/user-event": "^13.5.0",
     "antd": "^5.18.0",
     "antd-img-crop": "^4.20.0",
+    "apexcharts": "^3.49.2",
     "axios": "^1.6.5",
     "babel-runtime": "^6.26.0",
     "chart.js": "^4.4.2",
@@ -21,6 +22,7 @@
     "jspdf": "^2.5.1",
     "moment": "^2.30.1",
     "react": "^18.2.0",
+    "react-apexcharts": "^1.4.1",
     "react-calendar": "^4.8.0",
     "react-chartjs-2": "^5.2.0",
     "react-countup": "^6.5.0",
@@ -45,7 +47,6 @@
       "react-app/jest"
     ]
   },
-  
   "browserslist": {
     "production": [
       ">0.2%",
@@ -57,7 +58,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-    
   }
-  
 }
