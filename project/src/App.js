@@ -50,15 +50,15 @@ import TeamManagerAssignMembersCoach from "./Components/TeamManager/TeamManagerA
 import TeamManagerAssignMembersPlayer from "./Components/TeamManager/TeamManagerAssignMembers/TeamManagerAssignMembersPlayer.jsx";
 import TeamManagerProfile from "./Components/TeamManager/TeamManagerProfile/TeamManagerProfile.jsx";
 
-import EditTabEvent from "./Components/EventOrganizer/EditTabEvent/EditTabEvent.jsx"
+import EditTabEvent from "./Components/EventOrganizer/EditTabEvent/EditTabEvent.jsx";
 // import TeamManagerAssign from "./Components/TeamManager/TeamManagerAssign/TeamManagerAssign.jsx";
-import TeamManagerAssignCoaches from "./Components/TeamManager/TeamManagerAssignCoaches/TeamManagerAssignCoaches.jsx"
-import EventList from "./Components/TeamManager/EventList/EventList.jsx"
-import SearchPlayerProfile from "./Components/PlayerComponents/SearchPlayerProfile/SearchPlayerProfile.jsx"
-import SearchPlayerTable from "./Components/PlayerComponents/SearchPlayerTable/SearchPlayerTable.jsx"
-import AdminCharts from "./Components/Admin/DashboardCharts/DashboardCharts.jsx"
-import EditEventTable from "./Components/EventOrganizer/EditEventTable/EditEventTable.jsx"
-import EOEditEventFormNew from "./Components/EventOrganizer/EditEventTable/EditEventFormNew.jsx"
+import TeamManagerAssignCoaches from "./Components/TeamManager/TeamManagerAssignCoaches/TeamManagerAssignCoaches.jsx";
+import EventList from "./Components/TeamManager/EventList/EventList.jsx";
+import SearchPlayerProfile from "./Components/PlayerComponents/SearchPlayerProfile/SearchPlayerProfile.jsx";
+import SearchPlayerTable from "./Components/PlayerComponents/SearchPlayerTable/SearchPlayerTable.jsx";
+import AdminCharts from "./Components/Admin/DashboardCharts/DashboardCharts.jsx";
+import EditEventTable from "./Components/EventOrganizer/EditEventTable/EditEventTable.jsx";
+import EOEditEventFormNew from "./Components/EventOrganizer/EditEventTable/EditEventFormNew.jsx";
 import EOCommunicationToCoach from "./Components/EventOrganizer/EOCommunication/EOCommunicationToCoach.jsx";
 import EOCommunicationToTM from "./Components/EventOrganizer/EOCommunication/EOCommunicationToTM.jsx";
 import EOCommunicationToCoachForm from "./Components/EventOrganizer/EOCommunication/EOCommunicationToCoachForm.jsx";
@@ -71,14 +71,14 @@ import RefreeProfileNew from "./Components/Referee/RefreeProfileNew/RefreeProfil
 
 import TournamentBracket from "./Components/EventOrganizer/EOBracket/Bracket.jsx";
 import CoachCreateTeam from "./Components/Coach/CoachCreateTeam/CreateTeam.jsx";
-import SelectPlayers from "./Components/Coach/CoachCreateTeam/SelectPlayers.jsx"
+import SelectPlayers from "./Components/Coach/CoachCreateTeam/SelectPlayers.jsx";
 import CoachEditTeam from "./Components/Coach/CoachEditTeam/EditTeam.jsx";
 import UpdateTeam from "./Components/Coach/CoachEditTeam/UpdateTeam.jsx";
 import RefereeEvent from "./Components/Referee/RefereeEvent/RefereeEvent.jsx";
 import PointTableForm from "./Components/TeamManager/PointTableForm/PointTableForm.jsx";
 import TeamManagerAssignCoachesNew from "./Components/TeamManager/TeamManagerAssignCoachesNew/TeamManagerAssignCoachesNew.jsx";
 import AssignPlayerMatches from "./Components/PlayerComponents/AssignPlayerMatchesAndDetails/AssignPlayerMatches.jsx";
-import AssignPlayerMatchesDeatils from "./Components/PlayerComponents/AssignPlayerMatchesAndDetails/AssignedPlayerMatchDetails.jsx"
+import AssignPlayerMatchesDeatils from "./Components/PlayerComponents/AssignPlayerMatchesAndDetails/AssignedPlayerMatchDetails.jsx";
 
 import { useState } from "react";
 import AssignCoachesFinal from "./Components/TeamManager/AssignCoachesFinal/AssignCoachesFinal.jsx";
@@ -87,6 +87,7 @@ import EOEventList from "./Components/EventOrganizer/EOEventList/EOEventList.jsx
 import EOAssignRefereeFinal from "./Components/EventOrganizer/EOAssignRefereeFinal/EOAssignRefereeFinal.jsx";
 import EOCreateEventForm from "./Components/EventOrganizer/EOCreateEvent/EOCreateEventForm.jsx";
 import EOCreatedEventView from "./Components/EventOrganizer/EOCreateFixture/EOCreatedEventView.jsx";
+// import AdminStats from "./Components/Stats/AdminStats/AdminStats.jsx";
 
 function App() {
   const [eventId, setEventId] = useState("");
@@ -160,14 +161,14 @@ function App() {
         />
 
         {/* after login routes */}
-        <Route
+        {/* <Route
           path="/dashboad"
           element={
             <ProtectedRoute>
-              <StatCards />
+              <AdminStats />
             </ProtectedRoute>
           }
-        />
+        /> */}
 
         <Route
           path="/UserValidation"
@@ -519,7 +520,7 @@ function App() {
           path="/referee-profile"
           element={
             <ProtectedRoute>
-              <RefreeProfileNew/>
+              <RefreeProfileNew />
             </ProtectedRoute>
           }
         />
@@ -585,8 +586,6 @@ function App() {
         ></Route>
       </Routes>
 
-      
-
       <Routes>
         <Route
           path="/EditTabEvent"
@@ -610,7 +609,7 @@ function App() {
           path="/AssignCoachesFinal"
           element={
             <ProtectedRoute>
-              <AssignCoachesFinal/>
+              <AssignCoachesFinal />
             </ProtectedRoute>
           }
         ></Route>
@@ -631,7 +630,7 @@ function App() {
           path="/EO-EventView"
           element={
             <ProtectedRoute>
-               <EOEventList/>
+              <EOEventList />
             </ProtectedRoute>
           }
         ></Route>
@@ -642,7 +641,7 @@ function App() {
           path="/EO-RefereeAssign"
           element={
             <ProtectedRoute>
-               <EOAssignRefereeFinal/>
+              <EOAssignRefereeFinal />
             </ProtectedRoute>
           }
         ></Route>
@@ -653,7 +652,7 @@ function App() {
           path="/EOCreatedEventView"
           element={
             <ProtectedRoute>
-               <EOCreatedEventView/>
+              <EOCreatedEventView />
             </ProtectedRoute>
           }
         ></Route>
@@ -813,17 +812,14 @@ function App() {
               <RefreeProfileNew />
             </ProtectedRoute>
           }
-
-        >
-
-        </Route>
+        ></Route>
       </Routes>
       <Routes>
         <Route
           path="/RefereeEvent"
           element={
             <ProtectedRoute>
-              < RefereeEvent/>
+              <RefereeEvent />
             </ProtectedRoute>
           }
         ></Route>
@@ -833,36 +829,41 @@ function App() {
           path="/PointTableForm"
           element={
             <ProtectedRoute>
-              < PointTableForm/>
+              <PointTableForm />
             </ProtectedRoute>
           }
         ></Route>
       </Routes>
       <Routes>
         <Route
-        path="/AssignPlayerMatches"
-
-        element={
-          <ProtectedRoute>
-            <AssignPlayerMatches/>
-          </ProtectedRoute>
-        }
-        >
-
-        </Route>
+          path="/AssignPlayerMatches"
+          element={
+            <ProtectedRoute>
+              <AssignPlayerMatches />
+            </ProtectedRoute>
+          }
+        ></Route>
       </Routes>
       <Routes>
         <Route
-       path="/AssignPlayerMatchDetails"
-
+          path="/AssignPlayerMatchDetails"
           element={
             <ProtectedRoute>
-              <AssignPlayerMatchesDeatils  />
+              <AssignPlayerMatchesDeatils />
             </ProtectedRoute>
           }
-  >
-        </Route>
+        ></Route>
       </Routes>
+      {/* <Routes>
+        <Route
+          path="/AdminStats"
+          element={
+            <ProtectedRoute>
+              <AdminStats />
+            </ProtectedRoute>
+          }
+        ></Route>
+      </Routes> */}
 
       {/* <Routes>
         <Route
@@ -876,28 +877,59 @@ function App() {
         </Route>
       </Routes> */}
 
-
       <Routes>
-        <Route path="/brackets" element={<ProtectedRoute><TournamentBracket /></ProtectedRoute>} />
-        <Route path="/create-team" element={<ProtectedRoute><CoachCreateTeam /></ProtectedRoute>} />
-        <Route path="/select-players" element={<ProtectedRoute><SelectPlayers /></ProtectedRoute>} />
+        <Route
+          path="/brackets"
+          element={
+            <ProtectedRoute>
+              <TournamentBracket />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/create-team"
+          element={
+            <ProtectedRoute>
+              <CoachCreateTeam />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/select-players"
+          element={
+            <ProtectedRoute>
+              <SelectPlayers />
+            </ProtectedRoute>
+          }
+        />
         {/* <Route path="/create-match" element={<CreateMatch />} /> */}
-        <Route path="/edit-team" element={<ProtectedRoute><CoachEditTeam /></ProtectedRoute>} />
-        <Route path="/update-team" element={<ProtectedRoute><UpdateTeam /></ProtectedRoute>} />
+        <Route
+          path="/edit-team"
+          element={
+            <ProtectedRoute>
+              <CoachEditTeam />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/update-team"
+          element={
+            <ProtectedRoute>
+              <UpdateTeam />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
       <Routes>
         <Route
-        path="/AssignCoachesNew"
-        element={
-          <ProtectedRoute>
-            <TeamManagerAssignCoachesNew/>
-          </ProtectedRoute>
-        }
-        >
-
-        </Route>
+          path="/AssignCoachesNew"
+          element={
+            <ProtectedRoute>
+              <TeamManagerAssignCoachesNew />
+            </ProtectedRoute>
+          }
+        ></Route>
       </Routes>
-
     </BrowserRouter>
 
     // <div className="App">

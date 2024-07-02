@@ -1,0 +1,115 @@
+import React, { lazy, Suspense } from "react";
+import adminStatStyles from "./AdminStats.module.css";
+import DashboardSideBar from "../../DashboardSideBar/SideBar";
+import { Card, Col, Row, Statistic } from "antd";
+import CurrentPlayer from "./currentPlayer";
+import PendingUsersTable from "./PendingUsersTable";
+import { useNavigate } from "react-router-dom";
+import CurrentUser from "./currentUsers";
+import ApplicationStatus from "./applicationStatus";
+import CountUp from "react-countup";
+
+const formatter = (value) => <CountUp end={value} separator="," style={{
+  fontSize: "1.5rem",
+  fontWeight: "bold",
+  color: "#000000",
+}} />;
+const AdminStats = () => {
+  const navigate = useNavigate();
+  const handleTitleClick = () => {
+    navigate("/UserValidation"); 
+  };
+
+  return (
+    <DashboardSideBar>
+      <div className="admin-stats">
+        <div className={adminStatStyles.divContainer}>
+          <div className={adminStatStyles.firstRow}>
+            <div className={adminStatStyles.firstCard}>
+              <Card bordered={false} className={adminStatStyles.card1}>
+                <CurrentUser />
+              </Card>
+            </div>
+            <div className={adminStatStyles.secondCard}>
+              <Card
+                bordered={false}
+                title={
+                  <span
+                    onClick={handleTitleClick}
+                    style={{ cursor: "pointer" }}
+                  >
+                    Pending Users
+                  </span>
+                }
+                className={adminStatStyles.card2}
+              >
+                <div className={adminStatStyles.pendingUsers}>
+                  <PendingUsersTable />
+                </div>
+              </Card>
+            </div>
+          </div>
+
+          <div className={adminStatStyles.secondRow}>
+            <div className={adminStatStyles.SfirstCard}>
+              {/* Content for Player Overview card */}
+              <Card className={adminStatStyles.card3}>
+                <CurrentPlayer />
+              </Card>
+            </div>
+            <div className={adminStatStyles.SsecondCard}>
+              <Card
+                bordered={false}
+                title={
+                  <span
+                    onClick={handleTitleClick}
+                    style={{ cursor: "pointer" }}
+                  >
+                    Pending Players
+                  </span>
+                }
+                className={adminStatStyles.card4}
+              >
+                {/* Content for Current Users card */}
+                <div className={adminStatStyles.pendingPlayers}>
+                  <Statistic
+                    title="Batsman"
+                    value={5}
+                    formatter={formatter}
+                    className={adminStatStyles.ppStat}
+                  />
+                  <Statistic
+                    title="Ballers"
+                    value={6}
+                    formatter={formatter}
+                    className={adminStatStyles.ppStat}
+                  />
+                  <Statistic
+                    title="All-Rounders"
+                    value={7}
+                    formatter={formatter}
+                    className={adminStatStyles.ppStat}
+                  />
+                </div>
+              </Card>
+            </div>
+
+            <div className={adminStatStyles.SthirdCard}>
+              <Card
+                bordered={false}
+                className={adminStatStyles.card5}
+                title="Application Status"
+                style={{ textAlign: "center" }}
+              >
+                {/* Use ApplicationStatus (uppercase) here  */}
+                <ApplicationStatus acceptedCount={12} rejectedCount={5} />
+              </Card>
+            </div>
+          </div>
+        </div>
+      </div>
+    </DashboardSideBar>
+  );
+};
+
+export default AdminStats;
