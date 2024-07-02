@@ -1,0 +1,6 @@
+[
+        { "value": "Batsman", "label": "Batsman" },
+        { "value": "Bowler", "label": "Bowler" },
+        { "value": "Keeper", "label": "Keeper" },
+        { "value": "All Rounder", "label": "All Rounder" }
+]

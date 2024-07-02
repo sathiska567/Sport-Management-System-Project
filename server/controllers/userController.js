@@ -176,6 +176,7 @@ const applyPositionController = async (req, res) => {
             Experience: req.body.Experience,
             Distric: req.body.Distric,
             UserRole: req.body.UserRole,
+            catagory:req.body.catagory
         });
 
         await player.save();
