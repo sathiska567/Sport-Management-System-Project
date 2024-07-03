@@ -31,15 +31,26 @@ export default function SetFixtureRound() {
     const input = pdfRef.current;
 
     html2canvas(input).then((canvas) => {
-      const imgData = canvas.toDataURL("image/png"); //convert data as images
-      const pdf = new jspdf("p", "mm", "a4", true); //use to generate pdf p - portrait mode(can use l - landscape mode) , mm - dimension(can pass difference dimension) , a4 - sheet formate(can pass a1,a2..) , true - optimization in pdf(reduce file size)
-      const pdfWidth = pdf.internal.pageSize.getWidth();
-      const pdfHeight = pdf.internal.pageSize.getHeight();
+      const imgData = canvas.toDataURL("image/png"); // convert data as images
+      const pdf = new jspdf("p", "mm", "a4", true); // use to generate pdf p - portrait mode (can use l - landscape mode), mm - dimension (can pass different dimensions), a4 - sheet format (can pass a1, a2..), true - optimization in pdf (reduce file size)
+      
+      const margin = 10; // Define a margin size (in mm)
+      
+      const pdfWidth = pdf.internal.pageSize.getWidth() - 2 * margin;
+      const pdfHeight = pdf.internal.pageSize.getHeight() - 2 * margin;
       const imgWidth = canvas.width;
       const imgHeight = canvas.height;
       const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight);
-      const imgX = (pdfWidth - imgWidth * ratio) / 2;
-      const imgY = 30;
+      const imgX = margin + (pdfWidth - imgWidth * ratio) / 2;
+      const imgY = margin + 30;
+
+      pdf.setFillColor(200, 200, 255); // Light blue background color (RGB: 200, 200, 255)
+
+      // pdf.rect(x, y, width, height, style)
+      // 'F' stands for "filled", meaning the rectangle will be filled with the current fill color.
+      pdf.rect(0, 0, pdf.internal.pageSize.getWidth(), pdf.internal.pageSize.getHeight(), 'F'); // Draw filled rectangle
+
+
       pdf.addImage(
         imgData,
         "PNG",
