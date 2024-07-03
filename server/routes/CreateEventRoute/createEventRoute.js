@@ -1,5 +1,5 @@
 const express = require("express")
-const { createEventController,getAllEventsController, AddCoachesToEventController, AddPaginationToGetEvent, AddRefereesToEventController, GetRefereeAddEventController, searchRefereeAddEventController } = require("../../controllers/CreateEventController/createEventController")
+const { createEventController,getAllEventsController, AddCoachesToEventController, AddPaginationToGetEvent, AddRefereesToEventController, GetRefereeAddEventController, searchRefereeAddEventController, RemoveRefereesToEventController, } = require("../../controllers/CreateEventController/createEventController")
 
 const router = express.Router()
 
@@ -16,6 +16,9 @@ router.post("/assignCoaches",AddCoachesToEventController)
 
 // Assign Referee To Event || POST
 router.post("/assignReferee",AddRefereesToEventController)
+
+// Remove Assign Referee To Event || POST
+router.post("/removeReferee",RemoveRefereesToEventController)
 
 // Get Assign Referee Event || POST
 router.post("/assignReferee-event",GetRefereeAddEventController)

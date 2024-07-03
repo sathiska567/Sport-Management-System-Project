@@ -70,15 +70,33 @@ export default function FinalizeFixture() {
     const input = pdfRef.current;
 
     html2canvas(input).then((canvas) => {
-      const imgData = canvas.toDataURL("image/png"); //convert data as images
-      const pdf = new jspdf("p", "mm", "a4", true); //use to generate pdf p - portrait mode(can use l - landscape mode) , mm - dimension(can pass difference dimension) , a4 - sheet formate(can pass a1,a2..) , true - optimization in pdf(reduce file size)
-      const pdfWidth = pdf.internal.pageSize.getWidth();
-      const pdfHeight = pdf.internal.pageSize.getHeight();
+      const imgData = canvas.toDataURL("image/png"); // convert data as images
+      const pdf = new jspdf("p", "mm", "a4", true); // use to generate pdf p - portrait mode(can use l - landscape mode), mm - dimension(can pass different dimensions), a4 - sheet format(can pass a1, a2..), true - optimization in pdf(reduce file size)
+      
+      const margin = 10; // Define a margin size (in mm)
+      
+      const pdfWidth = pdf.internal.pageSize.getWidth() - 2 * margin;
+      const pdfHeight = pdf.internal.pageSize.getHeight() - 2 * margin;
       const imgWidth = canvas.width;
       const imgHeight = canvas.height;
       const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight);
-      const imgX = (pdfWidth - imgWidth * ratio) / 2;
-      const imgY = 30;
+      const imgX = margin + (pdfWidth - imgWidth * ratio) / 2;
+      const imgY = 50; // Adjust this if you want a margin above the image
+      
+      // Add title with blue color
+      // pdf.setFontSize(16);
+      // pdf.setTextColor(0, 0, 255); // set text color to blue (RGB: 0, 0, 255)    
+      // pdf.text("This Pdf About Team Name And Team Number", pdf.internal.pageSize.getWidth() / 2, 20, { align: "center" });
+      
+
+      pdf.setFillColor(200, 200, 255); // Light blue background color (RGB: 200, 200, 255)
+
+      // pdf.rect(x, y, width, height, style)
+      // 'F' stands for "filled", meaning the rectangle will be filled with the current fill color.
+      pdf.rect(0, 0, pdf.internal.pageSize.getWidth(), pdf.internal.pageSize.getHeight(), 'F'); // Draw filled rectangle
+
+
+      // Add the image with margins
       pdf.addImage(
         imgData,
         "PNG",
@@ -87,8 +105,13 @@ export default function FinalizeFixture() {
         imgWidth * ratio,
         imgHeight * ratio
       );
+      
+      // Save the PDF
       pdf.save("Fixture.pdf");
     });
+    
+    
+    
   };
 
   // handle single eliminate
@@ -137,18 +160,6 @@ export default function FinalizeFixture() {
                   </span>
                 ),
               },
-
-              // {
-              //   title: "Event Time",
-              //   dataIndex: "time",
-              //   render: (text, record) => <span style={{color:"blue",fontFamily:"sans-serif",fontWeight:"bold"}}>{record.formattedTime}</span>,
-              // },
-
-              // {
-              //   title: "Location",
-              //   dataIndex: "location",
-              //   render: (text, record) => <span style={{color:"green",fontFamily:"sans-serif",fontWeight:"bold"}}>Ground 01</span>,
-              // },
             ]}
             pagination={{
               pageSize: 6,

@@ -9,7 +9,7 @@ const createEventController = async (req, res) => {
       const lastEvent = await createEventModel.findOne().sort({ eid: -1 }); // Find the last event by eid
       let nextEidNumber = 1; // Default to 1 if no events exist
 
-      if (lastEvent  && lastEvent.eid) {
+      if (lastEvent && lastEvent.eid) {
          const lastEid = lastEvent.eid;
          nextEidNumber = parseInt(lastEid.slice(1), 10) + 1; // Extract numeric part and increment
       }
@@ -48,7 +48,6 @@ const createEventController = async (req, res) => {
 module.exports = createEventController;
 
 
-
 const getAllEventsController = async (req, res) => {
    try {
       const data = await createEventModel.find({});
@@ -76,92 +75,114 @@ const getAllEventsController = async (req, res) => {
 }
 
 
-const AddCoachesToEventController = async(req,res)=>{
+const AddCoachesToEventController = async (req, res) => {
    try {
-      const {eventId , coachId} = req.body;
-      console.log(eventId,coachId);
+      const { eventId, coachId } = req.body;
+      console.log(eventId, coachId);
 
-      const data = await createEventModel.find({_id:eventId});
+      const data = await createEventModel.find({ _id: eventId });
 
-      if(!data){
+      if (!data) {
          res.status(404).send({
             success: false,
             message: "Event Not Found",
          })
       }
 
-      const event = await createEventModel.findByIdAndUpdate(eventId, {$push: {coaches: coachId}}, {new: true});
-     
+      const event = await createEventModel.findByIdAndUpdate(eventId, { $push: { coaches: coachId } }, { new: true });
+
       res.status(200).send({
          success: true,
          message: "Coach Added Successful",
-         data:event
+         data: event
       })
-      
+
 
 
    } catch (error) {
       res.status(400).send({
          success: false,
          message: "All Events Fetch Unsuccessfull",
-         error:error.message
+         error: error.message
       })
    }
 }
 
-const AddRefereesToEventController = async(req,res)=>{
+const AddRefereesToEventController = async (req, res) => {
    try {
-      const {eventId , refereeId} = req.body;
-      console.log(eventId,refereeId);
+      const { eventId, refereeId } = req.body;
+      console.log(eventId, refereeId);
 
-      const data = await createEventModel.find({_id:eventId});
+      const data = await createEventModel.find({ _id: eventId });
 
-      if(!data){
+      if (!data) {
          res.status(404).send({
             success: false,
             message: "Event Not Found",
          })
       }
 
-      const event = await createEventModel.findByIdAndUpdate(eventId, {$push: {refereeId: refereeId}}, {new: true});
-     
+      const event = await createEventModel.findByIdAndUpdate(eventId, { $push: { refereeId: refereeId } }, { new: true });
+
       res.status(200).send({
          success: true,
          message: "Referee Added Successful",
-         data:event
+         data: event
       })
-      
+
 
    } catch (error) {
       res.status(400).send({
          success: false,
          message: "All Events Fetch Unsuccessfull",
-         error:error.message
+         error: error.message
+      })
+   }
+}
+
+// Remove Assign Referees
+const RemoveRefereesToEventController = async (req, res) => {
+   try {
+      const { eventId, refereeId } = req.body;
+      console.log(eventId, refereeId);
+
+      const event = await createEventModel.findByIdAndUpdate(eventId, { $pull: { refereeId: refereeId } }, { new: true });
+     
+      res.status(200).send({
+         success: true,
+         message: "Referee Remove Successful",
+      })
+
+   } catch (err) {
+      res.status(400).send({
+         success: false,
+         message: "Error Occur While Removing Referees",
+         error: err.message
       })
    }
 }
 
 // get referee assign matches
-const GetRefereeAddEventController = async(req,res)=>{
+const GetRefereeAddEventController = async (req, res) => {
    try {
-      const {refereeId,page} = req.body;
-      console.log(refereeId,page);
+      const { refereeId, page } = req.body;
+      console.log(refereeId, page);
 
-       // Default to page 1 if not provided or invalid
-       const pageNumber = parseInt(page, 10) || 1;
-                
-       // Define the limit per page
-       const limit = 5;
-   
-       // Calculate the skip based on pageNumber and limit
-       const skip = (pageNumber - 1) * limit;
+      // Default to page 1 if not provided or invalid
+      const pageNumber = parseInt(page, 10) || 1;
 
-      const data = await createEventModel.find({refereeId:refereeId}).limit(limit).skip(skip).exec();
+      // Define the limit per page
+      const limit = 5;
 
-       // Count total number of Fixtures
-       const totalData = await createEventModel.countDocuments({refereeId:refereeId});
+      // Calculate the skip based on pageNumber and limit
+      const skip = (pageNumber - 1) * limit;
 
-      if(!data){
+      const data = await createEventModel.find({ refereeId: refereeId }).limit(limit).skip(skip).exec();
+
+      // Count total number of Fixtures
+      const totalData = await createEventModel.countDocuments({ refereeId: refereeId });
+
+      if (!data) {
          res.status(404).send({
             success: false,
             message: "Event Not Found",
@@ -172,97 +193,103 @@ const GetRefereeAddEventController = async(req,res)=>{
          success: true,
          message: "Data fetched successfully",
          data: {
-           limit,
-           data,
-           totalData,
-           totalPages: Math.ceil(totalData / limit),
-           currentPage: pageNumber,
+            limit,
+            data,
+            totalData,
+            totalPages: Math.ceil(totalData / limit),
+            currentPage: pageNumber,
          },
-       });
+      });
 
    } catch (error) {
       res.status(400).send({
          success: false,
          message: "Assign Events Fetch Unsuccessful",
-         error:error.message
+         error: error.message
       })
    }
 }
 
-const searchRefereeAddEventController = async(req,res)=>{
+const searchRefereeAddEventController = async (req, res) => {
    try {
-     const {eventName} = req.body
-     console.log(eventName); 
+      const { eventName } = req.body
+      console.log(eventName);
 
-     if(eventName == ""){
-       return 0;
-     }
+      if (eventName == "") {
+         return 0;
+      }
 
-     const regex = RegExp(eventName, 'i');
-     const data = await createEventModel.find({nameOfTheEvent:regex});
+      const regex = RegExp(eventName, 'i');
+      const data = await createEventModel.find({ nameOfTheEvent: regex });
 
-     if(!data){
-        res.status(404).send({
-           success: false,
-           message: "Event Not Found",
-        })
-     }
+      if (!data) {
+         res.status(404).send({
+            success: false,
+            message: "Event Not Found",
+         })
+      }
 
-     res.status(200).send({
-        success: true,
-        message: "Data fetched successfully",
-        data:data
-     })
+      res.status(200).send({
+         success: true,
+         message: "Data fetched successfully",
+         data: data
+      })
 
    } catch (error) {
       res.status(400).send({
          success: false,
          message: "Search Events Fetch Unsuccessful",
-         error:error.message
+         error: error.message
       })
    }
 }
 
 // Add Paginations
-const AddPaginationToGetEvent = async(req,res)=> {
+const AddPaginationToGetEvent = async (req, res) => {
    try {
-     const {page} = req.body
- 
-     // Default to page 1 if not provided or invalid
-     const pageNumber = parseInt(page, 10) || 1;
+      const { page } = req.body
 
-   //   define limit number
-     const limit = 5;
+      // Default to page 1 if not provided or invalid
+      const pageNumber = parseInt(page, 10) || 1;
 
-     // Calculate the skip value base on pageNumber and limits
-     const skip = (pageNumber - 1) * limit;
+      //   define limit number
+      const limit = 5;
 
-     // Find all documents with the skip and limit
-     const events = await createEventModel.find().skip(skip).limit(limit);
+      // Calculate the skip value base on pageNumber and limits
+      const skip = (pageNumber - 1) * limit;
 
-     // Count the total number of documents
-     const totalDocuments = await createEventModel.countDocuments();
+      // Find all documents with the skip and limit
+      const events = await createEventModel.find().skip(skip).limit(limit);
 
-     res.status(200).send({
-      success: true,
-      message: "Data fetched successfully",
-      data: {
-        limit,
-        events,
-        totalDocuments,
-        totalPages: Math.ceil(totalDocuments / limit),
-        currentPage: pageNumber,
-      },
-    });
-     
-         
+      // Count the total number of documents
+      const totalDocuments = await createEventModel.countDocuments();
+
+      res.status(200).send({
+         success: true,
+         message: "Data fetched successfully",
+         data: {
+            limit,
+            events,
+            totalDocuments,
+            totalPages: Math.ceil(totalDocuments / limit),
+            currentPage: pageNumber,
+         },
+      });
+
+
    } catch (error) {
       res.status(400).send({
-          success: false,
-          message: "Event data fetch Unsuccessfully",
-          error:error.message
+         success: false,
+         message: "Event data fetch Unsuccessfully",
+         error: error.message
       })
    }
- }
+}
 
-module.exports = { createEventController, getAllEventsController,AddCoachesToEventController,AddRefereesToEventController,AddPaginationToGetEvent,GetRefereeAddEventController,searchRefereeAddEventController }
+
+
+
+
+
+
+module.exports = { createEventController, getAllEventsController, AddCoachesToEventController, AddRefereesToEventController, AddPaginationToGetEvent, GetRefereeAddEventController, searchRefereeAddEventController, RemoveRefereesToEventController }

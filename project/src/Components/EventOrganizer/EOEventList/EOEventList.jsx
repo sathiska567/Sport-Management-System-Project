@@ -50,9 +50,9 @@ const getAllCreateEvent = async () => {
     }
   };
 
-  const handleAssignRefereeNavigate = async(eventId)=>{
+  const handleAssignRefereeNavigate = async(record)=>{
     // console.log(eventId);
-    navigate("/EO-RefereeAssign",{state:{eventId}})
+    navigate("/EO-RefereeAssign",{state:{record}})
   }
 
 
@@ -175,7 +175,7 @@ const getAllCreateEvent = async () => {
                                                     type="ghost"
                                                     ghost
                                                     // "/AssignCoachesFinal"
-                                                    onClick={()=>handleAssignRefereeNavigate(record._id)}
+                                                    onClick={()=>handleAssignRefereeNavigate(record)}
                                                     style={{
                                                         backgroundColor: "blue",
                                                         color: "#fff",

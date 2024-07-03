@@ -16,9 +16,10 @@ export default function EOAssignRefereeFinal() {
     const [evedate, setEventDate] = useState("");
 
     const [createdEvent , setCreateEvent] = useState([]);
-    const [addedEvents, setAddedEvents] = useState(false);
+    const [addedEvents, setAddedEvents] = useState();
 
     const [dataSource, setDataSource] = useState([]);
+    const [restrictData , setRestrictData] = useState([]);
 
   console.log(location);
     // Filter userApplicationData based on userRole and Userlocation
@@ -35,7 +36,7 @@ export default function EOAssignRefereeFinal() {
 
     const getAvailableReferee = async () => {
          try {
-            const availabilityEventResponse = await axios.post("http://localhost:8080/api/v1/availability/event-available-referee",{eventId:location.state.eventId})
+            const availabilityEventResponse = await axios.post("http://localhost:8080/api/v1/availability/event-available-referee",{eventId:location.state.record._id})
             console.log(availabilityEventResponse);   
             if(availabilityEventResponse.data.success){
                 setDataSource(availabilityEventResponse.data.data);
@@ -47,11 +48,15 @@ export default function EOAssignRefereeFinal() {
 
     const handleRefereeAdd = async(refereeId)=>{
         try {
-                const addCoaches = await axios.post("http://localhost:8080/api/v1/event/assignReferee",{eventId:location.state.eventId ,refereeId:refereeId})
-                console.log(addCoaches);
-                if(addCoaches.data.success){
+                const addReferees = await axios.post("http://localhost:8080/api/v1/event/assignReferee",{eventId:location.state.record._id ,refereeId:refereeId})
+                const restrictRefereeAvailable = await axios.post("http://localhost:8080/api/v1/availability/restrictAssignReferees",{eventNewDate:location.state.record.eventNewDate,eventId:location.state.record._id,assignRefereeId:refereeId})
+
+                setRestrictData(restrictRefereeAvailable.data.data)
+                // console.log(addReferees,restrictRefereeAvailable);
+                if(addReferees.data.success){
                     message.success("Referee Assigned Successfully");
-                    setAddedEvents(addCoaches.data.success);
+                    setAddedEvents('true');
+                    // window.location.reload();
                 }
 
                 console.log(addedEvents);
@@ -60,6 +65,33 @@ export default function EOAssignRefereeFinal() {
                    message.error("Error fetching data");
              }  
     }
+
+    const handleRefereeRemove = async(refereeId)=>{
+        try {   
+                const restrictRemoveRefereeAvailable = await axios.post("http://localhost:8080/api/v1/availability/restrictRemoveReferees",{eventNewDate:location.state.record.eventNewDate,eventId:location.state.record._id,assignRefereeId:refereeId})
+                const removeReferees = await axios.post("http://localhost:8080/api/v1/event/removeReferee",{eventId:location.state.record._id,refereeId:refereeId})
+
+                console.log(removeReferees,restrictRemoveRefereeAvailable);
+                if(removeReferees.data.success){
+                    message.success("Referee Remove Successfully");
+                    setAddedEvents('false');
+                    // window.location.reload();
+                }
+
+                console.log(addedEvents);
+        
+             } catch (error) {
+                   message.error("Error fetching data");
+             }  
+    }
+
+    // const RestrictAssignReferee = async()=>{
+    //     try {
+            
+    //     } catch (error) {
+    //         message.error("Error fetching data");
+    //     }
+    // }
 
     useEffect(() => {
         getAvailableReferee()
@@ -140,7 +172,7 @@ export default function EOAssignRefereeFinal() {
                                                     gap: "10px",
                                                 }}
                                             >
-                                                <Button
+                                               <Button
                                                     type="ghost"
                                                     ghost
                                                     onClick={()=>handleRefereeAdd(record.id)}
@@ -154,8 +186,66 @@ export default function EOAssignRefereeFinal() {
                                                         marginBottom: "auto",
                                                     }}
                                                 >
-                                                   {addedEvents ? "Added Referee" : "Add Referee"}
+                                                  Assign
+                                                </Button> 
+
+                                                <Button
+                                                    type="ghost"
+                                                    ghost
+                                                    onClick={()=>handleRefereeRemove(record.id)}
+                                                    style={{
+                                                        backgroundColor: "red",
+                                                        color: "#fff",
+                                                        fontSize: "14px",
+                                                        marginRight: "10px",
+                                                        borderRadius: "8px",
+                                                        marginTop: "auto",
+                                                        marginBottom: "auto",
+                                                    }}
+                                                >
+                                                    Remove
                                                 </Button>
+
+                                            {/* {addedEvents == 'true' ?  (
+                                                    <Button
+                                                    type="ghost"
+                                                    ghost
+                                                    onClick={()=>handleRefereeRemove(record.id)}
+                                                    style={{
+                                                        backgroundColor: "red",
+                                                        color: "#fff",
+                                                        fontSize: "14px",
+                                                        marginRight: "10px",
+                                                        borderRadius: "8px",
+                                                        marginTop: "auto",
+                                                        marginBottom: "auto",
+                                                    }}
+                                                >
+                                                    Remove Referee
+                                                </Button>
+                                                ) :
+
+                                                (
+                                                    <Button
+                                                    type="ghost"
+                                                    ghost
+                                                    onClick={()=>handleRefereeAdd(record.id)}
+                                                    style={{
+                                                        backgroundColor: "blue",
+                                                        color: "#fff",
+                                                        fontSize: "14px",
+                                                        marginRight: "10px",
+                                                        borderRadius: "8px",
+                                                        marginTop: "auto",
+                                                        marginBottom: "auto",
+                                                    }}
+                                                >
+                                                   Add Referee
+                                                </Button>
+                                                )
+                                            
+                                            
+                                            } */}
                                                 
                                             </span>
                                         ),

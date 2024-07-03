@@ -1,5 +1,5 @@
 const express = require("express")
-const { RefereeAvailabilityController, EventAvailableRefereeController } = require("../../controllers/RefereeAvailabilityController/RefereeAvailabilityController")
+const { RefereeAvailabilityController, EventAvailableRefereeController, RestrictAssignRefereeController, RestrictRemoveRefereeController } = require("../../controllers/RefereeAvailabilityController/RefereeAvailabilityController")
 
 const router = express.Router()
 
@@ -9,6 +9,13 @@ router.post("/save-referee-availability",RefereeAvailabilityController)
 
 // EVENT AVAILABLE REFEREE || POST
 router.post("/event-available-referee",EventAvailableRefereeController)
+
+
+// restrict Assign Referees
+router.post("/restrictAssignReferees",RestrictAssignRefereeController)
+
+// restrict Remove Referees
+router.post("/restrictRemoveReferees",RestrictRemoveRefereeController)
 
 
 module.exports = router
