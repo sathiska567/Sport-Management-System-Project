@@ -2,8 +2,6 @@
 import "./EOSideBar.css";
 import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCalendar } from "@fortawesome/free-solid-svg-icons";
 
 import {
   MenuFoldOutlined,
@@ -12,7 +10,6 @@ import {
   PoweroffOutlined,
   FormOutlined,
   BellOutlined,
-  UserOutlined,
   EditOutlined,
   CalendarOutlined,
   MailOutlined,
@@ -29,7 +26,6 @@ import {
   Space,
   Badge,
   message,
-  theme,
 } from "antd";
 import axios from "axios";
 // Destructuring components from Ant Design's Layout
@@ -73,7 +69,7 @@ const EOSizeBar = ({ children }) => {
   // Functional component to display text based on selected menu item
   const Text = ({ selectedMenuItem }) => {
     const text = {
-      "/dashboad": "Dashboard",
+      "/eo-stats": "Dashboard",
       "/eo-create-event": "Create Event",
       "/EditEventTable": "Edit Event",
       "/create-fixture": "Create Fixture",
@@ -214,8 +210,8 @@ const EOSizeBar = ({ children }) => {
             fontSize: "16px",
           }}
         >
-          <Menu.Item key="/dashboad" icon={<DashboardOutlined />}>
-            <NavLink to="/dashboad">Dashboard</NavLink>
+          <Menu.Item key="/eo-stats" icon={<DashboardOutlined />}>
+            <NavLink to="/eo-stats">Dashboard</NavLink>
           </Menu.Item>
 
           {isEventOrganizer ? (
@@ -232,19 +228,6 @@ const EOSizeBar = ({ children }) => {
               <Menu.Item key="/eo-view-fixture" icon={<CalendarOutlined />}>
                 <NavLink to="/eo-view-fixture">View Fixture</NavLink>
               </Menu.Item>
-              {/* <Menu.Item
-                key="/shuffle-fixture"
-                icon={<FontAwesomeIcon icon={faCalendar} />}
-              >
-                <NavLink to="/shuffle-fixture">Shuffle Fixture</NavLink>
-              </Menu.Item> */}
-              {/* <Menu.Item key="/update-fixture" icon={<CalendarOutlined />}>
-                <NavLink to="/update-fixture">Edit Fixture</NavLink>
-              </Menu.Item> */}
-              {/* <Menu.Item key="/eo-assign-staff" icon={<UserOutlined />}>
-                <NavLink to="/eo-assign-staff">Assign Staff</NavLink>
-              </Menu.Item> */}
-
               <Menu.Item key="/brackets" icon={<Bracket />}>
                 <NavLink to="/brackets">Bracket</NavLink>
               </Menu.Item>

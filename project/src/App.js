@@ -17,7 +17,7 @@ import FinalizeFixtureUpdate from "./Components/EventOrganizer/EOShuffleFixture/
 import FinalUpdate from "./Components/EventOrganizer/EOShuffleFixture/FinalUpdate.jsx";
 import SetFixtureRound from "./Components/EventOrganizer/EOShuffleFixture/SetFixtureRound.jsx";
 import AddTeam from "./Components/EventOrganizer/EOShuffleFixture/AddTeam.jsx";
-import EOStats from "./Components/EventOrganizer/EOStats/EOStats.jsx";
+import EOStats from "./Components/Stats/EOStats/EOStats.jsx";
 import CreateFixture from "./Components/EventOrganizer/EOCreateFixture/EOCreateFixture.jsx";
 import AssignStaff from "./Components/EventOrganizer/EOAssignStaff/EOAssignStaff.jsx";
 import CreateEvent from "./Components/EventOrganizer/EOCreateEvent/EOCreateEventForm.jsx";
@@ -87,7 +87,7 @@ import EOEventList from "./Components/EventOrganizer/EOEventList/EOEventList.jsx
 import EOAssignRefereeFinal from "./Components/EventOrganizer/EOAssignRefereeFinal/EOAssignRefereeFinal.jsx";
 import EOCreateEventForm from "./Components/EventOrganizer/EOCreateEvent/EOCreateEventForm.jsx";
 import EOCreatedEventView from "./Components/EventOrganizer/EOCreateFixture/EOCreatedEventView.jsx";
-// import AdminStats from "./Components/Stats/AdminStats/AdminStats.jsx";
+import AdminStats from "./Components/Stats/AdminStats/AdminStats.jsx";
 
 function App() {
   const [eventId, setEventId] = useState("");
@@ -161,14 +161,14 @@ function App() {
         />
 
         {/* after login routes */}
-        {/* <Route
+        <Route
           path="/dashboad"
           element={
             <ProtectedRoute>
               <AdminStats />
             </ProtectedRoute>
           }
-        /> */}
+        />
 
         <Route
           path="/UserValidation"
@@ -854,7 +854,7 @@ function App() {
           }
         ></Route>
       </Routes>
-      {/* <Routes>
+      <Routes>
         <Route
           path="/AdminStats"
           element={
@@ -863,7 +863,7 @@ function App() {
             </ProtectedRoute>
           }
         ></Route>
-      </Routes> */}
+      </Routes>
 
       {/* <Routes>
         <Route

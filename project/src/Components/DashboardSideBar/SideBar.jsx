@@ -13,7 +13,6 @@ import {
 } from "@ant-design/icons";
 
 import { Layout, Menu, Button, Avatar, Space, Badge, message } from "antd";
-import ManageUser from "../icons/ManageUser.jsx";
 import PendingActions from "../icons/PendingActions.jsx";
 import axios from "axios";
 import { adminMenu, userMenu } from "../../Data/Data.js";
@@ -377,7 +376,7 @@ const SideBar = ({ children }) => {
               }}
             >
               <Menu.Item key="1" icon={<DashboardOutlined />}>
-                <Link to="/dashboad">Dashboard</Link>
+                <Link to="/AdminStats">Dashboard</Link>
               </Menu.Item>
 
               {isCoach ? (
