@@ -2,7 +2,6 @@ import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import UserApplication from "./Components/UserApplication/UserApplication.jsx";
 import UserApplicationTable from "./Components/UserApplicationTable/UserApplicationTable.jsx";
-import StatCards from "./Components/StatCard/StatCards.jsx";
 import ForgotPassword from "./Components/Login/ForgetPassword.jsx";
 import OTPPage from "./Components/Login/OTPPage.jsx";
 import ResetPassword from "./Components/Login/CreateNewPassword.jsx";
@@ -26,8 +25,6 @@ import EditEventForm from "./Components/EventOrganizer/EOEditEvent/EOEditEventFo
 import EOProfile from "./Components/EventOrganizer/EOProfile/EOProfile.jsx";
 import CoachAvailability from "./Components/Coach/CoachAvailability/CoachAvailability.jsx";
 import CoachStats from "./Components/Coach/CoachStats/CoachStats.jsx";
-//import CoachCreateTeam from "./Components/Coach/CoachCreateTeam/CoachCreateTeam.jsx";
-//import CoachEditTeam from "./Components/Coach/CoachEditTeam/CoachEditTeam.jsx";
 import CoachReviewPlayers from "./Components/Coach/CoachReviewPlayers/CoachReviewPlayers.jsx";
 import CoachProfile from "./Components/Coach/CoachProfile/CoachProfile.jsx";
 import EOViewFixture from "./Components/EventOrganizer/EOViewFixture/EOViewFixture.jsx";
@@ -42,16 +39,13 @@ import PlayerMatches from "./Components/PlayerComponents/PlayerMatches/PlayerMat
 import RefereeStats from "./Components/Referee/RefereeStats/RefereeStats.jsx";
 import RefereeAvailability from "./Components/Referee/RefereeAvailability/RefereeAvailability.jsx";
 import RefereeMatches from "./Components/Referee/RefereeMatches/RefereeMatches.jsx";
-import RefereeProfile from "./Components/Referee/RefereeProfile/RefereeProfile.jsx";
-import TeamManagerStats from "./Components/TeamManager/TeamManagerStats/TeamManagerStats.jsx";
+import TeamManagerStats from "./Components/Stats/TeamManagerStats/TeamManagerStats.jsx";
 import TeamManagerCreateTeam from "./Components/TeamManager/TeamManagerCreateTeam/TeamManagerCreateTeam.jsx";
 import TeamManagerAssignMembersTable from "./Components/TeamManager/TeamManagerAssignMembers/TeamManagerAssignMembersTable.jsx";
 import TeamManagerAssignMembersCoach from "./Components/TeamManager/TeamManagerAssignMembers/TeamManagerAssignMembersCoach.jsx";
 import TeamManagerAssignMembersPlayer from "./Components/TeamManager/TeamManagerAssignMembers/TeamManagerAssignMembersPlayer.jsx";
 import TeamManagerProfile from "./Components/TeamManager/TeamManagerProfile/TeamManagerProfile.jsx";
-
 import EditTabEvent from "./Components/EventOrganizer/EditTabEvent/EditTabEvent.jsx";
-// import TeamManagerAssign from "./Components/TeamManager/TeamManagerAssign/TeamManagerAssign.jsx";
 import TeamManagerAssignCoaches from "./Components/TeamManager/TeamManagerAssignCoaches/TeamManagerAssignCoaches.jsx";
 import EventList from "./Components/TeamManager/EventList/EventList.jsx";
 import SearchPlayerProfile from "./Components/PlayerComponents/SearchPlayerProfile/SearchPlayerProfile.jsx";
@@ -68,7 +62,6 @@ import CoachToEOCommunicationForm from "./Components/Coach/CoachCommunication/Co
 import TeamManagerToEOCommunication from "./Components/TeamManager/TeamManagerCommunication/TeamManagerToEOCommunication.jsx";
 import TeamManagerToEOCommunicationForm from "./Components/TeamManager/TeamManagerCommunication/TeamManagerToEOCommunicationForm.jsx";
 import RefreeProfileNew from "./Components/Referee/RefreeProfileNew/RefreeProfileNew.jsx";
-
 import TournamentBracket from "./Components/EventOrganizer/EOBracket/Bracket.jsx";
 import CoachCreateTeam from "./Components/Coach/CoachCreateTeam/CreateTeam.jsx";
 import SelectPlayers from "./Components/Coach/CoachCreateTeam/SelectPlayers.jsx";
@@ -79,15 +72,14 @@ import PointTableForm from "./Components/TeamManager/PointTableForm/PointTableFo
 import TeamManagerAssignCoachesNew from "./Components/TeamManager/TeamManagerAssignCoachesNew/TeamManagerAssignCoachesNew.jsx";
 import AssignPlayerMatches from "./Components/PlayerComponents/AssignPlayerMatchesAndDetails/AssignPlayerMatches.jsx";
 import AssignPlayerMatchesDeatils from "./Components/PlayerComponents/AssignPlayerMatchesAndDetails/AssignedPlayerMatchDetails.jsx";
-
-import { useState } from "react";
 import AssignCoachesFinal from "./Components/TeamManager/AssignCoachesFinal/AssignCoachesFinal.jsx";
 import AssignRefereeFinal from "./Components/TeamManager/AssignRefereeFinal/AssignRefereeFinal.jsx";
 import EOEventList from "./Components/EventOrganizer/EOEventList/EOEventList.jsx";
 import EOAssignRefereeFinal from "./Components/EventOrganizer/EOAssignRefereeFinal/EOAssignRefereeFinal.jsx";
-import EOCreateEventForm from "./Components/EventOrganizer/EOCreateEvent/EOCreateEventForm.jsx";
 import EOCreatedEventView from "./Components/EventOrganizer/EOCreateFixture/EOCreatedEventView.jsx";
 import AdminStats from "./Components/Stats/AdminStats/AdminStats.jsx";
+import { useState } from "react";
+
 
 function App() {
   const [eventId, setEventId] = useState("");
