@@ -94,53 +94,40 @@ const EventAvailableRefereeController = async (req, res) => {
 // Restric Assign Referees
 const RestrictAssignRefereeController = async (req, res) => {
         try {
-            const { eventId } = req.body;
-            const availableRefereeDetails = [];
+          const {eventId , eventNewDate,assignRefereeId} = req.body;
+          const consideringDayAvailableReferee = []
     
-            // Find coach availability for the given event ID
-            const availability = await RefereeAvailabilityModel.find({
-                eventId: eventId,
-                availability: true,
-            });
-    
-            // Extract the coach IDs from the availability records
-            const availableRefereeIds = availability.map((item) => item.RefereeId);
-    
-            // Find details of the coaches who are available and are coaches
-            // $in - operator selects the documents where the value of a field equals any value in the specified array
-            const refereeDetails = await User.find({
-                _id: { $in: availableRefereeIds },
-                isReferee: true,
-            });
-    
-            // Check if referee already assigned to an event on the same day
-            const assignedEvents = await createEventModel.find({
-                _id: { $ne: eventId }, // Exclude current event
-                date: { $eq: req.body.eventNewDate}, // Check for the same date
-                referees: { $in: availableRefereeIds }, // Check if referee is already assigned
-            });
-    
-            // If there are assigned events on the same day, restrict assignment
-            if (assignedEvents.length > 0) {
-                return res.status(400).send({
-                    success: false,
-                    message: "Cannot assign referee to more than one event on the same day",
-                });
+          const consideringDaysMatches = await createEventModel.find({eventNewDate:eventNewDate}) 
+          const refereeAvailability = await RefereeAvailabilityModel.find({availability:true})       
+        //   eventId
+          for (let i = 0; i < consideringDaysMatches.length; i++) {
+            for (let j = 0; j < refereeAvailability.length; j++) {
+               if(consideringDaysMatches[i]._id == refereeAvailability[j].eventId){
+                   consideringDayAvailableReferee.push(refereeAvailability[j])
+               }
             }
-    
-            // Collect the relevant details of the available referees
-            refereeDetails.forEach((referee) => {
-                availableRefereeDetails.push({
-                    id: referee._id,
-                    username: referee.username,
-                    email: referee.email,
-                });
-            });
-    
+                
+          }
+
+          for (let k = 0; k < consideringDayAvailableReferee.length; k++) {
+             if((consideringDayAvailableReferee[k].RefereeId == assignRefereeId) && (consideringDayAvailableReferee[k].eventId != eventId)){
+                console.log("hello");
+                consideringDayAvailableReferee[k].availability = false
+                await consideringDayAvailableReferee[k].save()
+                
+             }else{
+                
+                consideringDayAvailableReferee[k].availability = true
+                await consideringDayAvailableReferee[k].save()
+             }
+                
+          }
+         
+
             res.status(200).send({
                 success: true,
                 message: "Data fetched successfully",
-                data: availableRefereeDetails,
+                data: consideringDayAvailableReferee,
             });
     
         } catch (error) {
@@ -151,6 +138,57 @@ const RestrictAssignRefereeController = async (req, res) => {
             });
         }
     }
+
+
+// Restric Assign Referees
+const RestrictRemoveRefereeController = async (req, res) => {
+        try {
+            const { eventId, eventNewDate, assignRefereeId } = req.body;
+    
+            // Find matches for the specific eventNewDate
+            const consideringDaysMatches = await createEventModel.find({ eventNewDate: eventNewDate });
+    
+            // Find referee availabilities for all events
+            const refereeAvailability = await RefereeAvailabilityModel.find({});
+    
+            // Array to hold referees available for the specific event and day
+            const consideringDayAvailableReferee = [];
+    
+            // Filter referees available for the specific eventId and day
+            for (let i = 0; i < consideringDaysMatches.length; i++) {
+                for (let j = 0; j < refereeAvailability.length; j++) {
+                    if (consideringDaysMatches[i]._id.toString() === refereeAvailability[j].eventId.toString()) {
+                        consideringDayAvailableReferee.push(refereeAvailability[j]);
+                    }
+                }
+            }
+    
+            // Update availability status for the assigned referee
+            for (let k = 0; k < consideringDayAvailableReferee.length; k++) {
+                if (consideringDayAvailableReferee[k].RefereeId === assignRefereeId) {
+                    consideringDayAvailableReferee[k].availability = true; // Update availability logic as per your requirements
+                }
+            }
+    
+            // Save updated availability status (if needed)
+            await Promise.all(consideringDayAvailableReferee.map(ref => ref.save()));
+    
+            // Respond with updated referee availability data
+            res.status(200).send({
+                success: true,
+                message: "Referee availability updated successfully",
+                data: consideringDayAvailableReferee,
+            });
+    
+        } catch (error) {
+            res.status(400).send({
+                success: false,
+                message: "Error occurred while updating referee availability",
+                error: error.message,
+            });
+        }
+    }
+    
     
 
-module.exports = { RefereeAvailabilityController, EventAvailableRefereeController,RestrictAssignRefereeController };
+module.exports = { RefereeAvailabilityController, EventAvailableRefereeController,RestrictAssignRefereeController,RestrictRemoveRefereeController };

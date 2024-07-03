@@ -19,6 +19,7 @@ export default function EOAssignRefereeFinal() {
     const [addedEvents, setAddedEvents] = useState();
 
     const [dataSource, setDataSource] = useState([]);
+    const [restrictData , setRestrictData] = useState([]);
 
   console.log(location);
     // Filter userApplicationData based on userRole and Userlocation
@@ -47,8 +48,11 @@ export default function EOAssignRefereeFinal() {
 
     const handleRefereeAdd = async(refereeId)=>{
         try {
-                const addReferees = await axios.post("http://localhost:8080/api/v1/event/assignReferee",{eventId:location.state.eventId ,refereeId:refereeId})
-                console.log(addReferees);
+                const addReferees = await axios.post("http://localhost:8080/api/v1/event/assignReferee",{eventId:location.state.record._id ,refereeId:refereeId})
+                const restrictRefereeAvailable = await axios.post("http://localhost:8080/api/v1/availability/restrictAssignReferees",{eventNewDate:location.state.record.eventNewDate,eventId:location.state.record._id,assignRefereeId:refereeId})
+
+                setRestrictData(restrictRefereeAvailable.data.data)
+                // console.log(addReferees,restrictRefereeAvailable);
                 if(addReferees.data.success){
                     message.success("Referee Assigned Successfully");
                     setAddedEvents('true');
@@ -63,9 +67,11 @@ export default function EOAssignRefereeFinal() {
     }
 
     const handleRefereeRemove = async(refereeId)=>{
-        try {
-                const removeReferees = await axios.post("http://localhost:8080/api/v1/event/removeReferee",{eventId:location.state.eventId ,refereeId:refereeId})
-                console.log(removeReferees);
+        try {   
+                const restrictRemoveRefereeAvailable = await axios.post("http://localhost:8080/api/v1/availability/restrictRemoveReferees",{eventNewDate:location.state.record.eventNewDate,eventId:location.state.record._id,assignRefereeId:refereeId})
+                const removeReferees = await axios.post("http://localhost:8080/api/v1/event/removeReferee",{eventId:location.state.record._id,refereeId:refereeId})
+
+                console.log(removeReferees,restrictRemoveRefereeAvailable);
                 if(removeReferees.data.success){
                     message.success("Referee Remove Successfully");
                     setAddedEvents('false');
@@ -79,13 +85,13 @@ export default function EOAssignRefereeFinal() {
              }  
     }
 
-    const RestrictAssignReferee = async()=>{
-        try {
+    // const RestrictAssignReferee = async()=>{
+    //     try {
             
-        } catch (error) {
-            message.error("Error fetching data");
-        }
-    }
+    //     } catch (error) {
+    //         message.error("Error fetching data");
+    //     }
+    // }
 
     useEffect(() => {
         getAvailableReferee()
@@ -166,7 +172,7 @@ export default function EOAssignRefereeFinal() {
                                                     gap: "10px",
                                                 }}
                                             >
-                                                {/* <Button
+                                               <Button
                                                     type="ghost"
                                                     ghost
                                                     onClick={()=>handleRefereeAdd(record.id)}
@@ -180,10 +186,27 @@ export default function EOAssignRefereeFinal() {
                                                         marginBottom: "auto",
                                                     }}
                                                 >
-                                                   {addedEvents ? "Added Referee" : "Add Referee"}
-                                                </Button> */}
+                                                  Assign
+                                                </Button> 
 
-                                                {addedEvents == 'true' ?  (
+                                                <Button
+                                                    type="ghost"
+                                                    ghost
+                                                    onClick={()=>handleRefereeRemove(record.id)}
+                                                    style={{
+                                                        backgroundColor: "red",
+                                                        color: "#fff",
+                                                        fontSize: "14px",
+                                                        marginRight: "10px",
+                                                        borderRadius: "8px",
+                                                        marginTop: "auto",
+                                                        marginBottom: "auto",
+                                                    }}
+                                                >
+                                                    Remove
+                                                </Button>
+
+                                            {/* {addedEvents == 'true' ?  (
                                                     <Button
                                                     type="ghost"
                                                     ghost
@@ -222,7 +245,7 @@ export default function EOAssignRefereeFinal() {
                                                 )
                                             
                                             
-                                            }
+                                            } */}
                                                 
                                             </span>
                                         ),
