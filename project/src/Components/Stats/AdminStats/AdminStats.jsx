@@ -1,7 +1,7 @@
-import React, { lazy, Suspense } from "react";
+import React from "react";
 import adminStatStyles from "./AdminStats.module.css";
 import DashboardSideBar from "../../DashboardSideBar/SideBar";
-import { Card, Col, Row, Statistic } from "antd";
+import { Card, Statistic } from "antd";
 import CurrentPlayer from "./currentPlayer";
 import PendingUsersTable from "./PendingUsersTable";
 import { useNavigate } from "react-router-dom";
@@ -9,15 +9,21 @@ import CurrentUser from "./currentUsers";
 import ApplicationStatus from "./applicationStatus";
 import CountUp from "react-countup";
 
-const formatter = (value) => <CountUp end={value} separator="," style={{
-  fontSize: "1.5rem",
-  fontWeight: "bold",
-  color: "#000000",
-}} />;
+const formatter = (value) => (
+  <CountUp
+    end={value}
+    separator=","
+    style={{
+      fontSize: "1.5rem",
+      fontWeight: "bold",
+      color: "#000000",
+    }}
+  />
+);
 const AdminStats = () => {
   const navigate = useNavigate();
   const handleTitleClick = () => {
-    navigate("/UserValidation"); 
+    navigate("/UserValidation");
   };
 
   return (
