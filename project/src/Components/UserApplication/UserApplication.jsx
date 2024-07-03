@@ -30,7 +30,7 @@ const UserApplication = () => {
   const [userApplicationData, setUserApplicationData] = useState([]);
 
   const location = useLocation([]);
-  // console.log("dashboad : " , location);
+  console.log("dashboad : " , location);
 
   const navigate = useNavigate();
   const [getApproval, setGetApproval] = useState();
@@ -237,6 +237,15 @@ const handleStatus = async (id, status) => {
                   id="Age"
                   name="Age"
                   value={location.state?.record?.Age}
+                  readOnly={true}
+                />
+
+                <label htmlFor="">Player Category:</label>
+                <input
+                  type="category"
+                  id="category"
+                  name="category"
+                  value={(location.state?.record?.catagory) ? location.state?.record?.catagory : "Not selected"}
                   readOnly={true}
                 />
 
