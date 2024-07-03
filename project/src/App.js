@@ -78,6 +78,9 @@ import EOEventList from "./Components/EventOrganizer/EOEventList/EOEventList.jsx
 import EOAssignRefereeFinal from "./Components/EventOrganizer/EOAssignRefereeFinal/EOAssignRefereeFinal.jsx";
 import EOCreatedEventView from "./Components/EventOrganizer/EOCreateFixture/EOCreatedEventView.jsx";
 import AdminStats from "./Components/Stats/AdminStats/AdminStats.jsx";
+import PlayerHistory from "./Components/TeamManager/PlayerHistory/PlayerHistory.jsx";
+import PlayerDetails from "./Components/TeamManager/PlayerHistory/PlayerDetails.jsx";
+import HistoryForm from "./Components/TeamManager/PlayerHistory/HistoryForm.jsx";
 import { useState } from "react";
 
 
@@ -921,6 +924,42 @@ function App() {
             </ProtectedRoute>
           }
         ></Route>
+      </Routes>
+      <Routes>
+        <Route
+        path="/PlayerHistory"
+        element={
+          <ProtectedRoute>
+            <PlayerHistory/>
+          </ProtectedRoute>
+        }
+        >
+
+        </Route>
+      </Routes>
+      <Routes>
+        <Route
+        path="/PlayerDetails"
+        element={
+          <ProtectedRoute>
+            <PlayerDetails/>
+          </ProtectedRoute>
+        }
+        >
+
+        </Route>
+      </Routes>
+      <Routes>
+        <Route
+        path="/history-form"
+        element={
+          <ProtectedRoute>
+            <HistoryForm/>
+          </ProtectedRoute>
+        }
+        >
+
+        </Route>
       </Routes>
     </BrowserRouter>
 
