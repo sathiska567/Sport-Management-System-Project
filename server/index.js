@@ -57,7 +57,7 @@ const AssignCoachesNewRoute = require("./routes/AssignCoachesNewRoute/AssignCoac
 const DisplayAssignPlayers = require("./routes/DisplayAssignPlayersRoute/DisplayAssignPlayersRoute")
 const RefereeAvailabilityRoute = require("./routes/RefereeAvailabilityRoute/RefereeAvailabilityRoute")
 const GetPlayerAssignEventRoute = require("./routes/GetPlayerAssignEventRoute/GetPlayerAssignEventRoute")
-
+const GetPlayerCatagoryRoute = require("./routes/GetPlayerCatagoryRoute/GetPlayerCatagoryRoute")
 
 require("./db/mongoDb"); 
 
@@ -197,6 +197,9 @@ app.use("/api/v1/DisplayAssignPlayers", DisplayAssignPlayers);
 
 // GET Player Assign event
 app.use("/api/v1/event",GetPlayerAssignEventRoute)
+
+// GET PLAYER CATEGORY
+app.use("/api/v1/player",GetPlayerCatagoryRoute)
 
 
 // //jwt
