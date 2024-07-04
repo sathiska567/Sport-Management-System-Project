@@ -33,6 +33,7 @@ const CreatedTeams = () => {
       dataSource={createdTeams}
       columns={columns}
       pagination={false}
+      showHeader={false}
     />
   );
 };

@@ -38,7 +38,7 @@ const PlayerReview = () => {
       dataSource={playerDetails}
       columns={columns}
       pagination={false}
-      showHeader={true} 
+      showHeader={false} 
     />
   );
 };
