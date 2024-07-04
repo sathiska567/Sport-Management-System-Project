@@ -66,12 +66,10 @@ const RefereeSideBar = ({ children }) => {
   // Functional component to display text based on selected menu item
   const Text = ({ selectedMenuItem }) => {
     const text = {
-      "/player-stats": "Dashboard",
-      "/player-matches": "Matches",
-      "/player-availability": "Availability",
-      "/player-reviews": "My Reviews",
-      "/player-search": "Search Players",
-      "/player-profile": "My Profile",
+      "/referee-stats": "Dashboard",
+      "/referee-matches": "Matches",
+      "/referee-availability": "Availability",
+      "/referee-profile": "My Profile",
     };
 
     return <p>{text[selectedMenuItem]}</p>;
