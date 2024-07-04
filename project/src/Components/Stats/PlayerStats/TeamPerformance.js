@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import ReactApexChart from "react-apexcharts";
 
-const MyPerformance = () => {
+const TeamPerformance = () => {
   // Use useState to manage series and options
   const [series, setSeries] = useState([
     {
       name: "Won Matches",
-      data: [4, 5, 1,2, 2, 3, 4, 6, 2, 3],
+      data: [4, 5, 1, 2, 2, 3, 4, 6, 2, 3],
     },
     {
       name: "Lost Matches",
@@ -84,11 +84,19 @@ const MyPerformance = () => {
       // Math.max(7) + 1
       // 7 + 1
       // 8
-      tickAmount: 6,
+      tickAmount: 8,
       labels: {
         formatter: function (value) {
           return value; // Display the value directly
         },
+      },
+    },
+    title: {
+      text: "Team Performance",
+      align: "center",
+      style: {
+        fontSize: "18px",
+        fontWeight: "bold",
       },
     },
     legend: {
@@ -116,4 +124,4 @@ const MyPerformance = () => {
   );
 };
 
-export default MyPerformance;
+export default TeamPerformance;
