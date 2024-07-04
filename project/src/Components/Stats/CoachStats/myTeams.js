@@ -1,57 +1,67 @@
-import React from "react";
-import { Table } from "antd";
+import React, { useEffect, useState } from "react";
+import { message, Table } from "antd";
+import axios from "axios";
 
 const PlayerReview = () => {
-  const data = [
-    {
-      key: "1",
-      playerName: "Player 1",
-      eventName: "Event A",
-      teamName: "Team Alpha",
-      eventDate: "2023-04-01",
-    },
-    {
-      key: "2",
-      playerName: "Player 2",
-      eventName: "Event B",
-      teamName: "Team Beta",
-      eventDate: "2023-04-02",
-    },
-    {
-      key: "3",
-      playerName: "Player 3",
-      eventName: "Event C",
-      teamName: "Team Gamma",
-      eventDate: "2023-04-03",
-    },
-    {
-      key: "4",
-      playerName: "Player 4",
-      eventName: "Event D",
-      teamName: "Team Delta",
-      eventDate: "2023-04-04",
-    },
-    {
-      key: "5",
-      playerName: "Player 5",
-      eventName: "Event E",
-      teamName: "Team Epsilon",
-      eventDate: "2023-04-05",
-    },
-  ];
+  const [currentCoachId, setCurrentCoachId] = useState("");
+  const [createdTeams, setCreatedTeams] = useState([]);
+
+  //GET CURRENT USER DATA
+  const currentUserData = async () => {
+    try {
+      const res = await axios.get(
+        "http://localhost:8080/api/v1/user/getCurrentUser",
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      setCurrentCoachId(res.data.user._id);
+    } catch (error) {
+      message.error("Error inside the Get currentUserData function");
+    }
+  };
+
+  const getCreatedTeams = async () => {
+    try {
+      const createdTeamsResponse = await axios.get(
+        "http://localhost:8080/api/v1/team/get-created-team"
+      );
+      const coachCreatedTeams = createdTeamsResponse.data.data.filter(
+        (team) => team.coach_id === currentCoachId
+      );
+      setCreatedTeams(coachCreatedTeams);
+    } catch (error) {
+      message.error("Error while fetching created teams");
+    }
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      await currentUserData();
+    };
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    if (currentCoachId) {
+      getCreatedTeams();
+    }
+  }, [currentCoachId]);
 
   const columns = [
-    { dataIndex: "eventName", title: "Event Name" },
+    { dataIndex: "teamNo", title: "Event Name" },
     { dataIndex: "teamName", title: "Team Name" },
-    { dataIndex: "eventDate", title: "Event Date" },
   ];
 
   return (
     <Table
-      dataSource={data}
+      dataSource={createdTeams}
       columns={columns}
       pagination={false}
       showHeader={false}
+      rowKey={(record) => record._id} // Assuming each team has a unique _id
     />
   );
 };

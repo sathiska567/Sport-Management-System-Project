@@ -1,28 +1,40 @@
-import React from "react";
-import { Table } from "antd";
+import React, { useEffect, useState } from "react";
+import { message, Table } from "antd";
+import axios from 'axios';
 
-const createdTeams = () => {
-  const data = [
-    { key: "1", teamNumber: "T001", teamName: "Team 1" },
-    { key: "2", teamNumber: "T002", teamName: "Team 2" },
-    { key: "3", teamNumber: "T003", teamName: "Team 3" },
-    { key: "4", teamNumber: "T004", teamName: "Team 4" },
-    { key: "5", teamNumber: "T005", teamName: "Team 5" },
-  ];
+const CreatedTeams = () => {
+  const [createdTeams, setCreatedTeams] = useState([]);
+
+  const getCreatedTeams = async () => {
+    try {
+      const createdTeamsResponse = await axios.get("http://localhost:8080/api/v1/team/get-created-team");
+      const teams = createdTeamsResponse.data.data.map((team, index) => ({
+        key: index + 1,
+        teamNo: team.teamNo, // Assuming the response has teamNo
+        teamName: team.teamName, // Assuming the response has teamName
+      }));
+      setCreatedTeams(teams);
+    } catch (error) {
+      message.error("Error while fetching created teams");
+    }
+  };
+
+  useEffect(() => {
+    getCreatedTeams();
+  }, []);
 
   const columns = [
-    { dataIndex: "teamNumber" },
-    { dataIndex: "teamName" }
+    { title: "Team Number", dataIndex: "teamNo", key: "teamNo" },
+    { title: "Team Name", dataIndex: "teamName", key: "teamName" }
   ];
 
   return (
     <Table
-      dataSource={data}
+      dataSource={createdTeams}
       columns={columns}
       pagination={false}
-      showHeader={false}
     />
   );
 };
 
-export default createdTeams;
+export default CreatedTeams;
