@@ -36,7 +36,7 @@ import PlayerReviews from "./Components/PlayerComponents/PlayerReviews/PlayerRev
 import PlayerSearch from "./Components/PlayerComponents/PlayerSearch/PlayerSearch.jsx";
 import PlayerProfile from "./Components/PlayerComponents/PlayerProfile/PlayerProfile.jsx";
 import PlayerMatches from "./Components/PlayerComponents/PlayerMatches/PlayerMatches.jsx";
-import RefereeStats from "./Components/Referee/RefereeStats/RefereeStats.jsx";
+import RefereeStats from "./Components/Stats/RefereeStats/RefereeStats.jsx";
 import RefereeAvailability from "./Components/Referee/RefereeAvailability/RefereeAvailability.jsx";
 import RefereeMatches from "./Components/Referee/RefereeMatches/RefereeMatches.jsx";
 import TeamManagerStats from "./Components/Stats/TeamManagerStats/TeamManagerStats.jsx";
