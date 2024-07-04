@@ -34,6 +34,7 @@ const UpcomingEvents = () => {
       dataSource={createdEvent}
       columns={columns}
       pagination={false}
+      showHeader={false}
     />
   );
 };
