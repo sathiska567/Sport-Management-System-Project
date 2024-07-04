@@ -1,71 +1,51 @@
-// Importing necessary libraries and components
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./PlayerMatches.css";
 import PlayerSideBar from "../PlayerSideBar/PlayerSideBar";
 import { Layout, Button, Input, Table, DatePicker } from "antd";
+import axios from "axios";
 
-// Destructuring components from Ant Design's Layout
 const { Content } = Layout;
 
-// Navbar component
 const PlayerMatches = () => {
   const [Userlocation, setUserLocation] = useState("");
   const [eventNameFilter, setEventNameFilter] = useState("");
   const [districtFilter, setDistrictFilter] = useState("");
   const [teamNameFilter, setTeamNameFilter] = useState("");
-const [dateFilter, setDateFilter] = useState("");
-  const sampleData = [
-    {
-      key: "1",
-      eid: "E123",
-      eventName: "Event 1",
-      district: "District 1",
-      eventDate: "2022-01-01",
-      teamName: "Team A",
-    },
-    {
-      key: "2",
-      eid: "E456",
-      eventName: "Event 2",
-      district: "District 2",
-      eventDate: "2022-02-01",
-      teamName: "Team B",
-    },
-    {
-      key: "3",
-      eid: "E789",
-      eventName: "Event 3",
-      district: "District 3",
-      eventDate: "2022-03-01",
-      teamName: "Team C",
-    },
-  ];
+  const [dateFilter, setDateFilter] = useState("");
+  const [data, setData] = useState([]);
 
-  // Filter sampleData based on userRole and Userlocation
-  // Filter sampleData based on eventName, district, teamName, and eventDate
-  // Filter sampleData based on eventName, district, teamName, and eventDate
-  const filteredData = sampleData.filter((data) => {
+  // Function to fetch data from API
+  const fetchData = async () => {
+    try {
+      const response = await axios.get("http://localhost:8080/api/v1/events");
+      setData(response.data.data); // Assuming response.data.data is an array of event objects
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []); // Fetch data on component mount
+
+  // Filter data based on user input
+  const filteredData = data.filter((item) => {
     return (
       (!eventNameFilter ||
-        data.eventName
-          .toLowerCase()
-          .startsWith(eventNameFilter.toLowerCase())) &&
+        item.eventName.toLowerCase().startsWith(eventNameFilter.toLowerCase())) &&
       (!districtFilter ||
-        data.district.toLowerCase().startsWith(districtFilter.toLowerCase())) &&
+        item.district.toLowerCase().startsWith(districtFilter.toLowerCase())) &&
       (!teamNameFilter ||
-        data.teamName.toLowerCase().startsWith(teamNameFilter.toLowerCase())) &&
+        item.teamName.toLowerCase().startsWith(teamNameFilter.toLowerCase())) &&
       (!dateFilter ||
-        new Date(data.eventDate).getTime() === new Date(dateFilter).getTime())
+        new Date(item.eventDate).getTime() === new Date(dateFilter).getTime())
     );
   });
 
-  // JSX structure for the Navbar component
   return (
     <PlayerSideBar>
       <Layout className="ant-layout-sider-children">
-        {/* Main content layout */}
         <Layout>
-          {/* Content section with statistics */}
           <Content
             className="ant-layout-content"
             style={{
@@ -76,7 +56,6 @@ const [dateFilter, setDateFilter] = useState("");
               background: "whitesmoke",
             }}
           >
-            {/* Search section */}
             <div className="search">
               <div
                 className="searchSub"
@@ -95,10 +74,7 @@ const [dateFilter, setDateFilter] = useState("");
                   onChange={(e) => setDistrictFilter(e.target.value)}
                 />
               </div>
-              <div
-                className="searchSub"
-                style={{ display: "flex", width: "100%" }}
-              >
+              <div className="searchSub" style={{ display: "flex", width: "100%" }}>
                 <DatePicker
                   className="searchInputDate"
                   style={{ flex: 1 }}
@@ -112,49 +88,21 @@ const [dateFilter, setDateFilter] = useState("");
                 />
               </div>
             </div>
-            {/* Table section */}
             <div className="tableContainer">
               <Table
                 className="Table"
                 columns={[
-                  {
-                    title: "Event_ID",
-                    dataIndex: "eid",
-                  },
-                  {
-                    title: "Event Name",
-                    dataIndex: "eventName",
-                    key: "eventName",
-                  },
-                  {
-                    title: "District",
-                    dataIndex: "district",
-                    key: "district",
-                  },
-                  {
-                    title: "Event Date",
-                    dataIndex: "eventDate",
-                    key: "eventDate",
-                  },
-                  {
-                    title: "Team Name",
-                    dataIndex: "teamName",
-                    key: "teamName",
-                  },
+                  { title: "Event_ID", dataIndex: "eid" },
+                  { title: "Event Name", dataIndex: "eventName", key: "eventName" },
+                  { title: "District", dataIndex: "district", key: "district" },
+                  { title: "Event Date", dataIndex: "eventDate", key: "eventDate" },
+                  { title: "Team Name", dataIndex: "teamName", key: "teamName" },
                   {
                     title: "Actions",
                     dataIndex: "Actions",
                     key: "Actions",
                     render: (text, record) => (
-                      <span
-                        style={{
-                          display: "flex",
-                          flexDirection: "row",
-                          gap: "10px",
-                          justifyContent: "center",
-                          alignItems: "center",
-                        }}
-                      >
+                      <span style={{ display: "flex", flexDirection: "row", gap: "10px", justifyContent: "center", alignItems: "center" }}>
                         <Button
                           type="primary"
                           style={{
@@ -176,15 +124,9 @@ const [dateFilter, setDateFilter] = useState("");
                     ),
                   },
                 ]}
-                pagination={{
-                  style: {
-                    marginTop: "10px",
-                  },
-                  pageSize: 5,
-                }}
-                // Displaying data from the frontend
-                dataSource={filteredData} // Use filteredData instead of sampleData
-              ></Table>
+                pagination={{ style: { marginTop: "10px" }, pageSize: 5 }}
+                dataSource={filteredData} // Render filtered data
+              />
             </div>
           </Content>
         </Layout>
@@ -193,5 +135,4 @@ const [dateFilter, setDateFilter] = useState("");
   );
 };
 
-// Exporting the Navbar component
 export default PlayerMatches;

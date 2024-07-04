@@ -1,21 +1,84 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ReactApexChart from "react-apexcharts";
+import axios from "axios";
+import { message } from "antd";
 
 const MyPerformance = () => {
+  const [currentPlayerId, setCurrentPlayerId] = useState("");
+  const [battingReviews, setBattingReviews] = useState([]);
+  const [bowlingReviews, setBowlingReviews] = useState([]);
+  const [fieldingReviews, setFieldingReviews] = useState([]);
+  const [coachNames, setCoachNames] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  // Function to get current user data and reviews
+  const currentUserData = async (page) => {
+    try {
+      const res = await axios.get(
+        "http://localhost:8080/api/v1/user/getCurrentUser",
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+
+      // Update the state with the current user ID
+      setCurrentPlayerId(res.data.user._id);
+
+      const playerReviewResponse = await axios.post(
+        "http://localhost:8080/api/v1/review/get-overall-review",
+        { page: page }
+      );
+
+      console.log(playerReviewResponse);
+
+      if (!playerReviewResponse.data.success) {
+        throw new Error("Failed to fetch player reviews");
+      }
+
+      const batting = [];
+      const bowling = [];
+      const fielding = [];
+      const coaches = [];
+
+      for (let review of playerReviewResponse.data.data.review) {
+        if (review.playerId === res.data.user._id) {
+          batting.push(review.battingReview);
+          bowling.push(review.bowlingReview);
+          fielding.push(review.fieldingReview);
+          coaches.push(review.reviewGivenCoachName);
+        }
+      }
+
+      setBattingReviews(batting);
+      setBowlingReviews(bowling);
+      setFieldingReviews(fielding);
+      setCoachNames(coaches);
+
+    } catch (error) {
+      message.error("Error fetching user data or reviews");
+    }
+  };
+
+  useEffect(() => {
+    currentUserData(currentPage);
+  }, [currentPage]);
+
   const series = [
     {
       name: "Batting",
-      data: [79, 52, 65, 23, 67, 42, 27, 32, 11, 65],
+      data: battingReviews,
       color: "#ff7875",
     },
     {
-      name: "Balling",
-      data: [21, 13, 42, 54, 33, 22, 69, 70, 21, 82],
+      name: "Bowling",
+      data: bowlingReviews,
       color: "#95de64",
     },
     {
       name: "Fielding",
-      data: [63, 18, 27, 51, 68, 26, 24, 53, 41, 27],
+      data: fieldingReviews,
       color: "#85a5ff",
     },
   ];
@@ -45,18 +108,7 @@ const MyPerformance = () => {
       colors: ["transparent"],
     },
     xaxis: {
-      categories: [
-        "Coach 1",
-        "Coach 2",
-        "Coach 3",
-        "Coach 4",
-        "Coach 5",
-        "Coach 6",
-        "Coach 7",
-        "Coach 8",
-        "Coach 9",
-        "Coach 10",
-      ],
+      categories: coachNames,
     },
     yaxis: {
       title: {
@@ -72,7 +124,6 @@ const MyPerformance = () => {
     fill: {
       opacity: 1,
     },
-    min: 0,
     title: {
       text: "My Performance", // Chart title
       align: "center",
@@ -92,10 +143,9 @@ const MyPerformance = () => {
           options={options}
           series={series}
           type="bar"
-          height={260}
+          height={250}
         />
       </div>
-      <div id="html-dist"></div>
     </div>
   );
 };
