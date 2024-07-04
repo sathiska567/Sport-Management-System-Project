@@ -1,7 +1,23 @@
-import React from "react";
-import { Table } from "antd";
+import React, { useEffect, useState } from "react";
+import { message, Table } from "antd";
+import axios from "axios";
 
 const upcomingEvents = () => {
+  // const [createdEvent , setCreatedEvent] = useState([])
+
+  // const getAllEvents = async()=>{
+  //   try {
+  //     const response = await axios.get("http://localhost:8080/api/v1/event/get-all-events");
+  //     setCreatedEvent(response.data.data)
+  //   } catch (error) {
+  //     message.error("Something went wrong");
+  //   }
+  // }
+
+  // useEffect(()=>{
+  //   getAllEvents()
+  // },[])
+
   const data = [
     { key: "1", role: "Event 1", date: "24/07/4" },
     { key: "2", role: "Event 2", date: "24/07/12" },

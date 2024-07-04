@@ -43,6 +43,50 @@ const GetPlayerCatagoryController = async (req, res) => {
 };
 
 
+const GetPlayerPendingCatagoryController = async(req,res)=>{
+  try {
+    const getAllPlayerCategory = await playerModel.find({ status: 'pending' });
+    const PendingBatsmanCategory = []
+    const PendingBowlerCategory = []
+    const PendingKeeperCategory = []
+    const PendingAllRounderCategory = []
+
+    for (let i = 0; i < getAllPlayerCategory.length; i++) {
+
+      if(getAllPlayerCategory[i].catagory == "Batsman"){
+        PendingBatsmanCategory.push(getAllPlayerCategory[i])
+      }
+      else if(getAllPlayerCategory[i].catagory == "Bowler"){
+        PendingBowlerCategory.push(getAllPlayerCategory[i])
+      }
+      else if(getAllPlayerCategory[i].catagory == "Keeper"){
+        PendingKeeperCategory.push(getAllPlayerCategory[i])
+      }
+      else if(getAllPlayerCategory[i].catagory == "All Rounder"){
+        PendingAllRounderCategory.push(getAllPlayerCategory[i])
+      }
+
+      
+    }
+
+    res.status(200).send({
+      success: true,
+      message: "Get Pending Player Category Successful",
+      PendingBatsmanCategory: PendingBatsmanCategory,
+      PendingBowlerCategory:PendingBowlerCategory,
+      PendingKeeperCategory:PendingKeeperCategory,
+      PendingAllRounderCategory:PendingAllRounderCategory,
+    });
+
+    
+  } catch (error) {
+    res.status(400).send({
+      success: false,
+      message: "Get Player Category encountered an error",
+      error: error.message,
+    });
+  }
+}
 
 
-module.exports = {GetPlayerCatagoryController}
+module.exports = {GetPlayerCatagoryController,GetPlayerPendingCatagoryController}

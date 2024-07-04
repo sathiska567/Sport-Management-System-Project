@@ -1,12 +1,12 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import adminStatStyles from "./EOStats.module.css";
-import EOStatStyles from "./EOStats.module.css";
 import EOSideBar from "../../EventOrganizer/EOSideBar/EOSideBar";
-import { Card, Statistic } from "antd";
+import { Card, message, Statistic } from "antd";
 import CountUp from "react-countup";
 import FixtureSummery from "./FixtureSummery";
 import UpcomingEvents from "./upcomingEvents";
 import AvailableReferees from "./availableReferees";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const formatter = (value) => (
@@ -22,17 +22,57 @@ const formatter = (value) => (
 );
 
 const EOStats = () => {
+  const [createEvent, setCreateEvent] = useState([]);
+  const [availableEvents, setAvailableEvents] = useState([]);
+
   const Navigate = useNavigate();
+
   const handleAvailabilityClick = () => {
     Navigate("/EO-EventView");
   };
+
   const handleEventSummeryClick = () => {
     Navigate("/eo-create-event");
   };
 
-  const handleUpcommingClick = () => {
+  const handleUpcomingClick = () => {
     Navigate("/EditEventTable");
-  }
+  };
+
+  const getCreatedEvents = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:8080/api/v1/event/get-all-events"
+      );
+
+      if (response.data.success) {
+        setCreateEvent(response.data.data);
+        const eventIds = response.data.data.map(event => event._id);
+
+        const refereesPromises = eventIds.map(id =>
+          axios.post("http://localhost:8080/api/v1/availability/event-available-referee", { eventId: id })
+        );
+
+        const refereesResponses = await Promise.all(refereesPromises);
+        const availableReferees = refereesResponses.map(response => {
+          if (response.data.success) {
+            return response.data.data;
+          }
+          return []; // Handle the case where data fetching was not successful
+        });
+
+        setAvailableEvents(availableReferees.flat()); // Flatten the array of arrays
+
+        console.log(availableEvents);
+      }
+    } catch (error) {
+      message.error("Error fetching data");
+    }
+  };
+
+  useEffect(() => {
+    getCreatedEvents();
+  }, []);
 
   return (
     <EOSideBar>
@@ -61,13 +101,7 @@ const EOStats = () => {
                 <div className={adminStatStyles.pendingPlayers1}>
                   <Statistic
                     title="Available Referees"
-                    value={5}
-                    formatter={formatter}
-                    className={adminStatStyles.ppStat1}
-                  />
-                  <Statistic
-                    title="Assigned Referees "
-                    value={6}
+                    value={availableEvents.length} // Display the count of available referees
                     formatter={formatter}
                     className={adminStatStyles.ppStat1}
                   />
@@ -78,8 +112,6 @@ const EOStats = () => {
 
           <div className={adminStatStyles.secondRow}>
             <div className={adminStatStyles.SfirstCard}>
-              {/* Content for Player Overview card */}
-
               <Card
                 title={
                   <span
@@ -94,22 +126,22 @@ const EOStats = () => {
                 <div className={adminStatStyles.pendingPlayers2}>
                   <Statistic
                     title="Created"
-                    value={5}
+                    value={createEvent.length} // Replace with actual value
                     formatter={formatter}
                     className={adminStatStyles.ppStat2}
                   />
-                  <Statistic
+                  {/* <Statistic
                     title="Ongoing"
-                    value={1}
+                    value={1} // Replace with actual value
                     formatter={formatter}
                     className={adminStatStyles.ppStat2}
                   />
                   <Statistic
                     title="Cancelled"
-                    value={3}
+                    value={3} // Replace with actual value
                     formatter={formatter}
                     className={adminStatStyles.ppStat2}
-                  />
+                  /> */}
                 </div>
               </Card>
             </div>
@@ -127,13 +159,12 @@ const EOStats = () => {
                 title={
                   <span
                     style={{ cursor: "pointer" }}
-                    onClick={handleUpcommingClick}
+                    onClick={handleUpcomingClick}
                   >
                     Upcoming Events
                   </span>
                 }
               >
-                {/* Use ApplicationStatus (uppercase) here  */}
                 <div className={adminStatStyles.pendingUsers}>
                   <UpcomingEvents />
                 </div>
@@ -142,7 +173,6 @@ const EOStats = () => {
           </div>
         </div>
       </div>
-      );
     </EOSideBar>
   );
 };
