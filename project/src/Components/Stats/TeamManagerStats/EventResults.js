@@ -5,12 +5,12 @@ const UpcomingEvents = () => {
   const series = [
     {
       name: "Won Matches",
-      data: [7, 5, 6, 2, 6, 4, 2, 3, 1],
+      data: [7, 5, 6, 2, 6, 4, 2, 3, 1,6],
       color: "#597ef7",
     },
     {
       name: "Lost Matches",
-      data: [2, 1, 4, 5, 3, 2, 6, 7, 2],
+      data: [2, 1, 4, 5, 3, 2, 6, 7, 2,8],
       color: "#adc6ff",
     },
   ];
@@ -38,16 +38,16 @@ const UpcomingEvents = () => {
     },
     xaxis: {
       categories: [
-        "Event 1",
-        "Event 2",
-        "Event 3",
-        "Event 4",
-        "Event 5",
-        "Event 6",
-        "Event 7",
-        "Event 8",
-        "Event 9",
-        "Event 10",
+        "Team 1",
+        "Team 2",
+        "Team 3",
+        "Team 4",
+        "Team 5",
+        "Team 6",
+        "Team 7",
+        "Team 8",
+        "Team 9",
+        "Team 10",
       ],
     },
     yaxis: {

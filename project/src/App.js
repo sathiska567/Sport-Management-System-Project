@@ -24,7 +24,7 @@ import EditEvent from "./Components/EventOrganizer/EOEditEvent/EOEditEvent.jsx";
 import EditEventForm from "./Components/EventOrganizer/EOEditEvent/EOEditEventForm.jsx";
 import EOProfile from "./Components/EventOrganizer/EOProfile/EOProfile.jsx";
 import CoachAvailability from "./Components/Coach/CoachAvailability/CoachAvailability.jsx";
-import CoachStats from "./Components/Coach/CoachStats/CoachStats.jsx";
+import CoachStats from "./Components/Stats/CoachStats/CoachStats.jsx";
 import CoachReviewPlayers from "./Components/Coach/CoachReviewPlayers/CoachReviewPlayers.jsx";
 import CoachProfile from "./Components/Coach/CoachProfile/CoachProfile.jsx";
 import EOViewFixture from "./Components/EventOrganizer/EOViewFixture/EOViewFixture.jsx";
