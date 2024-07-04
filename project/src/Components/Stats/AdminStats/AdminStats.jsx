@@ -1,13 +1,14 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import adminStatStyles from "./AdminStats.module.css";
 import DashboardSideBar from "../../DashboardSideBar/SideBar";
-import { Card, Statistic } from "antd";
+import { Card, message, Statistic } from "antd";
 import CurrentPlayer from "./currentPlayer";
 import PendingUsersTable from "./PendingUsersTable";
 import { useNavigate } from "react-router-dom";
 import CurrentUser from "./currentUsers";
 import ApplicationStatus from "./applicationStatus";
 import CountUp from "react-countup";
+import axios from "axios";
 
 const formatter = (value) => (
   <CountUp
@@ -21,10 +22,34 @@ const formatter = (value) => (
   />
 );
 const AdminStats = () => {
+  const [pendingBowlers , setPendingBowlers] = useState([])
+  const [pendingBatters , setPendingBatters] = useState([])
+  const [pendingKeepers , setPendingKeepers] = useState([])
+  const [pendingAllRounders , setPendingAllRounders] = useState([])
+
+
   const navigate = useNavigate();
   const handleTitleClick = () => {
     navigate("/UserValidation");
   };
+
+  const pendingPlayerCategory = async()=>{
+    try {
+      const pendingCategoryResponse = await axios.get("http://localhost:8080/api/v1/player/pending-category")
+      console.log(pendingCategoryResponse.data)
+      setPendingBowlers(pendingCategoryResponse.data.PendingBowlerCategory)
+      setPendingBatters(pendingCategoryResponse.data.PendingBatsmanCategory)
+      setPendingKeepers(pendingCategoryResponse.data.PendingKeeperCategory)
+      setPendingAllRounders(pendingCategoryResponse.data.PendingAllRounderCategory)
+
+    } catch (error) {
+      message.error(error)
+    }
+  }
+
+  useEffect(()=>{
+    pendingPlayerCategory()
+  },[])
 
   return (
     <DashboardSideBar>
@@ -80,19 +105,25 @@ const AdminStats = () => {
                 <div className={adminStatStyles.pendingPlayers}>
                   <Statistic
                     title="Batsman"
-                    value={5}
+                    value={pendingBatters.length}
                     formatter={formatter}
                     className={adminStatStyles.ppStat}
                   />
                   <Statistic
                     title="Ballers"
-                    value={6}
+                    value={pendingBowlers.length}
+                    formatter={formatter}
+                    className={adminStatStyles.ppStat}
+                  />
+                  <Statistic
+                    title="Keepers"
+                    value={pendingKeepers.length}
                     formatter={formatter}
                     className={adminStatStyles.ppStat}
                   />
                   <Statistic
                     title="All-Rounders"
-                    value={7}
+                    value={pendingAllRounders.length}
                     formatter={formatter}
                     className={adminStatStyles.ppStat}
                   />

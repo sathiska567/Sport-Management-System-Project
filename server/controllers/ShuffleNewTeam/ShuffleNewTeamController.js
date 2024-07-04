@@ -63,4 +63,25 @@ const getShuffledNewTeamController = async(req,res)=>{
 
 }
 
-module.exports = { shuffledNewTeamController,getShuffledNewTeamController};
+
+// GET ALL SHUFFLE TEAM
+const getAllShuffleTeamController = async(req,res)=>{
+  try {
+    const data = await ShuffledNewTeamModel.find();
+
+    res.status(200).send({
+      success:true,
+      message:"All Shuffle Team Fetched Successfully",
+      dataLength:data.length
+    })
+    
+  } catch (error) {
+    res.status(400).send({
+      success:false,
+      message:"All Shuffle Team Fetched Unsuccessfully",
+      error 
+  })
+  }
+}
+
+module.exports = { shuffledNewTeamController,getShuffledNewTeamController,getAllShuffleTeamController};

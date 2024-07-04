@@ -2,14 +2,17 @@ import React, { useState, useEffect } from "react";
 import ReactApexChart from "react-apexcharts";
 import { useNavigate } from "react-router-dom";
 import availableRefereesStyles from "./availableReferees.module.css";
+import { message } from "antd";
+import axios from "axios";
 
 function AvailableReferees(props) {
   const navigate = useNavigate();
+  const [createEvent, setCreateEvent] = useState([]);
   const [chartData, setChartData] = useState({
     series: [
       {
         name: "Available Referees",
-        data: [1, 5, 3, 3, 5, 8, 0, 2, 8, 4],
+        data: [],
       },
     ],
     options: {
@@ -53,18 +56,7 @@ function AvailableReferees(props) {
         size: 1,
       },
       xaxis: {
-        categories: [
-          "Event 1",
-          "Event 2",
-          "Event 3",
-          "Event 4",
-          "Event 5",
-          "Event 6",
-          "Event 7",
-          "Event 8",
-          "Event 9",
-          "Event 10",
-        ],
+        categories: [],
         title: {
           text: "Event Names",
         },
@@ -86,12 +78,58 @@ function AvailableReferees(props) {
     },
   });
 
+  const getCreatedEvents = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:8080/api/v1/event/get-all-events"
+      );
+
+      if (response.data.success) {
+        setCreateEvent(response.data.data);
+        const eventIds = response.data.data.map(event => event._id);
+        const eventNames = response.data.data.map(event => event.nameOfTheEvent);
+
+        const refereesPromises = eventIds.map(id =>
+          axios.post("http://localhost:8080/api/v1/availability/event-available-referee", { eventId: id })
+        );
+
+        const refereesResponses = await Promise.all(refereesPromises);
+        const availableReferees = refereesResponses.map(response => 
+          response.data.success ? response.data.data.length : 0
+        );
+
+        setChartData(prevChartData => ({
+          ...prevChartData,
+          series: [
+            {
+              name: "Available Referees",
+              data: availableReferees,
+            },
+          ],
+          options: {
+            ...prevChartData.options,
+            xaxis: {
+              ...prevChartData.options.xaxis,
+              categories: eventNames,
+            },
+          },
+        }));
+      }
+    } catch (error) {
+      message.error("Error fetching data");
+    }
+  };
+
+  useEffect(() => {
+    getCreatedEvents();
+  }, []);
+
   const handleTitleClick = () => {
     navigate("/EO-EventView");
   };
 
   return (
-    <div id="chart" onClick={handleTitleClick} style={{cursor: "pointer"}}>
+    <div id="chart" onClick={handleTitleClick} style={{ cursor: "pointer" }}>
       <ReactApexChart
         id={availableRefereesStyles.chart}
         options={chartData.options}
