@@ -66,10 +66,10 @@ const PlayerSideBar = ({ children }) => {
   const Text = ({ selectedMenuItem }) => {
     const text = {
       "/player-stats": "Dashboard",
-      "/player-matches": "Matches",
+      "/AssignPlayerMatches": "Matches",
       "/player-availability": "Availability",
       "/player-reviews": "My Reviews",
-      "/player-search": "Search Players",
+      "/SearchPlayerTable": "Search Players",
       "/player-profile": "My Profile",
     };
 
@@ -208,7 +208,7 @@ const PlayerSideBar = ({ children }) => {
             <NavLink to="/player-availability">Availability</NavLink>
           </Menu.Item>
           <Menu.Item
-            key="/player-matches"
+            key="/AssignPlayerMatches"
             icon={<FontAwesomeIcon icon={faTrophy} />}
           >
             <NavLink to="/AssignPlayerMatches">Matches</NavLink>
@@ -220,7 +220,7 @@ const PlayerSideBar = ({ children }) => {
             <NavLink to="/player-reviews">My Reviews</NavLink>
           </Menu.Item>
           <Menu.Item
-            key="/player-search"
+            key="/SearchPlayerTable"
             icon={<FontAwesomeIcon icon={faUsers} />}
           >
             <NavLink to="/SearchPlayerTable">Search Players</NavLink>

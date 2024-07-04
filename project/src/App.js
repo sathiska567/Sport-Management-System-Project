@@ -30,7 +30,7 @@ import CoachProfile from "./Components/Coach/CoachProfile/CoachProfile.jsx";
 import EOViewFixture from "./Components/EventOrganizer/EOViewFixture/EOViewFixture.jsx";
 import CoachReviewForm from "./Components/Coach/CoachReviewPlayers/CoachReviewForm.jsx";
 import EOBracket from "./Components/EventOrganizer/EOBracket/EOBracket.jsx";
-import PlayerStats from "./Components/PlayerComponents/PlayerStats/PlayerStats.jsx";
+import PlayerStats from "./Components/Stats/PlayerStats/PlayerStats.jsx";
 import PlayerAvailability from "./Components/PlayerComponents/PlayerAvailability/PlayerAvailability.jsx";
 import PlayerReviews from "./Components/PlayerComponents/PlayerReviews/PlayerReviews.jsx";
 import PlayerSearch from "./Components/PlayerComponents/PlayerSearch/PlayerSearch.jsx";
