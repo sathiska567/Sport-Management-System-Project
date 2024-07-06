@@ -1,9 +1,24 @@
+import { message } from "antd";
+import axios from "axios";
 import React, { useState, useEffect } from "react";
 import ReactApexChart from "react-apexcharts";
 import { useNavigate } from "react-router-dom";
 
 function AvailableCoaches(props) {
   const navigate = useNavigate();
+
+  // const getAvailableCoachForEvent = async()=>{
+  //   try {
+  //     const eventAvailableCoach = await axios.get("http://localhost:8080/api/v1/availability/get-event-available-coach")
+  //   } catch (error) {
+  //     message.error("Error in fetching available coaches for events")
+  //   }
+  // }
+
+  // useEffect(()=>{
+  //   getAvailableCoachForEvent()
+  // },[])
+
   const [chartData, setChartData] = useState({
     series: [
       {
