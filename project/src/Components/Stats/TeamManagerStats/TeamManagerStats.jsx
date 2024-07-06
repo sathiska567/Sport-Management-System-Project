@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import adminStatStyles from "./TeamManagerStatsStyles.module.css";
+import React, { useEffect, useState } from "react";
 import TeamManagerStatsStyles from "./TeamManagerStatsStyles.module.css";
 import TeamManagerSideBar from "../../TeamManager/TeamManagerSideBar/TeamManagerSideBar";
-import { Card, Statistic, Dropdown, Menu } from "antd";
+import { Card, Statistic, message } from "antd";
 import CountUp from "react-countup";
-import UpcommingEvents from "./upcomingEvents";
+import UpcomingEvents from "./upcomingEvents"; // Fix the component name typo
 import AvailableCoaches from "./availableCoaches";
 import EventResults from "./EventResults";
+import axios from "axios";
 
 const formatter = (value) => (
   <CountUp
@@ -21,62 +21,70 @@ const formatter = (value) => (
 );
 
 const TeamManagerStats = () => {
-  
+  const [availableCoaches, setAvailableCoaches] = useState([]);
+
+  const getAvailableCoaches = async () => {
+    try {
+      const response = await axios.get("http://localhost:8080/api/v1/availability/get-available-coach");
+      // console.log(response.data.data);
+      setAvailableCoaches(response.data.data);
+    } catch (error) {
+      message.error(error.message);
+    }
+  };
+
+  useEffect(() => {
+    getAvailableCoaches();
+  }, []);
+
   return (
     <TeamManagerSideBar>
       <div className="admin-stats">
-        <div className={adminStatStyles.divContainer}>
-          <div className={adminStatStyles.firstRow}>
-            <div className={adminStatStyles.firstCard}>
-              <Card bordered={false} className={adminStatStyles.card1}>
-                {/* Content for User Overview card */}
+        <div className={TeamManagerStatsStyles.divContainer}>
+          <div className={TeamManagerStatsStyles.firstRow}>
+            <div className={TeamManagerStatsStyles.firstCard}>
+              <Card bordered={false} className={TeamManagerStatsStyles.card1}>
                 <AvailableCoaches />
               </Card>
             </div>
-            <div className={adminStatStyles.secondCard}>
+            <div className={TeamManagerStatsStyles.secondCard}>
               <Card
                 bordered={false}
-                title={
-                  <span style={{ cursor: "pointer" }}>Coach Availability</span>
-                }
-                className={adminStatStyles.card2}
+                title={<span style={{ cursor: "pointer" }}>Coach Availability</span>}
+                className={TeamManagerStatsStyles.card2}
               >
-                <div className={adminStatStyles.pendingPlayers1}>
+                <div className={TeamManagerStatsStyles.pendingPlayers1}>
                   <Statistic
                     title="Available Coaches"
-                    value={5}
+                    value={availableCoaches.length}
                     formatter={formatter}
-                    className={adminStatStyles.ppStat1}
+                    className={TeamManagerStatsStyles.ppStat1}
                   />
-                  <Statistic
-                    title="Assigned Coaches "
+                  {/* <Statistic
+                    title="Assigned Coaches"
                     value={6}
                     formatter={formatter}
-                    className={adminStatStyles.ppStat1}
-                  />
+                    className={TeamManagerStatsStyles.ppStat1}
+                  /> */}
                 </div>
               </Card>
             </div>
           </div>
 
-          <div className={adminStatStyles.secondRow}>
-            <div className={adminStatStyles.SfirstCard}>
-              <Card className={adminStatStyles.card3}>
-                <div >
-                  <EventResults />
-                </div>
+          <div className={TeamManagerStatsStyles.secondRow}>
+            <div className={TeamManagerStatsStyles.SfirstCard}>
+              <Card className={TeamManagerStatsStyles.card3}>
+                <EventResults />
               </Card>
             </div>
-            <div className={adminStatStyles.SthirdCard}>
+            <div className={TeamManagerStatsStyles.SthirdCard}>
               <Card
                 bordered={false}
-                className={adminStatStyles.card5}
-                title={
-                  <span style={{ cursor: "pointer" }}>Upcoming Events</span>
-                }
+                className={TeamManagerStatsStyles.card5}
+                title={<span style={{ cursor: "pointer" }}>Upcoming Events</span>}
               >
-                <div className={adminStatStyles.pendingUsers}>
-                  <UpcommingEvents />
+                <div className={TeamManagerStatsStyles.pendingUsers}>
+                  <UpcomingEvents />
                 </div>
               </Card>
             </div>
