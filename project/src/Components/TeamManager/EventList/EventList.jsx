@@ -14,7 +14,7 @@ export default function ViewMatch() {
     const location = useLocation([]);
     const [teamname, setTeamName] = useState("");
     const [evedate, setEventDate] = useState("");
-    const [createdEvent , setCreateEvent] = useState([]);
+    const [createdEvent, setCreateEvent] = useState([]);
 
 
     const [dataSource, setDataSource] = useState([]);
@@ -34,59 +34,48 @@ export default function ViewMatch() {
 
 
 
-    // // getdata  and search players
-    // const getFetchData = async (teamname, evedate) => {
-    //     axios.defaults.baseURL = "http://localhost:8080/api/v1/eventView"
-        
-    //     try {
-    //         const response = await axios.get(`/get-assignee-Event-Member?q=${teamname}&date=${evedate}`);
-    //         console.log(response.data);
-    
-    //         if (response.data.success) {
-    //             setDataSource(response.data.data);
-    //         }
-    //     } catch (error) {
-    //         console.error('Error fetching data:', error);
-    //     }
-    // };
-    
 
-    // useEffect(() => {
-    //     getFetchData(teamname, evedate);
-    // }, [teamname,evedate])
 
-  
-      // GET ALL CREATE EVENT 
-const getAllCreateEvent = async () => {
-    try {
-      const response = await axios.get(
-        "http://localhost:8080/api/v1/event/get-all-events"
-      );
-  
-      if (response.data.success) {
-        console.log(response);
-        setCreateEvent(response.data.data);
-      }
-    } catch (error) {
-      message.error("Error fetching data");
+    // GET ALL CREATE EVENT 
+    const getAllCreateEvent = async () => {
+        try {
+            const response = await axios.get(
+                "http://localhost:8080/api/v1/event/get-all-events"
+            );
+
+            if (response.data.success) {
+                console.log(response);
+                setCreateEvent(response.data.data);
+            }
+        } catch (error) {
+            message.error("Error fetching data");
+        }
+    };
+
+    const handleAssignCoachNavigate = async (eventId) => {
+        // console.log(eventId);
+        navigate("/AssignCoachesFinal", { state: { eventId } })
     }
-  };
 
-  const handleAssignCoachNavigate = async(eventId)=>{
-    // console.log(eventId);
-    navigate("/AssignCoachesFinal",{state:{eventId}})
-  }
-
-  const handleAssignRefereeNavigate = async(eventId)=>{
-    // console.log(eventId);
-    navigate("/referee-availability-final",{state:{eventId}})
-  }
+    const handleAssignRefereeNavigate = async (eventId) => {
+        // console.log(eventId);
+        navigate("/referee-availability-final", { state: { eventId } })
+    }
 
 
+    const handleEventLocationSearch = async (value) => {
+        try {
+            const searchResponse = await axios.post("http://localhost:8080/api/v1/search/search-location", { value });
+            setCreateEvent(searchResponse.data.data);
+        } catch (error) {
+            message.error("Error searching event location");
+        }
+    };
 
-  useEffect(() => {
-    getAllCreateEvent() 
-  },[])
+
+    useEffect(() => {
+        getAllCreateEvent()
+    }, [])
 
 
     // End
@@ -110,16 +99,16 @@ const getAllCreateEvent = async () => {
                     >
                         {/* Search section */}
                         <div className="search">
-                            <Input.Search
-                                placeholder="Search by Team Name"
-                                styles={{
-                                    marginBottom: "9",
+                        <Input.Search
+                                className="searchInputName"
+                                placeholder="Search Event Location..."
+                                style={{
+                                    marginBottom: "8px",
                                 }}
-                                onSearch={handleTeamNameSearch}
-                                // onChange={(e) => handleEventNameSearch(e.target.value)}
+                                onSearch={handleEventLocationSearch}
                                 allowClear
                             />
-                            <Input.Search
+                            {/* <Input.Search
                                 type='date'
                                 styles={{
                                     marginBottom: "9",
@@ -127,7 +116,7 @@ const getAllCreateEvent = async () => {
                                 onSearch={handleDateSearch}
                                 // onChange={(e) => handleTeamNameSearch(e.target.value)}
                                 allowClear
-                            />
+                            /> */}
                         </div>
                         {/* Table section */}
                         <div className="tabContainer">
@@ -140,7 +129,7 @@ const getAllCreateEvent = async () => {
                                         dataIndex: "EventName",
                                         key: "EventName",
                                         render: (text, record) => (
-                                            <span>{record. nameOfTheEvent}</span>
+                                            <span>{record.nameOfTheEvent}</span>
                                         )
                                     },
 
@@ -153,13 +142,13 @@ const getAllCreateEvent = async () => {
                                         )
                                     },
 
-                                    
+
                                     {
                                         title: "Event Date",
                                         dataIndex: "EventDate",
                                         key: "EventDate",
                                         render: (text, record) => (
-                                            <span>{record. eventNewDate}</span>
+                                            <span>{record.eventNewDate}</span>
                                         )
                                     },
 
@@ -168,10 +157,10 @@ const getAllCreateEvent = async () => {
                                         dataIndex: "Event Time",
                                         key: "EventTime",
                                         render: (text, record) => (
-                                            <span>{record. formattedTime}</span>
+                                            <span>{record.formattedTime}</span>
                                         )
                                     },
-                                   
+
                                     {
                                         title: "Actions",
                                         dataIndex: "Actions",
@@ -188,7 +177,7 @@ const getAllCreateEvent = async () => {
                                                     type="ghost"
                                                     ghost
                                                     // "/AssignCoachesFinal"
-                                                    onClick={()=>handleAssignCoachNavigate(record._id)}
+                                                    onClick={() => handleAssignCoachNavigate(record._id)}
                                                     style={{
                                                         backgroundColor: "blue",
                                                         color: "#fff",
@@ -200,7 +189,7 @@ const getAllCreateEvent = async () => {
                                                         marginBottom: "auto",
                                                     }}
                                                 >
-                                                   Coaches
+                                                    Coaches
                                                 </Button>
 
                                                 {/* <Button
@@ -220,7 +209,7 @@ const getAllCreateEvent = async () => {
                                                 >
                                                    Referees
                                                 </Button> */}
-                                                
+
                                             </span>
                                         ),
                                     },
@@ -239,6 +228,6 @@ const getAllCreateEvent = async () => {
                     </Content>
                 </Layout>
             </Layout>
-            </TeamManagerSideBar>
+        </TeamManagerSideBar>
     );
 }
