@@ -79,6 +79,8 @@ import EOAssignRefereeFinal from "./Components/EventOrganizer/EOAssignRefereeFin
 import EOCreatedEventView from "./Components/EventOrganizer/EOCreateFixture/EOCreatedEventView.jsx";
 import AdminStats from "./Components/Stats/AdminStats/AdminStats.jsx";
 import { useState } from "react";
+import EventListPointTable  from "./Components/TeamManager/PointTableForm/EventListPointTable .jsx"
+import TeamList from "./Components/TeamManager/PointTableForm/TeamList.jsx"
 
 
 function App() {
@@ -921,6 +923,31 @@ function App() {
             </ProtectedRoute>
           }
         ></Route>
+      </Routes>
+      <Routes>
+        <Route
+        path="/EventsForPointTable"
+        element={
+          <ProtectedRoute>
+            <EventListPointTable />
+          </ProtectedRoute>
+        }
+        >
+
+        </Route>
+      </Routes>
+
+      <Routes>
+        <Route
+        path="/TeamList"
+        element={
+          <ProtectedRoute>
+            <TeamList />
+          </ProtectedRoute>
+        }
+        >
+
+        </Route>
       </Routes>
     </BrowserRouter>
 
