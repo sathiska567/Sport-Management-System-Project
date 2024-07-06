@@ -120,7 +120,7 @@ const getAllCreateEvent = async () => {
                                 // onChange={(e) => handleEventNameSearch(e.target.value)}
                                 allowClear
                             />
-                            <Input.Search
+                            {/* <Input.Search
                                 type='date'
                                 styles={{
                                     marginBottom: "9",
@@ -128,7 +128,7 @@ const getAllCreateEvent = async () => {
                                 onSearch={handleDateSearch}
                                 // onChange={(e) => handleTeamNameSearch(e.target.value)}
                                 allowClear
-                            />
+                            /> */}
                         </div>
                         {/* Table section */}
                         <div className="tabContainer">
