@@ -6,24 +6,11 @@ import { useNavigate } from "react-router-dom";
 
 function AvailableCoaches(props) {
   const navigate = useNavigate();
-
-  // const getAvailableCoachForEvent = async()=>{
-  //   try {
-  //     const eventAvailableCoach = await axios.get("http://localhost:8080/api/v1/availability/get-event-available-coach")
-  //   } catch (error) {
-  //     message.error("Error in fetching available coaches for events")
-  //   }
-  // }
-
-  // useEffect(()=>{
-  //   getAvailableCoachForEvent()
-  // },[])
-
   const [chartData, setChartData] = useState({
     series: [
       {
         name: "Available Coaches",
-        data: [1, 5, 3, 3, 5, 8, 0, 2, 8, 4],
+        data: [],
       },
     ],
     options: {
@@ -55,6 +42,10 @@ function AvailableCoaches(props) {
       title: {
         text: "Available Coaches for Events",
         align: "center",
+        style: { cursor: "pointer" },
+        events: {
+          click: () => navigate("/EventView"),
+        },
       },
       grid: {
         borderColor: "#e7e7e7",
@@ -67,18 +58,7 @@ function AvailableCoaches(props) {
         size: 1,
       },
       xaxis: {
-        categories: [
-          "Event 1",
-          "Event 2",
-          "Event 3",
-          "Event 4",
-          "Event 5",
-          "Event 6",
-          "Event 7",
-          "Event 8",
-          "Event 9",
-          "Event 10",
-        ],
+        categories: [],
         title: {
           text: "Event Names",
         },
@@ -88,7 +68,6 @@ function AvailableCoaches(props) {
           text: "Number of Coaches",
         },
         min: 0,
-        // max : 10
       },
       legend: {
         position: "top",
@@ -100,12 +79,30 @@ function AvailableCoaches(props) {
     },
   });
 
-  const handleTitleClick = () => {
-    navigate("/EventView");
+  const getAvailableCoachForEvent = async () => {
+    try {
+      const eventAvailableCoach = await axios.get("http://localhost:8080/api/v1/availability/get-event-available-coach");
+      console.log(eventAvailableCoach);
+      
+      const eventNames = eventAvailableCoach.data.data.map(event => event.event.nameOfTheEvent);
+      const availableCoaches = eventAvailableCoach.data.data.map(event => event.availableCoachCount);
+
+      setChartData(prevData => ({
+        ...prevData,
+        series: [{ ...prevData.series[0], data: availableCoaches }],
+        options: { ...prevData.options, xaxis: { ...prevData.options.xaxis, categories: eventNames } },
+      }));
+    } catch (error) {
+      message.error("Error in fetching available coaches for events");
+    }
   };
 
+  useEffect(() => {
+    getAvailableCoachForEvent();
+  }, []);
+
   return (
-    <div id="chart" onClick={handleTitleClick} style={{ cursor: "pointer" }}>
+    <div id="chart">
       <ReactApexChart
         options={chartData.options}
         series={chartData.series}
