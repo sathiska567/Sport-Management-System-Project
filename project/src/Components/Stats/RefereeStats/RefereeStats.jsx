@@ -1,12 +1,13 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import adminStatStyles from "./RefereeStats.module.css";
 import RefereeSideBar from "../../Referee/RefereeSideBar/RefereeSideBar";
-import { Card, Statistic } from "antd";
+import { Card, message, Statistic } from "antd";
 import CountUp from "react-countup";
 import UpcomingEvents from "./upcomingEvents";
 import AssignedMatches from "./AssignedMatches";
 
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const formatter = (value) => (
   <CountUp
@@ -22,6 +23,8 @@ const formatter = (value) => (
 
 const RefereeStats = () => {
   const Navigate = useNavigate();
+  const [allReferee , setAllReferee] = useState([])
+  const [createdEvent , setCreateEvent] = useState([])
 
   const handleAssignTeams = () => {
     Navigate("/referee-matches");
@@ -44,6 +47,38 @@ const RefereeStats = () => {
 
     Navigate("/edit-team");
   };
+
+
+  const getAllReferee = async()=>{
+    try {
+      const getReferee = await axios.get("http://localhost:8080/api/v1/referee/referee-details")
+        // console.log(getReferee.data.referee);
+        setAllReferee(getReferee.data.referee)
+      
+    } catch (error) {
+      message.error("Error while fetching referee data");
+    }
+  }
+
+    // GET ALL CREATE EVENT 
+const getAllCreateEvent = async () => {
+  try {
+    const response = await axios.get(
+      "http://localhost:8080/api/v1/event/get-all-events"
+    );
+
+    if (response.data.success) {
+      setCreateEvent(response.data.data);
+    }
+  } catch (error) {
+    message.error("Error fetching data");
+  }
+};
+
+  useEffect(()=>{
+    getAllReferee()
+    getAllCreateEvent()
+  },[])
 
   return (
     <RefereeSideBar>
@@ -103,7 +138,7 @@ const RefereeStats = () => {
                 <div className={adminStatStyles.pendingPlayers2}>
                   <Statistic
                     title="Referees Count"
-                    value={5} // Replace with actual value
+                    value={allReferee.length} // Replace with actual value
                     formatter={formatter}
                     className={adminStatStyles.ppStat2}
                   />
@@ -133,7 +168,7 @@ const RefereeStats = () => {
                 <div className={adminStatStyles.pendingPlayers3}>
                   <Statistic
                     title="Event Count"
-                    value={5} // Replace with actual value
+                    value={createdEvent.length} // Replace with actual value
                     formatter={formatter}
                     className={adminStatStyles.ppStat2}
                   />

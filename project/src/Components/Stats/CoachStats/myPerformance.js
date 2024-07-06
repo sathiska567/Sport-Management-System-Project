@@ -1,19 +1,11 @@
-import React, { useState } from "react";
+import { message } from "antd";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import ReactApexChart from "react-apexcharts";
 
 const MyPerformance = () => {
-  // Use useState to manage series and options
-  const [series, setSeries] = useState([
-    {
-      name: "Won Matches",
-      data: [4, 5, 1,2, 2, 3, 4, 6, 2, 3],
-    },
-    {
-      name: "Lost Matches",
-      data: [3, 3, 5, 8, 1, 7, 4, 5, 6, 3],
-    },
-  ]);
-
+  const [allCreatedPointTableDetails, setAllCreatedPointTableDetails] = useState([]);
+  const [series, setSeries] = useState([]);
   const [options, setOptions] = useState({
     chart: {
       type: "bar",
@@ -39,8 +31,8 @@ const MyPerformance = () => {
       bar: {
         horizontal: false,
         borderRadius: 10,
-        borderRadiusApplication: "end", // 'around', 'end'
-        borderRadiusWhenStacked: "last", // 'all', 'last'
+        borderRadiusApplication: "end",
+        borderRadiusWhenStacked: "last",
         dataLabels: {
           total: {
             enabled: true,
@@ -54,18 +46,7 @@ const MyPerformance = () => {
     },
     xaxis: {
       type: "text",
-      categories: [
-        "Team 1",
-        "Team 2",
-        "Team 3",
-        "Team 4",
-        "Team 5",
-        "Team 6",
-        "Team 7",
-        "Team 8",
-        "Team 9",
-        "Team 10",
-      ],
+      categories: [],
       title: {
         text: "Team Names",
       },
@@ -74,20 +55,10 @@ const MyPerformance = () => {
       title: {
         text: "Matches",
       },
-      // Calculate tickAmount dynamically
-      // Use Math.max to get the highest number from all series
-      // Use flatMap to combine data from all series
-      // Add 1 to ensure the maximum value is included
-      // Example: how function works with series data [4, 5, 1, 7, 2, 3, 4, 6, 2, 3, 3]
-      // Math.max(...series.flatMap((serie) => serie.data)) + 1
-      // Math.max(4, 5, 1, 7, 2, 3, 4, 6, 2, 3, 3) + 1
-      // Math.max(7) + 1
-      // 7 + 1
-      // 8
-      tickAmount: 6,
+      tickAmount: 0,
       labels: {
         formatter: function (value) {
-          return value; // Display the value directly
+          return value;
         },
       },
     },
@@ -101,14 +72,61 @@ const MyPerformance = () => {
     colors: ["#2f54eb", "#85a5ff"],
   });
 
+  const getAllCreatedPointTable = async () => {
+    try {
+      const getAllResponse = await axios.get("http://localhost:8080/api/v1/PointTableForm/getAllPointTableForm");
+      setAllCreatedPointTableDetails(getAllResponse.data.allCreatedPointTableDetails);
+    } catch (error) {
+      message.error(error.message);
+    }
+  };
+
+  useEffect(() => {
+    getAllCreatedPointTable();
+  }, []);
+
+  useEffect(() => {
+    if (allCreatedPointTableDetails.length > 0) {
+      // Map the fetched data to extract team names, won matches, and lost matches
+      const teamNames = allCreatedPointTableDetails.map(detail => detail.nameOfTheTeam);
+      const wonMatches = allCreatedPointTableDetails.map(detail => detail.wonMatches);
+      const lostMatches = allCreatedPointTableDetails.map(detail => detail.lostMatches);
+
+      // Update series data
+      setSeries([
+        {
+          name: "Won Matches",
+          data: wonMatches,
+        },
+        {
+          name: "Lost Matches",
+          data: lostMatches,
+        },
+      ]);
+
+      // Update options with new categories and tickAmount
+      setOptions(prevOptions => ({
+        ...prevOptions,
+        xaxis: {
+          ...prevOptions.xaxis,
+          categories: teamNames,
+        },
+        yaxis: {
+          ...prevOptions.yaxis,
+          tickAmount: Math.max(...wonMatches, ...lostMatches) + 1,
+        },
+      }));
+    }
+  }, [allCreatedPointTableDetails]);
+
   return (
     <div>
       <div id="chart">
         <ReactApexChart
-          options={options} // Use options from state
-          series={series} // Use series from state
+          options={options}
+          series={series}
           type="bar"
-          height={200}
+          height={250}
         />
       </div>
       <div id="html-dist"></div>

@@ -83,7 +83,7 @@ export default function AssignCoachesFinal() {
             >
               {/* Search section */}
               <div className="search">
-                <Input.Search
+                {/* <Input.Search
                   placeholder="Search by Team Name"
                   styles={{
                     marginBottom: "9",
@@ -100,7 +100,7 @@ export default function AssignCoachesFinal() {
                   onSearch={handleDateSearch}
                   // onChange={(e) => handleTeamNameSearch(e.target.value)}
                   allowClear
-                />
+                /> */}
               </div>
               {/* Table section */}
               <div className="tabContainer">

@@ -1,54 +1,72 @@
-import React from "react";
-import { Table } from "antd";
+import React, { useEffect, useState } from "react";
+import { message, Table } from "antd";
+import axios from "axios";
 
-const upcomingEvents = () => {
-  const data = [
-    {
-      key: "1",
-      eventName: "Event 1",
-      teamName: "Team A",
-      eventDate: "2024-07-04",
-    },
-    {
-      key: "2",
-      eventName: "Event 2",
-      teamName: "Team C",
-      eventDate: "2024-07-12",
-    },
-    {
-      key: "3",
-      eventName: "Event 3",
-      teamName: "Team E",
-      eventDate: "2024-07-21",
-    },
-    {
-      key: "4",
-      eventName: "Event 4",
-      teamName: "Team V",
-      eventDate: "2024-07-25",
-    },
-    {
-      key: "5",
-      eventName: "Event 5",
-      teamName: "Team Q",
-      eventDate: "2024-07-30",
-    },
-  ];
+const UpcomingEvents = () => {
+  const [refereeId, setRefereeId] = useState("");
+  const [assignEvents, setAssignEvents] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [total, setTotal] = useState(0);
+
+  const currentUserData = async () => {
+    try {
+      const res = await axios.get("http://localhost:8080/api/v1/user/getCurrentUser", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      setRefereeId(res.data.user._id);
+    } catch (error) {
+      message.error("Error fetching current user data");
+    }
+  };
+
+  const getAssignMatches = async (refereeId, page) => {
+    try {
+      const assignMatchResponse = await axios.post("http://localhost:8080/api/v1/event/assignReferee-event", {
+        refereeId,
+        page,
+      });
+      // console.log(assignMatchResponse.data.data.data);
+      setAssignEvents(assignMatchResponse.data.data.data);
+      // setTotal(assignMatchResponse.data.data.total);
+    } catch (error) {
+      message.error("Failed to get assigned matches");
+    }
+  };
+
+  useEffect(() => {
+    currentUserData();
+  }, []);
+
+  useEffect(() => {
+    if (refereeId) {
+      getAssignMatches(refereeId, currentPage);
+    }
+  }, [refereeId, currentPage]);
+
+  const handleTableChange = (pagination) => {
+    setCurrentPage(pagination.current);
+  };
 
   const columns = [
-    { dataIndex: "eventName", key: "EventName", title: "Event Name" },
-    { dataIndex: "teamName", key: "TeamName", title: "Team Name" },
-    { dataIndex: "eventDate", key: "EventDate", title: "Event Date" },
+    { dataIndex: "nameOfTheEvent", key: "nameOfTheEvent", title: "Event Name" },
+    { dataIndex: "location", key: "location", title: "Location" }
+
   ];
 
   return (
     <Table
-      dataSource={data}
+      dataSource={assignEvents}
       columns={columns}
-      pagination={false}
-      showHeader={false} // This will hide the header completely
+      pagination={{
+        current: currentPage,
+        total: total,
+        pageSize: 5,
+        onChange: handleTableChange,
+      }}
     />
   );
 };
 
-export default upcomingEvents;
+export default UpcomingEvents;

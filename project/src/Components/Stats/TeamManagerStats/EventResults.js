@@ -1,22 +1,12 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import ReactApexChart from "react-apexcharts";
+import axios from "axios";
+import { message } from "antd";
 
 const UpcomingEvents = () => {
-  const series = [
-    {
-      name: "Won Matches",
-      data: [7, 5, 6, 2, 6, 4, 2, 3, 1,6],
-      color: "#597ef7",
-    },
-    {
-      name: "Lost Matches",
-      data: [2, 1, 4, 5, 3, 2, 6, 7, 2,8],
-      color: "#adc6ff",
-    },
-  ];
-
-  // Function to create chart options
-  const createOptions = () => ({
+  const [allCreatedPointTableDetails, setAllCreatedPointTableDetails] = useState([]);
+  const [series, setSeries] = useState([]);
+  const [options, setOptions] = useState({
     chart: {
       type: "bar",
       height: 350,
@@ -37,27 +27,16 @@ const UpcomingEvents = () => {
       colors: ["transparent"],
     },
     xaxis: {
-      categories: [
-        "Team 1",
-        "Team 2",
-        "Team 3",
-        "Team 4",
-        "Team 5",
-        "Team 6",
-        "Team 7",
-        "Team 8",
-        "Team 9",
-        "Team 10",
-      ],
+      categories: [],
     },
     yaxis: {
       title: {
         text: "Number of Matches",
       },
-      tickAmount: Math.max(...series.flatMap((serie) => serie.data)) + 1,
+      tickAmount: 0,
       labels: {
         formatter: function (value) {
-          return value; // Display the value directly
+          return value;
         },
       },
     },
@@ -67,7 +46,49 @@ const UpcomingEvents = () => {
     min: 0,
   });
 
-  const options = createOptions();
+  const getAllCreatedPointTable = async () => {
+    try {
+      const getAllResponse = await axios.get("http://localhost:8080/api/v1/PointTableForm/getAllPointTableForm");
+      setAllCreatedPointTableDetails(getAllResponse.data.allCreatedPointTableDetails);
+    } catch (error) {
+      message.error(error.message);
+    }
+  };
+
+  useEffect(() => {
+    getAllCreatedPointTable();
+  }, []);
+
+  useEffect(() => {
+    if (allCreatedPointTableDetails.length > 0) {
+      const teamNames = allCreatedPointTableDetails.map(detail => detail.nameOfTheTeam);
+      const wonMatches = allCreatedPointTableDetails.map(detail => detail.wonMatches);
+      const lostMatches = allCreatedPointTableDetails.map(detail => detail.lostMatches);
+
+      setSeries([
+        {
+          name: "Won Matches",
+          data: wonMatches,
+        },
+        {
+          name: "Lost Matches",
+          data: lostMatches,
+        },
+      ]);
+
+      setOptions(prevOptions => ({
+        ...prevOptions,
+        xaxis: {
+          ...prevOptions.xaxis,
+          categories: teamNames,
+        },
+        yaxis: {
+          ...prevOptions.yaxis,
+          tickAmount: Math.max(...wonMatches, ...lostMatches) + 1,
+        },
+      }));
+    }
+  }, [allCreatedPointTableDetails]);
 
   return (
     <div>
