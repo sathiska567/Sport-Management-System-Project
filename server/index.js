@@ -59,6 +59,7 @@ const RefereeAvailabilityRoute = require("./routes/RefereeAvailabilityRoute/Refe
 const GetPlayerAssignEventRoute = require("./routes/GetPlayerAssignEventRoute/GetPlayerAssignEventRoute")
 const GetPlayerCatagoryRoute = require("./routes/GetPlayerCatagoryRoute/GetPlayerCatagoryRoute")
 const GetAllCreatedTeamRoute = require("./routes/GetCoachCreatedTeamRoute/GetCoachCreatedTeamRoute")
+const GetEventsForPointTable = require("./routes/PointTableFormRoutes/GetEventsForPointTableRoute")
 
 require("./db/mongoDb"); 
 
@@ -204,6 +205,9 @@ app.use("/api/v1/player",GetPlayerCatagoryRoute)
 
 // Get All Created Team
 app.use("/api/v1/team",GetAllCreatedTeamRoute)
+
+//Get Events and Teams for point table
+app.use("/api/v1/EventsFroPointTable",GetEventsForPointTable)
 
 
 // //jwt
