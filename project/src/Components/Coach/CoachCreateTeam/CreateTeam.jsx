@@ -72,12 +72,6 @@ const CreateTeam = () => {
 
   const [columns, setColumns] = useState([
     {
-      title: "EID",
-      dataIndex: "eid",
-      align: "center",
-      render: (text) => <span className="text">{text}</span>,
-    },
-    {
       title: "Name",
       dataIndex: "nameOfTheEvent",
       align: "center",
