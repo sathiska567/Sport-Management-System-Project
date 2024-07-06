@@ -58,4 +58,23 @@ const PointTableForm = async (req, res) => {
    }
 }
 
-module.exports = { PointTableForm };
+
+const GetPointTableFormController = async(req,res)=>{
+   try {
+      const allCreatedPointTableDetails = await PointTableFormModel.find({});
+      res.status(200).send({
+         success: true,
+         message: "All Created Point Table Details",
+         allCreatedPointTableDetails
+      })
+      
+   } catch (error) {
+      res.status(400).send({
+         success: false,
+         message: "Failed to create event details",
+         error
+      })
+   }
+}
+
+module.exports = { PointTableForm,GetPointTableFormController };
