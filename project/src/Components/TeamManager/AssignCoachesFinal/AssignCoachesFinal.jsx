@@ -66,113 +66,108 @@ export default function AssignCoachesFinal() {
     },[])
 
     return (
-        <TeamManagerSideBar>
-            <Layout className="ant-layout-sider-children">
-                {/* Main content layout */}
-                <Layout>
-                    {/* Content section with statistics */}
-                    <Content
-                        className="ant-layout-content"
-                        style={{
-                            margin: "16px",
-                            padding: 0,
-                            minHeight: 180,
-                            height: "100%",
-                            background: "whitesmoke",
-                        }}
-                    >
-                        {/* Search section */}
-                        <div className="search">
-                            <Input.Search
-                                placeholder="Search by Team Name"
-                                styles={{
-                                    marginBottom: "9",
-                                }}
-                                onSearch={handleTeamNameSearch}
-                                // onChange={(e) => handleEventNameSearch(e.target.value)}
-                                allowClear
-                            />
-                            <Input.Search
-                                type='date'
-                                styles={{
-                                    marginBottom: "9",
-                                }}
-                                onSearch={handleDateSearch}
-                                // onChange={(e) => handleTeamNameSearch(e.target.value)}
-                                allowClear
-                            />
-                        </div>
-                        {/* Table section */}
-                        <div className="tabContainer">
-                            <Table
-                                className="Tab"
-                                columns={[
+      <TeamManagerSideBar>
+        <Layout className="ant-layout-sider-children">
+          {/* Main content layout */}
+          <Layout>
+            {/* Content section with statistics */}
+            <Content
+              className="ant-layout-content"
+              style={{
+                margin: "16px",
+                padding: 0,
+                minHeight: 180,
+                height: "100%",
+                background: "whitesmoke",
+              }}
+            >
+              {/* Search section */}
+              <div className="search">
+                <Input.Search
+                  placeholder="Search by Team Name"
+                  styles={{
+                    marginBottom: "9",
+                  }}
+                  onSearch={handleTeamNameSearch}
+                  // onChange={(e) => handleEventNameSearch(e.target.value)}
+                  allowClear
+                />
+                <Input.Search
+                  type="date"
+                  styles={{
+                    marginBottom: "9",
+                  }}
+                  onSearch={handleDateSearch}
+                  // onChange={(e) => handleTeamNameSearch(e.target.value)}
+                  allowClear
+                />
+              </div>
+              {/* Table section */}
+              <div className="tabContainer">
+                <Table
+                  className="Tab"
+                  columns={[
+                    {
+                      title: "Coach Name",
+                      dataIndex: "CoachName",
+                      key: "CoachName",
+                      render: (text, record) => <span>{record.username}</span>,
+                    },
 
-                                    {
-                                        title: "Coach Name",
-                                        dataIndex: "CoachName",
-                                        key: "CoachName",
-                                        render: (text, record) => (
-                                            <span>{record.username}</span>
-                                        )
-                                    },
+                    {
+                      title: "Email",
+                      dataIndex: "Email",
+                      key: "Email",
+                      render: (text, record) => <span>{record.email}</span>,
+                    },
 
-                                    {
-                                        title: "Email",
-                                        dataIndex: "Email",
-                                        key: "Email",
-                                        render: (text, record) => (
-                                            <span>{record.email}</span>
-                                        )
-                                    },
-                                   
-                                    {
-                                        title: "Actions",
-                                        dataIndex: "Actions",
-                                        key: "Actions",
-                                        render: (text, record) => (
-                                            <span
-                                                style={{
-                                                    display: "flex",
-                                                    flexDirection: "row",
-                                                    gap: "10px",
-                                                }}
-                                            >
-                                                <Button
-                                                    type="ghost"
-                                                    ghost
-                                                    onClick={()=>handleCoachAdd(record.id)}
-                                                    style={{
-                                                        backgroundColor: "blue",
-                                                        color: "#fff",
-                                                        fontSize: "14px",
-                                                        marginRight: "10px",
-                                                        borderRadius: "8px",
-                                                        marginTop: "auto",
-                                                        marginBottom: "auto",
-                                                    }}
-                                                >
-                                                   {addedEvents ? "Added Coach" : "Add Coach"}
-                                                </Button>
-                                                
-                                            </span>
-                                        ),
-                                    },
-                                ]}
-                                pagination={{
-                                    style: {
-                                        marginTop: "10px",
-                                    },
-                                    pageSize: 6,
-                                }}
-
-                                dataSource={dataSource}
-                            ></Table>
-                            {console.log(dataSource)}
-                        </div>
-                    </Content>
-                </Layout>
-            </Layout>
-            </TeamManagerSideBar>
+                    {
+                      title: "Actions",
+                      dataIndex: "Actions",
+                      key: "Actions",
+                      render: (text, record) => (
+                        <span
+                          style={{
+                            display: "flex",
+                            flexDirection: "row",
+                            gap: "10px",
+                          }}
+                        >
+                          <Button
+                            type="ghost"
+                            ghost
+                            onClick={() => handleCoachAdd(record.id)}
+                            style={{
+                              backgroundColor: addedEvents
+                                ? "#D94D34"
+                                : "#05AD1B",
+                              color: "#fff",
+                              fontSize: "14px",
+                              marginRight: "10px",
+                              borderRadius: "8px",
+                              marginTop: "auto",
+                              marginBottom: "auto",
+                            }}
+                          >
+                            {addedEvents ? "Added Coach" : "Add Coach"}
+                          </Button>
+                        </span>
+                      ),
+                    },
+                  ]}
+                  pagination={{
+                    style: {
+                      marginTop: "10px",
+                    },
+                    pageSize: 6,
+                  }}
+                  dataSource={dataSource}
+                ></Table>
+                {console.log(dataSource)}
+              </div>
+            </Content>
+          </Layout>
+        </Layout>
+      </TeamManagerSideBar>
     );
 }
