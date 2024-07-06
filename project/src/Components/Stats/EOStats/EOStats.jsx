@@ -130,18 +130,6 @@ const EOStats = () => {
                     formatter={formatter}
                     className={adminStatStyles.ppStat2}
                   />
-                  {/* <Statistic
-                    title="Ongoing"
-                    value={1} // Replace with actual value
-                    formatter={formatter}
-                    className={adminStatStyles.ppStat2}
-                  />
-                  <Statistic
-                    title="Cancelled"
-                    value={3} // Replace with actual value
-                    formatter={formatter}
-                    className={adminStatStyles.ppStat2}
-                  /> */}
                 </div>
               </Card>
             </div>

@@ -156,22 +156,6 @@ const handleCoachNameSearch = async(value) => {
                 className="Table"
                 columns={[
                   {
-                    title: "Profile",
-                    dataIndex: "profile",
-                    key: "profile",
-                    render: () => (
-                      <div
-                        style={{ display: "flex", justifyContent: "center" }}
-                      >
-                        <Image
-                          width={100}
-                          preview={false}
-                          src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png?x-oss-process=image"
-                        />
-                      </div>
-                    ),
-                  },
-                  {
                     title: "Coach Name",
                     dataIndex: "coachName",
                     key: "coachName",
