@@ -85,19 +85,19 @@ const handleDelete = async (id) => {
 
 
 
-    // // getdata  and search players
-    // const getFetchData = async (nameOfTheEvent, eventDate) => {        
-    //     try {
-    //         const response = await axios.get(`http://localhost:8080/api/v1/EditEventTable/get-create/?q=${nameOfTheEvent}&date=${eventDate}`);
-    //         console.log(response.data);
+    // getdata  and search players
+    const getFetchData = async (nameOfTheEvent, eventDate) => {        
+        try {
+            const response = await axios.get(`http://localhost:8080/api/v1/EditEventTable/get-create/?q=${nameOfTheEvent}&date=${eventDate}`);
+            console.log(response.data);
     
-    //         if (response.data.success) {
-    //             setDataSource(response.data.data);
-    //         }
-    //     } catch (error) {
-    //         console.error('Error fetching data:', error);
-    //     }
-    // };
+            if (response.data.success) {
+                setDataSource(response.data.data);
+            }
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
 
 
     const handleEditNavigate = async(record)=>{
@@ -109,9 +109,9 @@ const handleDelete = async (id) => {
     }
     
 
-    // useEffect(() => {
-    //     getFetchData(nameOfTheEvent,eventDate);
-    // }, [nameOfTheEvent,eventDate])
+    useEffect(() => {
+        getFetchData(nameOfTheEvent,eventDate);
+    }, [nameOfTheEvent,eventDate])
 
     // End
 
@@ -143,7 +143,7 @@ const handleDelete = async (id) => {
                                 // onChange={(e) => handleEventNameSearch(e.target.value)}
                                 allowClear
                             />
-                            <Input.Search
+                            {/* <Input.Search
                                 type='date'
                                 styles={{
                                     marginBottom: "9",
@@ -151,7 +151,7 @@ const handleDelete = async (id) => {
                                 onSearch={handleDateSearch}
                                 // onChange={(e) => handleTeamNameSearch(e.target.value)}
                                 allowClear
-                            />
+                            /> */}
                         </div>
                         {/* Table section */}
                         <div className="tabContainer">
