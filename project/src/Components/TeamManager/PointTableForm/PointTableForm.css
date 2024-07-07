@@ -23,8 +23,6 @@ body {
       width: 120px; /* Adjust the width as needed */
       margin-left: 100px;
   }
-
-<<<<<<< HEAD
 .PointTableForm {
   width: 80%;
   margin: auto;
@@ -129,11 +127,8 @@ form {
 }
 
 
-.DataIem {
-=======
-  
+.DataItem {
   .PointTableFormHeader {
->>>>>>> parent of d71b0ad1 (Merge pull request #228 from sathiska567/testing03)
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -141,6 +136,9 @@ form {
     margin: 0;
     padding: 10px;
   }
+
+}
+
 
   
   .PointTableFormHeader h3 {
