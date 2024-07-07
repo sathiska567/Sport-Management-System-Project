@@ -68,6 +68,7 @@ function AvailableCoaches(props) {
           text: "Number of Coaches",
         },
         min: 0,
+        tickAmount: 4,
       },
       legend: {
         position: "top",

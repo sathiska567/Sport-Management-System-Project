@@ -60,12 +60,7 @@ const TeamManagerStats = () => {
                     formatter={formatter}
                     className={TeamManagerStatsStyles.ppStat1}
                   />
-                  {/* <Statistic
-                    title="Assigned Coaches"
-                    value={6}
-                    formatter={formatter}
-                    className={TeamManagerStatsStyles.ppStat1}
-                  /> */}
+                 
                 </div>
               </Card>
             </div>

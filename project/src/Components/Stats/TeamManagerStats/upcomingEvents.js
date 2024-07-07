@@ -35,7 +35,7 @@ const UpcomingEvents = () => {
       dataSource={createEvent}
       columns={columns}
       pagination={false}
-      showHeader={true} // Change this to true to show the header
+      showHeader={false} // Change this to true to show the header
     />
   );
 };
