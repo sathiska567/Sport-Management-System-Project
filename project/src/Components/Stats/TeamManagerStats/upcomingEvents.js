@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Table, message } from "antd";
-import axios from "axios"; // Import axios
+import axios from "axios";
 
 const UpcomingEvents = () => {
   const [createEvent, setCreateEvent] = useState([]);
 
-  // GET ALL CREATE EVENT 
+  // GET ALL CREATE EVENT
   const getAllCreateEvent = async () => {
     try {
       const response = await axios.get(
@@ -13,8 +13,12 @@ const UpcomingEvents = () => {
       );
 
       if (response.data.success) {
-        console.log(response);
-        setCreateEvent(response.data.data); // Update the state with the fetched data
+        const events = response.data.data;
+        // Sort events by createdAt timestamp in descending order
+        events.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        // Slice the first 8 elements
+        const latestEvents = events.slice(0, 8);
+        setCreateEvent(latestEvents); // Update the state with the latest 8 events
       }
     } catch (error) {
       message.error("Error fetching data");
@@ -35,7 +39,7 @@ const UpcomingEvents = () => {
       dataSource={createEvent}
       columns={columns}
       pagination={false}
-      showHeader={false} // Change this to true to show the header
+      showHeader={false} // Show the header
     />
   );
 };

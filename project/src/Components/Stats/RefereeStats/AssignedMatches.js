@@ -23,13 +23,21 @@ const UpcomingEvents = () => {
 
   const getAssignMatches = async (refereeId, page) => {
     try {
-      const assignMatchResponse = await axios.post("http://localhost:8080/api/v1/event/assignReferee-event", {
-        refereeId,
-        page,
-      });
-      // console.log(assignMatchResponse.data.data.data);
-      setAssignEvents(assignMatchResponse.data.data.data);
-      // setTotal(assignMatchResponse.data.data.total);
+      const assignMatchResponse = await axios.post(
+        "http://localhost:8080/api/v1/event/assignReferee-event",
+        {
+          refereeId,
+          page,
+        }
+      );
+      const events = assignMatchResponse.data.data.data;
+      // Sort events by date in descending order
+      events.sort(
+        (a, b) => new Date(b.eventNewDate) - new Date(a.eventNewDate)
+      );
+      // Slice the first 10 elements
+      const latestEvents = events.slice(0, 10);
+      setAssignEvents(latestEvents);
     } catch (error) {
       message.error("Failed to get assigned matches");
     }
@@ -59,12 +67,8 @@ const UpcomingEvents = () => {
     <Table
       dataSource={assignEvents}
       columns={columns}
-      pagination={{
-        current: currentPage,
-        total: total,
-        pageSize: 5,
-        onChange: handleTableChange,
-      }}
+      pagination={false}
+      showHeader={false}
     />
   );
 };

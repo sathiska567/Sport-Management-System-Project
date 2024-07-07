@@ -383,31 +383,6 @@ const CoachSidebar = ({ children }) => {
           >
             GameSync Pro - Coach
           </span>
-          <span style={{ color: "white" }} className="notificaiton">
-            <a href="/UserValidation">
-              <Space size={24}>
-                {/* Notification badge */}
-                <Badge count={positionNotification}>
-                  <Avatar
-                    shape="square"
-                    icon={
-                      <BellOutlined
-                        style={{
-                          fontSize: "22px",
-                        }}
-                      />
-                    }
-                  />
-                </Badge>
-              </Space>
-            </a>
-          </span>
-          {/* Email communication section */}
-          <a href="www">
-            <span style={{ color: "white" }} className="emailCommunication">
-              <MailOutlined />
-            </span>
-          </a>
         </Header>
 
         {/* Title bar displaying the selected menu item */}

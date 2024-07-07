@@ -5,7 +5,7 @@ import axios from "axios";
 const UpcomingEvents = () => {
   const [createdEvent, setCreateEvent] = useState([]);
 
-  // GET ALL CREATE EVENT 
+  // GET ALL CREATE EVENT
   const getAllCreateEvent = async () => {
     try {
       const response = await axios.get(
@@ -29,11 +29,15 @@ const UpcomingEvents = () => {
     { title: "Event Date", dataIndex: "eventNewDate", key: "eventNewDate" },
   ];
 
+  // Show only the 10 latest events
+  const latestEvents = createdEvent.slice(-8);
+
   return (
     <Table
-      dataSource={createdEvent}
+      dataSource={latestEvents}
       columns={columns}
       pagination={false}
+      showHeader={false}
     />
   );
 };

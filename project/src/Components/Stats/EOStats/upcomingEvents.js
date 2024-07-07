@@ -7,13 +7,17 @@ const UpcomingEvents = () => {
 
   const getAllEvents = async () => {
     try {
-      const response = await axios.get("http://localhost:8080/api/v1/event/get-all-events");
-      // Assuming the response data has the structure where events are in `data.data`
-      const events = response.data.data.map((event, index) => ({
-        key: index + 1,
-        nameOfTheEvent: event.nameOfTheEvent,
-        eventNewDate: event.eventNewDate
-      }));
+      const response = await axios.get(
+        "http://localhost:8080/api/v1/event/get-all-events"
+      );
+      const events = response.data.data
+        .map((event, index) => ({
+          key: index + 1,
+          nameOfTheEvent: event.nameOfTheEvent,
+          eventNewDate: event.eventNewDate,
+        }))
+        .sort((a, b) => new Date(b.eventNewDate) - new Date(a.eventNewDate)) // Sort by eventNewDate in descending order
+        .slice(-10); // Take the last 10 elements (latest 10 events)
       setCreatedEvent(events);
     } catch (error) {
       message.error("Something went wrong");
@@ -34,7 +38,7 @@ const UpcomingEvents = () => {
       dataSource={createdEvent}
       columns={columns}
       pagination={false}
-      showHeader={false}
+      showHeader={false} // Show the header
     />
   );
 };

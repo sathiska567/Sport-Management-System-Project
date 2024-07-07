@@ -8,7 +8,6 @@ import UpcomingEvents from "./upcomingEvents.js";
 import EventResults from "./MyPerformance.js";
 import TeamPerformance from "./TeamPerformance.js";
 
-
 const PlayerStats = () => {
   const Navigate = useNavigate();
 
@@ -38,6 +37,15 @@ const PlayerStats = () => {
                     onClick={handleAssignedMatch}
                   >
                     Assigned Matches
+                    <span
+                      style={{
+                        fontSize: "13px",
+                        fontWeight: "300",
+                        marginLeft: "10px",
+                      }}
+                    >
+                      [ Event Name | Number of Teams | Location ]
+                    </span>
                   </span>
                 }
                 className={adminStatStyles.card2}
@@ -52,7 +60,7 @@ const PlayerStats = () => {
           <div className={adminStatStyles.secondRow}>
             <div className={adminStatStyles.SfirstCard}>
               <Card className={adminStatStyles.card3}>
-               <TeamPerformance />
+                <TeamPerformance />
               </Card>
             </div>
             <div className={adminStatStyles.SthirdCard}>
@@ -60,7 +68,18 @@ const PlayerStats = () => {
                 bordered={false}
                 className={adminStatStyles.card5}
                 title={
-                  <span style={{ cursor: "pointer" }}>Upcoming Events</span>
+                  <span style={{ cursor: "pointer" }}>
+                    Upcoming Events
+                    <span
+                      style={{
+                        fontSize: "13px",
+                        fontWeight: "300",
+                        marginLeft: "10px",
+                      }}
+                    >
+                      [ Event Name | Location]
+                    </span>
+                  </span>
                 }
               >
                 <div className={adminStatStyles.pendingUsers1}>

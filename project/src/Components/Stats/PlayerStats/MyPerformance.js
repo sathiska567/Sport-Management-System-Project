@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import ReactApexChart from "react-apexcharts";
 import axios from "axios";
 import { message } from "antd";
+import { min } from "moment/moment";
 
 const MyPerformance = () => {
   const [currentPlayerId, setCurrentPlayerId] = useState("");
@@ -55,7 +56,6 @@ const MyPerformance = () => {
       setBowlingReviews(bowling);
       setFieldingReviews(fielding);
       setCoachNames(coaches);
-
     } catch (error) {
       message.error("Error fetching user data or reviews");
     }
@@ -68,20 +68,22 @@ const MyPerformance = () => {
   const series = [
     {
       name: "Batting",
-      data: battingReviews,
+      data: battingReviews.slice(-10), // Show only the 10 latest data
       color: "#ff7875",
     },
     {
       name: "Bowling",
-      data: bowlingReviews,
+      data: bowlingReviews.slice(-10), // Show only the 10 latest data
       color: "#95de64",
     },
     {
       name: "Fielding",
-      data: fieldingReviews,
+      data: fieldingReviews.slice(-10), // Show only the 10 latest data
       color: "#85a5ff",
     },
   ];
+
+  const maxValue = Math.max(...series.flatMap((serie) => serie.data)); // Calculate the maximum value
 
   // Function to create chart options
   const createOptions = () => ({
@@ -108,16 +110,18 @@ const MyPerformance = () => {
       colors: ["transparent"],
     },
     xaxis: {
-      categories: coachNames,
+      categories: coachNames.slice(-10), // Show only the 10 latest data
     },
     yaxis: {
       title: {
         text: "Performance Percentage",
       },
-      tickAmount: 10,
+      min: 0,
+      max: maxValue, // Set the maximum value
+      forceNiceScale: true, // Enable nice scaling
       labels: {
-        formatter: function (value) {
-          return value + "%"; // Add percentage symbol
+        formatter: (value) => {
+          return `${Math.round((value / 5) * 100)}%`; // Convert 0-5 to 0-100%
         },
       },
     },

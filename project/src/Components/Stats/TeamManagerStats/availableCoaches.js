@@ -68,7 +68,6 @@ function AvailableCoaches(props) {
           text: "Number of Coaches",
         },
         min: 0,
-        tickAmount: 4,
       },
       legend: {
         position: "top",
@@ -82,16 +81,35 @@ function AvailableCoaches(props) {
 
   const getAvailableCoachForEvent = async () => {
     try {
-      const eventAvailableCoach = await axios.get("http://localhost:8080/api/v1/availability/get-event-available-coach");
+      const eventAvailableCoach = await axios.get(
+        "http://localhost:8080/api/v1/availability/get-event-available-coach"
+      );
       console.log(eventAvailableCoach);
-      
-      const eventNames = eventAvailableCoach.data.data.map(event => event.event.nameOfTheEvent);
-      const availableCoaches = eventAvailableCoach.data.data.map(event => event.availableCoachCount);
 
-      setChartData(prevData => ({
-        ...prevData,
-        series: [{ ...prevData.series[0], data: availableCoaches }],
-        options: { ...prevData.options, xaxis: { ...prevData.options.xaxis, categories: eventNames } },
+      const eventData = eventAvailableCoach.data.data;
+      const latestEventData = eventData.slice(-10); // get the 10 latest data
+
+      const eventNames = latestEventData.map(
+        (event) => event.event.nameOfTheEvent
+      );
+      const availableCoaches = latestEventData.map(
+        (event) => event.availableCoachCount
+      );
+
+      const maxValue = Math.max(...availableCoaches);
+
+      setChartData((prevData) => ({
+       ...prevData,
+        series: [{...prevData.series[0], data: availableCoaches }],
+        options: {
+         ...prevData.options,
+          xaxis: {...prevData.options.xaxis, categories: eventNames },
+          yaxis: {
+           ...prevData.options.yaxis,
+            max: maxValue,
+            forceNiceScale: true, // enable nice scaling
+          },
+        },
       }));
     } catch (error) {
       message.error("Error in fetching available coaches for events");

@@ -50,7 +50,9 @@ const TeamManagerStats = () => {
             <div className={TeamManagerStatsStyles.secondCard}>
               <Card
                 bordered={false}
-                title={<span style={{ cursor: "pointer" }}>Coach Availability</span>}
+                title={
+                  <span style={{ cursor: "pointer" }}>Coach Availability</span>
+                }
                 className={TeamManagerStatsStyles.card2}
               >
                 <div className={TeamManagerStatsStyles.pendingPlayers1}>
@@ -60,7 +62,6 @@ const TeamManagerStats = () => {
                     formatter={formatter}
                     className={TeamManagerStatsStyles.ppStat1}
                   />
-                 
                 </div>
               </Card>
             </div>
@@ -76,7 +77,20 @@ const TeamManagerStats = () => {
               <Card
                 bordered={false}
                 className={TeamManagerStatsStyles.card5}
-                title={<span style={{ cursor: "pointer" }}>Upcoming Events</span>}
+                title={
+                  <span style={{ cursor: "pointer" }}>
+                    Upcoming Events
+                    <span
+                      style={{
+                        fontSize: "13px",
+                        fontWeight: "300",
+                        marginLeft: "10px",
+                      }}
+                    >
+                      [ Event Name | Location ]
+                    </span>
+                  </span>
+                }
               >
                 <div className={TeamManagerStatsStyles.pendingUsers}>
                   <UpcomingEvents />

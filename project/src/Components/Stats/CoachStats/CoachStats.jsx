@@ -75,6 +75,15 @@ const CoachStats = () => {
                     onClick={handleCreatedTeams}
                   >
                     Created Teams
+                    <span
+                      style={{
+                        fontSize: "13px",
+                        fontWeight: "300",
+                        marginLeft: "10px",
+                      }}
+                    >
+                      [ Event Name | No of Teams | Location ]
+                    </span>
                   </span>
                 }
                 className={adminStatStyles.card2}
@@ -95,6 +104,15 @@ const CoachStats = () => {
                     onClick={handleMyAvailability}
                   >
                     Assigned Teams
+                    <span
+                      style={{
+                        fontSize: "13px",
+                        fontWeight: "300",
+                        marginLeft: "10px",
+                      }}
+                    >
+                      [ Event No | Name of Teams]
+                    </span>
                   </span>
                 }
                 className={adminStatStyles.card3}
@@ -131,6 +149,15 @@ const CoachStats = () => {
                     onClick={handleLoadReview}
                   >
                     Need to Review
+                    <span
+                      style={{
+                        fontSize: "13px",
+                        fontWeight: "300",
+                        marginLeft: "10px",
+                      }}
+                    >
+                      [ Name of Player]
+                    </span>
                   </span>
                 }
               >

@@ -66,7 +66,6 @@ function AvailableReferees(props) {
           text: "Number of Referees",
         },
         min: 0,
-        // max : 10
       },
       legend: {
         position: "top",
@@ -86,31 +85,44 @@ function AvailableReferees(props) {
 
       if (response.data.success) {
         setCreateEvent(response.data.data);
-        const eventIds = response.data.data.map(event => event._id);
-        const eventNames = response.data.data.map(event => event.nameOfTheEvent);
+        const eventIds = response.data.data.map((event) => event._id);
+        const eventNames = response.data.data.map(
+          (event) => event.nameOfTheEvent
+        );
 
-        const refereesPromises = eventIds.map(id =>
-          axios.post("http://localhost:8080/api/v1/availability/event-available-referee", { eventId: id })
+        const refereesPromises = eventIds.map((id) =>
+          axios.post(
+            "http://localhost:8080/api/v1/availability/event-available-referee",
+            { eventId: id }
+          )
         );
 
         const refereesResponses = await Promise.all(refereesPromises);
-        const availableReferees = refereesResponses.map(response => 
+        const availableReferees = refereesResponses.map((response) =>
           response.data.success ? response.data.data.length : 0
         );
 
-        setChartData(prevChartData => ({
+        const latestData = availableReferees.slice(-10); // get the 10 latest data
+        const maxValue = Math.max(...latestData);
+
+        setChartData((prevChartData) => ({
           ...prevChartData,
           series: [
             {
               name: "Available Referees",
-              data: availableReferees,
+              data: latestData,
             },
           ],
           options: {
             ...prevChartData.options,
             xaxis: {
               ...prevChartData.options.xaxis,
-              categories: eventNames,
+              categories: eventNames.slice(-10), // get the 10 latest event names
+            },
+            yaxis: {
+              ...prevChartData.options.yaxis,
+              max: maxValue,
+              forceNiceScale: true, // enable nice scaling
             },
           },
         }));

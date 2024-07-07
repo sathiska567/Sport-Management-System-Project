@@ -150,6 +150,15 @@ const EOStats = () => {
                     onClick={handleUpcomingClick}
                   >
                     Upcoming Events
+                    <span
+                      style={{
+                        fontSize: "13px",
+                        fontWeight: "300",
+                        marginLeft: "10px",
+                      }}
+                    >
+                      [ Event Name | Date]
+                    </span>
                   </span>
                 }
               >

@@ -4,7 +4,8 @@ import axios from "axios";
 import { message } from "antd";
 
 const UpcomingEvents = () => {
-  const [allCreatedPointTableDetails, setAllCreatedPointTableDetails] = useState([]);
+  const [allCreatedPointTableDetails, setAllCreatedPointTableDetails] =
+    useState([]);
   const [series, setSeries] = useState([]);
   const [options, setOptions] = useState({
     chart: {
@@ -33,12 +34,8 @@ const UpcomingEvents = () => {
       title: {
         text: "Number of Matches",
       },
-      tickAmount: 0,
-      labels: {
-        formatter: function (value) {
-          return value;
-        },
-      },
+      
+    min: 0,
     },
     fill: {
       opacity: 1,
@@ -48,8 +45,12 @@ const UpcomingEvents = () => {
 
   const getAllCreatedPointTable = async () => {
     try {
-      const getAllResponse = await axios.get("http://localhost:8080/api/v1/PointTableForm/getAllPointTableForm");
-      setAllCreatedPointTableDetails(getAllResponse.data.allCreatedPointTableDetails);
+      const getAllResponse = await axios.get(
+        "http://localhost:8080/api/v1/PointTableForm/getAllPointTableForm"
+      );
+      setAllCreatedPointTableDetails(
+        getAllResponse.data.allCreatedPointTableDetails
+      );
     } catch (error) {
       message.error(error.message);
     }
@@ -61,9 +62,13 @@ const UpcomingEvents = () => {
 
   useEffect(() => {
     if (allCreatedPointTableDetails.length > 0) {
-      const teamNames = allCreatedPointTableDetails.map(detail => detail.nameOfTheTeam);
-      const wonMatches = allCreatedPointTableDetails.map(detail => detail.wonMatches);
-      const lostMatches = allCreatedPointTableDetails.map(detail => detail.lostMatches);
+      const latestData = allCreatedPointTableDetails.slice(-10); // get the 10 latest data
+
+      const teamNames = latestData.map((detail) => detail.nameOfTheTeam);
+      const wonMatches = latestData.map((detail) => detail.wonMatches);
+      const lostMatches = latestData.map((detail) => detail.lostMatches);
+
+      const maxValue = Math.max(...wonMatches, ...lostMatches);
 
       setSeries([
         {
@@ -76,7 +81,7 @@ const UpcomingEvents = () => {
         },
       ]);
 
-      setOptions(prevOptions => ({
+      setOptions((prevOptions) => ({
         ...prevOptions,
         xaxis: {
           ...prevOptions.xaxis,
@@ -84,7 +89,8 @@ const UpcomingEvents = () => {
         },
         yaxis: {
           ...prevOptions.yaxis,
-          tickAmount: Math.max(...wonMatches, ...lostMatches) + 1,
+          max: maxValue,
+          forceNiceScale: true, // enable nice scaling
         },
       }));
     }

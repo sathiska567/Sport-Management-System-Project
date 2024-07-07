@@ -31,7 +31,10 @@ const UpcomingEvents = () => {
       );
       console.log(assignEventResponse.data);
       if (assignEventResponse.data.success) {
-        setAssignMatchData(assignEventResponse.data.data);
+        const events = assignEventResponse.data.data
+          .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)) // Sort by createdAt in descending order
+          .slice(0, 10); // Take the first 10 elements
+        setAssignMatchData(events);
       }
     } catch (error) {
       message.error("An error occurred while getting assigned matches data.");
@@ -59,7 +62,7 @@ const UpcomingEvents = () => {
       dataSource={AssignMatchData} // Use the state data
       columns={columns}
       pagination={false}
-      showHeader={false} // Optionally, you can set this to true or false based on your need
+      showHeader={false} // Show the header
     />
   );
 };

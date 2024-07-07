@@ -472,11 +472,7 @@ const SideBar = ({ children }) => {
                 </a>
               </span>
               {/* Email communication section */}
-              <a href="www">
-                <span className="emailCommunication" style={{ color: "white" }}>
-                  <MailOutlined />
-                </span>
-              </a>
+              
             </Header>
 
             {/* Title bar displaying the selected menu item */}

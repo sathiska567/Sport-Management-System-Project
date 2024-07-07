@@ -5,7 +5,7 @@ import axios from "axios"; // Import axios
 const UpcomingEvents = () => {
   const [createEvent, setCreateEvent] = useState([]);
 
-  // GET ALL CREATE EVENT 
+  // GET ALL CREATE EVENT
   const getAllCreateEvent = async () => {
     try {
       const response = await axios.get(
@@ -14,7 +14,10 @@ const UpcomingEvents = () => {
 
       if (response.data.success) {
         console.log(response);
-        setCreateEvent(response.data.data); // Update the state with the fetched data
+        const events = response.data.data
+          .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)) // Sort by createdAt in descending order
+          .slice(0, 10); // Take the first 10 elements
+        setCreateEvent(events); // Update the state with the sorted and sliced data
       }
     } catch (error) {
       message.error("Error fetching data");
@@ -35,7 +38,7 @@ const UpcomingEvents = () => {
       dataSource={createEvent}
       columns={columns}
       pagination={false}
-      showHeader={true} // Change this to true to show the header
+      showHeader={false} // Show the header
     />
   );
 };

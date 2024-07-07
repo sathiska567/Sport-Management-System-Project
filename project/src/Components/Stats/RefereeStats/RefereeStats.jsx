@@ -93,6 +93,15 @@ const getAllCreateEvent = async () => {
                     onClick={handleAssignTeams}
                   >
                     Assigned Events
+                    <span
+                      style={{
+                        fontSize: "13px",
+                        fontWeight: "300",
+                        marginLeft: "10px",
+                      }}
+                    >
+                      [ Event Name | Location ]
+                    </span>
                   </span>
                 }
                 bordered={false}
@@ -113,6 +122,15 @@ const getAllCreateEvent = async () => {
                     onClick={handleUpcomingEvents}
                   >
                     Upcoming Events
+                    <span
+                      style={{
+                        fontSize: "13px",
+                        fontWeight: "300",
+                        marginLeft: "10px",
+                      }}
+                    >
+                      [ Event Name | Date ]
+                    </span>
                   </span>
                 }
                 className={adminStatStyles.card2}
@@ -156,10 +174,7 @@ const getAllCreateEvent = async () => {
                 bordered={false}
                 className={adminStatStyles.card5}
                 title={
-                  <span
-                    style={{ cursor: "pointer" }}
-                    
-                  >
+                  <span style={{ cursor: "pointer" }}>
                     Total Participated Events as a Referee
                   </span>
                 }

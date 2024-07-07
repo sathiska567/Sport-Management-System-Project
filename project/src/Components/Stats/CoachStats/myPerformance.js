@@ -4,7 +4,8 @@ import React, { useEffect, useState } from "react";
 import ReactApexChart from "react-apexcharts";
 
 const MyPerformance = () => {
-  const [allCreatedPointTableDetails, setAllCreatedPointTableDetails] = useState([]);
+  const [allCreatedPointTableDetails, setAllCreatedPointTableDetails] =
+    useState([]);
   const [series, setSeries] = useState([]);
   const [options, setOptions] = useState({
     chart: {
@@ -55,12 +56,7 @@ const MyPerformance = () => {
       title: {
         text: "Matches",
       },
-      tickAmount: 0,
-      labels: {
-        formatter: function (value) {
-          return value;
-        },
-      },
+      
     },
     legend: {
       position: "right",
@@ -74,8 +70,12 @@ const MyPerformance = () => {
 
   const getAllCreatedPointTable = async () => {
     try {
-      const getAllResponse = await axios.get("http://localhost:8080/api/v1/PointTableForm/getAllPointTableForm");
-      setAllCreatedPointTableDetails(getAllResponse.data.allCreatedPointTableDetails);
+      const getAllResponse = await axios.get(
+        "http://localhost:8080/api/v1/PointTableForm/getAllPointTableForm"
+      );
+      setAllCreatedPointTableDetails(
+        getAllResponse.data.allCreatedPointTableDetails
+      );
     } catch (error) {
       message.error(error.message);
     }
@@ -87,10 +87,14 @@ const MyPerformance = () => {
 
   useEffect(() => {
     if (allCreatedPointTableDetails.length > 0) {
+      const latestData = allCreatedPointTableDetails.slice(-10); // get the 10 latest data
+
       // Map the fetched data to extract team names, won matches, and lost matches
-      const teamNames = allCreatedPointTableDetails.map(detail => detail.nameOfTheTeam);
-      const wonMatches = allCreatedPointTableDetails.map(detail => detail.wonMatches);
-      const lostMatches = allCreatedPointTableDetails.map(detail => detail.lostMatches);
+      const teamNames = latestData.map((detail) => detail.nameOfTheTeam);
+      const wonMatches = latestData.map((detail) => detail.wonMatches);
+      const lostMatches = latestData.map((detail) => detail.lostMatches);
+
+      const maxValue = Math.max(...wonMatches, ...lostMatches);
 
       // Update series data
       setSeries([
@@ -105,7 +109,7 @@ const MyPerformance = () => {
       ]);
 
       // Update options with new categories and tickAmount
-      setOptions(prevOptions => ({
+      setOptions((prevOptions) => ({
         ...prevOptions,
         xaxis: {
           ...prevOptions.xaxis,
@@ -113,7 +117,8 @@ const MyPerformance = () => {
         },
         yaxis: {
           ...prevOptions.yaxis,
-          tickAmount: Math.max(...wonMatches, ...lostMatches) + 1,
+          max: maxValue, // set max value to the highest value
+          forceNiceScale: true, // enable nice scaling to make the chart look better
         },
       }));
     }
