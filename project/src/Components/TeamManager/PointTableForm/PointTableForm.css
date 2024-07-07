@@ -11,6 +11,7 @@ body {
   width: 80%;
   margin: auto;
   max-width: 800px;
+  
 }
 
 
@@ -45,7 +46,7 @@ body {
 
 .PointTableFormApplication {
   max-height: 500px; 
-  overflow-y: auto; 
+  overflow-y: hidden; 
   border: 1px solid #e0f7ff;
   border-radius: 4px;
   background-color: #D6F5FF;
