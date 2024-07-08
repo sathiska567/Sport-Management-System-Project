@@ -81,6 +81,8 @@ import AdminStats from "./Components/Stats/AdminStats/AdminStats.jsx";
 import { useState } from "react";
 import EventListPointTable from "./Components/TeamManager/EventAndTeams/EventListPointTable.jsx"
 import TeamList from "./Components/TeamManager/EventAndTeams/TeamList.jsx"
+import PlayerList from "./Components/TeamManager/PlayerPerformance/playerList.jsx"
+import Perforamance from "./Components/TeamManager/PlayerPerformance/PerformanceForm.jsx"
 
 function App() {
   const [eventId, setEventId] = useState("");
@@ -944,6 +946,32 @@ function App() {
           <ProtectedRoute>
             <TeamList />
           </ProtectedRoute>
+        }
+        >
+
+        </Route>
+      </Routes>
+
+      <Routes>
+        <Route
+        path="/GetPlayers"
+        element={
+          <ProtectedRoute>
+            <PlayerList />
+          </ProtectedRoute>
+        }
+        >
+
+        </Route>
+      </Routes>
+      <Routes>
+        <Route
+        path="/PlayerDetailsForm"
+        element={
+         <ProtectedRoute>
+          <Perforamance />
+         </ProtectedRoute>
+
         }
         >
 
