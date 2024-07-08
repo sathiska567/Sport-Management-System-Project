@@ -208,6 +208,9 @@ const TeamManagerSideBar = ({ children }) => {
               <Menu.Item key="/EventView" icon={<UserAddOutlined />}>
                 <NavLink to="/EventView">Assign Members</NavLink>
               </Menu.Item>
+              <Menu.Item key="/GetPlayers" icon={<UserAddOutlined />}>
+                <NavLink to="/GetPlayers">Player Performance</NavLink>
+              </Menu.Item>
               {/* <Menu.Item key="/TeamManager-profile" icon={<Profile />}>
                 <NavLink to="/TeamManager-profile">My Profile</NavLink>
               </Menu.Item> */}
