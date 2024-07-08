@@ -1,0 +1,41 @@
+.tableContainer {
+    width: 100%;
+    overflow-x: auto;
+  }
+  
+
+  .Table {
+    width: 100%;
+  }
+  
+
+
+  .ant-layout-sider-children {
+    height: 100vh;
+  }
+  
+
+
+  .ant-layout-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  
+
+  .action-column {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+
+
+
+
+  
+  .action-column button {
+    margin-left: 8px;
+  }
