@@ -70,7 +70,8 @@ const userSchema = new mongoose.Schema({
   },
 
   availability: {
-    type: Boolean
+    type: Boolean,
+    // default: false
   },
 
   uid: {

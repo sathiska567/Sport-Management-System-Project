@@ -1,5 +1,6 @@
 const PlayerAvailabilityModel = require("../../models/PlayerAvailabilityModel/PlayerAvailabilityModel");
 const User = require("../../models/userModel")
+const createdEventModel = require("../../models/CreateEventModel/createEventModel")
 
 
 const PlayerAvailabilityController = async(req,res)=>{
@@ -7,8 +8,23 @@ const PlayerAvailabilityController = async(req,res)=>{
    const { eventId, playerId, availability } = req.body;
 
    try {
-
            const data = await PlayerAvailabilityModel.find({ eventId: eventId , playerId:playerId });
+           const event = await createdEventModel.findById(eventId);
+
+           
+           if(availability){
+                if (event) {
+                  event.availableSetPlayerId.push(playerId)  
+                        
+                  await event.save();
+              }
+           }else{
+                  if (event) {
+                  event.availableSetPlayerId.pull(playerId)  
+                        
+                  await event.save();
+              }
+           }
 
            console.log(data);
 
@@ -19,7 +35,12 @@ const PlayerAvailabilityController = async(req,res)=>{
                            availability: availability
                    })
 
+                //    const addPlayerAvailability = new User({
+                //            _id: playerId,
+                //            availability: availability,
+                //    })
 
+                //    await addPlayerAvailability.save();
                    await setAvailability.save();
 
                    res.status(200).send({

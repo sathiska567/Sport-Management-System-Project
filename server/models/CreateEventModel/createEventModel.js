@@ -35,6 +35,11 @@ const createEventSchema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: 'referee'
       }],
+      availableSetPlayerId: [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'availableSetPlayer'
+      }],
+      
       eid:{
             type: String
       }
