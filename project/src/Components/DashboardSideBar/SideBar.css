@@ -21,7 +21,6 @@ body {
   align-items: center;
 }
 
-// menu text
 .ant-menu-title-content {
 }
 
@@ -37,7 +36,7 @@ body {
 
 .trigger-button {
   position: absolute !important;
-  top: -95+px !important;
+  top: -95 + px !important;
   color: #15295e;
   background-color: white;
 }
@@ -60,27 +59,8 @@ body {
   background-color: red;
 }
 
-// dashboard icon
-.dashboard-icon {
-}
-
-.ant-menu-item-active {
-}
-
-.ant-menu-item:hover {
-}
-
-.ant-menu-item-selected {
-}
-
 .ant-menu {
   background-color: #15295e;
-}
-.ant-menu-root {
-}
-.ant-menu-inline {
-}
-.ant-menu-light {
 }
 
 .title_bar {

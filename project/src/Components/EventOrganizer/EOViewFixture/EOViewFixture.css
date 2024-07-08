@@ -31,10 +31,6 @@ body {
   color: #fff;
   font-weight: 500;
 }
-
-
-/* CSS */
-
 .tableContainer tbody {
   display: block;
   height: 400px;

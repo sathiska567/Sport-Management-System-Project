@@ -4,7 +4,6 @@ body {
   overflow-x: hidden;
 }
 
-/*User Application*/
 
 .CreateEventForm {
   width: 80%;
@@ -13,11 +12,11 @@ body {
 }
 
 .ant-form-item-control {
-    width: calc(100% - 120px); /* Adjust the width as needed */
+    width: calc(100% - 120px);
 }
 
 .ant-form-item-label {
-    width: 120px; /* Adjust the width as needed */
+    width: 120px; 
     margin-left: 100px;
 }
 
@@ -33,7 +32,7 @@ body {
 .CreateEventFormHeader h3 {
   color: #e0f7ff;
   margin: 0;
-  flex: 1; /* Take up remaining space, centering the h3 */
+  flex: 1; 
   text-align: center;
 }
 
@@ -52,7 +51,6 @@ body {
     gap: 10px;
 }
 
-/* Style for Submit button */
 
 form {
   display: flex;

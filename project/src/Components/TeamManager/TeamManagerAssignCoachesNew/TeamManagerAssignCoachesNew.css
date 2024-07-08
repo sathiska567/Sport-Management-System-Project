@@ -6,7 +6,7 @@ body {
 
 
   
-  /* Style for the table */
+  
   
   .search {
       display: flex;
@@ -20,7 +20,7 @@ body {
   .tableContainer {
       width: 100%;
       margin-top: 0px;
-      /* Add a vertical scroll bar if the content overflows */
+      
   }
 
 
@@ -34,12 +34,11 @@ body {
 
 
   .ant-table-row .ant-table-row-level-0 {
-    height: 10px !important ;/* Adjust the height as needed */
+    height: 10px !important ;
   }
 
 
   
-  /* CSS */
   .tableContainer th {
     position: sticky;
     top: 0;

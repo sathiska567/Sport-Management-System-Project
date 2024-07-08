@@ -116,10 +116,10 @@
   padding: 0 1rem;
   text-align: center;
 }
-  .ppStat1:first-child,
-  .ppStat1:nth-child(1) {
-    border-right: 1px solid #ccc;
-  }
+.ppStat1:first-child,
+.ppStat1:nth-child(1) {
+  border-right: 1px solid #ccc;
+}
 .ppStat2 {
   flex: 1;
   padding: 0 1rem;
@@ -161,5 +161,4 @@
     background-color: rgba(0, 0, 0, 0.1);
     border-radius: 10px;
   }
-
 }

@@ -131,7 +131,7 @@ const MyPerformance = () => {
           options={options}
           series={series}
           type="bar"
-          height={250}
+          height={200}
         />
       </div>
       <div id="html-dist"></div>
