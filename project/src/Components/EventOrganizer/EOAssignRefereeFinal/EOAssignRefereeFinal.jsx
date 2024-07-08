@@ -15,13 +15,15 @@ export default function EOAssignRefereeFinal() {
     const [teamname, setTeamName] = useState("");
     const [evedate, setEventDate] = useState("");
 
-    const [createdEvent , setCreateEvent] = useState([]);
+    const [createdEvent, setCreateEvent] = useState([]);
     const [addedEvents, setAddedEvents] = useState();
 
     const [dataSource, setDataSource] = useState([]);
-    const [restrictData , setRestrictData] = useState([]);
+    const [restrictData, setRestrictData] = useState([]);
+    const [addRefereeState, setAddRefereeState] = useState();
+    const [alreadyAddedReferee, setAlreadyAddedReferee] = useState([])
 
-  console.log(location);
+    console.log(location);
     // Filter userApplicationData based on userRole and Userlocation
     const handleDateSearch = (value) => {
         console.log("Event Date Searched: ", value);
@@ -35,59 +37,63 @@ export default function EOAssignRefereeFinal() {
 
 
     const getAvailableReferee = async () => {
-         try {
-            const availabilityEventResponse = await axios.post("http://localhost:8080/api/v1/availability/event-available-referee",{eventId:location.state.record._id})
-            console.log(availabilityEventResponse);   
-            if(availabilityEventResponse.data.success){
-                setDataSource(availabilityEventResponse.data.data);
-            } 
-         } catch (error) {
-               message.error("Error fetching data");
-         }   
-    }
-
-    const handleRefereeAdd = async(refereeId)=>{
         try {
-                const addReferees = await axios.post("http://localhost:8080/api/v1/event/assignReferee",{eventId:location.state.record._id ,refereeId:refereeId})
-                const restrictRefereeAvailable = await axios.post("http://localhost:8080/api/v1/availability/restrictAssignReferees",{eventNewDate:location.state.record.eventNewDate,eventId:location.state.record._id,assignRefereeId:refereeId})
-
-                setRestrictData(restrictRefereeAvailable.data.data)
-                // console.log(addReferees,restrictRefereeAvailable);
-                if(addReferees.data.success){
-                    message.success("Referee Assigned Successfully");
-                    setAddedEvents('true');
-                    // window.location.reload();
-                }
-
-                console.log(addedEvents);
-        
-             } catch (error) {
-                   message.error("Error fetching data");
-             }  
+            const availabilityEventResponse = await axios.post("http://localhost:8080/api/v1/availability/event-available-referee", { eventId: location.state.record._id })
+            console.log(availabilityEventResponse);
+            if (availabilityEventResponse.data.success) {
+                setDataSource(availabilityEventResponse.data.data);
+                setAlreadyAddedReferee(availabilityEventResponse.data.alreadyAddedReferee)
+            }
+        } catch (error) {
+            message.error("Error fetching data");
+        }
     }
 
-    const handleRefereeRemove = async(refereeId)=>{
-        try {   
-                const restrictRemoveRefereeAvailable = await axios.post("http://localhost:8080/api/v1/availability/restrictRemoveReferees",{eventNewDate:location.state.record.eventNewDate,eventId:location.state.record._id,assignRefereeId:refereeId})
-                const removeReferees = await axios.post("http://localhost:8080/api/v1/event/removeReferee",{eventId:location.state.record._id,refereeId:refereeId})
+    const handleRefereeAdd = async (refereeId) => {
+        try {
+            const addReferees = await axios.post("http://localhost:8080/api/v1/event/assignReferee", { eventId: location.state.record._id, refereeId: refereeId })
+            const restrictRefereeAvailable = await axios.post("http://localhost:8080/api/v1/availability/restrictAssignReferees", { eventNewDate: location.state.record.eventNewDate, eventId: location.state.record._id, assignRefereeId: refereeId })
 
-                console.log(removeReferees,restrictRemoveRefereeAvailable);
-                if(removeReferees.data.success){
-                    message.success("Referee Remove Successfully");
-                    setAddedEvents('false');
-                    // window.location.reload();
-                }
+            setRestrictData(restrictRefereeAvailable.data.data)
+            // console.log(addReferees,restrictRefereeAvailable);
+            if (addReferees.data.success) {
+                message.success("Referee Assigned Successfully");
+                getAvailableReferee(); // Refresh the list of referees
 
-                console.log(addedEvents);
-        
-             } catch (error) {
-                   message.error("Error fetching data");
-             }  
+                setAddedEvents('true');
+                // window.location.reload();
+            }
+
+            console.log(addedEvents);
+
+        } catch (error) {
+            message.error("Error fetching data");
+        }
     }
+
+ const handleRefereeRemove = async (refereeId) => {
+        try {
+            // Check if the referee is already assigned
+            if (!alreadyAddedReferee.includes(refereeId)) {
+                return message.error("This Referee is not assigned to the event.Therefore Cannot Remove Referee.");
+            }
+
+            const restrictRemoveRefereeAvailable = await axios.post("http://localhost:8080/api/v1/availability/restrictRemoveReferees", { eventNewDate: location.state.record.eventNewDate, eventId: location.state.record._id, assignRefereeId: refereeId });
+            const removeReferees = await axios.post("http://localhost:8080/api/v1/event/removeReferee", { eventId: location.state.record._id, refereeId });
+
+            // Update UI if necessary
+            if (removeReferees.data.success) {
+                message.success("Referee Removed Successfully");
+                getAvailableReferee(); // Refresh the list of referees
+            }
+        } catch (error) {
+            message.error("Error removing referee");
+        }
+    };
 
     // const RestrictAssignReferee = async()=>{
     //     try {
-            
+
     //     } catch (error) {
     //         message.error("Error fetching data");
     //     }
@@ -95,7 +101,7 @@ export default function EOAssignRefereeFinal() {
 
     useEffect(() => {
         getAvailableReferee()
-    },[])
+    }, [])
 
     return (
         <EOSidebar>
@@ -146,7 +152,7 @@ export default function EOAssignRefereeFinal() {
                                         key: "CoachName",
                                         render: (text, record) => (
                                             <span>{record.username}</span>
-                                        //     <span>AAA</span>
+                                            //     <span>AAA</span>
                                         )
                                     },
 
@@ -156,10 +162,10 @@ export default function EOAssignRefereeFinal() {
                                         key: "Email",
                                         render: (text, record) => (
                                             <span>{record.email}</span>
-                                        // <span>AAA</span>
+                                            // <span>AAA</span>
                                         )
                                     },
-                                   
+
                                     {
                                         title: "Actions",
                                         dataIndex: "Actions",
@@ -172,10 +178,10 @@ export default function EOAssignRefereeFinal() {
                                                     gap: "10px",
                                                 }}
                                             >
-                                               <Button
+                                                <Button
                                                     type="ghost"
                                                     ghost
-                                                    onClick={()=>handleRefereeAdd(record.id)}
+                                                    onClick={() => handleRefereeAdd(record.id)}
                                                     style={{
                                                         backgroundColor: "blue",
                                                         color: "#fff",
@@ -186,13 +192,13 @@ export default function EOAssignRefereeFinal() {
                                                         marginBottom: "auto",
                                                     }}
                                                 >
-                                                  Assign
-                                                </Button> 
+                                                    Assign
+                                                </Button>
 
                                                 <Button
                                                     type="ghost"
                                                     ghost
-                                                    onClick={()=>handleRefereeRemove(record.id)}
+                                                    onClick={() => handleRefereeRemove(record.id)}
                                                     style={{
                                                         backgroundColor: "red",
                                                         color: "#fff",
@@ -206,7 +212,7 @@ export default function EOAssignRefereeFinal() {
                                                     Remove
                                                 </Button>
 
-                                            {/* {addedEvents == 'true' ?  (
+                                                {/* {addedEvents == 'true' ?  (
                                                     <Button
                                                     type="ghost"
                                                     ghost
@@ -246,7 +252,7 @@ export default function EOAssignRefereeFinal() {
                                             
                                             
                                             } */}
-                                                
+
                                             </span>
                                         ),
                                     },
@@ -265,6 +271,6 @@ export default function EOAssignRefereeFinal() {
                     </Content>
                 </Layout>
             </Layout>
-            </EOSidebar>
+        </EOSidebar>
     );
 }

@@ -60,8 +60,6 @@ const registerController = async (req, res) => {
     }
 };
 
-
-
 // Handle the user login
 const loginController = async (req, res) => {
 

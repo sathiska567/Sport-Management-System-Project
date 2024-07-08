@@ -148,7 +148,7 @@ const CoachStats = () => {
                     style={{ cursor: "pointer" }}
                     onClick={handleLoadReview}
                   >
-                    Need to Review
+                    All Players
                     <span
                       style={{
                         fontSize: "13px",

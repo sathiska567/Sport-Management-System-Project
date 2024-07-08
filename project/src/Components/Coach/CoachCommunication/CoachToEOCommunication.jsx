@@ -86,13 +86,21 @@ const CoachToEOCommunication = () => {
 
   // filter data
   // console the value to search name of the event
-  const handleEventNameSearch = (value) => {
+  const handleEventNameSearch = async(value) => {
     console.log("Event Name Searched: ", value);
+    try {
+      const searchResponse = await axios.post("http://localhost:8080/api/v1/event-organizer/search",{value:value})
+      // console.log(searchResponse.data.data);
+      setEventOrganizers(searchResponse.data.data)
+    } catch (error) {
+      message.error("Error fetching event organizers");
+    }
   };
 
   // console the value to search location of the event
-  const handleEventLocationSearch = (value) => {
+  const handleEventLocationSearch = async(value) => {
     console.log("Event Location Searched: ", value);
+    
   };
 
   // console the value to search date of the event
@@ -131,14 +139,14 @@ const CoachToEOCommunication = () => {
                 onSearch={handleEventNameSearch}
                 allowClear
               />
-              <Input.Search
+              {/* <Input.Search
                 placeholder="Search Location..."
                 styles={{
                   marginBottom: "8",
                 }}
                 onSearch={handleEventLocationSearch}
                 allowClear
-              />
+              /> */}
             </div>
             {/* Table section */}
             <div className="tableContainer">
