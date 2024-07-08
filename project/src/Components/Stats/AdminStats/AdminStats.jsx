@@ -70,6 +70,15 @@ const AdminStats = () => {
                     style={{ cursor: "pointer" }}
                   >
                     Pending Users
+                    <span
+                      style={{
+                        fontSize: "13px",
+                        fontWeight: "300",
+                        marginLeft: "10px",
+                      }}
+                    >
+                      [ User Category | No of Pending Users]
+                    </span>
                   </span>
                 }
                 className={adminStatStyles.card2}
