@@ -1,7 +1,7 @@
 // Importing necessary libraries and components
 import "./SideBar.css";
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 
 import {
   MenuFoldOutlined,
@@ -9,7 +9,6 @@ import {
   DashboardOutlined,
   PoweroffOutlined,
   BellOutlined,
-  MailOutlined,
 } from "@ant-design/icons";
 
 import { Layout, Menu, Button, Avatar, Space, Badge, message } from "antd";
@@ -17,7 +16,6 @@ import PendingActions from "../icons/PendingActions.jsx";
 import axios from "axios";
 import { adminMenu, userMenu } from "../../Data/Data.js";
 import io from "socket.io-client";
-
 
 // Destructuring components from Ant Design's Layout
 const { Header, Sider } = Layout;
@@ -36,19 +34,16 @@ const SideBar = ({ children }) => {
   const [currentUserName, setCurrentUsername] = useState();
   const [isAdmin, setIsAdmin] = useState(false);
   const [positionNotification, setPositionNotification] = useState();
-  const [isCoach, setIsCoach] = useState("")
-  const [isEventOrganizer, setIsEventOrganizer] = useState("")
-  const [isPlayer, setIsPlayer] = useState("")
-  const [isReferee, setIsReferee] = useState("")
-  const [isTeamManager, setIsTeamManager] = useState("")
-
+  const [isCoach, setIsCoach] = useState("");
+  const [isEventOrganizer, setIsEventOrganizer] = useState("");
+  const [isPlayer, setIsPlayer] = useState("");
+  const [isReferee, setIsReferee] = useState("");
+  const [isTeamManager, setIsTeamManager] = useState("");
+  const location = useLocation();
   const [messages, setMessages] = useState([]);
+  const navigate = useNavigate();
 
-
-  const navigate = useNavigate()
-
-
-    useEffect(() => {
+  useEffect(() => {
     socket.on("receive_message", (data) => {
       console.log("Received message: ", data);
       // Update the messages state with the received message
@@ -107,23 +102,23 @@ const SideBar = ({ children }) => {
         }
       );
 
-    if(res.data.user.messages.length > 0){
-      // console.log(res.data.user.messages[0]);
-      message.success(res.data.user.messages[0])
-      // console.log(res.data.user);
-    }
+      if (res.data.user.messages.length > 0) {
+        // console.log(res.data.user.messages[0]);
+        message.success(res.data.user.messages[0]);
+        // console.log(res.data.user);
+      }
 
       setPositionNotification(res.data.user.notification.length);
 
       setCurrentUsername(res.data.user.username);
       setIsAdmin(res.data.user.isAdmin);
-      setIsCoach(res.data.user.isCoach)
-      setIsEventOrganizer(res.data.user.isEventOrganizer)
-      setIsPlayer(res.data.user.isPlayer)
-      setIsReferee(res.data.user.isReferee)
-      setIsTeamManager(res.data.user.isTeamManager)
+      setIsCoach(res.data.user.isCoach);
+      setIsEventOrganizer(res.data.user.isEventOrganizer);
+      setIsPlayer(res.data.user.isPlayer);
+      setIsReferee(res.data.user.isReferee);
+      setIsTeamManager(res.data.user.isTeamManager);
 
-    console.log(res.data.user);
+      console.log(res.data.user);
     } catch (error) {
       message.error("Error have inside the Get currentUserData function");
     }
@@ -165,19 +160,33 @@ const SideBar = ({ children }) => {
       });
   }, []);
 
-
   // HANDLE LOGOUT
   const handleLogOut = async () => {
     try {
-      localStorage.clear()
-      message.success("Logged out successfully!")
-      window.location.reload()
+      localStorage.clear();
+      message.success("Logged out successfully!");
+      window.location.reload();
     } catch (error) {
-      message.error("Error logging out!")
+      message.error("Error logging out!");
     }
-  }
+  };
 
-
+  const getSelectedMenuItem = () => {
+    const path = location.pathname;
+    // Example matching:
+    if (path === "/AdminStats") {
+      return "1";
+    } else if (path === "/UserValidation") {
+      return "2";
+    } else if (path === "/Manage") {
+      return "3";
+    } else {
+      return "1"; // Default to Dashboard (or another suitable item)
+    }
+  };
+  useEffect(() => {
+    setSelectedMenuItem(getSelectedMenuItem());
+  }, [location.pathname]); // Update whenever the path changes
 
   // get admin or not status
   const sideBarMenu = isAdmin ? adminMenu : userMenu;
@@ -221,7 +230,7 @@ const SideBar = ({ children }) => {
             <div className="demo-logo-vertical" />
             <Menu
               onSelect={handleMenuItemClick}
-              selectedKeys={[selectedMenuItem]}
+              selectedKeys={[selectedMenuItem]} // State-driven selection
               theme="dark"
               mode="inline"
               defaultSelectedKeys={["1"]}
@@ -239,8 +248,8 @@ const SideBar = ({ children }) => {
                 <Link to="/UserValidation">User Validation</Link>
               </Menu.Item>
               {/* <Menu.Item key="3" icon={<ManageUser />}>
-                <Link to="/Manage">Notification</Link>
-              </Menu.Item> */}
+          <Link to="/Manage">Notification</Link>
+        </Menu.Item> */}
               <Menu.Item
                 key="4"
                 icon={<PoweroffOutlined />}
@@ -305,11 +314,6 @@ const SideBar = ({ children }) => {
                 </a>
               </span>
               {/* Email communication section */}
-              <a href="www">
-                <span style={{ color: "white" }} className="emailCommunication">
-                  <MailOutlined />
-                </span>
-              </a>
             </Header>
 
             {/* Title bar displaying the selected menu item */}
@@ -472,7 +476,6 @@ const SideBar = ({ children }) => {
                 </a>
               </span>
               {/* Email communication section */}
-              
             </Header>
 
             {/* Title bar displaying the selected menu item */}

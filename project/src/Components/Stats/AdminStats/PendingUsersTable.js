@@ -103,7 +103,7 @@ const PendingUsersTable = () => {
       dataSource={data}
       columns={columns}
       pagination={false}
-      showHeader={true} // Changed to true to show the headers
+      showHeader={false} // Changed to true to show the headers
     />
   );
 };

@@ -20,7 +20,7 @@ body {
 }
 
 :where(.css-dev-only-do-not-override-qgg3xn).ant-table-wrapper .ant-table-thead >tr>th, :where(.css-dev-only-do-not-override-qgg3xn).ant-table-wrapper .ant-table-thead >tr>td {
-  background-color: #15295E;
+  /* background-color: #15295E; */
   color: #fff;
   font-weight: 500;
 }
@@ -48,5 +48,3 @@ body {
   width: 100%;
   table-layout: fixed;
 }
-
-
