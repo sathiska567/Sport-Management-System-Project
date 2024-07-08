@@ -1,29 +1,35 @@
 import React from "react";
 import ReactApexChart from "react-apexcharts";
+import axios from "axios";
+import { message } from "antd";
 
-class currentUsers extends React.Component {
+class CurrentUsers extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      eventOrganizers: [],
+      teamManagers: [],
+      coaches: [],
+      players: [],
+      referees: [],
       series: [
         {
-          name: "Number of users", // Series name (used for tooltip/legend)
-          data: [1, 2, 5, 3, 5], // Data values for each bar
+          name: "Number of users",
+          data: [0, 0, 0, 0, 0],
         },
       ],
       options: {
         chart: {
-          type: "bar", // Chart type: "bar" for vertical bars
-          height: 250, // Chart height in pixels
+          type: "bar",
+          height: 250,
           toolbar: {
-            show: true, // Show chart toolbar (zoom, download, etc.)
+            show: true,
           },
         },
         title: {
-          // Main chart title options
           text: "Active Users",
-          align: "center", // Title alignment
+          align: "center",
           style: {
             fontSize: "20px",
             fontWeight: "bold",
@@ -31,64 +37,150 @@ class currentUsers extends React.Component {
           },
         },
         xaxis: {
-          // X-axis options
           categories: [
             "Event Organizers",
             "Team Managers",
             "Coaches",
             "Players",
             "Referees",
-          ], // Category labels for the bars
+          ],
           title: {
-            text: "User Category", // X-axis title text
+            text: "User Category",
           },
         },
         yaxis: {
-          // Y-axis options
           title: {
-            text: "Number of Users", // Y-axis title text
+            text: "Number of Users",
           },
-          tickAmount: 5, // Approximate number of ticks on the Y-axis
+          tickAmount: 5,
           labels: {
-            // Y-axis label formatting
             formatter: function (val) {
-              return Math.trunc(val); // Remove decimals from labels
+              return Math.trunc(val);
             },
           },
         },
         plotOptions: {
-          // Options for "bar" chart type
           bar: {
-            borderRadius: 4, // Rounded corners for the bars
+            borderRadius: 4,
             dataLabels: {
-              position: "top", // Position of the data labels (values)
+              position: "top",
             },
-            columnWidth: "40%", // Bar width as a percentage of space
+            columnWidth: "40%",
           },
         },
         dataLabels: {
-          // Data label options (values on bars)
-          enabled: true, // Show data labels
-          offsetY: -20, // Vertical offset of labels
+          enabled: true,
+          offsetY: -20,
           style: {
             fontSize: "12px",
-            colors: ["#304758"], // Color of the data label text
+            colors: ["#304758"],
           },
         },
         fill: {
-          // Bar fill color
-          colors: ["#4096ff"], // Single color for all bars
+          colors: ["#4096ff"],
         },
       },
     };
   }
+
+  componentDidMount() {
+    this.getAllData();
+  }
+
+  getAllData = async () => {
+    await Promise.all([
+      this.getOnlyEventOrganizers(),
+      this.getOnlyTeamManagers(),
+      this.getOnlyCoach(),
+      this.handleGetAllPlayerDetails(),
+      this.getAllRefereeDetails(),
+    ]);
+    this.updateSeries();
+  };
+
+  getOnlyEventOrganizers = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:8080/api/v1/event-organizer/details"
+      );
+      if (response.data.success) {
+        this.setState({ eventOrganizers: response.data.data });
+      }
+    } catch (error) {
+      message.error("Error fetching event organizers");
+    }
+  };
+
+  getOnlyTeamManagers = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:8080/api/v1/team-manager/details"
+      );
+      if (response.data.success) {
+        this.setState({ teamManagers: response.data.data });
+      }
+    } catch (error) {
+      message.error("Error fetching team managers");
+    }
+  };
+
+  getOnlyCoach = async () => {
+    try {
+      const response = await axios.get("http://localhost:8080/api/v1/coach/details");
+      if (response.data.success) {
+        this.setState({ coaches: response.data.data });
+      }
+    } catch (error) {
+      message.error("Error fetching coaches");
+    }
+  };
+
+  handleGetAllPlayerDetails = async () => {
+    try {
+      const response = await axios.get("http://localhost:8080/api/v1/player/player-details");
+      if (response.data.success) {
+        this.setState({ players: response.data.players });
+      }
+    } catch (error) {
+      message.error("Error fetching players");
+    }
+  };
+
+  getAllRefereeDetails = async () => {
+    try {
+      const response = await axios.get("http://localhost:8080/api/v1/referee/referee-details");
+      if (response.data.success) {
+        this.setState({ referees: response.data.referee });
+      }
+    } catch (error) {
+      message.error("Error fetching referees");
+    }
+  };
+
+  updateSeries = () => {
+    const { eventOrganizers, teamManagers, coaches, players, referees } = this.state;
+    this.setState({
+      series: [
+        {
+          name: "Number of users",
+          data: [
+            eventOrganizers.length,
+            teamManagers.length,
+            coaches.length,
+            players.length,
+            referees.length,
+          ],
+        },
+      ],
+    });
+  };
 
   render() {
     return (
       <div id="chart">
         <ReactApexChart
           options={this.state.options}
-          series={this.state.series} // Data for the chart
+          series={this.state.series}
           type="bar"
           height={250}
         />
@@ -97,4 +189,4 @@ class currentUsers extends React.Component {
   }
 }
 
-export default currentUsers;
+export default CurrentUsers;

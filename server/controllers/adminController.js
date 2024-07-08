@@ -243,5 +243,41 @@ const PaginationController = async (req, res) => {
      };
 
 
+// get apply all user details
+const getAllDetailsWithCategoryController = async(req,res)=>{
 
-module.exports = {getAllDetailsController,handleStatusController,updateDetailsController,deleteDetailsController,removeDetailsController,PaginationController}
+       try {
+          const approveForms = []
+          const pendingForms = []
+          const allApplyingDetails = await PlayerModel.find({});
+
+          for (let i = 0; i < allApplyingDetails.length; i++) {
+              if(allApplyingDetails[i].status == 'Approve'){
+                  approveForms.push(allApplyingDetails[i])
+              }
+              if(allApplyingDetails[i].status == 'pending'){
+                     pendingForms.push(allApplyingDetails[i])
+              }
+              
+          }
+  
+          res.status(200).send({
+                  message:"Applying user fetching successfull",
+                  success : true,
+                  approveForms:approveForms,
+                  pendingForms:pendingForms
+          })
+          
+       } catch (error) {
+          res.status(200).send({
+                  message:"Applying user fetching have some error",
+                  success : false,
+                  error
+          })
+       }
+          
+  
+  }
+
+
+module.exports = {getAllDetailsController,handleStatusController,updateDetailsController,deleteDetailsController,removeDetailsController,PaginationController,getAllDetailsWithCategoryController}
