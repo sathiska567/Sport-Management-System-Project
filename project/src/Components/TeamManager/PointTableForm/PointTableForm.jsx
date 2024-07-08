@@ -1,312 +1,186 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import TeamManagerSideBar from "../TeamManagerSideBar/TeamManagerSideBar";
 import "./PointTableForm.css";
-import { Form, Input, message } from "antd";
+import { Form, Input, message, Button } from "antd";
 import { CloseSquareOutlined, EditOutlined } from "@ant-design/icons";
 import axios from "axios";
-
+import { useLocation } from "react-router-dom";
 
 const PointTableForm = () => {
   const [nameOfTheMatch, setEventName] = useState("");
-  const [nameOfTheTeam, setTeamName] = useState([]);
+  const [nameOfTheTeam, setTeamName] = useState("");
   const [wonMatches, setWonMatches] = useState(0);
   const [lostMatches, setLostMatches] = useState(0);
-  const [totalRunsEachTeamMatches,setTotalRunsEachTeamMatches] = useState(0);
+  const [totalRunsEachTeamMatches, setTotalRunsEachTeamMatches] = useState(0);
   const [totalOversEachTeam, setTotalOversEachTeam] = useState(0);
   const [totalMarksForEachTeam, setTotalMarksForEachTeam] = useState(0);
-  
-  
-  
 
-  // Event Name
-  const handleInputChange = (e) => {
-    setEventName(e.target.value);
-  };
+  const location = useLocation();
 
+  useEffect(() => {
+    const { teamId, teamName, eventName } = location.state || {};
+    if (teamName) setTeamName(teamName);
+    if (eventName) setEventName(eventName);
+  }, [location.state]);
 
-   // Team name
-   const handleTeamChange = (e) => {
-    setTeamName(e.target.value);
-  };
-
-
-   // won matches
-   const handleWonChange = (e) => {
-    setWonMatches(e.target.value);
-  };
-
-
-  // Lost matches
-  const handleLostChange = (e) => {
-    setLostMatches(e.target.value);
-  };
-
-
-  // All runs
-  const handleRunsChange = (e) => {
-    setTotalRunsEachTeamMatches(e.target.value);
-  };
-
-
-  // Event Overs
-  const handleOversChange = (e) => {
-    setTotalOversEachTeam(e.target.value);
-  };
-
-
-  // All marks
-  const handleMarksChange = (e) => {
-    setTotalMarksForEachTeam(e.target.value);
-  };
-
-  
-
-   
-
- 
+  const handleInputChange = (e) => setEventName(e.target.value);
+  const handleTeamChange = (e) => setTeamName(e.target.value);
+  const handleWonChange = (e) => setWonMatches(e.target.value);
+  const handleLostChange = (e) => setLostMatches(e.target.value);
+  const handleRunsChange = (e) => setTotalRunsEachTeamMatches(e.target.value);
+  const handleOversChange = (e) => setTotalOversEachTeam(e.target.value);
+  const handleMarksChange = (e) => setTotalMarksForEachTeam(e.target.value);
 
   const handleCreate = async () => {
-    console.log(
-      nameOfTheMatch,
-      nameOfTheTeam,
-      wonMatches,
-      lostMatches,
-      totalRunsEachTeamMatches,
-      totalOversEachTeam,
-      totalMarksForEachTeam,
-      
-    );
-
-
     try {
-      const response = await axios.post(
+      await axios.post(
         "http://localhost:8080/api/v1/PointTableForm/createPointTableForm",
-        {  
-          
+        {
           nameOfTheMatch,
-           nameOfTheTeam, 
-            wonMatches, 
-            lostMatches, 
-            totalRunsEachTeamMatches,
-             totalOversEachTeam, 
-              totalMarksForEachTeam 
-            }
+          nameOfTheTeam,
+          wonMatches,
+          lostMatches,
+          totalRunsEachTeamMatches,
+          totalOversEachTeam,
+          totalMarksForEachTeam,
+        }
       );
-      console.log(response);
-
-     
+      message.success("Submitted successfully");
+      // Reset form fields
+      setEventName("");
+      setTeamName("");
+      setWonMatches(0);
+      setLostMatches(0);
+      setTotalRunsEachTeamMatches(0);
+      setTotalOversEachTeam(0);
+      setTotalMarksForEachTeam(0);
     } catch (error) {
-      message.error("Error event entred details");
+      message.error("Error submitting event details");
     }
   };
-
-
 
   return (
     <div>
       <TeamManagerSideBar>
-
         <Form
           style={{
             margin: "auto",
             width: "75%",
           }}
-          
-          layout="verticle"
+          layout="vertical"
+          onFinish={handleCreate}
         >
-          <div style={{}} className="PointTableForm">
-            <div
-              style={{
-                backgroundColor: "#15295E",
-              }}
-              className="PointTableFormHeader"
-            >
-              <h3
-                style={{
-                  color: "white",
-                  letterSpacing: "1px",
-                  fontWeight: "500",
-                }}
-              >
-                Point Table
+          <div className="PointTableForm">
+            <div className="PointTableFormHeader" style={{ backgroundColor: "#15295E", padding: "10px" }}>
+              <h3 style={{ color: "white", letterSpacing: "1px", fontWeight: "500", margin: 0 }}>
+                Event Details
               </h3>
-
-
               <a href="#">
-                <CloseSquareOutlined
-                  style={{
-                    color: "white",
-                    fontSize: "20px",
-                    marginRight: "10%",
-                  }}
-                />
+                <CloseSquareOutlined style={{ color: "white", fontSize: "20px", float: "right" }} />
               </a>
             </div>
-
-
-            <div
-              style={{
-                backgroundColor: "white",
-                padding: "50px",
-              }}
-              className="PointTableFormApplication"
-            >
-              <div className="InputData">
-                <div className="DataIem">
-                  <label htmlFor="eventName">Name of the Event:</label>
-                  <div style={{ flex: 2.6 }}>
-                    <Input
-                      type="text"
-                      id="eventName"
-                      required
-                      name="eventName"
-                      onChange={handleInputChange}
-                    />
-                  </div>
+            <div className="PointTableFormApplication" style={{ backgroundColor: "white", padding: "50px" }}>
+              <div className="InputData" style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+                <div className="DataItem" style={{ display: 'flex', alignItems: 'center' }}>
+                  <label htmlFor="eventName" style={{ width: '200px', marginRight: '10px' }}>Name of the Event:</label>
+                  <Input
+                    type="text"
+                    id="eventName"
+                    required
+                    name="eventName"
+                    value={nameOfTheMatch}
+                    onChange={handleInputChange}
+                    style={{ flex: 1 }}
+                  />
                 </div>
-
-
-
-                    
-                <div className="DataIem">
-
-                  <label htmlFor="teamName">Name of the Team:</label>
-                  <div style={{ flex: 2.6 }}>
-
-                    <Input
-                      type="text"
-                      id="teamName"
-                      required
-                      name="teamName"
-                      onChange={ handleTeamChange}
-                    />
-
-                  </div>
+                <div className="DataItem" style={{ display: 'flex', alignItems: 'center' }}>
+                  <label htmlFor="teamName" style={{ width: '200px', marginRight: '10px' }}>Name of the Team:</label>
+                  <Input
+                    type="text"
+                    id="teamName"
+                    required
+                    name="teamName"
+                    value={nameOfTheTeam}
+                    onChange={handleTeamChange}
+                    style={{ flex: 1 }}
+                  />
                 </div>
-
-
-
-
-                <div className="DataIem">
-
-                  <label htmlFor="wonMatches">Won Matches:</label>
-                  <div style={{ flex: 2.6 }}>
-
-                    <Input
-                      type="number"
-                      id="wonMatches"
-                      name="wonMatches"
-                      required
-                      onChange={handleWonChange}
-                    />
-
-                  </div>
+                <div className="DataItem" style={{ display: 'flex', alignItems: 'center' }}>
+                  <label htmlFor="wonMatches" style={{ width: '200px', marginRight: '10px' }}>Won Matches:</label>
+                  <Input
+                    type="number"
+                    id="wonMatches"
+                    required
+                    name="wonMatches"
+                    value={wonMatches}
+                    onChange={handleWonChange}
+                    style={{ flex: 1 }}
+                  />
                 </div>
-
-
-
-                <div className="DataIem">
-
-                  <label htmlFor="LostMatches">Lost Matches:</label>
-
-                  <div style={{ flex: 2.6 }}>
-
-                    <Input
-                      type="number"
-                      id="LostMatches"
-                      name="LostMatches"
-                      required
-                      onChange={handleLostChange}
-                    />
-                  </div>
+                <div className="DataItem" style={{ display: 'flex', alignItems: 'center' }}>
+                  <label htmlFor="lostMatches" style={{ width: '200px', marginRight: '10px' }}>Lost Matches:</label>
+                  <Input
+                    type="number"
+                    id="lostMatches"
+                    required
+                    name="lostMatches"
+                    value={lostMatches}
+                    onChange={handleLostChange}
+                    style={{ flex: 1 }}
+                  />
                 </div>
-
-
-
-                <div className="DataIem">
-
-                  <label htmlFor="TotalRuns">Total Runs For Each Team:</label>
-
-                  <div style={{ flex: 2.6 }}>
-
-                    <Input
-                      type="number"
-                      id="TotalRunes"
-                      name="TotalRuns"
-                      required
-                      onChange={handleRunsChange}
-                    />
-
-                  </div>
+                <div className="DataItem" style={{ display: 'flex', alignItems: 'center' }}>
+                  <label htmlFor="totalRuns" style={{ width: '200px', marginRight: '10px' }}>Total Runs For Each Team:</label>
+                  <Input
+                    type="number"
+                    id="totalRuns"
+                    required
+                    name="totalRunsEachTeamMatches"
+                    value={totalRunsEachTeamMatches}
+                    onChange={handleRunsChange}
+                    style={{ flex: 1 }}
+                  />
                 </div>
-
-
-
-                <div className="DataIem">
-
-                  <label htmlFor="TotalOvers">Total Overs For Each Team:</label>
-
-                  <div style={{ flex: 2.6 }}>
-
-                    <Input
-                      type="number"
-                      id="TotalOvers"
-                      name="TotalOvers"
-                      required
-                      onChange={handleOversChange}
-                    />
-
-                  </div>
+                <div className="DataItem" style={{ display: 'flex', alignItems: 'center' }}>
+                  <label htmlFor="totalOvers" style={{ width: '200px', marginRight: '10px' }}>Total Overs For Each Team:</label>
+                  <Input
+                    type="number"
+                    id="totalOvers"
+                    required
+                    name="totalOversEachTeam"
+                    value={totalOversEachTeam}
+                    onChange={handleOversChange}
+                    style={{ flex: 1 }}
+                  />
                 </div>
-
-
-
-                <div className="DataIem">
-
-                  <label htmlFor="TotalMarks">Total Marks For Each Team:</label>
-
-                  <div style={{ flex: 2.6 }}>
-
-                    <Input
-                      type="number"
-                      id="TotalMarks"
-                      name="TotalMarks"
-                      required
-                      onChange={ handleMarksChange}
-                    />
-
-                  </div>
+                <div className="DataItem" style={{ display: 'flex', alignItems: 'center' }}>
+                  <label htmlFor="totalMarks" style={{ width: '200px', marginRight: '10px' }}>Total Marks For Each Team:</label>
+                  <Input
+                    type="number"
+                    id="totalMarks"
+                    required
+                    name="totalMarksForEachTeam"
+                    value={totalMarksForEachTeam}
+                    onChange={handleMarksChange}
+                    style={{ flex: 1 }}
+                  />
                 </div>
-
-                
-
-                
-
-                
-                
-
-               
-
-                <div class="buttonSet">
-                  <div>
-                    <button
-                      class="approve PointTableFormBTn"
-                      style={{ backgroundColor: "#52c41a", width: "115px" }}
-                      onClick={handleCreate}
-                    >
-
-                      <EditOutlined className="UserApplicationIcon" />
-                       Submit
-                    </button>
-
-                    
-                  </div>
+                <div className="buttonSet" style={{ textAlign: "center" }}>
+                  <Button
+                    type="primary"
+                    htmlType="submit"
+                    className="approve PointTableFormBtn"
+                    style={{ backgroundColor: "#52c41a", width: "115px" }}
+                  >
+                    <EditOutlined className="UserApplicationIcon" />
+                    Submit
+                  </Button>
                 </div>
               </div>
             </div>
           </div>
         </Form>
-        </TeamManagerSideBar>
+      </TeamManagerSideBar>
     </div>
   );
 };
