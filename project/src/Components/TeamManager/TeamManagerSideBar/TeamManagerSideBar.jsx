@@ -203,7 +203,7 @@ const TeamManagerSideBar = ({ children }) => {
                 key="/PointTableForm"
                 icon={<FontAwesomeIcon icon={faPeopleGroup} />}
               >
-                <NavLink to="/PointTableForm">Point Table</NavLink>
+                <NavLink to="/EventsForPointTable">Point Table</NavLink>
               </Menu.Item>
               <Menu.Item key="/EventView" icon={<UserAddOutlined />}>
                 <NavLink to="/EventView">Assign Members</NavLink>
