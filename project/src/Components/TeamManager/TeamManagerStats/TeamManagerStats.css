@@ -4,11 +4,11 @@ body {
 }
 
 .stats {
-display: flex;
-flex-direction: column;
-gap: 20px;
-width: 100%;
-display: flex;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  display: flex;
 }
 
 .sRow {
@@ -20,13 +20,13 @@ display: flex;
 }
 
 .sItem {
-  width : 350px;
+  width: 350px;
   height: 170px;
   background-color: white;
   box-shadow: 1.5px 2px 2px 1.5px rgba(0, 0, 0, 0.17);
 }
 
-.ant-col  {
+.ant-col {
   text-align: center;
   margin-left: 25%;
   margin-top: 8%;
@@ -34,13 +34,12 @@ display: flex;
 
 .stats .ant-statistic-title {
   font-size: 22px;
-  color: #6C6C6C;
+  color: #6c6c6c;
   margin-bottom: 0px;
 }
 
 .stats .ant-statistic-content-value {
   font-size: 48px;
-  color: #17404F;
+  color: #17404f;
   font-weight: 500;
-
 }

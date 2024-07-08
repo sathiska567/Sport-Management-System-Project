@@ -2,10 +2,6 @@ body {
     width: 100%;
     height: 100%;
 }
-
-
-/* Login.css */
-
 .LoginInput.error {
     border: 1px solid red;
 }
@@ -16,17 +12,11 @@ body {
 
 .custom-messag {
     font-size: 20px !important;
-    /* Custom font size */
     color: red !important;
-    /* Custom text color */
     background-color: #fff4f4 !important;
-    /* Custom background color */
     border: 3px solid red !important;
-    /* Custom border color */
     padding: 10px !important;
-    /* Custom padding */
     border-radius: 100px !important;
-    /* Custom border radius */
     font-weight: bold;
     width: 800px;
     margin: 0 auto;
@@ -34,17 +24,11 @@ body {
 
 .custom-message-succes {
     font-size: 20px !important;
-    /* Custom font size for success messages */
     color: green !important;
-    /* Custom text color for success messages */
     background-color: #f6ffed !important;
-    /* Custom background color for success messages */
     border: 3px solid green !important;
-    /* Custom border color for success messages */
     padding: 10px !important;
-    /* Custom padding for success messages */
     border-radius: 100px !important;
-    /* Custom border radius for success messages */
     font-weight: bold;
     width: 800px;
     margin: 0 auto;
@@ -96,7 +80,6 @@ body {
 }
 
 .LoginLabel {
-    /*margin-bottom: -10px;*/
     font-family: 'Roboto', sans-serif;
     font-size: 16px;
     color: #666666;
@@ -104,7 +87,6 @@ body {
 
 
 .ant-btn {
-    /*margin-top: 5%;*/
     border-radius: 0;
     font-family: Roboto, sans-serif;
     font-size: 16px;
@@ -114,7 +96,6 @@ body {
 }
 
 .LoginLink {
-    /*margin-top: -5px;*/
     font-family: 'Roboto ', sans-serif;
     font-size: 14px;
     color: #0075E1;

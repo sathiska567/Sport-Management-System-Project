@@ -1,82 +1,68 @@
 body {
-    height: 100vh;
-    width: 100vw;
-    overflow-x: hidden;
-  }
-  
-  /*User Application*/
-  
+  height: 100vh;
+  width: 100vw;
+  overflow-x: hidden;
+}
 
-  .PointTableForm {
-    width: 80%;
-    margin: auto;
-    max-width: 800px;
-  }
-
-  
-  .ant-form-item-control {
-      width: calc(100% - 120px); /* Adjust the width as needed */
-  }
-
-  
-  .ant-form-item-label {
-      width: 120px; /* Adjust the width as needed */
-      margin-left: 100px;
-  }
 .PointTableForm {
   width: 80%;
   margin: auto;
   max-width: 800px;
-  
 }
-
 
 .ant-form-item-control {
-    width: calc(100% - 120px); /* Adjust the width as needed */
+  width: calc(100% - 120px);
 }
-
 
 .ant-form-item-label {
-    width: 120px; /* Adjust the width as needed */
-    margin-left: 100px;
+  width: 120px;
+  margin-left: 100px;
+}
+.PointTableForm {
+  width: 80%;
+  margin: auto;
+  max-width: 800px;
 }
 
+.ant-form-item-control {
+  width: calc(100% - 120px);
+}
+
+.ant-form-item-label {
+  width: 120px;
+  margin-left: 100px;
+}
 
 .PointTableFormHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #022C3B;
+  background-color: #022c3b;
   margin: 0;
   padding: 10px;
 }
 
-
 .PointTableFormHeader h3 {
   color: #e0f7ff;
   margin: 0;
-  flex: 1; /* Take up remaining space, centering the h3 */
+  flex: 1;
   text-align: center;
 }
 
-
 .PointTableFormApplication {
-  max-height: 500px; 
-  overflow-y: hidden; 
+  max-height: 500px;
+  overflow-y: hidden;
   border: 1px solid #e0f7ff;
   border-radius: 4px;
-  background-color: #D6F5FF;
-  color: #022C3B;
+  background-color: #d6f5ff;
+  color: #022c3b;
   font-weight: 500;
   max-width: 800px;
   margin: auto;
   display: flex;
-    flex-direction: column;
-    gap: 10px;
+  flex-direction: column;
+  gap: 10px;
 }
-
-
-/* Style for Submit button */
 
 form {
   display: flex;
@@ -85,9 +71,8 @@ form {
   margin: 50px;
   padding-left: 25px;
   padding-right: 25px;
-  color: #022C3B;
+  color: #022c3b;
 }
-
 
 .buttonSet {
   display: flex;
@@ -95,7 +80,6 @@ form {
   flex-direction: row;
   gap: 20px;
 }
-
 
 .PointTableFormBTn {
   margin-top: 30px;
@@ -108,17 +92,13 @@ form {
   width: 160px !important;
 }
 
-
 .PointTableFormBTn:hover {
   cursor: pointer !important;
 }
 
-
 .UserApplicationIcon {
   margin-right: 10px;
 }
-
-
 
 .InputData {
   display: flex;
@@ -126,124 +106,103 @@ form {
   gap: 15px;
 }
 
-
 .DataItem {
   .PointTableFormHeader {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #022C3B;
+    background-color: #022c3b;
     margin: 0;
     padding: 10px;
   }
-
 }
 
+.PointTableFormHeader h3 {
+  color: #e0f7ff;
+  margin: 0;
+  flex: 1;
+  text-align: center;
+}
 
-  
-  .PointTableFormHeader h3 {
-    color: #e0f7ff;
-    margin: 0;
-    flex: 1; /* Take up remaining space, centering the h3 */
-    text-align: center;
-  }
+.PointTableFormApplication {
+  max-height: 500px;
+  overflow-y: auto;
+  border: 1px solid #e0f7ff;
+  border-radius: 4px;
+  background-color: #d6f5ff;
+  color: #022c3b;
+  font-weight: 500;
+  max-width: 800px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
 
-  
-  .PointTableFormApplication {
-    max-height: 500px; 
-    overflow-y: auto; 
-    border: 1px solid #e0f7ff;
-    border-radius: 4px;
-    background-color: #D6F5FF;
-    color: #022C3B;
-    font-weight: 500;
-    max-width: 800px;
-    margin: auto;
-    display: flex;
-      flex-direction: column;
-      gap: 10px;
-  }
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin: 50px;
+  padding-left: 25px;
+  padding-right: 25px;
+  color: #022c3b;
+}
 
-  
-  /* Style for Submit button */
-  
-  form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    margin: 50px;
-    padding-left: 25px;
-    padding-right: 25px;
-    color: #022C3B;
-  }
+.buttonSet {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  gap: 20px;
+}
 
-  
-  .buttonSet {
-    display: flex;
-    justify-content: center;
-    flex-direction: row;
-    gap: 20px;
-  }
+.PointTableFormBTn {
+  margin-top: 30px;
+  font-size: 15px;
+  margin-right: 10px;
+  color: #fff;
+  padding: 7px 16px 7px 16px;
+  border-radius: 5px;
+  border: none;
+  width: 160px !important;
+}
 
-  
-  .PointTableFormBTn {
-    margin-top: 30px;
-    font-size: 15px;
-    margin-right: 10px;
-    color: #fff;
-    padding: 7px 16px 7px 16px;
-    border-radius: 5px;
-    border: none;
-    width: 160px !important;
-  }
+.PointTableFormBTn:hover {
+  cursor: pointer !important;
+}
 
-  
-  .PointTableFormBTn:hover {
-    cursor: pointer !important;
-  }
+.UserApplicationIcon {
+  margin-right: 10px;
+}
 
-  
-  .UserApplicationIcon {
-    margin-right: 10px;
-  }
+.InputData {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
 
-  
-  
-  .InputData {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-  }
+.DataIem {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+}
 
-  
-  .DataIem {
-      display: flex;
-      flex-direction: row;
-      gap: 15px;
-  }
+.DataIem > label {
+  flex: 1;
+}
 
-  
-  .DataIem > label {
-      flex: 1;
-  }
+.DataIem > input {
+  flex: 2.5;
+}
 
-  
-  .DataIem > input {
-      flex: 2.5;
-  }
+.DataItemTeamsLabel {
+  flex: 1;
+}
 
-  
-  .DataItemTeamsLabel {
-      flex: 1;
-  
-  }
+.DataItemTeamsInput {
+  flex: 2.5;
+}
 
-  
-  .DataItemTeamsInput {
-      flex: 2.5;
-  }
-
-  
-  .DataIem > .ant-picker{
-    flex: 2.5;
-  }
+.DataIem > .ant-picker {
+  flex: 2.5;
+}

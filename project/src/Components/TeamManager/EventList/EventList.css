@@ -4,7 +4,7 @@ body {
     overflow-x: hidden;
   }
   
-  /* Style for the table */
+
   
   .searched {
       display: flex;
@@ -16,7 +16,7 @@ body {
   .tabContainer {
       width: 100%;
       margin-top: 0px;
-      /* Add a vertical scroll bar if the content overflows */
+     
   }
   
   :where(.css-dev-only-do-not-override-qgg3xn).ant-table-wrapper .ant-table-thead >tr>th, :where(.css-dev-only-do-not-override-qgg3xn).ant-table-wrapper .ant-table-thead >tr>td {
@@ -26,10 +26,10 @@ body {
   }
   
   .ant-table-row .ant-table-row-level-0 {
-    height: 10px !important ;/* Adjust the height as needed */
+    height: 10px !important ;
   }
   
-  /* CSS */
+
   .tabContainer th {
     position: sticky;
     top: 0;

@@ -1,33 +1,32 @@
-.fixtureContainer{
-        width: 95%;
-        margin-top: 30px;
-        margin-left: 30px;
-        max-height: 60vh;
+.fixtureContainer {
+  width: 95%;
+  margin-top: 30px;
+  margin-left: 30px;
+  max-height: 60vh;
 }
 
 .ViewTableButtons {
-        width: 200px !important;
-        border-radius: 15px;
-        padding: 20px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
+  width: 200px !important;
+  border-radius: 15px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
 
 .ShuffleButtons {
-        height: 15vh;
-        display: flex;
-        flex-direction: row;
-        gap: 1rem;;
-        border-radius: 15px;
-        position: absolute;
-        bottom: 0;
+  height: 15vh;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  border-radius: 15px;
+  position: absolute;
+  bottom: 0;
 }
 
 .TbaleBUttons {
-        display: flex;
-        flex-direction: row;
-        gap: 1rem;
-        
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
 }

@@ -4,7 +4,7 @@ body {
   overflow-x: hidden;
 }
 
-/*User Application*/
+
 
 .CoachReviewForm {
     width: 60%;
@@ -42,7 +42,7 @@ body {
   gap: 10px;
 }
 
-/* Style for Submit button */
+
 
 form {
   display: flex;
