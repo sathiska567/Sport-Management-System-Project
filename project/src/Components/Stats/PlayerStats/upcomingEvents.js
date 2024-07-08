@@ -15,8 +15,6 @@ const UpcomingEvents = () => {
       if (response.data.success) {
         console.log(response);
         const events = response.data.data
-          .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)) // Sort by createdAt in descending order
-          .slice(0, 10); // Take the first 10 elements
         setCreateEvent(events); // Update the state with the sorted and sliced data
       }
     } catch (error) {
