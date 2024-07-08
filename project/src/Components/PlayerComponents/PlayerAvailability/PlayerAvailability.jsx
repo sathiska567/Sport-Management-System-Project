@@ -44,29 +44,8 @@ const PlayerAvailability = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [total, setTotal] = useState(1);
   const [limits , setLimits] = useState(3);
+  const [availability , setPlayerAvailability] = useState([]);
   
-
-  const fetchData = async (page) => {
-    try {
-      const response = await axios.post('http://localhost:8080/api/v1/event/pagination', { page });
-      console.log("response", response)
-      setCreateEvent(response.data.data.events);
-      setTotal(response.data.data.totalDocuments);
-      setLimits(response.data.data.limit)
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
-  };
-
-  useEffect(() => {
-    fetchData(currentPage);
-  }, [currentPage]);
-
-  const handlePagination = (page) => {
-    setCurrentPage(page);
-  };
-  
-
   const currentUserData = async () => {
     try {
       const res = await axios.get(
@@ -98,6 +77,7 @@ const PlayerAvailability = () => {
 
       if (availabilityResponse.data.success) {
         message.success(availabilityResponse.data.message);
+        setPlayerAvailability()
         setAddedEvents(prev => new Set(prev).add(id));
 
       } else {
@@ -137,6 +117,36 @@ const PlayerAvailability = () => {
       message.error("Error removing availability");
     }
   }
+
+  
+  const fetchData = async (page) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:8080/api/v1/event/pagination",
+        { page }
+      );
+      console.log("response", response);
+      setCreateEvent(response.data.data.events);
+      setTotal(response.data.data.totalDocuments);
+      setLimits(response.data.data.limit);
+
+      response.data.data.events.forEach((event) => {
+        if (event.availableSetPlayerId.includes(playerId)) {
+          setAddedEvents((prev) => new Set(prev).add(event._id));
+        }
+      });
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData(currentPage);
+  }, [currentPage]);
+
+  const handlePagination = (page) => {
+    setCurrentPage(page);
+  };
 
   // GET ALL CREATE EVENT
   const getAllCreateEvent = async () => {
