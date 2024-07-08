@@ -3,94 +3,62 @@ import { Table, message } from "antd";
 import axios from "axios";
 
 const PendingUsersTable = () => {
-  const [eventOrganizers, setEventOrganizers] = useState([]);
-  const [teamManagers, setTeamManagers] = useState([]);
-  const [coaches, setCoaches] = useState([]);
-  const [players, setPlayerDetails] = useState([]);
-  const [referees, setRefereeDetails] = useState([]);
+  const [pendingPlayer, setPendingPlayer] = useState([]);
+  const [pendingEO, setPendingEO] = useState([]);
+  const [pendingCoach, setPendingCoach] = useState([]);
+  const [pendingTM, setPendingTM] = useState([]);
+  const [pendingReferee, setPendingReferee] = useState([]);
 
-  //  get all event organizers
-  const getOnlyEventOrganizers = async () => {
+  const getApplicationWithCategory = async () => {
     try {
-      const response = await axios.get(
-        "http://localhost:8080/api/v1/event-organizer/details"
-      );
-      if (response.data.success) {
-        setEventOrganizers(response.data.data);
+      const categoryResponse = await axios.get("http://localhost:8080/api/v1/admin/get-all-details-with-category");
+      if (categoryResponse.data.success) {
+        const pendingForms = categoryResponse.data.pendingForms;
+
+        const players = [];
+        const coaches = [];
+        const teamManagers = [];
+        const referees = [];
+        const eventOrganizers = [];
+
+        for (let i = 0; i < pendingForms.length; i++) {
+          const form = pendingForms[i];
+          if (form.UserRole === "player") {
+            players.push(form);
+          } else if (form.UserRole === "coach") {
+            coaches.push(form);
+          } else if (form.UserRole === "Team Manager") {
+            teamManagers.push(form);
+          } else if (form.UserRole === "referee") {
+            referees.push(form);
+          } else if (form.UserRole === "Event Organizer") {
+            eventOrganizers.push(form);
+          }
+        }
+
+        setPendingPlayer(players);
+        setPendingCoach(coaches);
+        setPendingTM(teamManagers);
+        setPendingReferee(referees);
+        setPendingEO(eventOrganizers);
+      } else {
+        message.error("Error in fetching application with category");
       }
     } catch (error) {
-      message.error("Error fetching event organizers");
-    }
-  };
-
-  //  get all team managers
-  const getOnlyTeamManagers = async () => {
-    try {
-      const response = await axios.get(
-        "http://localhost:8080/api/v1/team-manager/details"
-      );
-      if (response.data.success) {
-        setTeamManagers(response.data.data);
-      }
-    } catch (error) {
-      message.error("Error fetching team managers");
-    }
-  };
-
-  //  get all coaches
-  const getOnlyCoach = async () => {
-    try {
-      const response = await axios.get(
-        "http://localhost:8080/api/v1/coach/details"
-      );
-      if (response.data.success) {
-        setCoaches(response.data.data);
-      }
-    } catch (error) {
-      message.error("Error fetching coaches");
-    }
-  };
-
-  const handleGetAllPlayerDetails = async () => {
-    try {
-      const response = await axios.get(
-        "http://localhost:8080/api/v1/player/player-details"
-      );
-      if (response.data.success) {
-        setPlayerDetails(response.data.players);
-      }
-    } catch (error) {
-      message.error("Something went wrong");
-    }
-  };
-
-  const getAllRefereeDetails = async () => {
-    try {
-      const refereeResponse = await axios.get(
-        "http://localhost:8080/api/v1/referee/referee-details"
-      );
-      if (refereeResponse.data.success) {
-        setRefereeDetails(refereeResponse.data.referee);
-      }
-    } catch (error) {
-      message.error("Error fetching referee details");
+      message.error("Error in fetching application with category");
     }
   };
 
   useEffect(() => {
-    getOnlyEventOrganizers();
-    getOnlyTeamManagers();
-    getOnlyCoach();
-    handleGetAllPlayerDetails();
-    getAllRefereeDetails();
+    getApplicationWithCategory();
   }, []);
 
   const data = [
-    { key: "1", role: "Event Organizers", count: eventOrganizers.length },
-    { key: "2", role: "Team Managers", count: teamManagers.length },
-    { key: "3", role: "Coaches", count: coaches.length },
-    { key: "4", role: "Referees", count: referees.length },
-    { key: "5", role: "Players", count: players.length },
+    { key: "1", role: "Event Organizers", count: pendingEO.length },
+    { key: "2", role: "Team Managers", count: pendingTM.length },
+    { key: "3", role: "Coaches", count: pendingCoach.length },
+    { key: "4", role: "Referees", count: pendingReferee.length },
+    { key: "5", role: "Players", count: pendingPlayer.length },
   ];
 
   const columns = [
@@ -103,7 +71,7 @@ const PendingUsersTable = () => {
       dataSource={data}
       columns={columns}
       pagination={false}
-      showHeader={false} // Changed to true to show the headers
+      showHeader={true}
     />
   );
 };
