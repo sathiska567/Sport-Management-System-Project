@@ -50,6 +50,8 @@ const EventAvailableRefereeController = async (req, res) => {
         try {
                 const { eventId } = req.body;
                 const availableRefereeDetails = [];
+                const createdEvent = await createEventModel.find({})
+                const alreadyAddedReferee = []
 
                 // Find coach availability for the given event ID
                 const availability = await RefereeAvailabilityModel.find({
@@ -76,11 +78,24 @@ const EventAvailableRefereeController = async (req, res) => {
                         });
                 });
 
-                res.status(200).send({
-                        success: true,
-                        message: "Data fetched successfully",
-                        data: availableRefereeDetails,
-                });
+
+                // Identify already added referees
+                createdEvent.forEach((event) => {
+                if (event.refereeId && event.refereeId.length > 0) {
+                    event.refereeId.forEach((refId) => {
+                        if (availableRefereeIds.includes(refId.toString())) {
+                            alreadyAddedReferee.push(refId.toString());
+                        }
+                    });
+                }
+            });
+    
+            res.status(200).send({
+                success: true,
+                message: "Data fetched successfully",
+                data: availableRefereeDetails,
+                alreadyAddedReferee: alreadyAddedReferee
+            });
 
         } catch (error) {
                 res.status(400).send({
