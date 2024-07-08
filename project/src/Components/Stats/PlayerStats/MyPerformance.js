@@ -27,9 +27,8 @@ const MyPerformance = () => {
       // Update the state with the current user ID
       setCurrentPlayerId(res.data.user._id);
 
-      const playerReviewResponse = await axios.post(
-        "http://localhost:8080/api/v1/review/get-overall-review",
-        { page: page }
+      const playerReviewResponse = await axios.get(
+        "http://localhost:8080/api/v1/review/get-overall-review-without-pagination",
       );
 
       console.log(playerReviewResponse);
@@ -43,7 +42,7 @@ const MyPerformance = () => {
       const fielding = [];
       const coaches = [];
 
-      for (let review of playerReviewResponse.data.data.review) {
+      for (let review of playerReviewResponse.data.data) {
         if (review.playerId === res.data.user._id) {
           batting.push(review.battingReview);
           bowling.push(review.bowlingReview);
