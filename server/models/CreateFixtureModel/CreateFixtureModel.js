@@ -18,7 +18,7 @@ const createFixtureSchema = new mongoose.Schema({
 
   nameOfTheTeam: {
     type: Array,
-    required: [true, 'Team Name is required']
+    required: [{ type: String, required: true }]
   },
 
   createdFixtureId: {
