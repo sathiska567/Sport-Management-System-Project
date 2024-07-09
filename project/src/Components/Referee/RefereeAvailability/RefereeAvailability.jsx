@@ -236,7 +236,7 @@ const RefereeAvailability = () => {
                   dataIndex: "eventDate",
                   width: "20%",
                   align: "center",
-                  render: (text, record) => <span>2024-03-02</span>,
+                  render: (text, record) => <span>{record.eventNewDate}</span>,
                 },
                 {
                   title: "Actions",
