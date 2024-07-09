@@ -250,7 +250,7 @@ const removeAvailability = async (id, isChecked) => {
                   dataIndex: "eventDate",
                   width: "20%",
                   align: "center",
-                  render: (text, record) => <span>{"2024-02-03"}</span>,
+                  render: (text, record) => <span>{record.eventNewDate}</span>,
                 },
                 {
                   title: "Actions",
