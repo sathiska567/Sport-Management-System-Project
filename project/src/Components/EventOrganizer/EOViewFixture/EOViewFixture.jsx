@@ -171,11 +171,11 @@ const EOViewFixture = () => {
             }} // Remove overflowY: "auto"
           >
             <div className="search">
-              <DatePicker
+              {/* <DatePicker
                 className="searchInputDate"
                 style={{ marginBottom: 8 }}
                 onChange={handleDateChange}
-              />
+              /> */}
 
               <Tooltip title="Search for event location">
                 <Input.Search
