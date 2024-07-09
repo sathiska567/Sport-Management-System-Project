@@ -71,7 +71,7 @@ const PendingUsersTable = () => {
       dataSource={data}
       columns={columns}
       pagination={false}
-      showHeader={true}
+      showHeader={false}
     />
   );
 };
