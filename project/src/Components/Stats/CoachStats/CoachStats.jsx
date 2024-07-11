@@ -57,7 +57,7 @@ const CoachStats = () => {
             <div className={adminStatStyles.firstCard}>
               <Card
                 title={
-                  <span style={{ cursor: "pointer" }}>My Performance</span>
+                  <span style={{ cursor: "pointer" }}>Teams Performances</span>
                 }
                 bordered={false}
                 className={adminStatStyles.card1}
@@ -74,7 +74,7 @@ const CoachStats = () => {
                     style={{ cursor: "pointer" }}
                     onClick={handleCreatedTeams}
                   >
-                    Created Teams
+                    All Teams 
                     <span
                       style={{
                         fontSize: "13px",
