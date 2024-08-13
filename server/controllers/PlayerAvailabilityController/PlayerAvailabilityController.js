@@ -28,7 +28,7 @@ const PlayerAvailabilityController = async(req,res)=>{
 
            console.log(data);
 
-           if (data.length == 0) {
+           if (data.length == 0 && eventId!=null) {
                    const setAvailability = new PlayerAvailabilityModel({
                            eventId: eventId,
                            playerId: playerId,

@@ -36,7 +36,7 @@ const coachProfileController = async (req, res) => {
                 })
 
                 await response.save();
-                console.log(response);
+               // console.log(response);
 
                 return res.status(200).send({
                         success: true,

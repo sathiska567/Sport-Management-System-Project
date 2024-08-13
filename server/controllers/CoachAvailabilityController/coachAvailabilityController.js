@@ -9,9 +9,9 @@ const coachAvailabilityController = async (req, res) => {
 
                 const data = await coachAvailabilityModel.find({ eventId: eventId , coachId:coachId });
 
-                console.log(data);
+                // console.log(data);
 
-                if (data.length == 0) {
+                if (data.length == 0 && eventId!=null) {
                         const setAvailability = new coachAvailabilityModel({
                                 eventId: eventId,
                                 coachId: coachId,

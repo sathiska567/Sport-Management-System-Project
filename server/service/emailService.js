@@ -8,13 +8,15 @@ const transporter = nodemailer.createTransport({
   port: 587,
   secure: false,
   auth: {
-    user: process.env.EMAIL_FROM, // Replace with your Gmail email
-    pass: process.env.EMAIL_PASSWORD, // Replace with your Gmail email password
+    user:  'gcealgceal@gmail.com', // Replace with your Gmail email
+    pass: 'ppsoncscicyxxftu', // Replace with your Gmail email password
   },
 });
 
 // Function to send an email
 const sendEmail = async (email, resetCode) => {
+ // console.log('18 : email : ', email)
+ // console.log('19 : reset code : ', resetCode)
     const mailOptions = {
         from: 'your-email@gmail.com',
         to: email,
@@ -24,6 +26,7 @@ const sendEmail = async (email, resetCode) => {
       console.log("email service started");
 
   try {
+
     await transporter.sendMail(mailOptions);
     console.log('Email sent successfully');
   } 
